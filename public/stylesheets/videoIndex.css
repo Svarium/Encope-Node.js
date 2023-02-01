@@ -1,0 +1,193 @@
+.index__body{
+    font-family: 'Raleway', sans-serif;
+    background: rgb(12, 12, 12);
+}
+
+.index__header{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.videoLarge{
+    margin-bottom: -10px;
+    height: 110vh;
+}
+
+.videoSmall{
+    display: none;
+}
+
+
+.absolute{
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    position: absolute;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    /* float: right; */
+    z-index: 2000;
+    }
+  
+
+
+.videoIndex img{
+    width: 300px;
+}
+
+.tituloMapa{
+    display:none;
+}
+
+.videoIndex::after{
+    display: block;
+    width: 30%;
+    height: 10px;
+    /* content: ""; */
+    margin: auto;
+    background: #fff;
+}
+
+.videoIndex:hover{
+    color: rgb(57, 188, 206);
+    transform: scale(1.5);
+    transition: width 3s, height 3s, transform 5s;
+                }
+
+
+.overlay{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+   /*  background: rgba(189, 35, 35, 0.1); */
+}
+
+.mapa{
+    display: none;
+}
+
+.ir{
+    display: none;
+}
+
+@media screen and (max-width: 1200px){
+    h1{
+        font-size: 50px;
+    }
+    img{
+        width: 200px;
+    }
+}
+
+@media screen and (max-width: 1000px){
+    a{
+        font-size: 30px;
+    }
+
+    img{
+        width: 150px;
+    }
+     } 
+     
+@media screen and (max-width: 800px){
+    a{
+        font-size: 20px;
+        margin-bottom: 0;
+    }
+    img{
+        width:200px;
+     }
+     .absolute{
+         width: 100%;
+         height: 100%;
+         top: 0;
+         right: 0;
+         position: absolute;
+         text-align: center;
+         display: flex;
+         justify-content: center;
+         align-items:center;
+         float: right;
+         z-index: 2000;
+         margin-top: -30%;
+         margin-bottom: 0%;
+         }
+ 
+     .mapa{
+         display:flex
+     }
+ 
+     .videoLarge{
+         display: none;
+     }
+ 
+     .videoSmall{
+         display:block;
+         width: 100%;
+         
+         object-fit: cover;
+     }
+     
+     .tituloMapa{
+        display:block;
+        font-family: 'Raleway', sans-serif;
+        color: #fff;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 500px){
+    img{
+       width:200px;
+    }
+    .absolute{
+        width: 100%;
+        height: 100%;
+        top: 0;
+        right: 0;
+        position: absolute;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items:center;
+        float: right;
+        z-index: 2000;
+        margin-top: -30%;
+        margin-bottom: 0%;
+        }
+    .mapa{
+        display:flex
+    }
+
+    .videoLarge{
+        display: none;
+    }
+
+    .videoSmall{
+        display:block;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .tituloMapa{
+        display:block;
+        font-family: 'Raleway', sans-serif;
+        color: #fff;
+        text-align: center;
+    }
+
+    .ir{
+        display: block;
+        text-align: center;
+        font-family:'roboto';
+        font-weight:bolder;
+        color: #fff;
+        text-decoration: none;
+    }
+    
+}

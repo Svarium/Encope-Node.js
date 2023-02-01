@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="es">
+
+<!-- HEAD -->
+<%- include('./partials/head') %> 
+
+<body>
+
+  
+<!-- HEADER -->  
+<%- include('./partials/header') %> 
+  
+
+    <!-- cabecera  -->
+    
+      <div class="container-fluid titulares-secciones">
+        <div class="row justify-content-center text-white">
+            <div class="p-5 col-xs-12 col-md-6 col-lg-4 ">
+                <h4 class="h3 titulo-lic">Uso Interno</h4>
+                <hr class="linea-textos">
+                <p class="h3 titulo-lic" style="font-weight:bolder;">Normativas y reglamentaciones</p>            
+            </div>
+            <div class="col-xs-12 col-md-6 col-lg-5  ">             
+                <video onloadstart="this.muted=true" autoplay muted playsinline loop class="video-titulares">
+                  <source src="./images/VIDEOS TITULOS/uso interno.mp4"></video>  
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- SECCION USO INTERNO -->
+
+    
+    <div class="container-fluid">
+        <div class="row justify-content-around p-5" style="background-color: #829529;">          
+        <div class="col-xs-12 col-md-6 col-lg-2">
+          <a href="https://peculio.encope.gob.ar/" target="_blank" >      <!-- ESTA LINEA ES PARA DESCARGAR ARCHIVOS DESDE EL LINK -->
+            <img class="mx-auto img-fluid d-block" src="/images/iconos/peculio-01.png" width="150px" alt="" >
+          </a>
+        </div>
+        <div class="col-xs-12 col-md-6 col-lg-2 ">
+          <a href="https://patrimonial.encope.gob.ar/Seguridad/Login?returnUrl=%2F" target="_blank">
+            <img class="mx-auto img-fluid d-block"  src="/images/iconos/patrimonial-01.png" width="150px" alt="" >
+          </a>
+        </div>
+        <div class="col-xs-12 col-md-6 col-lg-2 ">
+          <a href="https://presupuesto.encope.gob.ar/" target="_blank">
+            <img class="mx-auto img-fluid d-block" src="/images/iconos/presupuesto-01.png" width="150px" alt="" >
+          </a>
+        </div>
+        <div class="col-xs-12 col-md-6 col-lg-2 ">
+          <a href="https://login.microsoftonline.com" target="_blank">
+            <img class="mx-auto img-fluid d-block" src="/images/iconos/web mail-01.png" width="150px" alt="" >
+          </a>
+        </div>
+        </div>
+    </div>
+  
+        
+
+
+     
+
+
+
+    <!-- INICIA TABLAS DESCARGA NORMATIVAS -->
+<br>
+<div class="contenedor">
+  <table class="table">
+      <h2>Normativas</h2><br>
+      <thead>
+          <tr>
+              <th>Tipo</th>
+              <th>Titulo</th>
+              <th>Fecha de vigencia</th>
+              <th>Descargar</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td data-label="Tipo">Ley</td>
+              <td data-label="titulo">24.372</td>
+              <td data-label="fecha">29-09-1994</td>
+              <td data-label="descargar" class="boton-descarga"> <a href="http://servicios.infoleg.gob.ar/infolegInternet/anexos/65000-69999/67467/texact.htm" download="licitacion.pdf"> <i class="fa-sharp fa-solid fa-cloud-arrow-down"></i></a> </td>
+          </tr>
+          <tr>
+            <td data-label="Tipo">Reglamento</td>
+            <td data-label="titulo">Reglamento Interno ENCOPE</td>
+            <td data-label="fecha">29-09-2022</td>
+            <td data-label="descargar" class="boton-descarga"> <a href="../normativas/archivos/reglamento.pdf" download="reglamento.pdf"><i class="fa-sharp fa-solid fa-cloud-arrow-down"></i> </a> </td>
+        </tr>
+               
+      </tbody>
+  </table>
+</div>
+<!-- FINALIZA TABLAS DESCARGRA LICITACIONES -->
+
+
+<!--LOGOS COLABORADORES-->
+
+<%- include('./partials/colab') %> 
+  
+    </main>
+
+     <!-- FOOTER -->
+
+ <%- include('./partials/footer') %> 
+
+  <!-- SCRIPTS DE EFECTOS/BOOTSTRAP5 -->
+
+<%- include('./partials/scripts') %> 
+    
+   
+  </body>
+  </html>
