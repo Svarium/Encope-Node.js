@@ -25,5 +25,10 @@ module.exports = {
         return res.render('interno',{
             title : 'Uso interno'
         })
+    },
+    contacto : (req,res)=>{
+        return res.render('contacto',{
+            title: 'Contacto'
+        })
     }
 }
