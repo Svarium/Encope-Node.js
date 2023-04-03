@@ -1,4 +1,4 @@
-/* const unidades = require('../data/unidades.json') */
+
 
 module.exports = {
     home : (req,res) =>{
