@@ -1,5 +1,5 @@
 const {check, body} = require('express-validator');
-/* const db = require('../database/models'); */
+const db = require('../database/models');
 
 module.exports = [
     check('name')
@@ -20,11 +20,11 @@ module.exports = [
             ignore : " "
         }).withMessage('Solo caracteres alfabéticos'),
 
-    body('email')
+        body('email')
         .notEmpty().withMessage('El email es obligatorio').bail()
-        .isEmail().withMessage('Debe ser un email con formato válido'),
-     /*    .custom((value, {req}) => {
-            return db.User.findOne({
+        .isEmail().withMessage('Debe ser un email con formato válido')
+        .custom((value, {req}) => {
+            return db.Usuario.findOne({
                 where : {
                     email : value
                 }
@@ -36,7 +36,7 @@ module.exports = [
                 console.log(error)
                 return Promise.reject('El email ya se encuentra registrado')
             })
-        } */
+        }),
 
     check('password')
         .notEmpty().withMessage('La contraseña es obligatoria').bail()
@@ -52,23 +52,6 @@ module.exports = [
                 return false
             }
             return true
-        }).withMessage('Las contraseñas no coinciden')/* ,
-
-        body('icon').custom((value, { req }) => {
-            if (!value) {
-              throw new Error('Debe seleccionar una imagen.');
-            }
-            const extension = value.originalname.split('.').pop().toLowerCase();
-            switch (extension) {
-              case 'jpg':
-              case 'jpeg':
-              case 'png':
-              case 'gif':
-                return true;
-              default:
-                throw new Error('Formato de imagen no válido. Solo se permiten archivos en formato JPG, JPEG, PNG o GIF.');
-            }
-          })
-         */
-    
+        }).withMessage('Las contraseñas no coinciden')
+        
     ]

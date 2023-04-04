@@ -7,6 +7,10 @@ var logger = require('morgan');
 var indexRouter = require('./src/routes/index');
 var usersRouter = require('./src/routes/users');
 const methodOverride = require('method-override');
+const session = require('express-session');
+const localsUserCheck = require('./src/middlewares/localsUserCheck');
+const cookieCheck = require('./src/middlewares/cookieCheck');
+
 
 var app = express();
 
@@ -20,6 +24,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
+app.use(session({
+  secret : "Encope web 2023",
+  resave : false,
+  saveUninitialized: true
+}))
+
+app.use(cookieCheck)
+app.use(localsUserCheck)
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

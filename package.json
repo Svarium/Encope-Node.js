@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./src/bin/www"
+    "start": "node ./src/bin/www",
+    "db:create": "sequelize db:drop & sequelize db:create & sequelize db:migrate",
+    "db:reset": "sequelize db:migrate:undo:all & sequelize db:migrate & sequelize db:seed:all"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -12,6 +14,7 @@
     "dotenv": "^16.0.3",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
+    "express-session": "^1.17.3",
     "express-validator": "^6.15.0",
     "http-errors": "~1.6.3",
     "method-override": "^3.0.0",

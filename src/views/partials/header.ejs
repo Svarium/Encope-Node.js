@@ -32,9 +32,27 @@
                   <li class="nav-item">
                     <a class="nav-link active" href="#noticias">Noticias</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="/users/register">Registrarse</a>
-                </li>
+                <% if (locals.userLogin) { %>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/users/logout">Cerrar Sesion</a>
+                    </li>
+                
+          <li class="nav-item">
+            <a>Hola, <%= userLogin.name %>!</a>
+            <img src="/images/iconsProfile/<%= userLogin.icon %>"  alt="" class="iconProfile">
+          </li>  
+                 
+
+                 <% } else {%>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/users/register">Registrarse</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/users/login">iniciar Sesión</a>
+                    </li>
+                <% } %>
+
+
                    <!--  <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownId">
@@ -43,10 +61,10 @@
                         </div>
                     </li> -->
                 </ul>
-                <form class="d-flex my-2 my-lg-0">
+                <!-- <form class="d-flex my-2 my-lg-0">
                     <input class="form-control me-sm-2" type="text" placeholder="">
                     <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Buscar</button>
-                </form>
+                </form> -->
             </div>
       </div>
     </nav>

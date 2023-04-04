@@ -633,6 +633,13 @@
     color: rgb(230, 50, 50);
 }
 
+.iconProfile{
+    width: 42.5px;
+    height: 42.5px;
+    border-radius: 100%;
+    object-fit: cover;
+}
+
 /* TERMINA FOOTER */
 
 
