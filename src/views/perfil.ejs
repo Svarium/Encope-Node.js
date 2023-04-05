@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('./partials/head')  %>
+         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+         <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">        
+          
+<body>
+  
+    <nav class="navbar navbar-expand-sm navbar-light bg-body-secondary">
+        <div class="container">
+        <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+          aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavId">
+          <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+            <a class="nav-link active" href="/inicio" aria-current="page">Ir al Inicio<span class="visually-hidden">(current)</span></a>
+            
+            <li class="nav-item dropdown">
+                
+                <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menú</a>
+                <div class="dropdown-menu" aria-labelledby="dropdownId">
+                  <a class="dropdown-item" href="/users/logout">Cerrar Sesión</a>
+                  <a class="dropdown-item" href="#">Editar Usuario</a>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="#" aria-current="page">Uso Interno<span class="visually-hidden">(current)</span></a>
+            </li> 
+            <li class="nav-item">
+                <a class="nav-link active" href="#" aria-current="page">Nueva Noticia +<span class="visually-hidden">(current)</span></a>
+            </li> 
+          
+          </ul>
+         <!--  <form action="/search" method="get" class="d-flex my-2 my-lg-0">
+            <input  class="form-control me-sm-2" type="search" name="search" placeholder="Buscar Libro">
+            <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Buscar</button>
+          </form> -->
+          <li class="nav-item me-3">
+            <a class="nav-link active" href="#" aria-current="page">Bienvenido, <%= userLogin.name %> <span class="visually-hidden">(current)</span></a>
+          </li>        
+          <a href="/inicio"><img src="/images/iconsProfile/<%= userLogin.icon %>" class="iconProfile" alt=""></a>
+        </div>
+      </div>
+    </nav><br>
+
+    <main>
+        <div class="container my-5">
+            <div class="row">
+              <div class="col-12 col-md-3">
+                <div class="card">
+                  <img src="/images/iconsProfile/<%= usuario.icon %>" alt="User Profile Image" class="card-img-top">
+                  <div class="card-body">
+                    <h5 class="card-title text-center"> <%= usuario.name %> <%= usuario.surname %> </h5>
+                  </div>
+                  <ul class="list-group list-group-flush text-center">
+                    <li class="list-group-item">Rol de usuario: <%= usuario.rol.nombre %> </li>
+                    <li class="list-group-item">Email: <%= usuario.email %> </li>
+                  </ul>
+        
+                </div>
+              </div>
+              <div class="col-12 col-md-9">
+                <h4 class="text-center">Editar info personal</h4>
+                <hr>
+                <div class="row justify-content-center">
+                  
+                    <form class="col-sm-12 col-md-6 col-lg-10">
+                        <div class="mb-3">
+                          <label for="nombre" class="form-label">Nombre</label>
+                          <input type="text" class="form-control" id="nombre" required>
+                        </div>
+                        <div class="mb-3">
+                          <label for="apellido" class="form-label">Apellido</label>
+                          <input type="text" class="form-control" id="apellido" required>
+                        </div>
+                        <div class="mb-3">
+                          <label for="email" class="form-label">Email</label>
+                          <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                          <label for="password" class="form-label">Contraseña</label>
+                          <input type="password" class="form-control" id="password" required>
+                        </div>
+                        <div class="mb-3">
+                          <label for="perfil" class="form-label">Foto de perfil</label>
+                          <input class="form-control" type="file" id="perfil">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                      </form>
+            </div>
+          </div>
+          
+          
+    </main>
+
+
+
+
+
+
+
+    <!-- BOOTSTRAP -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html>

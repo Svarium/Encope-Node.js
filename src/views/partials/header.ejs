@@ -2,7 +2,7 @@
     <!-- place navbar here -->
     <nav class="navbar navbar-expand-sm navbar-light" id="up">
           <div class="container">
-            <a class="navbar-brand" href="../inicio.html"> 
+            <a class="navbar-brand" href="/inicio"> 
             <img src="/images/logo_home.png" width="150px" alt="" class="logo-web">
             </a>
             <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
@@ -12,7 +12,7 @@
             <div class="collapse navbar-collapse" id="collapsibleNavId">
                 <ul class="navbar-nav me-auto mt-2 mt-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" href="../inicio.html" aria-current="page">Home <span class="visually-hidden">(current)</span></a>
+                        <a class="nav-link active" href="/inicio" aria-current="page">Home<span class="visually-hidden">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="./nosotros" aria-current="page">Nosotros <span class="visually-hidden">(current)</span></a>
@@ -20,55 +20,52 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="./licitaciones" aria-current="page">Licitaciones <span class="visually-hidden">(current)</span></a>
                     </li>
+                  <!--   <li class="nav-item">
+                        <a class="nav-link active" href="./interno" aria-current="page">Uso Interno<span class="visually-hidden">(current)</span></a>
+                    </li> -->
                     <li class="nav-item">
-                        <a class="nav-link active" href="./interno" aria-current="page">Uso Interno <span class="visually-hidden">(current)</span></a>
+                        <a class="nav-link active" href="#">Contacto</a>
                     </li>
+               
                     <li class="nav-item">
-                        <a class="nav-link active" href="./contacto.html">Contacto</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link active" href="./mapa.html">Mapa</a>
+                      <a class="nav-link active" href="#">Mapa</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link active" href="#noticias">Noticias</a>
                 </li>
+                <form class="d-flex my-2 my-lg-0 ms-2">
+                    <input class="form-control me-sm-2" type="text" placeholder="">
+                    <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Buscar</button>
+                </form>
                 <% if (locals.userLogin) { %>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/users/logout">Cerrar Sesion</a>
-                    </li>
+                    
+                    <li class="nav-item ms-3">
+                        <a href="/users/perfil" class="text-secondary">Hola, <%= userLogin.name %>!  <img src="/images/iconsProfile/<%= userLogin.icon %>"  alt="" class="iconProfile"></a>
+                       
+                    </li>   
                 
-          <li class="nav-item">
-            <a>Hola, <%= userLogin.name %>!</a>
-            <img src="/images/iconsProfile/<%= userLogin.icon %>"  alt="" class="iconProfile">
-          </li>  
+          <!--       <li class="nav-item ">
+                    <a class="nav-link active text-secondary" href="/users/logout">Cerrar Sesion</a>
+                       
+                </li>  
+               -->
                  
 
                  <% } else {%>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/users/register">Registrarse</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/users/login">iniciar Sesión</a>
+                        <a class="nav-link active" href="/users/login">Iniciar Sesión</a>
                     </li>
                 <% } %>
 
 
-                   <!--  <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownId">
-                            <a class="dropdown-item" href="/users/register">Registrarse</a>
-                            <a class="dropdown-item" href="#">Construcción</a>
-                        </div>
-                    </li> -->
+                 
                 </ul>
-                <!-- <form class="d-flex my-2 my-lg-0">
-                    <input class="form-control me-sm-2" type="text" placeholder="">
-                    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Buscar</button>
-                </form> -->
+              
             </div>
       </div>
     </nav>
 
+    
    
     <span class="redes-sociales-span">    
 

@@ -96,6 +96,7 @@ module.exports = {
                 res.cookie('userEncopeWeb', req.session.userLogin, {maxAge : 100*60*2})
             }
 
+            
             return res.redirect('/inicio')
 
         })
@@ -112,6 +113,22 @@ module.exports = {
         req.session.destroy();
         res.cookie('userEncopeWeb', null, {maxAge:-1})
         return res.redirect('/inicio')
+    },
+
+    perfil: (req,res) =>{
+
+        db.Usuario.findByPk(req.session.userLogin.id,{
+            include : ['rol']
+        })
+        .then(usuario =>{
+            return res.render('perfil',{
+                usuario,
+                title: "Perfil de usuario"
+            })
+        })
+
+
+     
     }
 
 }
