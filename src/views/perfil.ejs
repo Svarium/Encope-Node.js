@@ -34,6 +34,13 @@
             <li class="nav-item">
                 <a class="nav-link active" href="#" aria-current="page">Nueva Noticia +<span class="visually-hidden">(current)</span></a>
             </li> 
+
+            <% if (locals.userLogin.rol === 1) { %>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/users/dashboard" aria-current="page">Dashboard<span class="visually-hidden">(current)</span></a>
+                </li> 
+            <% } %>
+            
           
           </ul>
          <!--  <form action="/search" method="get" class="d-flex my-2 my-lg-0">

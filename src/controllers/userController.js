@@ -126,9 +126,26 @@ module.exports = {
                 title: "Perfil de usuario"
             })
         })
+        .catch(error => console.log(error))
 
 
      
+    },
+
+    dashboard : (req,res) =>{
+        db.Usuario.findAll({
+            attributes:['name', 'surname', 'email', 'rolId'],
+            include : ['rol']
+        }
+           
+        )
+        .then(usuarios =>{
+            return res.render('dashboard',{
+                title: "Panel de administración",
+                usuarios
+            })
+        })
+        .catch(error => console.log(error))
     }
 
 }

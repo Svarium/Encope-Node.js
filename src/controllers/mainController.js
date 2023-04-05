@@ -25,5 +25,7 @@ module.exports = {
         return res.render('interno',{
             title : 'Uso interno'
         })
-    }
+    },
+
+  
 }
