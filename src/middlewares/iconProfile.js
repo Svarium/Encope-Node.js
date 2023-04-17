@@ -6,7 +6,7 @@ const storageIconImage = multer.diskStorage({
         callback(null, 'public/images/iconsProfile')
     },
     filename : function (req,file,callback) {
-        callback(null, `${Date.now()}_icons_${path.extname(file.originalname)}`)
+        callback(null, `${Date.now()}_user_${path.extname(file.originalname)}`)
     }
 })
 

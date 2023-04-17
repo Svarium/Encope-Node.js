@@ -28,12 +28,12 @@
                   <a class="dropdown-item" href="#">Editar Usuario</a>
                 </div>
               </li>
-              <li class="nav-item">
+           <!--    <li class="nav-item">
                 <a class="nav-link active" href="#" aria-current="page">Uso Interno<span class="visually-hidden">(current)</span></a>
             </li> 
             <li class="nav-item">
                 <a class="nav-link active" href="#" aria-current="page">Nueva Noticia +<span class="visually-hidden">(current)</span></a>
-            </li> 
+            </li>  -->
 
             <% if (locals.userLogin.rol === 1) { %>
                 <li class="nav-item">
@@ -50,7 +50,7 @@
           <li class="nav-item me-3">
             <a class="nav-link active" href="#" aria-current="page">Bienvenido, <%= userLogin.name %> <span class="visually-hidden">(current)</span></a>
           </li>        
-          <a href="/inicio"><img src="/images/iconsProfile/<%= userLogin.icon %>" class="iconProfile" alt=""></a>
+          <a href="/inicio"><img src="/images/iconsProfile/<%= usuario.icon %>" class="iconProfile" alt=""></a>
         </div>
       </div>
     </nav><br>
@@ -76,27 +76,28 @@
                 <hr>
                 <div class="row justify-content-center">
                   
-                    <form class="col-sm-12 col-md-6 col-lg-10">
-                        <div class="mb-3">
-                          <label for="nombre" class="form-label">Nombre</label>
-                          <input type="text" class="form-control" id="nombre" required>
-                        </div>
-                        <div class="mb-3">
-                          <label for="apellido" class="form-label">Apellido</label>
-                          <input type="text" class="form-control" id="apellido" required>
-                        </div>
-                        <div class="mb-3">
-                          <label for="email" class="form-label">Email</label>
-                          <input type="email" class="form-control" id="email" required>
-                        </div>
-                        <div class="mb-3">
-                          <label for="password" class="form-label">Contraseña</label>
-                          <input type="password" class="form-control" id="password" required>
-                        </div>
-                        <div class="mb-3">
-                          <label for="perfil" class="form-label">Foto de perfil</label>
-                          <input class="form-control" type="file" id="perfil">
-                        </div>
+                  <form class="col-sm-12 col-md-6 col-lg-10" action="/users/update/<%- locals.userLogin.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                      <label for="nombre" class="form-label">Nombre</label>
+                      <input type="text" name="name" class="form-control <%= (locals.errors && errors.name) && 'is-invalid'%>" id="nombre" value="<%= usuario.name %>" >
+                      <small class="text-danger ms-2"><%= locals.errors && errors.name ? errors.name.msg : null %></small>
+                    </div>
+                    <div class="mb-3">
+                      <label for="apellido" class="form-label">Apellido</label>
+                      <input type="text" name="surname" class="form-control <%= (locals.errors && errors.surname) && 'is-invalid'%>" id="apellido" value="<%= usuario.surname %>" >
+                      <small class="text-danger ms-2"><%= locals.errors && errors.surname ? errors.surname.msg : null %></small>
+                    </div>
+                    <div class="mb-3">
+                      <label for="email" class="form-label">Email</label>
+                      <input type="email" name="email" class="form-control <%= (locals.errors && errors.email) && 'is-invalid'%>" id="email" value="<%= usuario.email %>" disabled >
+                      <small class="text-danger ms-2"><%= locals.errors && errors.email ? errors.email.msg : null %></small>
+                    </div>
+                  
+                    <div class="mb-3">
+                      <label for="perfil" class="form-label">Foto de perfil</label>
+                      <input class="form-control <%= (locals.errors && errors.icon) && 'is-invalid'%>" name="icon" type="file" id="perfil">
+                      <small class="text-danger ms-2"><%= locals.errors && errors.icon ? errors.icon.msg : null %></small>
+                    </div>
                         <button type="submit" class="btn btn-primary">Enviar</button>
                       </form>
             </div>

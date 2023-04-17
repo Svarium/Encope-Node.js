@@ -1,7 +1,9 @@
 const fs = require('fs');
 const {validationResult} = require('express-validator');
 const {hashSync} = require('bcryptjs');
+const bcrypt = require('bcrypt')
 const { log, error } = require('console');
+const path = require('path');
 
 const db = require('../database/models')
 
@@ -50,13 +52,28 @@ module.exports = {
                 email: email.trim(),
                 password : hashSync(password, 12),
                 rolId: 3,
-                icon: req.file.filename
+                icon: req.file ? req.file.filename : "not image.png",
             }).then(user =>{
-                res.redirect('/users/login')
+
+                req.session.userLogin = {
+                    id : user.id, 
+                    name : user.name,
+                    rol: user.rolId,
+                    icon : user.icon,
+                };
+
+                if (req.body){
+                    res.cookie('userEncopeWeb', req.session.userLogin, {maxAge: 1000*60*5})
+                }
+
+                res.redirect('/users/perfil')
             })
             .catch(error => console.log(error))
 
         } else{
+
+          
+            
             return res.render('register',{
                 errors : errors.mapped(),
                 old : req.body,
@@ -109,6 +126,81 @@ module.exports = {
       }
     },
 
+    updateUser: async (req,res) => {
+
+        try {
+      
+            const errors = validationResult(req);
+      
+         
+      
+             if(req.fileValidationError){ //este if valida que solo se puedan subir extensiones (jpg|jpeg|png|gif|webp)
+                 errors.errors.push({
+                     value : "",
+                     msg : req.fileValidationError,
+                     param : "icon",
+                     location : "file"
+                 })
+             }
+      
+             
+      
+          if(errors.isEmpty()){
+                // manejo de errores de validación
+      
+                const { name, surname } = req.body;
+                const userSession = req.session.userLogin
+                const user = await db.Usuario.findByPk(userSession.id)
+    
+                user.name= name,
+                user.surname= surname,
+                user.icon= req.file ? req.file.filename : userSession.icon
+                
+                await user.save()
+    
+                req.session.userLogin = {
+                  ...userSession,
+                  name: user.name,
+                  icon: user.icon
+                };
+
+                if (req.cookies.userEncopeWeb){
+                  res.cookie('userGuaridaDelLector', '', { maxAge: -1 });
+                  res.cookie('userEncopeWeb', req.session.userLogin, {maxAge: 1000*60*5});
+                }
+    
+               
+                if(req.file){
+                    fs.existsSync(path.join(__dirname,`../../public/images/iconsProfile/${userSession.icon}`)) && fs.unlinkSync(path.join(__dirname,`../../public/images/iconsProfile/${userSession.icon}`)) //SI HAY ERROR Y CARGÓ IMAGEN ESTE METODO LA BORRA
+                }
+                
+                return res.redirect('/users/perfil');
+                
+              } else {
+    
+                db.Usuario.findByPk(req.session.userLogin.id,{
+                    attributes : ['name', 'surname', 'email', 'icon'],
+                    include : ['rol']
+                })
+                .then(usuario =>{
+                   return res.render('perfil',{
+                        usuario,
+                        errors : errors.mapped(),
+                        old : req.body,
+                        title: 'Perfil de usuario'
+                    })
+                })
+                .catch(error => console.log(error))
+              }
+            } catch (error) {
+              res.send(error)
+            }
+    },
+
+    updateUserRol: (req,res) =>{
+
+    },
+
     logout: (req,res) =>{
         req.session.destroy();
         res.cookie('userEncopeWeb', null, {maxAge:-1})
@@ -118,6 +210,7 @@ module.exports = {
     perfil: (req,res) =>{
 
         db.Usuario.findByPk(req.session.userLogin.id,{
+            attributes : ['name', 'surname', 'email', 'icon'],
             include : ['rol']
         })
         .then(usuario =>{
