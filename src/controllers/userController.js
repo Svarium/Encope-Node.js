@@ -227,7 +227,7 @@ module.exports = {
 
     dashboard : (req,res) =>{
         db.Usuario.findAll({
-            attributes:['name', 'surname', 'email', 'rolId'],
+            attributes:['name', 'surname', 'email', 'rolId', 'id'],
             include : ['rol']
         }
            
@@ -239,6 +239,22 @@ module.exports = {
             })
         })
         .catch(error => console.log(error))
-    }
+    },
+    editRol : (req,res) => {
+         /* return res.send(req.body) */
+  
+          db.Usuario.update({
+              rolId : req.body.nuevoRol
+          },
+          {
+              where : {id: req.body.userId}
+          })
+          .then(user => {
+              return res.redirect('/users/dashboard')
+          })
+          .catch(error => console.log(error))
+  
+       
+      }
 
 }

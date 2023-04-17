@@ -57,10 +57,29 @@
             <td><%= email%></td>
             <td><%= rol.nombre%></td>
             <td>
-                <div class="d-flex gap-2">
-                    <a class="btn btn-sm btn-success" href="#">Editar</a>
-                    <a class="btn btn-sm btn-danger" href="#">Eliminar</a>
+              <div class="d-flex">
+                <form action="/users/rol/<%= usuarios.id %>" method="POST" class="row g-6">
+                  <input type="hidden" name="_method" value="PUT">
+                  <input type="hidden" name="userId" value="<%= id %>">
+                 
+                <div class="col-md-6">
+                  <label for="nuevo_rol" class="form-label">Nuevo rol:</label>
+                  <select name="nuevoRol" id="nuevoRol" class="form-select">
+                    <option value="" selected hidden>Seleccione...</option>
+                    <option value="1">Administrador</option>
+                    <option value="2">Editor</option>
+                    <option value="3">Invitado</option>
+                  </select>
                 </div>
+                
+                <div class="col-md-4 d-flex align-items-end">
+                  <button type="submit" class="btn btn-primary">Actualizar</button>
+                </div>
+                 
+              </form>
+        
+                 
+              </div>
         </td>
           </tr>
          <% }) %>
