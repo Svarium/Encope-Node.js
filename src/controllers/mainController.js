@@ -16,11 +16,7 @@ module.exports = {
             title:'Nosotros'
         })
     },
-    licitaciones : (req,res)=>{
-        return res.render('licitaciones', {
-            title: 'Licitaciones'
-        })
-    },
+   
     interno : (req,res)=>{
         return res.render('interno',{
             title : 'Uso interno'

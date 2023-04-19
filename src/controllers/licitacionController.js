@@ -9,6 +9,24 @@ const db = require("../database/models")
 
 module.exports = {
 
+    list : (req,res) => {
+
+    db.Publicaciones.findAll({
+        include : ['tipo']
+    })
+    .then(publicaciones =>{
+       
+        return res.render('licitaciones',{
+            title: 'Licitaciones',
+            publicaciones
+        })
+    })
+    .catch(error => console.log(error))
+
+
+       
+    },
+
 
     agregar : (req,res) => {
 
@@ -63,7 +81,7 @@ module.exports = {
             archivo: req.file ? req.file.filename : null
         })
         .then(publicacion =>{
-            return res.redirect('/inicio')
+            return res.redirect('/licitacion/listar')
         })
         .catch(error => console.log(error))
 
