@@ -6,6 +6,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./src/routes/index');
 var usersRouter = require('./src/routes/users');
+const licitacionRouter = require('./src/routes/licitacion');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const localsUserCheck = require('./src/middlewares/localsUserCheck');
@@ -35,7 +36,9 @@ app.use(localsUserCheck)
 
 
 app.use('/', indexRouter);
+app.use('/licitacion', licitacionRouter);
 app.use('/users', usersRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

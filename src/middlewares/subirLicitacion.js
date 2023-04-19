@@ -1,6 +1,9 @@
+const multer = require('multer');
+const path = require('path');
+
 const storageLicitacionFiles = multer.diskStorage({
     destination: function (req, file, callback) {
-        callback(null, 'public/licitaciones')
+        callback(null, 'public/images/licitaciones')
     },
     filename: function (req, file, callback) {
         callback(null, `${Date.now()}_archivo_${path.extname(file.originalname)}`)
@@ -9,6 +12,7 @@ const storageLicitacionFiles = multer.diskStorage({
 
 const uploadLicitacionesFiles = multer({
     storage: storageLicitacionFiles,
+
     fileFilter: (req, file, cb) =>  {
         if (!file.originalname.match(/\.(pdf)$/)) {
             req.fileValidationError = "Solo se permiten archivos PDF";

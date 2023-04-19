@@ -24,7 +24,7 @@
                     <form action="" class="row" method="POST" enctype="multipart/form-data">
                         <div class="col-12 col-md-6 mb-3">
                             <label for="name" class="form-label">Nombre</label>
-                            <input type="text" class="form-control  <%= (locals.errors && errors.name) && 'is-invalid'%>" id="name" name="name" value="<%= (locals.old && old.name) && old.name %>">
+                            <input type="text" class="form-control <%= (locals.errors && errors.name) && 'is-invalid'%>" id="name" name="name" value="<%= (locals.old && old.name) && old.name %>">
                             <small class="text-danger ms-2"><%= locals.errors && errors.name ? errors.name.msg : null %></small>
 
                           </div>

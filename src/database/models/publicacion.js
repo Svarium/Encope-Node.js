@@ -23,7 +23,6 @@ module.exports = (sequelize, DataTypes) => {
     titulo: DataTypes.STRING,
     expediente: DataTypes.STRING,
     objetivo: DataTypes.STRING,
-    fecha: DataTypes.DATE,
     archivo: DataTypes.STRING,
     tipoId: DataTypes.INTEGER
   }, {

@@ -18,9 +18,6 @@ module.exports = {
       objetivo: {
         type: Sequelize.STRING
       },
-      fecha: {
-        type: Sequelize.DATE
-      },
       archivo: {
         type: Sequelize.STRING
       },
