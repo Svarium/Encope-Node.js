@@ -87,9 +87,9 @@ module.exports = {
 
     } else {
 
-    /*     if(req.file){
-            fs.existsSync(path.join(__dirname,`../../public/images/licitaciones/${req.file.filename}`)) && fs.unlinkSync(path.join(__dirname,`../../public/images/licitaciones/${req.file.filename}`)) //SI HAY ERROR Y CARGÓ ARCHIVO ESTE METODO LO BORRA
-        } */
+        if(req.file){
+            fs.existsSync(path.join(__dirname,`../../public/images/licitaciones/${req.file.filename}`)) && fs.unlinkSync(path.join(__dirname,`../../public/images/licitaciones/${req.file.filename}`)) //SI HAY ERROR Y CARGÓ IMAGEN ESTE METODO LA BORRA
+        }
 
         db.Tipos.findAll({
             order : [['nombre']],
@@ -108,6 +108,117 @@ module.exports = {
 
     }
 
+
+    },
+
+    edit : (req,res) => {
+
+        const {id} = req.params;
+
+        const publicacion = db.Publicaciones.findByPk(id) //busco la publicación en la base
+
+        const tipos =  db.Tipos.findAll() // busco los tipos para recorrerlos en el select del form
+
+        Promise.all(([publicacion, tipos])) //engloba las dos promesas anteriores y las envia a la vista
+        .then(([publicacion, tipos]) =>{
+           /*  return res.send(tipos) */
+            return res.render('editarLic',{
+                tipos,
+                publicacion,
+                title : 'Editar Publicación'
+            })
+        })
+        .catch(error => console.log(error))
+
+    },
+
+    update : (req,res) => {
+
+        const errors = validationResult(req)
+
+        if(req.fileValidationError){ //este if valida que solo se puedan subir extensiones (pdf)
+            errors.errors.push({
+                value : "",
+                msg : req.fileValidationError,
+                param : "pdf",
+                location : "file"
+            })
+        }
+
+        /* return res.send(errors.mapped()) */
+
+        if(errors.isEmpty()){
+
+            const {expediente, titulo, objetivo, tipo} = req.body
+
+            const id = req.params.id
+
+            db.Publicaciones.findByPk(id)
+            .then(publicacion => {
+                db.Publicaciones.update(
+                    {
+                    expediente: expediente.trim(),
+                    titulo: titulo.trim(),
+                    objetivo: objetivo.trim(),
+                    tipoId: tipo,
+                    archivo: req.file ? req.file.filename : publicacion.archivo
+                    },
+                    {
+                        where : {id}
+                    }
+                )
+                .then(publicacionUpdate => {
+
+                    if(req.file){
+                        fs.existsSync(`./public/images/licitaciones/${libroUpdate.archivo}`) && fs.unlinkSync(`./public/images/licitaciones/${libroUpdate.archivo}`)  
+                    }
+                    return res.redirect('/licitacion/listar')
+
+                })
+            })
+            .catch(error => console.log(error))
+
+        } else {
+
+            if(req.file){
+                fs.existsSync(path.join(__dirname,`../../public/images/licitaciones/${req.file.filename}`)) && fs.unlinkSync(path.join(__dirname,`../../public/images/licitaciones/${req.file.filename}`)) //SI HAY ERROR Y CARGÓ IMAGEN ESTE METODO LA BORRA
+            }
+
+            const {id} = req.params;
+
+            const publicacion = db.Publicaciones.findByPk(id) //busco la publicación en la base
+    
+            const tipos =  db.Tipos.findAll() // busco los tipos para recorrerlos en el select del form
+    
+            Promise.all(([publicacion, tipos])) //engloba las dos promesas anteriores y las envia a la vista
+            .then(([publicacion, tipos]) =>{
+               /*  return res.send(tipos) */
+                return res.render('editarLic',{
+                    tipos,
+                    publicacion,
+                    title : 'Editar Publicación',
+                    errors : errors.mapped(),
+                    old : req.body
+                })
+            })
+            .catch(error => console.log(error))
+        
+
+
+
+        }
+
+    },
+
+    remove : (req,res) => {
+
+        db.Publicaciones.destroy({
+            where : {id:req.params.id},
+            force:true
+        }).then(() => {
+            return res.redirect('/licitacion/listar')
+        })
+        .catch(error => console.log(error))
 
     }
 

@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { agregar, store, list } = require('../controllers/licitacionController');
+const { agregar, store, list, edit, update, remove } = require('../controllers/licitacionController');
 const checkUserAdmin = require('../middlewares/checkUserAdmin');
 const checkUserLogin = require('../middlewares/checkUserLogin');
 const { uploadLicitacionesFiles } = require('../middlewares/subirLicitacion');
 const licitacionValidator = require('../validations/licitacionValidator');
+const editLicitacionValidator = require('../validations/editLicitacionValidator');
 
 
 
@@ -15,13 +16,20 @@ const licitacionValidator = require('../validations/licitacionValidator');
 
 router.get('/listar', list)
 
+//CRUD
 
-//CRUD Licitaciones
+//Agregar Licitacion:
 
 router.get('/agregar', agregar)
 router.post('/agregar',uploadLicitacionesFiles.single('pdf'), licitacionValidator, store)
-router.put('/editar')
-router.delete('/eliminar')
+
+//Editar publicación:
+router.get('/editar/:id', edit)
+router.put('/editar/:id',uploadLicitacionesFiles.single('pdf'),editLicitacionValidator, update)
+
+
+//Eliminar publicación:
+router.delete('/eliminar/:id', remove)
 
 
 module.exports = router

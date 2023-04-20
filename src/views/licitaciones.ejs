@@ -72,8 +72,7 @@
 
 <!-- LICITACIONES PUBLICAS -->
 
-<% publicaciones.forEach(publicacion => { %>
- <% if (publicacion.tipo.nombre === "Licitacion Publica") { %>
+
   
   <div class="contenedor">
     <table class="table">
@@ -84,27 +83,54 @@
                 <th>Objetivo</th>
                 <th>fecha de subida</th>
                 <th>Expediente</th>
-                <th>Descargar</th>
+                <th>Acciones</th>
             </tr>
         </thead>
+     
         <tbody>
+          <% publicaciones.forEach(publicacion => { %>
+            <% if (publicacion.tipo.nombre === "Licitacion Publica") { %>
             <tr>
-                <td data-label="Tipo"><%= publicacion.tipo.nombre %></td>
+                <td data-label="Tipo"><%= publicacion.titulo %></td>
                 <td data-label="detalle"><%= publicacion.objetivo %></td>
                 <td data-label="fecha"><%= publicacion.createdAt %></td>
                 <td data-label="Expediente"><%= publicacion.expediente %></td>
-                <td data-label="descargar" class="boton-descarga"><a href="/images/licitaciones/<%= publicacion.archivo %>" download="licitacionPublica"> <i class="fa-sharp fa-solid fa-cloud-arrow-down"></i></a></td>
-            </tr>          
+                <td data-label="descargar" class="boton-descarga"><a href="/images/licitaciones/<%= publicacion.archivo %>" download="licitacionPublica"> <i class="fa-sharp fa-solid fa-cloud-arrow-down"></i></a><br><br>
+                  <a href="/licitacion/editar/<%= publicacion.id %>"><i class="fas fa-edit"></i></a><br><br>
+                  <!--Boton para abrir el modal-->
+                
+                <div class="boton-modal detalle-comprar">
+                  <label for="btn-modal">
+                    <i class="fas fa-trash-alt"></i>
+                  </label>
+              </div>
+              <!--Fin de Boton-->
+                </td>
+            </tr>   
+           <!--Ventana Modal para consultar si queire elminar producto-->
+       <input type="checkbox" id="btn-modal">
+       <div class="container-modal">
+           <div class="content-modal">
+               <h2>¡ATENCION!</h2>
+               <p>¿Estas seguro de que deseas eliminar esta publicación?</p>
+               <div class="btn-cerrar">
+                 <form action="/licitacion/eliminar/<%= publicacion.id %>?_method=DELETE" method="POST" >
+                   <button type="submit">ELIMINAR <i class="fa-solid fa-trash"></i></button>
+                  </form> 
+                   <label for="btn-modal">CANCELAR</i></label>
+               </div>
+           </div>
+           <label for="btn-modal" class="cerrar-modal"></label>
+       </div>
+      <!--Fin de Ventana Modal-->  
+            <% } %>
+            <% }) %>   
         </tbody>
     </table>
   </div>
- <% } %>
-<% }) %>
+    
 
 <!-- LICITACIONES PRIVADAS -->
-
-<% publicaciones.forEach(publicacion => { %>
-  <% if (publicacion.tipo.nombre === "Licitacion Privada") { %>
    
    <div class="contenedor">
      <table class="table">
@@ -115,27 +141,32 @@
                  <th>Objetivo</th>
                  <th>fecha de subida</th>
                  <th>Expediente</th>
-                 <th>Descargar</th>
+                 <th>Acciones</th>
              </tr>
          </thead>
          <tbody>
+          <% publicaciones.forEach(publicacion => { %>
+            <% if (publicacion.tipo.nombre === "Licitacion Privada") { %>
              <tr>
                  <td data-label="Tipo"><%= publicacion.tipo.nombre %></td>
                  <td data-label="detalle"><%= publicacion.objetivo %></td>
                  <td data-label="fecha"><%= publicacion.createdAt %></td>
                  <td data-label="Expediente"><%= publicacion.expediente %></td>
-                 <td data-label="descargar" class="boton-descarga"><a href="/images/licitaciones/<%= publicacion.archivo %>" download="licitacionPrivada"> <i class="fa-sharp fa-solid fa-cloud-arrow-down"></i></a></td>
-             </tr>          
+                 <td data-label="descargar" class="boton-descarga"><a href="/images/licitaciones/<%= publicacion.archivo %>" download="licitacionPublica"> <i class="fa-sharp fa-solid fa-cloud-arrow-down"></i></a><br><br>
+                  <a href="/licitacion/editar/<%= publicacion.id %>"><i class="fas fa-edit"></i></a><br><br>
+                  <a href="#"><i class="fas fa-trash-alt"></i></a>
+                </td>
+             </tr>     
+             <% } %>
+             <% }) %>     
          </tbody>
      </table>
    </div>
-  <% } %>
- <% }) %>
+ 
 
 <!-- Contratación directa -->
 
-<% publicaciones.forEach(publicacion => { %>
-  <% if (publicacion.tipo.nombre === "Contratación Directa") { %>
+
    
    <div class="contenedor">
      <table class="table">
@@ -146,27 +177,30 @@
                  <th>Objetivo</th>
                  <th>fecha de subida</th>
                  <th>Expediente</th>
-                 <th>Descargar</th>
+                 <th>Acciones</th>
              </tr>
          </thead>
          <tbody>
+          <% publicaciones.forEach(publicacion => { %>
+            <% if (publicacion.tipo.nombre === "Contratación Directa") { %>
              <tr>
                  <td data-label="Tipo"><%= publicacion.tipo.nombre %></td>
                  <td data-label="detalle"><%= publicacion.objetivo %></td>
                  <td data-label="fecha"><%= publicacion.createdAt %></td>
                  <td data-label="Expediente"><%= publicacion.expediente %></td>
-                 <td data-label="descargar" class="boton-descarga"><a href="/images/licitaciones/<%= publicacion.archivo %>" download="ContrataciónDirecta"> <i class="fa-sharp fa-solid fa-cloud-arrow-down"></i></a></td>
-             </tr>          
+                 <td data-label="descargar" class="boton-descarga"><a href="/images/licitaciones/<%= publicacion.archivo %>" download="licitacionPublica"> <i class="fa-sharp fa-solid fa-cloud-arrow-down"></i></a><br><br>
+                  <a href="/licitacion/editar/<%= publicacion.id %>"><i class="fas fa-edit"></i></a><br><br>
+                  <a href="#"><i class="fas fa-trash-alt"></i></a>
+                </td>
+             </tr>   
+             <% } %>
+             <% }) %>       
          </tbody>
      </table>
    </div>
-  <% } %>
- <% }) %>
+
 
 <!-- Adjudicaciones -->
-
-<% publicaciones.forEach(publicacion => { %>
-  <% if (publicacion.tipo.nombre === "Adjudicación") { %>
    
    <div class="contenedor">
      <table class="table">
@@ -177,26 +211,31 @@
                  <th>Objetivo</th>
                  <th>fecha de subida</th>
                  <th>Expediente</th>
-                 <th>Descargar</th>
+                 <th>Acciones</th>
              </tr>
          </thead>
          <tbody>
+          <% publicaciones.forEach(publicacion => { %>
+            <% if (publicacion.tipo.nombre === "Adjudicación") { %>
              <tr>
                  <td data-label="Tipo"><%= publicacion.tipo.nombre %></td>
                  <td data-label="detalle"><%= publicacion.objetivo %></td>
                  <td data-label="fecha"><%= publicacion.createdAt %></td>
                  <td data-label="Expediente"><%= publicacion.expediente %></td>
-                 <td data-label="descargar" class="boton-descarga"><a href="/images/licitaciones/<%= publicacion.archivo %>" download="Adjudicación"> <i class="fa-sharp fa-solid fa-cloud-arrow-down"></i></a></td>
-             </tr>          
+                 <td data-label="descargar" class="boton-descarga"><a href="/images/licitaciones/<%= publicacion.archivo %>" download="licitacionPublica"> <i class="fa-sharp fa-solid fa-cloud-arrow-down"></i></a><br><br>
+                  <a href="/licitacion/editar/<%= publicacion.id %>"><i class="fas fa-edit"></i></a><br><br>
+                  <a href="#"><i class="fas fa-trash-alt"></i></a>
+                </td>
+             </tr> 
+             <% } %>
+             <% }) %>         
          </tbody>
      </table>
    </div>
-  <% } %>
- <% }) %>
+
 
  <!-- Dictamenes -->
- <% publicaciones.forEach(publicacion => { %>
-  <% if (publicacion.tipo.nombre === "Dictamen de Evaluación") { %>
+
    
    <div class="contenedor">
      <table class="table">
@@ -207,28 +246,31 @@
                  <th>Objetivo</th>
                  <th>fecha de subida</th>
                  <th>Expediente</th>
-                 <th>Descargar</th>
+                 <th>Acciones</th>
              </tr>
          </thead>
          <tbody>
+          <% publicaciones.forEach(publicacion => { %>
+            <% if (publicacion.tipo.nombre === "Dictamen de Evaluación") { %>
              <tr>
                  <td data-label="Tipo"><%= publicacion.tipo.nombre %></td>
                  <td data-label="detalle"><%= publicacion.objetivo %></td>
                  <td data-label="fecha"><%= publicacion.createdAt %></td>
                  <td data-label="Expediente"><%= publicacion.expediente %></td>
-                 <td data-label="descargar" class="boton-descarga"><a href="/images/licitaciones/<%= publicacion.archivo %>" download="Dictamen"> <i class="fa-sharp fa-solid fa-cloud-arrow-down"></i></a></td>
-             </tr>          
+                 <td data-label="descargar" class="boton-descarga"><a href="/images/licitaciones/<%= publicacion.archivo %>" download="licitacionPublica"> <i class="fa-sharp fa-solid fa-cloud-arrow-down"></i></a><br><br>
+                  <a href="/licitacion/editar/<%= publicacion.id %>"><i class="fas fa-edit"></i></a><br><br>
+                  <a href="#"><i class="fas fa-trash-alt"></i></a>
+                </td>
+             </tr>   
+             <% } %>
+             <% }) %>      
          </tbody>
      </table>
    </div>
-  <% } %>
- <% }) %>
+
 
  <!-- Circulares -->
 
- 
- <% publicaciones.forEach(publicacion => { %>
-  <% if (publicacion.tipo.nombre === "Circular Modificatoria") { %>
    
    <div class="contenedor">
      <table class="table">
@@ -239,27 +281,30 @@
                  <th>Objetivo</th>
                  <th>fecha de subida</th>
                  <th>Expediente</th>
-                 <th>Descargar</th>
+                 <th>Acciones</th>
              </tr>
          </thead>
          <tbody>
+          <% publicaciones.forEach(publicacion => { %>
+            <% if (publicacion.tipo.nombre === "Circular Modificatoria") { %>
              <tr>
                  <td data-label="Tipo"><%= publicacion.tipo.nombre %></td>
                  <td data-label="detalle"><%= publicacion.objetivo %></td>
                  <td data-label="fecha"><%= publicacion.createdAt %></td>
                  <td data-label="Expediente"><%= publicacion.expediente %></td>
-                 <td data-label="descargar" class="boton-descarga"><a href="/images/licitaciones/<%= publicacion.archivo %>" download="Circular"> <i class="fa-sharp fa-solid fa-cloud-arrow-down"></i></a></td>
-             </tr>          
+                 <td data-label="descargar" class="boton-descarga"><a href="/images/licitaciones/<%= publicacion.archivo %>" download="licitacionPublica"> <i class="fa-sharp fa-solid fa-cloud-arrow-down"></i></a><br><br>
+                  <a href="/licitacion/editar/<%= publicacion.id %>"><i class="fas fa-edit"></i></a><br><br>
+                  <a href="#"><i class="fas fa-trash-alt"></i></a>
+                </td>
+             </tr>   
+             <% } %>
+             <% }) %>
          </tbody>
      </table>
    </div>
-  <% } %>
- <% }) %>
 
 
  <!-- Compulsa  -->
- <% publicaciones.forEach(publicacion => { %>
-  <% if (publicacion.tipo.nombre === "Compulsa urgente") { %>
    
    <div class="contenedor">
      <table class="table">
@@ -270,22 +315,28 @@
                  <th>Objetivo</th>
                  <th>fecha de subida</th>
                  <th>Expediente</th>
-                 <th>Descargar</th>
+                 <th>Acciones</th>
              </tr>
          </thead>
          <tbody>
              <tr>
+              <% publicaciones.forEach(publicacion => { %>
+                <% if (publicacion.tipo.nombre === "Compulsa urgente") { %>
                  <td data-label="Tipo"><%= publicacion.tipo.nombre %></td>
                  <td data-label="detalle"><%= publicacion.objetivo %></td>
                  <td data-label="fecha"><%= publicacion.createdAt %></td>
                  <td data-label="Expediente"><%= publicacion.expediente %></td>
-                 <td data-label="descargar" class="boton-descarga"><a href="/images/licitaciones/<%= publicacion.archivo %>" download="Compulsa"> <i class="fa-sharp fa-solid fa-cloud-arrow-down"></i></a></td>
-             </tr>          
+                 <td data-label="descargar" class="boton-descarga"><a href="/images/licitaciones/<%= publicacion.archivo %>" download="licitacionPublica"> <i class="fa-sharp fa-solid fa-cloud-arrow-down"></i></a><br><br>
+                  <a href="/licitacion/editar/<%= publicacion.id %>"><i class="fas fa-edit"></i></a><br><br>
+                  <a href="#"><i class="fas fa-trash-alt"></i></a>
+                </td>
+             </tr>    
+             <% } %>
+             <% }) %>      
          </tbody>
      </table>
    </div>
-  <% } %>
- <% }) %>
+
 
 
 

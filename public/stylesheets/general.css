@@ -60,3 +60,109 @@ h3 {
         margin: .2em;
         font-family: 'Roboto';
     }
+
+
+    /* BOTON ABRIR VENTANA MODAL */
+
+.boton-modal label{
+    padding: 11px ;
+    background-color: var(--footer);
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 300ms ease;
+}
+.boton-modal label:hover{
+    background-color: #dd1818;
+}
+
+.videoReseña iframe{
+    width: 293px;
+    height: 350px;
+    box-shadow: 5px 5px 5px rgb(0,0,0);
+}
+
+
+/*:::Ventana Modal:::*/
+#btn-modal{
+    display: none;
+}
+.container-modal{
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0; left: 0;
+    background-color: rgba(130, 161, 197, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+#btn-modal:checked ~ .container-modal{
+    display: flex;
+}
+.content-modal{
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 4px;
+}
+.content-modal h2{
+    margin-bottom: 15px;
+}
+.content-modal p{
+    padding: 10px 0px;
+    border-top: 1px solid #dbdbdb;
+    border-bottom: 1px solid #dbdbdb;
+    text-align: center;
+}
+.content-modal .btn-cerrar{
+    width: 100%;
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+.content-modal .btn-cerrar label{
+    padding: 10px 10px;
+    background-color: #1f79c2;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 300ms ease;
+    font-size: 13px;
+    text-align: flex-end;
+    font-weight: bolder;
+}
+.btn-cerrar button{
+    padding: 10px 10px;
+    background-color: #d12811;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 300ms ease;
+    border: none;
+    margin: 0 5px;
+}
+
+
+
+.content-modal .btn-cerrar label:hover{
+    background-color:#185E83;
+}
+.cerrar-modal{
+    width:100%;
+    height: 100vh;
+    position: absolute;
+    top:0; left: 0;
+    z-index: -1;
+}
+
+@media screen and (max-width:800px) {
+    .content-modal{
+        width: 90%;
+    }
+}
+
+/*:::Fin Ventana Modal:::*/
