@@ -26,6 +26,11 @@
                 <div class="dropdown-menu" aria-labelledby="dropdownId">
                   <a class="dropdown-item" href="/users/logout">Cerrar Sesión</a>
                   <a class="dropdown-item" href="#">Editar Usuario</a>
+
+                  <% if (locals.userLogin && (locals.userLogin.rol === 1 || locals.userLogin.rol === 2) ) { %>
+                    <a class="dropdown-item" href="/licitacion/agregar">Crear Publicación +</a>
+                    
+                    <% } %>
                 </div>
               </li>
            <!--    <li class="nav-item">

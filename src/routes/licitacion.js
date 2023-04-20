@@ -6,6 +6,7 @@ const checkUserLogin = require('../middlewares/checkUserLogin');
 const { uploadLicitacionesFiles } = require('../middlewares/subirLicitacion');
 const licitacionValidator = require('../validations/licitacionValidator');
 const editLicitacionValidator = require('../validations/editLicitacionValidator');
+const checkUserEditor = require('../middlewares/checkUserEditor');
 
 
 
@@ -20,11 +21,11 @@ router.get('/listar', list)
 
 //Agregar Licitacion:
 
-router.get('/agregar', agregar)
+router.get('/agregar', checkUserEditor ,agregar)
 router.post('/agregar',uploadLicitacionesFiles.single('pdf'), licitacionValidator, store)
 
 //Editar publicación:
-router.get('/editar/:id', edit)
+router.get('/editar/:id',checkUserEditor, edit)
 router.put('/editar/:id',uploadLicitacionesFiles.single('pdf'),editLicitacionValidator, update)
 
 
