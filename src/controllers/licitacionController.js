@@ -12,7 +12,9 @@ module.exports = {
     list : (req,res) => {
 
     db.Publicaciones.findAll({
-        include : ['tipo']
+        order : [['id', 'DESC']],
+        include : ['tipo'],
+        
     })
     .then(publicaciones =>{
        
@@ -25,6 +27,21 @@ module.exports = {
 
 
        
+    },
+
+    verTodas : (req,res) => {
+        db.Publicaciones.findAll({
+            include : ['tipo']
+        })
+        .then(publicaciones =>{
+           
+      /*       return res.send(publicaciones) */
+            return res.render('adminLicitaciones',{
+                title: 'Administrar Licitaciones',
+                publicaciones
+            })
+        })
+        .catch(error => console.log(error))
     },
 
 
@@ -81,7 +98,7 @@ module.exports = {
             archivo: req.file ? req.file.filename : null
         })
         .then(publicacion =>{
-            return res.redirect('/licitacion/listar')
+            return res.redirect('/licitacion/publicaciones')
         })
         .catch(error => console.log(error))
 
@@ -172,7 +189,7 @@ module.exports = {
                     if(req.file){
                         fs.existsSync(`./public/images/licitaciones/${libroUpdate.archivo}`) && fs.unlinkSync(`./public/images/licitaciones/${libroUpdate.archivo}`)  
                     }
-                    return res.redirect('/licitacion/listar')
+                    return res.redirect('/licitacion/publicaciones')
 
                 })
             })
@@ -216,11 +233,29 @@ module.exports = {
             where : {id:req.params.id},
             force:true
         }).then(() => {
-            return res.redirect('/licitacion/listar')
+            return res.redirect('/licitacion/publicaciones')
         })
         .catch(error => console.log(error))
 
+    }, 
+
+    search : (req,res) => {
+
+        const query = req.query.search;
+        db.Publicaciones.findAll({
+            where : {
+                titulo : {
+                    [Op.like] : `%${query}%`
+                }
+            },
+            include : ['tipo']
+        })
+        .then(publicaciones => {
+            return res.render('resultado',{
+                publicaciones,
+                title : 'Resultado de la busqueda'
+            })
+        })
+        .catch(error => console.log(error))
     }
-
-
 }

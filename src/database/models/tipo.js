@@ -11,6 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+
+      Tipos.hasMany(models.Publicaciones,{
+        as: "publicaciones",
+        foreignKey: "tipoId",
+        onDelete:"CASCADE"
+      })
     }
   }
   Tipos.init({

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('./partials/head')  %>
+         <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<body>
+  
+    <nav class="navbar navbar-expand-sm navbar-light bg-body-secondary">
+        <div class="container">
+          <a href="/inicio"><img src="/images/iconsProfile/<%= userLogin.icon %>" class="iconProfile" alt="" width="100px"></a>
+        <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+          aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavId">
+          <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" href="#" aria-current="page">Bienvenido, <%= userLogin.name %> <span class="visually-hidden">(current)</span></a>
+            </li>
+         <!--    <li class="nav-item ">
+              
+              <a class="nav-link active" href="/products/agregar">Agregar Libro +</a>
+            </li> -->
+        
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menú</a>
+              <div class="dropdown-menu" aria-labelledby="dropdownId">
+                <a class="dropdown-item" href="/licitacion/agregar">Crear Publicación +</a>
+                <a class="dropdown-item" href="/users/perfil">Regresar</a>
+                <a class="dropdown-item" href="/users/logout">Cerrar Sesión</a>
+              </div>
+            </li>
+          </ul>
+          <form action="/licitacion/search" method="get" class="d-flex my-2 my-lg-0">
+            <input  class="form-control me-sm-2" type="search" name="search" placeholder="Buscar Licitación">
+            <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Buscar</button>
+          </form>
+        </div>
+      </div>
+    </nav><br>
+    
+<main>
+
+
+   
+    
+    <table class="table">
+        <thead>
+          <tr>
+            
+            <th scope="col">Tipo</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Expediente</th>
+            <th scope="col">Objetivo</th>
+            <th scope="col">acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+         <% publicaciones.forEach(({id,titulo,expediente,objetivo, archivo, tipo}) => { %>
+            <tr>
+            <th scope="row"><%= tipo.nombre %></th>
+            <td><%= titulo %></td>
+            <td><%= expediente %></td>
+            <td><%= objetivo %></td>
+            <td>
+                <div class="d-flex gap-2">
+                    <!-- <a class="btn btn-sm btn-primary" href="/products/agregar"><i class="fas fa-plus"></i></a> -->
+                    <a href="/images/licitaciones/<%= archivo %>" download="licitacionPublica" class="btn btn-sm btn-primary">Archivo</i>
+                    </a>
+                    <a class="btn btn-sm btn-success" href="/licitacion/editar/<%= id %>">Editar</i></a>
+                    <!-- Botón que abre la ventana modal -->
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarProducto">Borrar</button>
+
+                     
+                     <!-- Ventana modal -->
+<div class="modal fade" id="eliminarProducto" tabindex="-1" aria-labelledby="eliminarProductoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="eliminarProductoLabel">Confirmar eliminación de Publicación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <form action="/licitacion/eliminar/<%= id %>?_method=DELETE" method="POST">
+            <p>¿Estás seguro/a de que quieres eliminar esta publicación?</p>
+            <div class="d-flex justify-content-end">
+              <button type="button" class="btn btn-primary me-2" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-danger">Eliminar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+                      <!-- Fin ventana modal -->
+                </div>
+        </td>
+          </tr>
+         <% }) %>
+          
+         
+        </tbody>
+      </table>
+</main>
+
+
+
+<!-- BOOTSTRAP -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+ </body>
+</html>

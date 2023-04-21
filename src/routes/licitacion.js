@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { agregar, store, list, edit, update, remove } = require('../controllers/licitacionController');
+const { agregar, store, list, edit, update, remove, verTodas, search } = require('../controllers/licitacionController');
 const checkUserAdmin = require('../middlewares/checkUserAdmin');
 const checkUserLogin = require('../middlewares/checkUserLogin');
 const { uploadLicitacionesFiles } = require('../middlewares/subirLicitacion');
@@ -15,9 +15,19 @@ const checkUserEditor = require('../middlewares/checkUserEditor');
 
 // listar publicaciones
 
-router.get('/listar', list)
+router.get('/listar',checkUserEditor, list)
+
+// ver todas en el dashboard
+
+router.get('/publicaciones',checkUserEditor, verTodas)
+
+// buscardor de licitaciones por titulo tomando en cuenta el query
+
+router.get('/search', search)
+
 
 //CRUD
+
 
 //Agregar Licitacion:
 
