@@ -187,7 +187,7 @@ module.exports = {
                 .then(publicacionUpdate => {
 
                     if(req.file){
-                        fs.existsSync(`./public/images/licitaciones/${libroUpdate.archivo}`) && fs.unlinkSync(`./public/images/licitaciones/${libroUpdate.archivo}`)  
+                        fs.existsSync(`./public/images/licitaciones/${publicacion.archivo}`) && fs.unlinkSync(`./public/images/licitaciones/${publicacion.archivo}`)  
                     }
                     return res.redirect('/licitacion/publicaciones')
 
