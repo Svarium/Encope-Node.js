@@ -64,43 +64,11 @@
                           <p class="card-text"><%= publicacion.objetivo %></p>
                           <a href="/images/licitaciones/<%= publicacion.archivo %>" download="licitacionPublica" class="btn btn-primary">Archivo</a>
                           <a class="btn btn-success" href="/licitacion/editar/<%= publicacion.id %>">Editar</i></a>
-                          <!-- Botón que abre la ventana modal -->
-                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarProducto">Borrar</button>
-
-                     
-                    <!-- Ventana modal -->
-<div class="modal fade" id="eliminarProducto" tabindex="-1" aria-labelledby="eliminarProductoLabel" aria-hidden="true">
-   <div class="modal-dialog">
-     <div class="modal-content">
-       <div class="modal-header">
-         <h5 class="modal-title" id="eliminarProductoLabel">Confirmar eliminación de Publicación</h5>
-         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-       </div>
-       <div class="modal-body">
-         <form action="/licitacion/eliminar/<%= publicacion.id %>?_method=DELETE" method="POST">
-           <p>¿Estás seguro/a de que quieres eliminar esta publicación?</p>
-           <div class="d-flex justify-content-end">
-             <button type="button" class="btn btn-primary me-2" data-bs-dismiss="modal">Cancelar</button>
-             <button type="submit" class="btn btn-danger">Eliminar</button>
-           </div>
-         </form>
-       </div>
-     </div>
-   </div>
- </div>
-                     <!-- Fin ventana modal -->
-                        </div>
-                      </div><br>
-                      
-                      
-                      
+                          <form  action="/licitacion/eliminar/<%= publicacion.id %>?_method=DELETE" method="POST" class="mt-2 d-flex">
+                            <button type="submit" class="btn btn-danger">Borrar Publicación</button>
+                          </form>
                  <% }) %>
-                <% } %>
-
-
-
-
-              
+                <% } %>              
             </div>          
     </main>
 
