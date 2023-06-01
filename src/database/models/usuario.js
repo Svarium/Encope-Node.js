@@ -16,6 +16,12 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey : 'rolId',
         as : 'rol'
       })
+
+      
+      Usuario.belongsTo(models.destinoUsuario,{
+        foreignKey : 'destinoId',
+        as : 'destino'
+      })
     }
   }
   Usuario.init({
@@ -24,7 +30,9 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     icon: DataTypes.STRING,
-    rolId: DataTypes.INTEGER
+    rolId: DataTypes.INTEGER,
+    destinoId: DataTypes.INTEGER,
+    credencial: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Usuario',

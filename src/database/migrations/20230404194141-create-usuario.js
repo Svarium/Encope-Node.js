@@ -34,6 +34,20 @@ module.exports = {
           key:"id"
         }
       },
+      destinoId : {
+        type: Sequelize.INTEGER,
+        allowNull:true,
+        references: {
+          model : {
+            tableName:"destinoUsuarios"
+          },
+          key:"id"
+        }
+      },
+      credencial:{
+        type:Sequelize.INTEGER,
+        allowNull:true
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

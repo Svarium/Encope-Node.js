@@ -2,11 +2,10 @@
 
 
 let listadoRoles = [
-
+  "SuperAdmin",
   "Admin",
   "Editor",
   "Visitante"
-
 ]
 
 let roles = listadoRoles.map(rol=>{
