@@ -71,6 +71,12 @@
                   <ul class="list-group list-group-flush text-center">
                     <li class="list-group-item">Rol de usuario: <%= usuario.rol.nombre %> </li>
                     <li class="list-group-item">Email: <%= usuario.email %> </li>
+                    <% if (usuario.credencial && usuario.destino.nombreDestino) { %>
+                      <li class="list-group-item">Credencial: <%= usuario.credencial %> </li>
+                    <li class="list-group-item">Destino: <%= usuario.destino.nombreDestino %> </li>
+                    <% } %>
+                   
+                    
                   </ul>
         
                 </div>
@@ -79,6 +85,7 @@
                 <h4 class="text-center">Editar info personal</h4>
                 <hr>
                 <div class="row justify-content-center">
+                  <small class="text-center  text-muted">* En caso de ser agente del spf ingrese su credencial y destino *</small>
                   
                   <form class="col-sm-12 col-md-6 col-lg-10" action="/users/update/<%- locals.userLogin.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
                     <div class="mb-3">
@@ -92,10 +99,21 @@
                       <small class="text-danger ms-2"><%= locals.errors && errors.surname ? errors.surname.msg : null %></small>
                     </div>
                     <div class="mb-3">
-                      <label for="email" class="form-label">Email</label>
-                      <input type="email" name="email" class="form-control <%= (locals.errors && errors.email) && 'is-invalid'%>" id="email" value="<%= usuario.email %>" disabled >
-                      <small class="text-danger ms-2"><%= locals.errors && errors.email ? errors.email.msg : null %></small>
+                      <label for="destino" class="form-label">Destino</label>
+                      <select name="destino" class="form-select <%= locals.errors && errors.destino ? 'errorInput' : null %>">
+                        <option value="" selected hidden>Seleccione su destino...</option>
+                        <% destino.forEach(({id, nombreDestino}) => { %>
+                         <option value="<%= id %>" <%= id === usuario.destinoId && 'selected' %>><%= nombreDestino %></option>
+                        <% }) %>
+                      </select>
+                      <small class="text-danger ms-2"><%= locals.errors && errors.destino ? errors.destino.msg : null %></small>
                     </div>
+                    <div class="mb-3">
+                      <label for="credencial" class="form-label <%= locals.errors && errors.credencial ? 'errorInput' : null %>">Credencial</label>
+                      <input name="credencial" type="number" class="form-control" value="<%= usuario.credencial %>">
+                      <small class="text-danger ms-2"><%= locals.errors && errors.credencial ? errors.credencial.msg : null %></small>
+                    </div>
+
                   
                     <div class="mb-3">
                       <label for="perfil" class="form-label">Foto de perfil</label>

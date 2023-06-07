@@ -2,7 +2,6 @@ const fs = require('fs');
 const {validationResult} = require('express-validator');
 const {hashSync} = require('bcryptjs');
 const bcrypt = require('bcrypt')
-const { log, error } = require('console');
 const path = require('path');
 
 const db = require('../database/models')
@@ -51,7 +50,7 @@ module.exports = {
                 surname : surname.trim(),
                 email: email.trim(),
                 password : hashSync(password, 12),
-                rolId: 3,
+                rolId: 6,
                 icon: req.file ? req.file.filename : "not image.png",
             }).then(user =>{
 
@@ -128,6 +127,8 @@ module.exports = {
 
     updateUser: async (req,res) => {
 
+        /* return res.send(req.body) */
+
         try {
       
             const errors = validationResult(req);
@@ -147,13 +148,17 @@ module.exports = {
       
           if(errors.isEmpty()){
                 // manejo de errores de validación
+
+                
       
-                const { name, surname } = req.body;
+                const { name, surname, credencial, destino } = req.body;
                 const userSession = req.session.userLogin
                 const user = await db.Usuario.findByPk(userSession.id)
     
                 user.name= name,
                 user.surname= surname,
+                user.credencial= credencial,
+                user.destinoId= destino,
                 user.icon= req.file ? req.file.filename : userSession.icon
                 
                 await user.save()
@@ -178,27 +183,30 @@ module.exports = {
                 
               } else {
     
-                db.Usuario.findByPk(req.session.userLogin.id,{
+                const usuario = db.Usuario.findByPk(req.session.userLogin.id,{
                     attributes : ['name', 'surname', 'email', 'icon'],
-                    include : ['rol']
+                    include : ['rol', 'destino']
                 })
-                .then(usuario =>{
-                   return res.render('perfil',{
+                const destino = db.destinoUsuario.findAll({
+                    attributes : ['id', 'nombreDestino'],
+                    order :[['nombreDestino']]
+                })
+        
+                Promise.all([usuario, destino])
+                .then(([usuario, destino])=>{
+                    return res.render('perfil',{
                         usuario,
-                        errors : errors.mapped(),
-                        old : req.body,
-                        title: 'Perfil de usuario'
+                        destino,
+                        old:req.body,
+                        errors: errors.mapped(),
+                        title: "Perfil de usuario"
                     })
-                })
+                })      
                 .catch(error => console.log(error))
               }
             } catch (error) {
               res.send(error)
             }
-    },
-
-    updateUserRol: (req,res) =>{
-
     },
 
     logout: (req,res) =>{
@@ -209,20 +217,30 @@ module.exports = {
 
     perfil: (req,res) =>{
 
-        db.Usuario.findByPk(req.session.userLogin.id,{
-            attributes : ['name', 'surname', 'email', 'icon'],
-            include : ['rol']
+        
+
+        const usuario = db.Usuario.findByPk(req.session.userLogin.id,{
+            attributes : ['name', 'surname', 'email', 'icon', 'id', 'credencial', 'destinoId'],
+            include : ['rol', 'destino']
         })
-        .then(usuario =>{
+        const destino = db.destinoUsuario.findAll({
+            attributes : ['id', 'nombreDestino'],
+            order :[['nombreDestino']]
+        })
+
+        Promise.all([usuario, destino])
+        .then(([usuario, destino])=>{
+            
             return res.render('perfil',{
                 usuario,
-                title: "Perfil de usuario"
-            })
-        })
-        .catch(error => console.log(error))
-
-
-     
+                destino,
+                title: "Perfil de usuario",
+               
+            }
+            
+            )
+        })      
+        .catch(error => console.log(error))     
     },
 
     dashboard : (req,res) =>{

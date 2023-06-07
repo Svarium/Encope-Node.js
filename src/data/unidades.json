@@ -1,0 +1,183 @@
+[
+    {
+        "id":1,
+        "nombreDestino": "Sede Central",
+        "provincia":"Buenos Aires",
+        "ciudad":"Ciudad Autónoma de Buenos Aires"
+    },
+    {
+        "id":2,
+        "nombreDestino": "Complejo Penitenciario Federal I",
+        "provincia":"Buenos Aires",
+        "ciudad":"Ezeiza"
+    },
+    {
+        "id":3,
+        "nombreDestino": "Complejo Penitenciario Federal III",
+        "provincia":"Salta",
+        "ciudad":"General Güemes"
+    },
+   
+    {
+        "id":4,
+        "nombreDestino": "Complejo Penitenciario Federal IV",
+        "provincia":"Buenos Aires",
+        "ciudad":"Ezeiza"
+    },
+    {
+        "id":5,
+        "nombreDestino": "Complejo Penitenciario Federal V",
+        "provincia":"Neuquen",
+        "ciudad":"Senillosa"
+    },
+    {
+        "id":6,
+        "nombreDestino": "Complejo Penitenciario Federal VI",
+        "provincia":"Mendoza",
+        "ciudad":"Lujan de Cuyo"
+    },
+    {
+        "id":7,
+        "nombreDestino": "Complejo Penitenciario Federal de la Ciudad Autónoma de Buenos Aires",
+        "provincia":"Buenos Aires",
+        "ciudad":"Ciudad Autónoma de Buenos Aires"
+    },
+    {
+        "id":8,
+        "nombreDestino": "Complejo Federal de Jóvenes Adultos",
+        "provincia":"Buenos Aires",
+        "ciudad":"Marcos Paz"
+    },
+    {
+        "id":9,
+        "nombreDestino": "Unidad 4",
+        "provincia":"La Pampa",
+        "ciudad":"Santa Rosa"
+    },
+    {
+        "id":10,
+        "nombreDestino": "Unidad 5",
+        "provincia":"Río Negro",
+        "ciudad":"General Roca"
+    },
+    {
+        "id":11,
+        "nombreDestino": "Unidad 6",
+        "provincia":"Chubut",
+        "ciudad":"Rawson"
+    },
+    {
+        "id":12,
+        "nombreDestino": "Unidad 7",
+        "provincia":"Chaco",
+        "ciudad":"Resistencia"
+    },
+    {
+        "id":13,
+        "nombreDestino": "Unidad 8",
+        "provincia":"Jujuy",
+        "ciudad":"San Salvador de Jujuy"
+    },
+    {
+        "id":14,
+        "nombreDestino": "Unidad 10",
+        "provincia":"Formosa",
+        "ciudad":"Formosa"
+    },
+    {
+        "id":15,
+        "nombreDestino": "Unidad 11",
+        "provincia":"Chaco",
+        "ciudad":"Roque Sáenz Peña"
+    },
+    {
+        "id":16,
+        "nombreDestino": "Unidad 12",
+        "provincia":"Río Negro",
+        "ciudad":"Viedma"
+    },
+    {
+        "id":17,
+        "nombreDestino": "Unidad 13",
+        "provincia":"La Pampa",
+        "ciudad":"Santa Rosa"
+    },
+    {
+        "id":18,
+        "nombreDestino": "Unidad 14",
+        "provincia":"Chubut",
+        "ciudad":"Esquel"
+    },
+    {
+        "id":19,
+        "nombreDestino": "Unidad 15",
+        "provincia":"Santa Cruz",
+        "ciudad":"Río Gallegos"
+    },
+    {
+        "id":20,
+        "nombreDestino": "Unidad 16",
+        "provincia":"Salta",
+        "ciudad":"Cerrillos"
+    },
+    {
+        "id":21,
+        "nombreDestino": "Unidad 17",
+        "provincia":"Misiones",
+        "ciudad":"Candelaria"
+    },
+    {
+        "id":22,
+        "nombreDestino": "Unidad 19",
+        "provincia":"Buenos Aires",
+        "ciudad":"Ezeiza"
+    },
+    {
+        "id":23,
+        "nombreDestino": "Unidad 21",
+        "provincia":"Buenos Aires",
+        "ciudad":"Ciudad Autónoma de Buenos Aires"
+    },
+    {
+        "id":24,
+        "nombreDestino": "Unidad 22",
+        "provincia":"Jujuy",
+        "ciudad":"San Salvador de Jujuy"
+    },
+    {
+        "id":25,
+        "nombreDestino": "Unidad 25",
+        "provincia":"La Pampa",
+        "ciudad":"General Pico"
+    },
+    {
+        "id":26,
+        "nombreDestino": "Unidad 30",
+        "provincia":"La Pampa",
+        "ciudad":"Santa Rosa"
+    },
+    {
+        "id":27,
+        "nombreDestino": "Unidad 31",
+        "provincia":"Buenos Aires",
+        "ciudad":"Ezeiza"
+    },
+    {
+        "id":28,
+        "nombreDestino": "Unidad 34",
+        "provincia":"Buenos Aires",
+        "ciudad":"Campo de Mayo"
+    },
+    {
+        "id":29,
+        "nombreDestino": "Unidad 35",
+        "provincia":"Santiago del Estero",
+        "ciudad":"San Martín"
+    },
+    {
+        "id":30,
+        "nombreDestino": "Alcaidías",
+        "provincia":"Buenos Aires y Mendoza",
+        "ciudad":"Ciudad Autónoma de Buenos Aires, La Plata, Lomas de Zamora y Mendoza"
+    }
+]

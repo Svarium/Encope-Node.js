@@ -12,6 +12,12 @@ module.exports = {
       nombreDestino: {
         type: Sequelize.STRING
       },
+      provincia: {
+        type: Sequelize.STRING
+      },
+      ciudad: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

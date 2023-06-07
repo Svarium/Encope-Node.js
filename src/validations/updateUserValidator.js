@@ -20,7 +20,11 @@ module.exports = [
             ignore : " "
         }).withMessage('Solo caracteres alfabéticos'),
 
-     /*    body('email')
-        .notEmpty().withMessage('El email es obligatorio').bail()
-        .isEmail().withMessage('Debe ser un email con formato válido') */
+    check('destino')
+    .notEmpty().withMessage('El destino es obligatorio'),
+
+    check('credencial')
+    .notEmpty().withMessage('Ingresa tu credencial').bail()
+    .isLength({min:5, max:5}).withMessage('Ingresa una credencial válida'),
+
     ]

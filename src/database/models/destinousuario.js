@@ -19,7 +19,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   destinoUsuario.init({
-    nombreDestino: DataTypes.STRING
+    nombreDestino: DataTypes.STRING,
+    provincia:DataTypes.STRING,
+    ciudad:DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'destinoUsuario',
