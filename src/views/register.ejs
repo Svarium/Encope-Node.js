@@ -21,44 +21,47 @@
                     <h5 class="card-title">Registro de Usuario</h5>
                 </div>
                 <div class="card-body">
-                    <form action="" class="row" method="POST" enctype="multipart/form-data">
+                    <form action="" class="row" method="POST" enctype="multipart/form-data" id="formRegister">
                         <div class="col-12 col-md-6 mb-3">
                             <label for="name" class="form-label">Nombre</label>
                             <input type="text" class="form-control <%= (locals.errors && errors.name) && 'is-invalid'%>" id="name" name="name" value="<%= (locals.old && old.name) && old.name %>">
-                            <small class="text-danger ms-2"><%= locals.errors && errors.name ? errors.name.msg : null %></small>
+                            <small id="errorName" class="text-danger ms-2"><%= locals.errors && errors.name ? errors.name.msg : null %></small>
 
                           </div>
                           <div class="col-12 col-md-6 mb-3">
                             <label for="surname" class="form-label">Apellido</label>
                             <input type="text" class="form-control  <%= (locals.errors && errors.surname) && 'is-invalid'%>" id="surname" name="surname" value="<%= (locals.old && old.surname) && old.surname   %>">
-                            <small class="text-danger ms-2"><%= locals.errors && errors.surname ? errors.surname.msg : null %></small>
-
+                            <small id="errorSurname" class="text-danger ms-2"><%= locals.errors && errors.surname ? errors.surname.msg : null %></small>
                           </div>
+                          
                         <div class="mb-3">
                             <label for="email" class="form-label">Correo electrónico</label>
                             <input type="email" class="form-control  <%= (locals.errors && errors.email) && 'is-invalid'%>" id="email" name="email" value="<%= (locals.old && old.email) && old.email  %>">
-                            <small class="text-danger ms-2"><%= locals.errors && errors.email ? errors.email.msg : null %></small>
+                            <small id="errorEmail" class="text-danger ms-2"><%= locals.errors && errors.email ? errors.email.msg : null %></small>
 
                           </div>
                           <div class="mb-3 col-12 col-md-6">
                             <label for="password" class="form-label">Contraseña</label>
                             <input type="password" class="form-control  <%= (locals.errors && errors.password) && 'is-invalid'%>" id="password" name="password">
-                            <small class="text-danger ms-2"><%= locals.errors && errors.password ? errors.password.msg : null %></small>
+                            <small id="errorPass" class="text-danger ms-2"><%= locals.errors && errors.password ? errors.password.msg : null %></small>
 
                           </div>
                           <div class="mb-3 col-12 col-md-6">
                             <label for="password2" class="form-label">Confirme contraseña</label>
                             <input type="password" class="form-control  <%= (locals.errors && errors.password2) && 'is-invalid'%>" id="password2" name="password2">
-                            <small class="text-danger ms-2"><%= locals.errors && errors.password2 ? errors.password2.msg : null %></small>
+                            <small id="errorPass2" class="text-danger ms-2"><%= locals.errors && errors.password2 ? errors.password2.msg : null %></small>
 
                           </div>
                           <div class="mb-3">
                             <label for="email" class="form-label">Subir foto de perfil</label>
                             <input type="file" class="form-control  <%= (locals.errors && errors.icon) && 'is-invalid'%>" id="icon" name="icon">
-                            <small class="text-danger ms-2"><%= locals.errors && errors.icon ? errors.icon.msg : null %></small>
+                            <small id="errorIcon" class="text-danger ms-2"><%= locals.errors && errors.icon ? errors.icon.msg : null %></small>
                           </div>
                           <div class="d-flex justify-content-end">
                             <button type="submit" class="btn btn-danger">Registrarme</button>
+                          </div>
+                          <div class="mb-3">
+                            <small id="errorForm" class="text-danger"></small>
                           </div>
                           
                     </form>
@@ -88,6 +91,6 @@
  <!-- SCRIPTS DE EFECTOS/BOOTSTRAP5 -->
 
 <%- include('./partials/scripts') %> 
-
+<script src="/js/register.js"></script>
 </body>
 </html>
