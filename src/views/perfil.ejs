@@ -85,45 +85,48 @@
                 <h4 class="text-center">Editar info personal</h4>
                 <hr>
                 <div class="row justify-content-center">
-                  <small class="text-center  text-muted">* En caso de ser agente del spf ingrese su credencial y destino *</small>
-                  
+                  <small class="text-center  text-danger mb-2">* En caso de ser agente del spf ingrese su credencial y destino *</small>
                   <form class="col-sm-12 col-md-6 col-lg-10" action="/users/update/<%- locals.userLogin.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
-                    <div class="mb-3">
-                      <label for="nombre" class="form-label">Nombre</label>
-                      <input type="text" name="name" class="form-control <%= (locals.errors && errors.name) && 'is-invalid'%>" id="nombre" value="<%= usuario.name %>" >
-                      <small class="text-danger ms-2"><%= locals.errors && errors.name ? errors.name.msg : null %></small>
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" name="name" class="form-control <%= (locals.errors && errors.name) && 'is-invalid'%>" id="nombre" value="<%= usuario.name %>" >
+                        <small class="text-danger ms-2"><%= locals.errors && errors.name ? errors.name.msg : null %></small>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="apellido" class="form-label">Apellido</label>
+                        <input type="text" name="surname" class="form-control <%= (locals.errors && errors.surname) && 'is-invalid'%>" id="apellido" value="<%= usuario.surname %>" >
+                        <small class="text-danger ms-2"><%= locals.errors && errors.surname ? errors.surname.msg : null %></small>
+                      </div>
                     </div>
-                    <div class="mb-3">
-                      <label for="apellido" class="form-label">Apellido</label>
-                      <input type="text" name="surname" class="form-control <%= (locals.errors && errors.surname) && 'is-invalid'%>" id="apellido" value="<%= usuario.surname %>" >
-                      <small class="text-danger ms-2"><%= locals.errors && errors.surname ? errors.surname.msg : null %></small>
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <label for="destino" class="form-label">Destino</label>
+                        <select name="destino" class="form-select <%= locals.errors && errors.destino ? 'errorInput' : null %>">
+                          <option value="" selected hidden>Seleccione su destino...</option>
+                          <% destino.forEach(({id, nombreDestino}) => { %>
+                          <option value="<%= id %>" <%= id === usuario.destinoId && 'selected' %>><%= nombreDestino %></option>
+                          <% }) %>
+                        </select>
+                        <small class="text-danger ms-2"><%= locals.errors && errors.destino ? errors.destino.msg : null %></small>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="credencial" class="form-label <%= locals.errors && errors.credencial ? 'errorInput' : null %>">Credencial</label>
+                        <input name="credencial" type="number" class="form-control" value="<%= usuario.credencial %>">
+                        <small class="text-danger ms-2"><%= locals.errors && errors.credencial ? errors.credencial.msg : null %></small>
+                      </div>
                     </div>
-                    <div class="mb-3">
-                      <label for="destino" class="form-label">Destino</label>
-                      <select name="destino" class="form-select <%= locals.errors && errors.destino ? 'errorInput' : null %>">
-                        <option value="" selected hidden>Seleccione su destino...</option>
-                        <% destino.forEach(({id, nombreDestino}) => { %>
-                         <option value="<%= id %>" <%= id === usuario.destinoId && 'selected' %>><%= nombreDestino %></option>
-                        <% }) %>
-                      </select>
-                      <small class="text-danger ms-2"><%= locals.errors && errors.destino ? errors.destino.msg : null %></small>
-                    </div>
-                    <div class="mb-3">
-                      <label for="credencial" class="form-label <%= locals.errors && errors.credencial ? 'errorInput' : null %>">Credencial</label>
-                      <input name="credencial" type="number" class="form-control" value="<%= usuario.credencial %>">
-                      <small class="text-danger ms-2"><%= locals.errors && errors.credencial ? errors.credencial.msg : null %></small>
-                    </div>
-
-                  
                     <div class="mb-3">
                       <label for="perfil" class="form-label">Foto de perfil</label>
                       <input class="form-control <%= (locals.errors && errors.icon) && 'is-invalid'%>" name="icon" type="file" id="perfil">
                       <small class="text-danger ms-2"><%= locals.errors && errors.icon ? errors.icon.msg : null %></small>
                     </div>
-                        <button type="submit" class="btn btn-primary">Enviar</button>
-                      </form>
-            </div>
-          </div>
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-primary">Enviar</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
           
           
     </main>

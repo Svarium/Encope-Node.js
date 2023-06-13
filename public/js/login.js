@@ -1,5 +1,3 @@
-alert('++++++++')
-
 const $ = (id) => document.getElementById(id)
 
 
