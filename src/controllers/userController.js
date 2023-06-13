@@ -12,7 +12,6 @@ module.exports = {
         return res.render('register',{
             title: 'Registrate'
         })
-
     },
     
     processRegister: (req,res)=>{
@@ -37,9 +36,6 @@ module.exports = {
                 location : "file"
             })
         }
-
-      /*   console.log(req.fileValidationError);
-            return res.send(errors.mapped()) */
 
         if(errors.isEmpty()){
 
@@ -91,8 +87,6 @@ module.exports = {
     processLogin: (req,res) =>{
         const errors = validationResult(req);
 
-      /*   return res.send(errors.mapped()) */
-
       if(errors.isEmpty()){
 
         db.Usuario.findOne({
@@ -126,8 +120,6 @@ module.exports = {
     },
 
     updateUser: async (req,res) => {
-
-        /* return res.send(req.body) */
 
         try {
       
@@ -205,7 +197,7 @@ module.exports = {
                 .catch(error => console.log(error))
               }
             } catch (error) {
-              res.send(error)
+              console.log(error);
             }
     },
 

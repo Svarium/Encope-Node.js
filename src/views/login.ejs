@@ -21,18 +21,18 @@
                     <h5 class="card-title">Login de usuario</h5>
                 </div>
                 <div class="card-body">
-                    <form action="/users/login" class="row" method="POST">
+                    <form action="/users/login" class="row" method="POST" id="formLogin">
                         
                         <div class="mb-3 col-12 col-md-6">
-                            <label for="email" class="form-label">Correo electrónico</label>
+                            <label  for="email" class="form-label">Correo electrónico</label>
                             <input type="email" class="form-control  <%= (locals.errors && errors.email) && 'is-invalid'%>" id="email" name="email" value="<%= (locals.old && old.email) && old.email  %>">
-                            <small class="text-danger ms-2"><%= locals.errors && errors.email ? errors.email.msg : null %></small>
+                            <small id="errorEmail" class="text-danger ms-2"><%= locals.errors && errors.email ? errors.email.msg : null %></small>
 
                           </div>
                           <div class="mb-3 col-12 col-md-6">
                             <label for="password" class="form-label">Contraseña</label>
                             <input type="password" class="form-control  <%= (locals.errors && errors.password) && 'is-invalid'%>" id="password" name="password">
-                            <small class="text-danger ms-2"><%= locals.errors && errors.password ? errors.password.msg : null %></small>
+                            <small id="errorPass" class="text-danger ms-2"><%= locals.errors && errors.password ? errors.password.msg : null %></small>
                           </div>
 
                           <div class="mb-3 col-12 col-md-6">
@@ -43,7 +43,10 @@
                           <div class="d-flex justify-content-center mb-3 col-12 col-md-6">
                             <button type="submit" class="btn btn-danger">Ingresar</button>
                             <a class="nav-link active text-danger" href="/users/register">¿No tenes cuenta?</a>
-                          </div>                          
+                          </div>     
+                          <div class="mb-3">
+                            <small id="errorFormLogin"></small>
+                          </div>                     
                     </form>
                   
                 </div>
@@ -71,6 +74,6 @@
  <!-- SCRIPTS DE EFECTOS/BOOTSTRAP5 -->
 
 <%- include('./partials/scripts') %> 
-
+<script src="/js/login.js"></script>
 </body>
 </html>

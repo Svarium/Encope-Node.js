@@ -1,9 +1,11 @@
-<!doctype html>
-<html lang="es">
+<!DOCTYPE html>
+<html lang="en">
 
 
 <!-- HEAD -->
 <%- include('./partials/head') %> 
+
+
 
 <body>
 
@@ -13,7 +15,7 @@
 
 <!-- principal -->
 <br><br>
-<main class="register__main">
+<main class="register__main">   
     <div class="row mb-5">
         <div class="col-12 col-md-8 mx-auto">
             <div class="card shadow">
@@ -36,7 +38,7 @@
                           
                         <div class="mb-3">
                             <label for="email" class="form-label">Correo electrónico</label>
-                            <input type="email" class="form-control  <%= (locals.errors && errors.email) && 'is-invalid'%>" id="email" name="email" value="<%= (locals.old && old.email) && old.email  %>">
+                            <input type="email" class="form-control  <%= (locals.errors && errors.email) && 'is-invalid'%>" id="userEmail" name="email" value="<%= (locals.old && old.email) && old.email  %>">
                             <small id="errorEmail" class="text-danger ms-2"><%= locals.errors && errors.email ? errors.email.msg : null %></small>
 
                           </div>

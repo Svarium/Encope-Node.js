@@ -1,4 +1,3 @@
-alert('HOLALAAAA')
 const $ = (id) => document.getElementById(id)
 
 const msgError = (element, message, {target}) => {
@@ -103,7 +102,7 @@ $('name').addEventListener('blur', function(e){
 
   /* INPUT EMAIL */
 
-  $('email').addEventListener('blur', async function(e){
+  $('userEmail').addEventListener('blur', async function(e){
     
     switch (true) {
         case !this.value.trim():
@@ -123,7 +122,7 @@ $('name').addEventListener('blur', function(e){
     }
   });
 
-  $('email').addEventListener('focus', function(e) {
+  $('userEmail').addEventListener('focus', function(e) {
     cleanError('errorEmail', e)
   })
 
