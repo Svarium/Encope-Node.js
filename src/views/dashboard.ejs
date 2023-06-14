@@ -7,7 +7,7 @@
   
     <nav class="navbar navbar-expand-sm navbar-light bg-body-secondary">
         <div class="container">
-          <a href="/inicio"><img src="/images/iconsProfile/<%= userLogin.icon %>" class="iconProfile" alt="" width="100px"></a>
+          <a href="/inicio"><img src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>" class="iconProfile" alt="" width="100px"></a>
         <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
           aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>

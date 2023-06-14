@@ -30,7 +30,9 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     icon: DataTypes.STRING,
-    rolId: DataTypes.INTEGER,
+    socialId: DataTypes.STRING,
+    socialProvider: DataTypes.STRING,
+    rolId: {type:DataTypes.INTEGER, defaultValue:6},
     destinoId: DataTypes.INTEGER,
     credencial: DataTypes.INTEGER
   }, {

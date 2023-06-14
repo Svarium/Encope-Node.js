@@ -2,6 +2,7 @@
 
 module.exports = {
     home : (req,res) =>{
+        console.log(req.session?.userLogin);
         return res.render('index',{
             title: 'Encope'
         });

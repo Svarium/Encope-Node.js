@@ -54,7 +54,7 @@
           <li class="nav-item me-3">
             <a class="nav-link active" href="#" aria-current="page">Bienvenido, <%= userLogin.name %> <span class="visually-hidden">(current)</span></a>
           </li>        
-          <a href="/inicio"><img src="/images/iconsProfile/<%= usuario.icon %>" class="iconProfile" alt=""></a>
+          <a href="/inicio"><img src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>" class="iconProfile" alt=""></a>
         </div>
       </div>
     </nav><br>
@@ -64,7 +64,7 @@
             <div class="row">
               <div class="col-12 col-md-3">
                 <div class="card">
-                  <img src="/images/iconsProfile/<%= usuario.icon %>" alt="User Profile Image" class="card-img-top">
+                  <img src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>" alt="User Profile Image" class="card-img-top">
                   <div class="card-body">
                     <h5 class="card-title text-center"> <%= usuario.name %> <%= usuario.surname %> </h5>
                   </div>
@@ -117,7 +117,7 @@
                       </div>
                     </div>
                     <div class="mb-3">
-                      <label for="perfil" class="form-label">Foto de perfil</label>
+                      <label for="perfil" class="form-label">Editar Foto de perfil</label>
                       <input class="form-control <%= (locals.errors && errors.icon) && 'is-invalid'%>" name="icon" type="file" id="perfil">
                       <small class="text-danger ms-2"><%= locals.errors && errors.icon ? errors.icon.msg : null %></small>
                     </div>

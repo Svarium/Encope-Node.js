@@ -3,7 +3,10 @@ const passport = require('passport');
 const { loginGoogle } = require('../controllers/authController');
 const router = express.Router();
 
-/* /auth/google */
+passport.serializeUser((user, done) => done(null,user))
+passport.deserializeUser((user, done) => done(null,user))
+
+/* /auth */
 
 router.get('/login/google', passport.authenticate('google'));
 router.get(
