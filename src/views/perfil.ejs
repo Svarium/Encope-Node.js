@@ -39,9 +39,30 @@
                     <a class="nav-link active" href="/users/dashboard" aria-current="page">Dashboard<span class="visually-hidden">(current)</span></a>
                 </li> 
             <% } %>
-            
-          
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary btn-sm mt-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Solicitar cambio de rol
+          </button>
           </ul>
+          <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cambio de rol de usuario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Para cambiar sus permisos de usuario primero deberá acreditar que es un agente editando su información personal a través del formulario agregando en el mismo su destino y su credencial. <br>
+        Por último deberá realizar su solicitud via mail a la dirección <span class="text-bg-primary">informatica@encope.gob.ar</span>, indicando sus datos de usuario: nombre, apellido, credencial, destino y email. 
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
          
           <li class="nav-item me-3">
             <a class="nav-link active" href="#" aria-current="page">Bienvenido, <%= userLogin.name %> <span class="visually-hidden">(current)</span></a>
@@ -65,10 +86,7 @@
                     <li class="list-group-item">Email: <%= usuario.email %> </li>
                    
                     <li class="list-group-item">Credencial: <%= usuario.credencial? usuario.credencial : '-' %> </li>
-                    <li class="list-group-item">Destino: <%= usuario.destino? usuario.destino.nombreDestino : '-' %> </li>
-                   
-                   
-                    
+                    <li class="list-group-item">Destino: <%= usuario.destino? usuario.destino.nombreDestino : '-' %> </li>                 
                   </ul>
         
                 </div>
@@ -118,7 +136,7 @@
                     </div>
                   </form>
                 </div>
-              </div>
+              </div>           
           
           
     </main>
