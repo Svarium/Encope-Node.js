@@ -1,6 +1,8 @@
 const {check, body} = require('express-validator');
 const db = require('../database/models');
 
+
+
 module.exports = [
     check('name')
         .notEmpty().withMessage('El nombre es obligatorio').bail()
@@ -25,6 +27,22 @@ module.exports = [
 
     check('credencial')
     .notEmpty().withMessage('Ingresa tu credencial').bail()
-    .isLength({min:5, max:5}).withMessage('Ingresa una credencial válida'),
+    .matches(/^[0-9]+$/).withMessage('La credencial es invalida').bail()
+    .isLength({min:5, max:5}).withMessage('Ingresa una credencial válida').bail()
+    .custom((value, {req}) => {
+        return db.Usuario.findOne({
+            where :{
+                credencial:value
+            }
+        }).then(user => {
+            if(user){
+                return Promise.reject()
+            }
+        }).catch((error) => {
+            console.log(error);
+            return Promise.reject('La credencial ya existe en la base de datos')
+        })
+    })
+    ,
 
     ]

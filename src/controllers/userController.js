@@ -3,6 +3,7 @@ const {validationResult} = require('express-validator');
 const {hashSync} = require('bcryptjs');
 const bcrypt = require('bcrypt')
 const path = require('path');
+const { Op } = require("sequelize");
 
 const db = require('../database/models')
 
@@ -237,8 +238,8 @@ module.exports = {
 
     dashboard : (req,res) =>{
         db.Usuario.findAll({
-            attributes:['name', 'surname', 'email', 'rolId', 'id'],
-            include : ['rol']
+            attributes:['name', 'surname', 'email', 'rolId', 'id', 'credencial'],
+            include : ['rol', 'destino']
         }
            
         )
@@ -262,9 +263,26 @@ module.exports = {
           .then(user => {
               return res.redirect('/users/dashboard')
           })
-          .catch(error => console.log(error))
-  
-       
+          .catch(error => console.log(error))         
+      },
+
+      searchUser : (req,res) => {
+        const query = req.query.search;
+        db.Usuario.findAll({
+            where : {
+                email : {
+                    [Op.like] : `%${query}%`
+                }
+            },
+            include : ['rol', 'destino']
+        })
+        .then(users => {
+            return res.render('searchUser',{
+                users,
+                title : 'Resultado de la busqueda'
+            })
+        })
+        .catch(error => console.log(error))
       }
 
 }

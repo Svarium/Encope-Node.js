@@ -3,7 +3,7 @@
     <%- include('./partials/head')  %>
          <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-<body>
+<body style="background-image: url('/images/imagen\ productos\ vector-03.png'); background-size: cover;">
   
     <nav class="navbar navbar-expand-sm navbar-light bg-body-secondary">
         <div class="container">
@@ -22,13 +22,13 @@
               <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menú</a>
               <div class="dropdown-menu" aria-labelledby="dropdownId">
                 <a class="dropdown-item" href="/users/logout">Cerrar Sesión</a>
-                <a class="dropdown-item" href="#">Editar Usuario</a>
+                <a class="dropdown-item" href="/users/perfil">Mi Perfil</a>
               </div>
             </li>
           </ul>
-          <form action="/search" method="get" class="d-flex my-2 my-lg-0">
-            <input  class="form-control me-sm-2" type="search" name="search" placeholder="Buscar Usuario">
-            <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Buscar</button>
+          <form action="/users/search" method="get" class="d-flex my-2 my-lg-0">
+            <input  class="form-control me-sm-2" type="search" name="search" placeholder="Email del usuario">
+            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
           </form>
         </div>
       </div>
@@ -37,56 +37,59 @@
 <main>
 
 
-   
-    
+   <div class="container">
     <table class="table">
-        <thead>
+      <thead>
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellido</th>
+          <th scope="col">Email</th>
+          <th scope="col">Rol</th>
+          <th scope="col">Credencial</th>
+          <th scope="col">Destino</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+       <% usuarios.forEach(({id, name, surname, email, rolId, nombre, rol, credencial,destino}) => { %>
           <tr>
-            <th scope="col">Nombre</th>
-            <th scope="col">Apellido</th>
-            <th scope="col">Email</th>
-            <th scope="col">Rol</th>
-            <th scope="col">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-         <% usuarios.forEach(({id, name, surname, email, rolId, nombre, rol}) => { %>
-            <tr>
-            <th scope="row"><%= name %></th>
-            <td><%= surname %></td>
-            <td><%= email%></td>
-            <td><%= rol.nombre%></td>
-            <td>
-              <div class="d-flex">
-                <form action="/users/rol/<%= usuarios.id %>" method="POST" class="row g-6">
-                  <input type="hidden" name="_method" value="PUT">
-                  <input type="hidden" name="userId" value="<%= id %>">
-                 
-                <div class="col-md-6">
-                  <label for="nuevo_rol" class="form-label">Nuevo rol:</label>
-                  <select name="nuevoRol" id="nuevoRol" class="form-select">
-                    <option value="" selected hidden>Seleccione...</option>
-                    <option value="1">Administrador</option>
-                    <option value="2">Editor</option>
-                    <option value="3">Invitado</option>
-                  </select>
-                </div>
-                
-                <div class="col-md-4 d-flex align-items-end">
-                  <button type="submit" class="btn btn-primary">Actualizar</button>
-                </div>
-                 
-              </form>
+          <th scope="row"><%= name %></th>
+          <td><%= surname %></td>
+          <td><%= email%></td>
+          <td><%= rol.nombre%></td>
+          <td><%= credencial? credencial : '-' %></td>
+          <td><%= destino ? destino.nombreDestino : '-' %></td>
+          <td>
+            <div class="d-flex">
+              <form action="/users/rol/<%= usuarios.id %>" method="POST" class="row g-6">
+                <input type="hidden" name="_method" value="PUT">
+                <input type="hidden" name="userId" value="<%= id %>">
+               
+              <div class="col-md-10">
+                <label for="nuevo_rol" class="form-label">Nuevo rol:</label>
+                <select name="nuevoRol" id="nuevoRol" class="form-select">
+                  <option value="" selected hidden>Seleccione...</option>
+                  <option value="1">SuperAdmin</option>
+                  <option value="2">Admin</option>
+                  <option value="3">Editor-Noticias</option>
+                  <option value="4">Editor-Licitaciones</option>
+                  <option value="5">Editor-Intranet</option>
+                  <option value="6">Visitante</option>
+                </select>
+                <button type="submit" class="btn btn-primary mt-1">Actualizar</button>
+              </div>               
+            </form>    
+            </div>
+      </td>
+        </tr>
+       <% }) %>
         
-                 
-              </div>
-        </td>
-          </tr>
-         <% }) %>
-          
-         
-        </tbody>
-      </table>
+       
+      </tbody>
+    </table>
+   </div>
+    
+    
 </main>
 
 

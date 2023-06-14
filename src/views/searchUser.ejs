@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('./partials/head')  %>
+         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+         <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">        
+          
+    <body style="background-image: url('/images/imagen\ productos\ vector-03.png'); background-size: cover;">
+  
+      <nav class="navbar navbar-expand-sm navbar-light bg-body-secondary">
+          <div class="container">
+          <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="collapsibleNavId">
+            <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+              <a class="nav-link active" href="/inicio" aria-current="page">Ir al Inicio<span class="visually-hidden"></a>
+              <a class="nav-link active" href="/users/dashboard" aria-current="page">Regresar<span class="visually-hidden"></a>
+              
+              <li class="nav-item dropdown">
+                  
+                  <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menú</a>
+                  <div class="dropdown-menu" aria-labelledby="dropdownId">
+                    <% if (locals.userLogin && locals.userLogin.rol === 1) { %>
+                      <a class="dropdown-item" href="/licitacion/publicaciones">Administrar Licitaciones</a>
+                  <% } %>
+                    
+                    <a class="dropdown-item" href="/users/logout">Cerrar Sesión</a>
+                    <a class="dropdown-item" href="/users/perfil">Mi Perfil</a>
+                 
+                  </div>
+                </li>
+              
+            
+            </ul>
+         <!--  <form action="/search" method="get" class="d-flex my-2 my-lg-0">
+            <input  class="form-control me-sm-2" type="search" name="search" placeholder="Buscar Libro">
+            <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Buscar</button>
+          </form> -->       
+          <a href="/"><img src="<%=/https:/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>" class="iconProfile" alt=""></a>
+        </div>
+      </div>
+    </nav><br>
+
+    <main>
+
+        <div class="row ms-3 me-3 justify-content-center">
+            <div class="col-12 col-md-6 col-lg-5">
+                <h4 class="text-center">Resultado de la busqueda:</h4>
+                <hr>
+
+
+                <% if (users.length != 0) { %>
+                 <% users.forEach(user => { %>
+                    <div class="card mb-3 justify-content-center" style="background-color: white; box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);">
+                        <div class="row g-0">
+                          <div class="col-md-4">
+                            <img id="userIconSearch" src="<%=/https:/.test(user.icon) ? user.icon : `/images/iconsProfile/${user.icon}` %>" class="img-fluid rounded-start" alt="...">
+                            <small class="text-center ms-4 text-muted">Rol: <%= user.rol.nombre %></small>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="card-body">
+                              <h5 class="card-title"><%= user.name %> <%= user.surname %></h5>
+                              <p class="card-text"><%= user.email %></p>
+                              <p class="card-text"><small class="text-muted">Destino: <%= user.destino? user.destino.nombreDestino : '-' %></small></p>
+                              <p class="card-text"><small class="text-muted">Credencial: <%= user.credencial? user.credencial : '-' %></small></p>
+                            </div>
+                            <div class="d-flex">
+                                <form action="/users/rolUser/<%= user.id %>?_method=PUT" method="POST" class="row g-6">
+                                  <input type="hidden" name="_method" value="PUT">
+                                  <input type="hidden" name="userId" value="<%= user.id %>">
+                                 
+                                <div class="col-md-12">
+                                  <label for="nuevo_rol" class="form-label">Nuevo rol:</label>
+                                  <select name="nuevoRol" id="nuevoRol" class="form-select">
+                                    <option value="" selected hidden>Seleccione...</option>
+                                    <option value="1">SuperAdmin</option>
+                                    <option value="2">Admin</option>
+                                    <option value="3">Editor-Noticias</option>
+                                    <option value="4">Editor-Licitaciones</option>
+                                    <option value="5">Editor-Intranet</option>
+                                    <option value="6">Visitante</option>
+                                  </select>
+                                  <button type="submit" class="btn btn-primary mt-1 mb-2">Actualizar rol de usuario</button>
+                                </div>               
+                              </form>    
+                              </div>                                  
+                          </div>
+                        </div>
+                      </div>                  
+                                           
+                 <% }) %>
+                <% } %>              
+            </div>          
+    </main>
+
+
+
+
+
+
+
+    <!-- BOOTSTRAP -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+<script>
+    const icon = document.getElementById('userIconSearch')
+    icon.addEventListener('error', () => {
+    icon.src = 'https://cdn-icons-png.flaticon.com/512/149/149071.png'
+ 
+})
+</script>
+</body>
+</html>

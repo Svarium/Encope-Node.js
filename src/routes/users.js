@@ -1,5 +1,5 @@
 var express = require('express');
-const { register, processLogin, processRegister, login, logout, perfil, dashboard, updateUser, editRol } = require('../controllers/userController');
+const { register, processLogin, processRegister, login, logout, perfil, dashboard, updateUser, editRol, searchUser } = require('../controllers/userController');
 const { uploadIconImage } = require('../middlewares/iconProfile');
 const registerValidator = require('../validations/registerValidator');
 const loginValidator = require('../validations/loginValidator');
@@ -32,6 +32,12 @@ router.put('/update/:id',uploadIconImage.single('icon'), updateUserValidator, up
 
 /* Editar Rol de usuario */
 router.post('/rol', editRol)
+router.put('/rolUser/:id', editRol)
+
+/* Buscar un usuario */
+
+router.get('/search', searchUser)
+
 
 
 
