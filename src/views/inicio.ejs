@@ -214,5 +214,12 @@
 
 <%- include('./partials/scripts') %> 
 
+<script>
+  const iconInicio = document.getElementById('iconInicio')
+  iconInicio.addEventListener('error', () => {
+    iconInicio.src='https://cdn-icons-png.flaticon.com/512/149/149071.png'
+  })
+</script>
+
 </body>
 </html>
