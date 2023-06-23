@@ -251,21 +251,24 @@ module.exports = {
         })
         .catch(error => console.log(error))
     },
-    editRol : (req,res) => {
-         /* return res.send(req.body) */
-  
-          db.Usuario.update({
-              rolId : req.body.nuevoRol
-          },
-          {
-              where : {id: req.body.userId}
-          })
-          .then(user => {
-              return res.redirect('/users/dashboard')
-          })
-          .catch(error => console.log(error))         
-      },
+    editRol : async (req,res) => {
 
+
+        try {
+
+            const user = await db.Usuario.findByPk(req.body.userId)
+
+            user.rolId = req.body.nuevoRol
+
+            user.save()
+            return res.redirect('/users/dashboard')
+         
+        } catch (error) {
+            console.log(error);
+        }
+  
+         
+    },                       
       searchUser : (req,res) => {
         const query = req.query.search;
         db.Usuario.findAll({
