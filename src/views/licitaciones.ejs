@@ -79,7 +79,7 @@
         <h6 id="publicas">Licitaciones Publicas</h6>
         <thead>
             <tr>
-                <th>Tipo</th>
+                <th>Nombre</th>
                 <th>Objetivo</th>
                 <th>fecha de subida</th>
                 <th>Expediente</th>
@@ -91,7 +91,7 @@
           <% publicaciones.forEach(publicacion => { %>
             <% if (publicacion.tipo.nombre === "Licitación Pública") { %>
             <tr>
-                <td data-label="Tipo"><%= publicacion.titulo %></td>
+                <td data-label="Nombre"><%= publicacion.titulo %></td>
                 <td data-label="detalle"><%= publicacion.objetivo %></td>
                 <td data-label="fecha"><%= publicacion.createdAt %></td>
                 <td data-label="Expediente"><%= publicacion.expediente %></td>
@@ -141,7 +141,7 @@
          <h6 id="privadas">Licitaciones Privadas</h6>
          <thead>
              <tr>
-                 <th>Tipo</th>
+                 <th>Nombre</th>
                  <th>Objetivo</th>
                  <th>fecha de subida</th>
                  <th>Expediente</th>
@@ -152,7 +152,7 @@
           <% publicaciones.forEach(publicacion => { %>
             <% if (publicacion.tipo.nombre === "Licitación Privada") { %>
              <tr>
-                 <td data-label="Tipo"><%= publicacion.tipo.nombre %></td>
+                 <td data-label="Nombre"><%= publicacion.titulo %></td>
                  <td data-label="detalle"><%= publicacion.objetivo %></td>
                  <td data-label="fecha"><%= publicacion.createdAt %></td>
                  <td data-label="Expediente"><%= publicacion.expediente %></td>
@@ -203,7 +203,7 @@
          <h6 id="directa">Contratación Directa</h6>
          <thead>
              <tr>
-                 <th>Tipo</th>
+                 <th>Nombre</th>
                  <th>Objetivo</th>
                  <th>fecha de subida</th>
                  <th>Expediente</th>
@@ -214,7 +214,7 @@
           <% publicaciones.forEach(publicacion => { %>
             <% if (publicacion.tipo.nombre === "Contratación Directa") { %>
              <tr>
-                 <td data-label="Tipo"><%= publicacion.tipo.nombre %></td>
+                 <td data-label="Nombre"><%= publicacion.titulo %></td>
                  <td data-label="detalle"><%= publicacion.objetivo %></td>
                  <td data-label="fecha"><%= publicacion.createdAt %></td>
                  <td data-label="Expediente"><%= publicacion.expediente %></td>
@@ -263,7 +263,7 @@
          <h6 id="adjudicacion">Adjudicaciones</h6>
          <thead>
              <tr>
-                 <th>Tipo</th>
+                 <th>Nombre</th>
                  <th>Objetivo</th>
                  <th>fecha de subida</th>
                  <th>Expediente</th>
@@ -274,7 +274,7 @@
           <% publicaciones.forEach(publicacion => { %>
             <% if (publicacion.tipo.nombre === "Adjudicación") { %>
              <tr>
-                 <td data-label="Tipo"><%= publicacion.tipo.nombre %></td>
+                 <td data-label="Nombre"><%= publicacion.titulo %></td>
                  <td data-label="detalle"><%= publicacion.objetivo %></td>
                  <td data-label="fecha"><%= publicacion.createdAt %></td>
                  <td data-label="Expediente"><%= publicacion.expediente %></td>
@@ -324,7 +324,7 @@
          <h6 id="dictamen">Dictamenes de Evaluación</h6>
          <thead>
              <tr>
-                 <th>Tipo</th>
+                 <th>Nombre</th>
                  <th>Objetivo</th>
                  <th>fecha de subida</th>
                  <th>Expediente</th>
@@ -335,7 +335,7 @@
           <% publicaciones.forEach(publicacion => { %>
             <% if (publicacion.tipo.nombre === "Dictamen de Evaluación") { %>
              <tr>
-                 <td data-label="Tipo"><%= publicacion.tipo.nombre %></td>
+                 <td data-label="Nombre"><%= publicacion.titulo %></td>
                  <td data-label="detalle"><%= publicacion.objetivo %></td>
                  <td data-label="fecha"><%= publicacion.createdAt %></td>
                  <td data-label="Expediente"><%= publicacion.expediente %></td>
@@ -385,7 +385,7 @@
          <h6 id="circular">Circular Modificatoria</h6>
          <thead>
              <tr>
-                 <th>Tipo</th>
+                 <th>Nombre</th>
                  <th>Objetivo</th>
                  <th>fecha de subida</th>
                  <th>Expediente</th>
@@ -396,7 +396,7 @@
           <% publicaciones.forEach(publicacion => { %>
             <% if (publicacion.tipo.nombre === "Circular Modificatoria") { %>
              <tr>
-                 <td data-label="Tipo"><%= publicacion.tipo.nombre %></td>
+                 <td data-label="Nombre"><%= publicacion.titulo %></td>
                  <td data-label="detalle"><%= publicacion.objetivo %></td>
                  <td data-label="fecha"><%= publicacion.createdAt %></td>
                  <td data-label="Expediente"><%= publicacion.expediente %></td>
@@ -445,7 +445,7 @@
          <h6 id="compulsa">Compulsa Urgente</h6>
          <thead>
              <tr>
-                 <th>Tipo</th>
+                 <th>Nombre</th>
                  <th>Objetivo</th>
                  <th>fecha de subida</th>
                  <th>Expediente</th>
@@ -456,7 +456,7 @@
              <tr>
               <% publicaciones.forEach(publicacion => { %>
                 <% if (publicacion.tipo.nombre === "Compulsa Urgente") { %>
-                 <td data-label="Tipo"><%= publicacion.tipo.nombre %></td>
+                 <td data-label="Nombre"><%= publicacion.titulo %></td>
                  <td data-label="detalle"><%= publicacion.objetivo %></td>
                  <td data-label="fecha"><%= publicacion.createdAt %></td>
                  <td data-label="Expediente"><%= publicacion.expediente %></td>
