@@ -20,8 +20,7 @@ const paintUsers = (users) => {
     console.log(users);
     userTable.innerHTML = "";
     users.forEach((user)=> {
-        const template = `
-        
+        const template = `        
           <tr>
           <th scope="row">${user.name}</th>
           <td>${user.surname}</td>
@@ -31,7 +30,7 @@ const paintUsers = (users) => {
           <td>${user.destino ? user.destino.nombreDestino : '-'}</td>
           <td>
             <div class="d-flex">
-              <form action="/users/rolUser/${user.id} ?_method=PUT" method="POST" class="row g-6">
+              <form action="/users/rolUser/${user.id} ?_method=PUT" method="POST" id="formRolUser" class="row g-6">
                 <input type="hidden" name="_method" value="PUT">
                 <input type="hidden" name="userId" value="${user.id}">
                
@@ -54,9 +53,10 @@ const paintUsers = (users) => {
         </tr>       
       
         `;
-        userTable.innerHTML += template
+        userTable.innerHTML += template       
     });
 }
+
 
 const getPage = async (page) => {
     pageActive = page
@@ -106,6 +106,13 @@ window.addEventListener("load", async () => {
       paintUsers(users)    
       paintItemsPage({numberPages: pages, itemActive: currentPage})  
       statusPrevAndNext({currentPage, pages})
+      $('#formRolUser').addEventListener('submit', function(event) {
+        if (event.submitter && event.submitter.type === 'submit') {
+            location.reload
+        }
+      })
+     
+      
 
     } catch (error) {
         console.log(error);
