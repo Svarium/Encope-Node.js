@@ -24,7 +24,7 @@
           <hr class="ms-4">
         </div>
         <div class="col-xs-12 col-md-6 col-lg-2">
-          <a href="#publicas">
+          <a href="#publicas" id="licitacionPublica">
             <img src="/images/iconos/Lic publica.png" width="200px" alt="">
           </a>
         </div>
@@ -77,6 +77,9 @@
   <div class="contenedor">
     <table class="table">
         <h6 id="publicas">Licitaciones Publicas</h6>
+        <div class="d-flex justify-content-center align-items-center">
+          <%- include('./partials/tablaPaginateLicitacion')  %>
+      </div>
         <thead>
             <tr>
                 <th>Nombre</th>
@@ -87,48 +90,8 @@
             </tr>
         </thead>
      
-        <tbody>
-          <% publicaciones.forEach(publicacion => { %>
-            <% if (publicacion.tipo.nombre === "Licitación Pública") { %>
-            <tr>
-                <td data-label="Nombre"><%= publicacion.titulo %></td>
-                <td data-label="detalle"><%= publicacion.objetivo %></td>
-                <td data-label="fecha"><%= publicacion.createdAt %></td>
-                <td data-label="Expediente"><%= publicacion.expediente %></td>
-                <td data-label="descargar" class="boton-descarga"><a href="/images/licitaciones/<%= publicacion.archivo %>" download="licitacionPublica"> <i class="fa-sharp fa-solid fa-cloud-arrow-down"></i></a><br><br>
-
-                  <% if (locals.userLogin && (locals.userLogin.rol === 1 || locals.userLogin.rol === 2) ) { %>
-                    <a href="/licitacion/editar/<%= publicacion.id %>"><i class="fas fa-edit"></i></a><br><br>
-                  <!--Boton para abrir el modal-->
-                
-                <div class="boton-modal detalle-comprar">
-                  <label for="btn-modal">
-                    <i class="fas fa-trash-alt"></i>
-                  </label>
-              </div>
-              <!--Fin de Boton-->
-                  <% } %>
-                 
-                </td>
-            </tr>   
-           <!--Ventana Modal para consultar si queire elminar producto-->
-       <input type="checkbox" id="btn-modal">
-       <div class="container-modal">
-           <div class="content-modal">
-               <h2>¡ATENCION!</h2>
-               <p>¿Estas seguro de que deseas eliminar esta publicación?</p>
-               <div class="btn-cerrar">
-                 <form action="/licitacion/eliminar/<%= publicacion.id %>?_method=DELETE" method="POST" >
-                   <button type="submit">ELIMINAR <i class="fa-solid fa-trash"></i></button>
-                  </form> 
-                   <label for="btn-modal">CANCELAR</i></label>
-               </div>
-           </div>
-           <label for="btn-modal" class="cerrar-modal"></label>
-       </div>
-      <!--Fin de Ventana Modal-->  
-            <% } %>
-            <% }) %>   
+        <tbody id="publicasTable">
+         
         </tbody>
     </table>
   </div>
@@ -514,6 +477,8 @@
   <!-- SCRIPTS DE EFECTOS/BOOTSTRAP5 -->
 
 <%- include('./partials/scripts') %> 
+
+<script src="/js/paginateLicitaciones.js"></script>
 
 </body>
 </html>

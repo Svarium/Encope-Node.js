@@ -15,7 +15,7 @@ const checkUserEditor = require('../middlewares/checkUserEditor');
 
 // listar publicaciones
 
-router.get('/listar',checkUserEditor, list)
+router.get('/listar', list)
 
 // ver todas en el dashboard
 

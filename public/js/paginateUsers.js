@@ -126,15 +126,3 @@ btnNext.addEventListener('click', async () => {
     }
 })
 
-btnPrev.addEventListener('click', async () => {
-    try {
-        const {
-            data:{ pages, currentPage, users}} = await getUsers({page : --pageActive});
-                paintLibros(users)    
-                paintItemsPage({numberPages: pages, itemActive: currentPage})  
-                statusPrevAndNext({currentPage, pages})
-
-    } catch (error) {
-        console.log(error);
-    }
-})

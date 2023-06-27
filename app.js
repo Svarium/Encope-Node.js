@@ -26,6 +26,7 @@ const licitacionRouter = require('./src/routes/licitacion');
 
 //APIS
 const apiUsersRouter = require('./src/routes/apis/apiUsers');
+const apiLicitacionRouter = require('./src/routes/apis/apiLicitaciones')
 
 
 
@@ -61,6 +62,7 @@ app.use('/auth', authRouter)
 
 //APIS
 app.use('/api/users', apiUsersRouter)
+app.use('/api/licitacion', apiLicitacionRouter)
 
 
 // catch 404 and forward to error handler
