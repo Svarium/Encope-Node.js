@@ -8,7 +8,7 @@ module.exports = {
     allLicitacion : async (req,res) => {
 
         try {
-            const {withPagination = "true", page=1, limit = 5} = req.query
+            const {withPagination = "true", page=1, limit = 10} = req.query
             const {licitacion, count, pages} = await getAllLicitaciones(req,{
                 withPagination,
                 page,
@@ -35,7 +35,7 @@ module.exports = {
                 meta:{
                     status:200,
                     total:licitacion.count,
-                    url:"api/allUsers"
+                    
                 },
             });
 

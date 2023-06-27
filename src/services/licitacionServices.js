@@ -4,7 +4,7 @@ const db = require('../database/models');
 
 module.exports = {
 
-getAllLicitaciones : async(req, {withPagination = "false", page=1, limit=5} = {}) => {
+getAllLicitaciones : async(req, {withPagination = "false", page= 1, limit=10} = {}) => {
 
     try {  
             
@@ -17,14 +17,15 @@ getAllLicitaciones : async(req, {withPagination = "false", page=1, limit=5} = {}
         }
 
         if(withPagination === "true"){
-            options={
+                
+            options= {
                 ...options,
                 page,
-                paginate:limit
+                paginate: limit
             }
 
 
-             const {docs, pages, total} = await db.Publicaciones.paginate(options);
+            const {docs, pages, total} = await db.Publicaciones.paginate(options);
 
              return {
                 licitacion:docs,

@@ -12,457 +12,50 @@
 
 
        <!-- SECCION LICITACIONES -->
-
-       <div class="container-fluid">
-        <div class="row mx-auto p-5 text-black">          
-        <div class="col-xs-12 col-md-6 col-lg-5">
-          <p class="ms-4 h3 titulo-lic ">Licitaciones</p>
-          <hr class="ms-4">
-          <div class="ms-4 mb-3">
-            <p class="text-secondary text-start texto-descrip-lic">Con el fin de promover la transparencia podes acceder a compras y contrataciones y demás gestiones comerciales que realiza el Ente de Cooperación Técnica y Financiera del Servicio Penitenciario Federal.</p>
+       <div style="background-color:#829529;">
+        <div class="container">
+          <div class="row justify-content-between align-items-center"> <!-- Edit the row classes to align flex items and position content on the row -->
+            <div class="col-xs-12 col-md-6 col-lg-6">
+              <p class="ms-4 h3 titulo-lic text-white">Licitaciones</p>
+              <hr class="ms-4">
+              <div class="ms-4 mb-3">
+                <p class="text-start texto-descrip-lic text-white">Con el fin de promover la transparencia podes acceder a compras y contrataciones y demás gestiones comerciales que realiza el Ente de Cooperación Técnica y Financiera del Servicio Penitenciario Federal.</p>
+              </div>
+              <hr class="ms-4">
+            </div>
+            <div class="col-xs-12 col-md-6 col-lg-6 d-flex justify-content-center"> <!-- Edit the column classes to align flex items and position content on the column -->
+              <a href="./publicacion de licitaciones/PLAN DE COMPRAS-2023.pdf" download="PLAN DE COMPRAS-2023.pdf">
+                <img src="/images/iconos/4.png" width="200px" alt="">
+              </a>
+            </div>
           </div>
-          <hr class="ms-4">
         </div>
-        <div class="col-xs-12 col-md-6 col-lg-2">
-          <a href="#publicas" id="licitacionPublica">
-            <img src="/images/iconos/Lic publica.png" width="200px" alt="">
-          </a>
-        </div>
-        <div class="col-xs-12 col-md-6 col-lg-2">
-          <a href="#privadas">
-            <img src="/images/iconos/Lic privada.png" width="200px" alt="">
-          </a>
-        </div>
-        <div class="col-xs-12 col-md-6 col-lg-2">
-          <a href="#directa">
-            <img src="/images/iconos/Directa.png" width="200px" alt="">
-          </a>
-        </div>
-        </div>
-    </div>
-
-    <div style="background-color:#829529;">
-    <div class="container">
-      <div class="row ms-2  p-5">          
-      <div class="col-xs-12 col-md-6 col-lg-3">
-        <a href="./publicacion de licitaciones/PLAN DE COMPRAS-2023.pdf" download="PLAN DE COMPRAS-2023.pdf">     <!-- ESTA LINEA ES PARA DESCARGAR ARCHIVOS DESDE EL LINK -->
-          <img src="/images/iconos/4.png" width="200px" alt="" >
-        </a>
       </div>
-      <div class="col-xs-12 col-md-6 col-lg-3">
-        <a href="#adjudicacion">
-          <img src="/images/iconos/2.png" width="200px" alt="" >
-        </a>
-      </div>
-      <div class="col-xs-12 col-md-6 col-lg-3">
-        <a href="#dictamen">
-          <img src="/images/iconos/3.png" width="200px" alt="" >
-        </a>
-      </div>
-      <div class="col-xs-12 col-md-6 col-lg-3">
-        <a href="#circular">
-          <img src="/images/iconos/1.png" width="200px" alt="" >
-        </a>
-      </div>
-      </div>
-  </div>
-</div>
 
 <!-- SECCION TABLAS DE LICITACIONES -->
 
-<!-- LICITACIONES PUBLICAS -->
 
-
-  
-  <div class="contenedor">
+  <div class="contenedor mt-5">
     <table class="table">
-        <h6 id="publicas">Licitaciones Publicas</h6>
         <div class="d-flex justify-content-center align-items-center">
           <%- include('./partials/tablaPaginateLicitacion')  %>
       </div>
         <thead>
             <tr>
+               <th>Tipo</th>
                 <th>Nombre</th>
                 <th>Objetivo</th>
                 <th>fecha de subida</th>
-                <th>Expediente</th>
                 <th>Acciones</th>
             </tr>
         </thead>
      
-        <tbody id="publicasTable">
+        <tbody id="licitacionTable">
          
         </tbody>
     </table>
   </div>
     
-
-<!-- LICITACIONES PRIVADAS -->
-   
-   <div class="contenedor">
-     <table class="table">
-         <h6 id="privadas">Licitaciones Privadas</h6>
-         <thead>
-             <tr>
-                 <th>Nombre</th>
-                 <th>Objetivo</th>
-                 <th>fecha de subida</th>
-                 <th>Expediente</th>
-                 <th>Acciones</th>
-             </tr>
-         </thead>
-         <tbody>
-          <% publicaciones.forEach(publicacion => { %>
-            <% if (publicacion.tipo.nombre === "Licitación Privada") { %>
-             <tr>
-                 <td data-label="Nombre"><%= publicacion.titulo %></td>
-                 <td data-label="detalle"><%= publicacion.objetivo %></td>
-                 <td data-label="fecha"><%= publicacion.createdAt %></td>
-                 <td data-label="Expediente"><%= publicacion.expediente %></td>
-                 <td data-label="descargar" class="boton-descarga"><a href="/images/licitaciones/<%= publicacion.archivo %>" download="licitacionPublica"> <i class="fa-sharp fa-solid fa-cloud-arrow-down"></i></a><br><br>
-                  <% if (locals.userLogin && (locals.userLogin.rol === 1 || locals.userLogin.rol === 2) ) { %>
-                    <a href="/licitacion/editar/<%= publicacion.id %>"><i class="fas fa-edit"></i></a><br><br>
-                  <!--Boton para abrir el modal-->
-                
-                <div class="boton-modal detalle-comprar">
-                  <label for="btn-modal">
-                    <i class="fas fa-trash-alt"></i>
-                  </label>
-              </div>
-              <!--Fin de Boton-->
-                  <% } %>
-                 
-                </td>
-            </tr>   
-           <!--Ventana Modal para consultar si queire elminar producto-->
-       <input type="checkbox" id="btn-modal">
-       <div class="container-modal">
-           <div class="content-modal">
-               <h2>¡ATENCION!</h2>
-               <p>¿Estas seguro de que deseas eliminar esta publicación?</p>
-               <div class="btn-cerrar">
-                 <form action="/licitacion/eliminar/<%= publicacion.id %>?_method=DELETE" method="POST" >
-                   <button type="submit">ELIMINAR <i class="fa-solid fa-trash"></i></button>
-                  </form> 
-                   <label for="btn-modal">CANCELAR</i></label>
-               </div>
-           </div>
-           <label for="btn-modal" class="cerrar-modal"></label>
-       </div>
-      <!--Fin de Ventana Modal-->  
-             <% } %>
-             <% }) %>     
-         </tbody>
-     </table>
-   </div>
- 
-
-<!-- Contratación directa -->
-
-
-   
-   <div class="contenedor">
-     <table class="table">
-         <h6 id="directa">Contratación Directa</h6>
-         <thead>
-             <tr>
-                 <th>Nombre</th>
-                 <th>Objetivo</th>
-                 <th>fecha de subida</th>
-                 <th>Expediente</th>
-                 <th>Acciones</th>
-             </tr>
-         </thead>
-         <tbody>
-          <% publicaciones.forEach(publicacion => { %>
-            <% if (publicacion.tipo.nombre === "Contratación Directa") { %>
-             <tr>
-                 <td data-label="Nombre"><%= publicacion.titulo %></td>
-                 <td data-label="detalle"><%= publicacion.objetivo %></td>
-                 <td data-label="fecha"><%= publicacion.createdAt %></td>
-                 <td data-label="Expediente"><%= publicacion.expediente %></td>
-                 <td data-label="descargar" class="boton-descarga"><a href="/images/licitaciones/<%= publicacion.archivo %>" download="licitacionPublica"> <i class="fa-sharp fa-solid fa-cloud-arrow-down"></i></a><br><br>
-                  <% if (locals.userLogin && (locals.userLogin.rol === 1 || locals.userLogin.rol === 2) ) { %>
-                    <a href="/licitacion/editar/<%= publicacion.id %>"><i class="fas fa-edit"></i></a><br><br>
-                  <!--Boton para abrir el modal-->
-                
-                <div class="boton-modal detalle-comprar">
-                  <label for="btn-modal">
-                    <i class="fas fa-trash-alt"></i>
-                  </label>
-              </div>
-              <!--Fin de Boton-->
-                  <% } %>
-                 
-                </td>
-            </tr>   
-           <!--Ventana Modal para consultar si queire elminar producto-->
-       <input type="checkbox" id="btn-modal">
-       <div class="container-modal">
-           <div class="content-modal">
-               <h2>¡ATENCION!</h2>
-               <p>¿Estas seguro de que deseas eliminar esta publicación?</p>
-               <div class="btn-cerrar">
-                 <form action="/licitacion/eliminar/<%= publicacion.id %>?_method=DELETE" method="POST" >
-                   <button type="submit">ELIMINAR <i class="fa-solid fa-trash"></i></button>
-                  </form> 
-                   <label for="btn-modal">CANCELAR</i></label>
-               </div>
-           </div>
-           <label for="btn-modal" class="cerrar-modal"></label>
-       </div>
-      <!--Fin de Ventana Modal-->  
-             <% } %>
-             <% }) %>       
-         </tbody>
-     </table>
-   </div>
-
-
-<!-- Adjudicaciones -->
-   
-   <div class="contenedor">
-     <table class="table">
-         <h6 id="adjudicacion">Adjudicaciones</h6>
-         <thead>
-             <tr>
-                 <th>Nombre</th>
-                 <th>Objetivo</th>
-                 <th>fecha de subida</th>
-                 <th>Expediente</th>
-                 <th>Acciones</th>
-             </tr>
-         </thead>
-         <tbody>
-          <% publicaciones.forEach(publicacion => { %>
-            <% if (publicacion.tipo.nombre === "Adjudicación") { %>
-             <tr>
-                 <td data-label="Nombre"><%= publicacion.titulo %></td>
-                 <td data-label="detalle"><%= publicacion.objetivo %></td>
-                 <td data-label="fecha"><%= publicacion.createdAt %></td>
-                 <td data-label="Expediente"><%= publicacion.expediente %></td>
-                 <td data-label="descargar" class="boton-descarga"><a href="/images/licitaciones/<%= publicacion.archivo %>" download="licitacionPublica"> <i class="fa-sharp fa-solid fa-cloud-arrow-down"></i></a><br><br>
-                  <% if (locals.userLogin && (locals.userLogin.rol === 1 || locals.userLogin.rol === 2) ) { %>
-                    <a href="/licitacion/editar/<%= publicacion.id %>"><i class="fas fa-edit"></i></a><br><br>
-                  <!--Boton para abrir el modal-->
-                
-                <div class="boton-modal detalle-comprar">
-                  <label for="btn-modal">
-                    <i class="fas fa-trash-alt"></i>
-                  </label>
-              </div>
-              <!--Fin de Boton-->
-                  <% } %>
-                 
-                </td>
-            </tr>   
-           <!--Ventana Modal para consultar si queire elminar producto-->
-       <input type="checkbox" id="btn-modal">
-       <div class="container-modal">
-           <div class="content-modal">
-               <h2>¡ATENCION!</h2>
-               <p>¿Estas seguro de que deseas eliminar esta publicación?</p>
-               <div class="btn-cerrar">
-                 <form action="/licitacion/eliminar/<%= publicacion.id %>?_method=DELETE" method="POST" >
-                   <button type="submit">ELIMINAR <i class="fa-solid fa-trash"></i></button>
-                  </form> 
-                   <label for="btn-modal">CANCELAR</i></label>
-               </div>
-           </div>
-           <label for="btn-modal" class="cerrar-modal"></label>
-       </div>
-      <!--Fin de Ventana Modal-->  
-             <% } %>
-             <% }) %>         
-         </tbody>
-     </table>
-   </div>
-
-
- <!-- Dictamenes -->
-
-   
-   <div class="contenedor">
-     <table class="table">
-         <h6 id="dictamen">Dictamenes de Evaluación</h6>
-         <thead>
-             <tr>
-                 <th>Nombre</th>
-                 <th>Objetivo</th>
-                 <th>fecha de subida</th>
-                 <th>Expediente</th>
-                 <th>Acciones</th>
-             </tr>
-         </thead>
-         <tbody>
-          <% publicaciones.forEach(publicacion => { %>
-            <% if (publicacion.tipo.nombre === "Dictamen de Evaluación") { %>
-             <tr>
-                 <td data-label="Nombre"><%= publicacion.titulo %></td>
-                 <td data-label="detalle"><%= publicacion.objetivo %></td>
-                 <td data-label="fecha"><%= publicacion.createdAt %></td>
-                 <td data-label="Expediente"><%= publicacion.expediente %></td>
-                 <td data-label="descargar" class="boton-descarga"><a href="/images/licitaciones/<%= publicacion.archivo %>" download="licitacionPublica"> <i class="fa-sharp fa-solid fa-cloud-arrow-down"></i></a><br><br>
-                  <% if (locals.userLogin && (locals.userLogin.rol === 1 || locals.userLogin.rol === 2) ) { %>
-                    <a href="/licitacion/editar/<%= publicacion.id %>"><i class="fas fa-edit"></i></a><br><br>
-                  <!--Boton para abrir el modal-->
-                
-                <div class="boton-modal detalle-comprar">
-                  <label for="btn-modal">
-                    <i class="fas fa-trash-alt"></i>
-                  </label>
-              </div>
-              <!--Fin de Boton-->
-                  <% } %>
-                 
-                </td>
-            </tr>   
-           <!--Ventana Modal para consultar si queire elminar producto-->
-       <input type="checkbox" id="btn-modal">
-       <div class="container-modal">
-           <div class="content-modal">
-               <h2>¡ATENCION!</h2>
-               <p>¿Estas seguro de que deseas eliminar esta publicación?</p>
-               <div class="btn-cerrar">
-                 <form action="/licitacion/eliminar/<%= publicacion.id %>?_method=DELETE" method="POST" >
-                   <button type="submit">ELIMINAR <i class="fa-solid fa-trash"></i></button>
-                  </form> 
-                   <label for="btn-modal">CANCELAR</i></label>
-               </div>
-           </div>
-           <label for="btn-modal" class="cerrar-modal"></label>
-       </div>
-      <!--Fin de Ventana Modal-->  
-             <% } %>
-             <% }) %>      
-         </tbody>
-     </table>
-   </div>
-
-
- <!-- Circulares -->
-
-   
-   <div class="contenedor">
-     <table class="table">
-         <h6 id="circular">Circular Modificatoria</h6>
-         <thead>
-             <tr>
-                 <th>Nombre</th>
-                 <th>Objetivo</th>
-                 <th>fecha de subida</th>
-                 <th>Expediente</th>
-                 <th>Acciones</th>
-             </tr>
-         </thead>
-         <tbody>
-          <% publicaciones.forEach(publicacion => { %>
-            <% if (publicacion.tipo.nombre === "Circular Modificatoria") { %>
-             <tr>
-                 <td data-label="Nombre"><%= publicacion.titulo %></td>
-                 <td data-label="detalle"><%= publicacion.objetivo %></td>
-                 <td data-label="fecha"><%= publicacion.createdAt %></td>
-                 <td data-label="Expediente"><%= publicacion.expediente %></td>
-                 <td data-label="descargar" class="boton-descarga"><a href="/images/licitaciones/<%= publicacion.archivo %>" download="licitacionPublica"> <i class="fa-sharp fa-solid fa-cloud-arrow-down"></i></a><br><br>
-                  <% if (locals.userLogin && (locals.userLogin.rol === 1 || locals.userLogin.rol === 2) ) { %>
-                    <a href="/licitacion/editar/<%= publicacion.id %>"><i class="fas fa-edit"></i></a><br><br>
-                  <!--Boton para abrir el modal-->
-                
-                <div class="boton-modal detalle-comprar">
-                  <label for="btn-modal">
-                    <i class="fas fa-trash-alt"></i>
-                  </label>
-              </div>
-              <!--Fin de Boton-->
-                  <% } %>
-                 
-                </td>
-            </tr>   
-           <!--Ventana Modal para consultar si queire elminar producto-->
-       <input type="checkbox" id="btn-modal">
-       <div class="container-modal">
-           <div class="content-modal">
-               <h2>¡ATENCION!</h2>
-               <p>¿Estas seguro de que deseas eliminar esta publicación?</p>
-               <div class="btn-cerrar">
-                 <form action="/licitacion/eliminar/<%= publicacion.id %>?_method=DELETE" method="POST" >
-                   <button type="submit">ELIMINAR <i class="fa-solid fa-trash"></i></button>
-                  </form> 
-                   <label for="btn-modal">CANCELAR</i></label>
-               </div>
-           </div>
-           <label for="btn-modal" class="cerrar-modal"></label>
-       </div>
-      <!--Fin de Ventana Modal-->  
-             <% } %>
-             <% }) %>
-         </tbody>
-     </table>
-   </div>
-
-
- <!-- Compulsa  -->
-   
-   <div class="contenedor">
-     <table class="table">
-         <h6 id="compulsa">Compulsa Urgente</h6>
-         <thead>
-             <tr>
-                 <th>Nombre</th>
-                 <th>Objetivo</th>
-                 <th>fecha de subida</th>
-                 <th>Expediente</th>
-                 <th>Acciones</th>
-             </tr>
-         </thead>
-         <tbody>
-             <tr>
-              <% publicaciones.forEach(publicacion => { %>
-                <% if (publicacion.tipo.nombre === "Compulsa Urgente") { %>
-                 <td data-label="Nombre"><%= publicacion.titulo %></td>
-                 <td data-label="detalle"><%= publicacion.objetivo %></td>
-                 <td data-label="fecha"><%= publicacion.createdAt %></td>
-                 <td data-label="Expediente"><%= publicacion.expediente %></td>
-                 <td data-label="descargar" class="boton-descarga"><a href="/images/licitaciones/<%= publicacion.archivo %>" download="licitacionPublica"> <i class="fa-sharp fa-solid fa-cloud-arrow-down"></i></a><br><br>
-                  <% if (locals.userLogin && (locals.userLogin.rol === 1 || locals.userLogin.rol === 2) ) { %>
-                    <a href="/licitacion/editar/<%= publicacion.id %>"><i class="fas fa-edit"></i></a><br><br>
-                  <!--Boton para abrir el modal-->
-                
-                <div class="boton-modal detalle-comprar">
-                  <label for="btn-modal">
-                    <i class="fas fa-trash-alt"></i>
-                  </label>
-              </div>
-              <!--Fin de Boton-->
-                  <% } %>
-                 
-                </td>
-            </tr>   
-           <!--Ventana Modal para consultar si queire elminar producto-->
-       <input type="checkbox" id="btn-modal">
-       <div class="container-modal">
-           <div class="content-modal">
-               <h2>¡ATENCION!</h2>
-               <p>¿Estas seguro de que deseas eliminar esta publicación?</p>
-               <div class="btn-cerrar">
-                 <form action="/licitacion/eliminar/<%= publicacion.id %>?_method=DELETE" method="POST" >
-                   <button type="submit">ELIMINAR <i class="fa-solid fa-trash"></i></button>
-                  </form> 
-                   <label for="btn-modal">CANCELAR</i></label>
-               </div>
-           </div>
-           <label for="btn-modal" class="cerrar-modal"></label>
-       </div>
-      <!--Fin de Ventana Modal-->  
-             <% } %>
-             <% }) %>      
-         </tbody>
-     </table>
-   </div>
-
-
-
-
 <!--LOGOS COLABORADORES-->
 
 <%- include('./partials/colab') %> 
