@@ -9,7 +9,7 @@ const botonPublicas = $('#licitacionPublica')
 
 let pageActive = 1;
 
-const apiGetLicitacion = "http://localhost:3000/api/licitacion";
+const apiGetLicitacion = "https://encope.wnpower.host/api/licitacion";
 const getLicitacion = ({page=1} = {}) => {
 
     licitacion = fetch(`${apiGetLicitacion}?page=${page}`).then((res)=> 
