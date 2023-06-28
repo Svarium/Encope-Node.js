@@ -48,6 +48,22 @@ getAllLicitaciones : async(req, {withPagination = "false", page= 1, limit=10} = 
             message:error.message,
         }
     }
+},
+
+destroyLicitacion : async (id) => {
+    try {
+        const licitacionDestroy = await db.Publicaciones.destroy({
+            where:{id:id},
+            force:true
+        })
+        return licitacionDestroy
+    } catch (error) {
+        console.log(error);
+        throw{
+            status:500,
+            message:error.message,
+        }        
+    }
 }
 
 

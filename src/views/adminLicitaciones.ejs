@@ -4,8 +4,8 @@
          <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-LlzyU/VBnkpiyLYMNU9dyB/szvDp50cD31U5Hp/3YqSqcItUyFDZdU6P25mJv4DxQv1oEfuULbRJwMu1xZbsCg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<body style="background-image: url('/images/imagen\ productos\ vector-03.png'); background-size: cover;">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-ZAiz2sTdefijRTCzQNveG5S+yzB9YwYyz6gyZpOp3Qz+VHPDODz3OqmfOVOR9sDG" crossorigin="anonymous">
+
   
     <nav class="navbar navbar-expand-sm navbar-light bg-body-secondary">
         <div class="container">
@@ -44,6 +44,7 @@
 <main>
 
   <div class="contenedor">
+    <%- include('./partials/tablaPaginateAdminLicitacion')  %>
     <table class="table">
         <h6 id="publicas">Todas las Publicaciones</h6>
         <thead>
@@ -57,52 +58,30 @@
             </tr>
         </thead>
      
-        <tbody>
-          <% publicaciones.forEach(publicacion => { %>
+        <tbody id="">
           
-            <tr>
-                <td data-label="Tipo"><%= publicacion.tipo.nombre %></td>
-                <td data-label="Nombre"><%= publicacion.titulo %></td>
-                <td data-label="detalle"><%= publicacion.objetivo %></td>
-                <td data-label="fecha"><%= publicacion.createdAt %></td>
-                <td data-label="Expediente"><%= publicacion.expediente %></td>
-                <td data-label="Acciones" class="boton-descarga"><a href="/images/licitaciones/<%= publicacion.archivo %>" download="licitacionPublica" class="btn btn-primary">Archivo</a><br><br>
-
-                  <% if (locals.userLogin && (locals.userLogin.rol === 1 || locals.userLogin.rol === 2) ) { %>
-                    <a href="/licitacion/editar/<%= publicacion.id %>" class="btn btn-success">Editar</a><br><br>
-                  <!--Boton para abrir el modal-->
-                
-                <div class="boton-modal detalle-comprar">
-                  <label for="btn-modal" style="background-color: rgb(199, 54, 66);">
-                    Borrar
-                  </label>
-              </div>
-              <!--Fin de Boton-->
-                  
-                 
-                </td>
-            </tr>   
-           <!--Ventana Modal para consultar si queire elminar producto-->
-       <input type="checkbox" id="btn-modal">
-       <div class="container-modal">
-           <div class="content-modal">
-               <h2>¡ATENCION!</h2>
-               <p>¿Estas seguro de que deseas eliminar esta publicación?</p>
-               <div class="btn-cerrar">
-                 <form action="/licitacion/eliminar/<%= publicacion.id %>?_method=DELETE" method="POST" >
-                   <button type="submit">ELIMINAR <i class="fa-solid fa-trash"></i></button>
-                  </form> 
-                   <label for="btn-modal">CANCELAR</i></label>
-               </div>
-           </div>
-           <label for="btn-modal" class="cerrar-modal"></label>
-       </div>
-      <!--Fin de Ventana Modal-->  
-            <% } %>
-            <% }) %>   
         </tbody>
     </table>
   </div>
+
+
+  <div class="container">
+    <table class="table" id="tabla-admin-licitaciones">
+      <thead>
+        <tr>
+          <th scope="col">Expediente</th>
+          <th scope="col">Tipo</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Objetivo</th>
+          <th scope="col">Fecha subida</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+
+
+
+    </table>
+   </div>
    
     
     
@@ -112,5 +91,8 @@
 
 <!-- BOOTSTRAP -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+<script src="/js/paginateAdminLicitaciones.js"></script>
+<script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" integrity="sha384-6HTMpWJgChj5YA2sAd43XdW1FLLyBn6HHfI2v5IgR9NwhT+JGDD2qXiw5uvMz0po" crossorigin="anonymous"></script>
+
  </body>
 </html>

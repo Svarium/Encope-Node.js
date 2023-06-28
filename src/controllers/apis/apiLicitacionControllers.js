@@ -1,6 +1,6 @@
 const createResponseError = require('../../helpers/createResponseError')
 const {op} = require('sequelize');
-const { getAllLicitaciones } = require('../../services/licitacionServices');
+const { getAllLicitaciones, destroyLicitacion } = require('../../services/licitacionServices');
 
 
 module.exports = {
@@ -43,12 +43,23 @@ module.exports = {
         } catch (error) {
             console.log(error);
             return createResponseError(res, error)
+        }        
+    },
+
+    destroy : async(req,res) => {
+        try {
+            const licitacionDeleted = await destroyLicitacion(req.params.id)
+            return res.status(200).json({
+                ok:true,
+                data:{
+                    message:"Licitacion eliminada",
+                    total:1,
+                }
+            })
+        } catch (error) {
+            console.log(error);
+            return createResponseError(res, error)
         }
-
-
-        
-       
-            
     }
 
 
