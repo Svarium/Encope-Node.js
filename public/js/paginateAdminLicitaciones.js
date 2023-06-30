@@ -8,9 +8,9 @@ const licitacionesTable = $("#tabla-admin-licitaciones");
 
 let pageActive = 1;
 
-//const apiGetLicitacion = "https://encope.wnpower.host/api/licitacion/";
+const apiGetLicitacion = "https://encope.wnpower.host/api/licitacion/";
 
-const apiGetLicitacion = "http://localhost:3000/api/licitacion/";
+//const apiGetLicitacion = "http://localhost:3000/api/licitacion/";
 
 const getLicitacion = ({page=1} = {}) => {
 
@@ -23,21 +23,20 @@ const paintLicitaciones = (licitacion) => {
     licitacionesTable.innerHTML = "";
     licitacion.forEach(publicacion => {
         const template = `
-        <tbody>
        
         <tr>
         <th scope="row">${publicacion.tipo.nombre}</th>
         <td>${publicacion.titulo}</td>
-        <td>$ ${publicacion.objetivo}</td>
+        <td>${publicacion.objetivo}</td>
         <td>${publicacion.createdAt}</td>
         <td>${publicacion.expediente}</td>
         <td>
             <div class="d-flex justify-content-center gap-2"> 
-                <a class="btn  btn-primary" href="/images/licitaciones/${publicacion.archivo}"><i class="fa-solid fa-eye"></i></a>
-                <a class="btn  btn-success" href="/licitacion/editar/${publicacion.id}"><i class="fa-solid fa-edit"></i></a>              
+                <a class="btn  btn-primary" href="/images/licitaciones/${publicacion.archivo}">Ver</a>
+                <a class="btn  btn-success" href="/licitacion/editar/${publicacion.id}">Editar</i></a>              
           <div class="boton-modal detalle-comprar">
-              <label class="btn btn-sm btn-success" for="btn-modal" style="background-color: rgb(199, 54, 66);">
-                <i class="fa-solid fa-trash"></i>
+              <label class="btn btn-success" for="btn-modal" style="background-color: rgb(199, 54, 66);">
+                Borrar
               </label>
           </div>          
             </div>
@@ -50,15 +49,14 @@ const paintLicitaciones = (licitacion) => {
            <p>¿Estas seguro de que deseas eliminar esta publicación?</p>
            <div class="btn-cerrar">
              <div>
-               <button onclick="removelicitacion(${publicacion.id})">ELIMINAR <i class="fa-solid fa-trash"></i></button>
+               <button onclick="removeLicitacion(${publicacion.id})">ELIMINAR <i class="fa-solid fa-trash"></i></button>
              </div> 
                <label for="btn-modal">CANCELAR</label>
            </div>
        </div>
        <label for="btn-modal" class="cerrar-modal"></label>
    </div>
-   </input>
-    </tbody>
+   
           
         `
         licitacionesTable.innerHTML += template
