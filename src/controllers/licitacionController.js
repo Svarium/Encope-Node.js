@@ -248,5 +248,27 @@ module.exports = {
             })
         })
         .catch(error => console.log(error))
+    },
+
+    searchLicitacion : (req,res) => {
+
+        const querySearch = req.query.search;
+        db.Publicaciones.findAll({
+            where : {
+                titulo : {
+                    [Op.like] : `%${querySearch}%`
+                }
+            },
+            include : ['tipo']
+        })
+        .then(publicaciones => {
+            return res.render('searchLicitacion',{
+                publicaciones,
+                title : 'Resultado de la busqueda'
+            })
+        })
+        .catch(error => console.log(error))
     }
+
+
 }

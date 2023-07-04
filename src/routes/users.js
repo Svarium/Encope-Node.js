@@ -36,16 +36,7 @@ router.put('/rolUser/:id', editRol)
 
 /* Buscar un usuario */
 
-router.get('/search', searchUser)
-
-
-
-
-
-
-
-
-
+router.get('/search',checkUserLogin, searchUser)
 
 
 

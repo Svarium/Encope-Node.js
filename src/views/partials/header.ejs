@@ -33,10 +33,10 @@
                   <li class="nav-item">
                     <a class="nav-link active" href="#noticias">Noticias</a>
                 </li>
-                <form class="d-flex my-2 my-lg-0 ms-2">
-                    <input class="form-control me-sm-2" type="text" placeholder="">
+                <form action="/licitacion/searchLicitacion" method="get" class="d-flex my-2 my-lg-0">
+                    <input  class="form-control me-sm-2" type="search" name="search" placeholder="Buscar Licitacion">
                     <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Buscar</button>
-                </form>
+                  </form>
                 <% if (locals.userLogin) { %>
                     
                     <li class="nav-item ms-3">

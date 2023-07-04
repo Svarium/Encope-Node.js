@@ -68,7 +68,15 @@
                             <button type="submit" class="btn btn-danger">Borrar Publicación</button>
                           </form>
                  <% }) %>
-                <% } %>              
+                 <% } else { %>
+
+                  <h5 class="text-center">No se encontraron resultados para tu busqueda...</h5>
+
+                  <div class="container mt-4">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/tW2tyE4rpRw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                  </div>
+                
+                <% } %>       
             </div>          
     </main>
 

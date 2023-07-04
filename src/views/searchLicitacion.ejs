@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('./partials/head')  %>
+         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+         <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">        
+          
+    <body style="background-image: url('/images/imagen\ productos\ vector-03.png'); background-size: cover;">
+  
+      <nav class="navbar navbar-expand-sm navbar-light bg-body-secondary">
+          <div class="container">
+          <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="collapsibleNavId">
+            <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+              <a class="nav-link active" href="/inicio" aria-current="page">Ir al Inicio<span class="visually-hidden"></a>          
+            </ul>
+        </div>
+      </div>
+    </nav><br>
+
+    <main>
+
+        <div class="row ms-3 me-3 justify-content-center">
+            <div class="col-md-6">
+                <h4 class="text-center">Resultado de la busqueda:</h4>
+                <hr>
+
+
+                <% if (publicaciones.length != 0) { %>
+                 <% publicaciones.forEach(publicacion => { %>
+                    <div class="card">
+                        <div class="card-header">
+                         <%= publicacion.tipo.nombre %>
+                        </div>
+                        <div class="card-body">
+                          <h5 class="card-title"><%= publicacion.titulo %></h5>
+                          <p class="card-text"><%= publicacion.objetivo %></p>
+                          <a href="/images/licitaciones/<%= publicacion.archivo %>" download="licitacionPublica" class="btn btn-primary">Archivo</a>
+                 <% }) %>
+                <% } else { %>
+
+                    <h5 class="text-center">No se encontraron resultados para tu busqueda...</h5>
+
+                    <div class="container mt-4">
+                      <iframe width="560" height="315" src="https://www.youtube.com/embed/tW2tyE4rpRw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+                  
+                  <% } %>
+            </div>          
+    </main>
+
+
+
+
+
+
+
+    <!-- BOOTSTRAP -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
+</body>
+</html>
