@@ -23,6 +23,7 @@ const indexRouter = require('./src/routes/index');
 const usersRouter = require('./src/routes/users');
 const authRouter = require('./src/routes/auth')
 const licitacionRouter = require('./src/routes/licitacion');
+const noticiasRouter = require('./src/routes/noticias')
 
 //APIS
 const apiUsersRouter = require('./src/routes/apis/apiUsers');
@@ -59,6 +60,7 @@ app.use('/', indexRouter);
 app.use('/licitacion', licitacionRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter)
+app.use('/noticias', noticiasRouter)
 
 //APIS
 app.use('/api/users', apiUsersRouter)
