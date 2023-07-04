@@ -22,42 +22,45 @@
 
     <div class="container fluid mt-5">
         <div class="form-container bg-white p-3 text-black mt-1 rounded">
-            <form action="/licitacion/agregar" method="POST" enctype="multipart/form-data">
+            <form action="/licitacion/agregar" method="POST" enctype="multipart/form-data" id="formAddLicitacion">
                 <h3 class="text-center mb-4">Nueva publicación + </h3>
                 <div class="row">
                     <div class="col-md-12 mb-2">
                         <label for="expediente" class="form-label">N° de expediente</label>
-                        <input type="text" name="expediente" class="form-control rounded <%= (locals.errors && errors.expediente) && 'is-invalid'%>" id="expediente" value="<%= (locals.old && old.expediente) && old.expediente %>">
-                        <small class="text-danger ms-2"><%= locals.errors && errors.expediente ? errors.expediente.msg : null %></small>
+                        <input  type="text" name="expediente" class="form-control rounded <%= (locals.errors && errors.expediente) && 'is-invalid'%>" id="expediente" value="<%= (locals.old && old.expediente) && old.expediente %>">
+                        <small id="errorExpediente" class="text-danger ms-2"><%= locals.errors && errors.expediente ? errors.expediente.msg : null %></small>
                     </div>
                     <div class="col-md-12 mb-2">
                         <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" name="titulo" class="form-control rounded <%= (locals.errors && errors.titulo) && 'is-invalid'%>" value="<%= (locals.old && old.titulo) && old.titulo %>">
-                        <small class="text-danger ms-2"><%= locals.errors && errors.titulo ? errors.titulo.msg : null %></small>
+                        <input type="text" name="titulo" class="form-control rounded <%= (locals.errors && errors.titulo) && 'is-invalid'%>" value="<%= (locals.old && old.titulo) && old.titulo %>" id="nombre">
+                        <small id="errorNombre" class="text-danger ms-2"><%= locals.errors && errors.titulo ? errors.titulo.msg : null %></small>
                     </div>
                 </div>
                 <div class="col-md-12 mb-2">
                     <label for="objetivo" class="form-label">Objetivo</label>
-                    <textarea class="form-control rounded <%= (locals.errors && errors.objetivo) && 'is-invalid'%>" name="objetivo"><%= (locals.old && old.objetivo) && old.objetivo %></textarea>
-                    <small class="text-danger ms-2"><%= locals.errors && errors.objetivo ? errors.objetivo.msg : null %></small>
+                    <textarea id="objetivo" class="form-control rounded <%= (locals.errors && errors.objetivo) && 'is-invalid'%>" name="objetivo"><%= (locals.old && old.objetivo) && old.objetivo %></textarea>
+                    <small id="errorObjetivo" class="text-danger ms-2"><%= locals.errors && errors.objetivo ? errors.objetivo.msg : null %></small>
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-2">
                         <label for="archivo" class="form-label">Archivo</label>
-                        <input type="file" name="pdf" class="form-control rounded <%= (locals.errors && errors.pdf) && 'is-invalid'%>">
-                        <small class="text-danger ms-2"><%= locals.errors && errors.pdf ? errors.pdf.msg : null %></small>
+                        <input type="file" name="pdf" class="form-control rounded <%= (locals.errors && errors.pdf) && 'is-invalid'%>" id="archivo">
+                        <small id="errorArchivo" class="text-danger ms-2"><%= locals.errors && errors.pdf ? errors.pdf.msg : null %></small>
                     </div>
                     <div class="col-md-6 mb-2">
                         <label for="tipo" class="form-label">Tipo de publicación</label>
-                        <select class="form-control rounded <%= (locals.errors && errors.tipo) && 'is-invalid'%>" name="tipo">
+                        <select id="tipo" class="form-control rounded <%= (locals.errors && errors.tipo) && 'is-invalid'%>" name="tipo">
                             <option value="" selected hidden>Seleccione...</option>
                             <% tipos.forEach(({nombre, id}) => { %>
                             <option value="<%= id %>"> <%= nombre %> </option>
                             <% }) %>
         
                         </select>
-                        <small class="text-danger ms-2"><%= locals.errors && errors.tipo ? errors.tipo.msg : null %></small>
+                        <small id="errorTipo" class="text-danger ms-2"><%= locals.errors && errors.tipo ? errors.tipo.msg : null %></small>
                     </div>
+                    <div class="mb-3 text center">
+                        <small class="text-danger" id="errorFormAddLicitacion"></small>
+                      </div>  
                 </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary rounded">Enviar</button>
@@ -76,5 +79,6 @@
     
 
     <script src="https://unpkg.com/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/addLicitacion.js"></script>
 </body>
 </html>
