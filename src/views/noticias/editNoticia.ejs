@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.1.1/dist/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="/images/favicom_encope.png" type="image/x-icon">
+    <style>
+        body {
+            background-image: url('ruta/a/la/imagen.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body style="background-image: url('/images/imagen productos vector-03.png');">
+
+    <div class="container fluid mt-5">
+        <div class="form-container bg-white p-3 text-black mt-1 rounded">
+            <form action="/noticias/update/<%= noticia.id %>?_method=PUT" method="POST" enctype="multipart/form-data" id="formAddLicitacion">
+                <h3 class="text-center mb-4">Nueva Noticia + </h3>
+                <div class="row">
+                    <div class="col-md-12 mb-2">
+                        <label for="titulo" class="form-label">Titulo</label>
+                        <input  type="text" name="titulo" class="form-control rounded <%= (locals.errors && errors.titulo) && 'is-invalid'%>" id="titulo" value="<%= noticia.titulo %>">
+                        <small id="errortitulo" class="text-danger ms-2"><%= locals.errors && errors.titulo ? errors.titulo.msg : null %></small>
+                    </div>
+                    <div class="col-md-12 mb-2">
+                        <label for="video" class="form-label">Link del Video</label>
+                        <input  type="text" name="video" class="form-control rounded <%= (locals.errors && errors.video) && 'is-invalid'%>" id="video" value="<%= noticia.video %>">
+                        <small id="errorvideo" class="text-danger ms-2"><%= locals.errors && errors.video ? errors.video.msg : null %></small>
+                    </div>
+                </div>
+                <div class="col-md-12 mb-2">
+                    <label for="descripcion" class="form-label">Descripción</label>
+                    <textarea id="descripcion" class="form-control rounded <%= (locals.errors && errors.descripcion) && 'is-invalid'%>" name="descripcion"><%= noticia.descripcion %></textarea>
+                    <small id="errordescripcion" class="text-danger ms-2"><%= locals.errors && errors.descripcion ? errors.descripcion.msg : null %></small>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-2">
+                        <label for="images" class="form-label">Imagenes</label>
+                        <input type="file" name="images" multiple class="form-control rounded <%= (locals.errors && errors.images) && 'is-invalid'%>" id="images">
+                        <small id="errorimages" class="text-danger ms-2"><%= locals.errors && errors.images ? errors.images.msg : null %></small>
+                    </div>
+                    <div class="mb-3 text center">
+                        <small class="text-danger" id="errorFormAddLicitacion"></small>
+                      </div>  
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary rounded">Enviar</button>
+                    <a href="/users/perfil" class="btn btn-danger rounded">Volver</a>
+                </div>
+        
+            </form>
+        </div>
+    </div>
+
+    
+    
+    
+    
+    
+    
+
+    <script src="https://unpkg.com/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/addLicitacion.js"></script>
+</body>
+</html>
