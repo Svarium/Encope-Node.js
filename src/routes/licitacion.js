@@ -6,7 +6,7 @@ const checkUserLogin = require('../middlewares/checkUserLogin');
 const { uploadLicitacionesFiles } = require('../middlewares/subirLicitacion');
 const licitacionValidator = require('../validations/licitacionValidator');
 const editLicitacionValidator = require('../validations/editLicitacionValidator');
-const checkUserEditor = require('../middlewares/checkUserEditor');
+const checkUserEditorLicitaciones = require('../middlewares/checkUserEditorLicitaciones');
 
 
 
@@ -19,7 +19,7 @@ router.get('/listar', list)
 
 // ver todas en el dashboard
 
-router.get('/publicaciones',checkUserEditor, verTodas)
+router.get('/publicaciones',checkUserEditorLicitaciones, verTodas)
 
 // buscardor de licitaciones por titulo tomando en cuenta el query
 
@@ -35,11 +35,11 @@ router.get('/searchLicitacion', searchLicitacion)
 
 //Agregar Licitacion:
 
-router.get('/agregar', checkUserEditor ,agregar)
+router.get('/agregar', checkUserEditorLicitaciones ,agregar)
 router.post('/agregar',uploadLicitacionesFiles.single('pdf'), licitacionValidator, store)
 
 //Editar publicación:
-router.get('/editar/:id',checkUserEditor, edit)
+router.get('/editar/:id',checkUserEditorLicitaciones, edit)
 router.put('/editar/:id',uploadLicitacionesFiles.single('pdf'),editLicitacionValidator, update)
 
 

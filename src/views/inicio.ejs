@@ -76,90 +76,36 @@
 
     <h2 id="noticias">NOTICIAS RECIENTES</h2>
 
-<!-- CARRUSEL DE NOTICIAS -->
-<section class="card-slice">
-  <div class="container-fluid my-5">
-    <!-- <h1 class="text-center fw-bold display-1 mb-5">Owl <span class="text-danger">Carousel</span></h1> -->
-    <div class="row">
-        <div class="col-12 m-auto">
-            <div class="owl-carousel owl-theme">
-              <div class="item mb-4">
-                <div class="card border-0 shadow" datos data-aos="fade-up"
-                data-aos-duration="1000">
-                  <a href="./noticias/manipulacion-alimentos.html"><img src="/images/noticias/Manipulacion Alimentos/1.jpg" alt="Foto acto" class="card-img-top"></a>
-                    <div class="card-body">
-                        <div class="card-title text-center">
-                          <h5 class="card-tittle">Nueva Certificación en la U.19</h5>
-        <p class="card-text text-start">Capacitar, acompañar y brindar herramientas es fundamental para lograr un pronto avance en la resocialización... </p>
-                        </div>
-                    </div>
-                </div>
+    <% if (locals.userLogin) { %>
+      <% if (locals.userLogin.rol === 1 || locals.userLogin.rol === 2 || locals.userLogin.rol === 3) { %>
+        <div class="container">
+          <div class="justify-content-end">
+            <a href="/noticias/add" class="btn btn-sm btn-danger">Nueva noticia +</a>
+          </div>
+        </div>      
+      <% } %>
+    <% } %>  
+
+    <div class="container-fluid mb-5 mt-5">
+
+      <div class="row d-flex justify-content-center">
+        <% noticias.forEach(noticia => { %>
+
+          <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="card card shadow" style="width: 18rem;">
+              <img src="/images/imagesNoticias/<%= noticia.images[0].name %>" class="card-img-top"  style="width: 100%; height: auto;" alt="...">
+              <div class="card-body">
+                <h5 class="card-title"><%= noticia.titulo %></h5>
+                <p class="card-text"><%= noticia.descripcion.slice(0, 100) %></p>
+                <a href="/noticias/detalle/<%= noticia.id %>" class="btn btn-primary">Leer más</a>
               </div>
-                <div class="item ">
-                    <div class="card border-0 shadow" datos data-aos="fade-up"
-                    data-aos-duration="1000">
-                      <a href="./noticias/cierreCursoCPFI.html"><img src="/images/noticias/CPF I - ENTREGA DE CERTIFICADOS/DSC_0310.JPG" alt="Foto acto" class="card-img-top"></a>
-                        <div class="card-body">
-                            <div class="card-title text-center">
-                              <h5 class="card-tittle">Cierre de curso en el CPFI</h5>
-                              <p class="card-text text-start">El día 6 de diciembre se realizó la ceremonia de cierre del curso de  “Introducción a la huerta orgánica” en el Complejo...</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-  
-                <div class="item">
-                   <div class="card border-0 shadow" datos data-aos="fade-up"
-                   data-aos-duration="1000">
-                    <a href="./noticias/cfja-girgolas.html"><img src="/images/noticias/CFJA - GIRGOLAS ENTREGA DE CERTIFICADOS/DSC_0838.JPG" alt="Foto acto" class="card-img-top"></a>
-                        <div class="card-body">
-                            <div class="card-title text-center">
-                              <h5 class="card-tittle">Cierre de curso - Girgolas</h5>
-          <p class="card-text text-start">El dia 11 de noviembre se realizó el cierre del curso de Cultivo de Girgolas Orgánicas en el Complejo Federal...</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                  <div class="card border-0 shadow" datos data-aos="fade-up"
-                  data-aos-duration="1000">
-                    <a href="./noticias/asamblea.html"><img src="/images/noticias/asamblea.JPG" alt="Foto acto" class="card-img-top"></a>
-                      <div class="card-body">
-                          <div class="card-title text-center">
-                            <h5 class="card-tittle"> Asamblea Extraordinaria</h5>
-          <p class="card-text text-start">En el día 29 de septiembre se llevó a cabo la “XVII Asamblea Anual Extraordinaria de Delegados del Encope”... </p>
-                          </div>
-                      </div>
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="card border-0 shadow" datos data-aos="fade-up"
-                  data-aos-duration="1000">
-                    <a href="./noticias/recoU19.html"><img src="/images/noticias/huerta.JPG" alt="Foto acto" class="card-img-top"></a>
-                      <div class="card-body">
-                          <div class="card-title text-center">
-                            <h5 class="card-tittle">Recorrida U.19 </h5>
-          <p class="card-text text-start">El día lunes 12 de septiembre se realizó una reunión donde fueron participes autoridades de la Colonia Penalde Ezeiza, Unidad 19... </p>
-                          </div>
-                      </div>
-                  </div>
-                </div>
-          <!--       <div class="item">
-                    <div class="card border-0 shadow">
-                        <img src="7.jpg" alt="" class="card-img-top">
-                        <div class="card-body">
-                            <div class="card-title text-center">
-                                <h4>Owl Carousel</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>  -->
-  
             </div>
-        </div>
+          </div>
+        <% }) %>
+      </div>
+
+
     </div>
-  </div>
-</section>
 
 
 

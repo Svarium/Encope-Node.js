@@ -5,11 +5,6 @@ const fs = require("fs");
 
 module.exports = {
 
-    //listar las noticias para mostrar en el carrusel del home
-    listHome: (req,res) => {
-
-    },
-
     //renderiza la vista del detalle de la noticia
     detail : (req,res) => {
 
@@ -60,9 +55,9 @@ module.exports = {
                         name:image.filename,
                         noticiaId:noticia.id
                     });
-                });
+                })
 
-                return res.redirect('/inicio')
+                return res.redirect('/')
             })
             .catch((error) => console.log(error))
 
