@@ -78,13 +78,35 @@
 
     <% if (locals.userLogin) { %>
       <% if (locals.userLogin.rol === 1 || locals.userLogin.rol === 2 || locals.userLogin.rol === 3) { %>
-        <div class="container">
-          <div class="justify-content-end">
-            <a href="/noticias/add" class="btn btn-sm btn-danger">Nueva noticia +</a>
-          </div>
-        </div>      
+
+        <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary ms-5" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Nueva noticia +
+</button>
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Requisitos para la subida +</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p> -Imagenes: Tener en cuenta que solo se pueden subir 4 imagenes y las mismas deben estar optimizada para web, es decir que tienen que tener baja resolución, pesar menos de 6mb y tener todas la misma relación de aspecto para mantener la maquetación del sitio. Se aceptan formatos: jpg, jpeg, png, gif y webp. <br><br>
+       -Video: el link del video de YouTube tiene que ser el que brinda la plataforma al dar click en compartir tanto en web como en celular, y NO el de la url del navegador.  <br><br>
+       -Titulo: Hasta 50 carácteres. <br><br>
+       -Descripción: Hasta 1000 carácteres. 
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Volver</button>
+        <a href="/noticias/add" class="btn btn-primary">Crear +</a>
+      </div>
+    </div>
+  </div>
+</div>  
       <% } %>
-    <% } %>  
+    <% } %>   
 
     <div class="container-fluid mb-5 mt-5">
 
@@ -103,8 +125,6 @@
           </div>
         <% }) %>
       </div>
-
-
     </div>
 
 

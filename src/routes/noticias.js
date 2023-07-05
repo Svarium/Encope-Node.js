@@ -1,11 +1,14 @@
 const express = require('express');
-const { add, store, edit, update } = require('../controllers/noticiasController');
+const { add, store, edit, update, detail } = require('../controllers/noticiasController');
 const { uploadNoticiasImages } = require('../middlewares/subirNoticia');
 const noticiaValidator = require('../validations/noticiaValidator');
 const checkUserEditorNoticias = require('../middlewares/checkUserEditorNoticias');
 const router = express.Router();
 
 /* llego con /noticias */
+
+//Vista del detalle de la noticia
+router.get('/detalle/:id', detail)
 
 //Vista del formulario agregar noticias
 router.get('/add', checkUserEditorNoticias,  add)

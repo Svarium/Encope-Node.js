@@ -1,13 +1,26 @@
 const { validationResult } = require("express-validator");
 const db = require("../database/models")
 const fs = require("fs");
+const { error } = require("console");
 
 
 module.exports = {
 
     //renderiza la vista del detalle de la noticia
     detail : (req,res) => {
+      const id = req.params.id
 
+
+      db.Noticias.findByPk(id, {
+        include:["images"],
+      })
+      .then(noticia => {
+        return res.render('noticias/detalleNoticia',{
+          noticia,
+          title: "Noticias"
+        })
+      })
+      .catch(error => console.log(error))
     },
 
 
