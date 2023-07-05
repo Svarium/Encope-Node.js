@@ -11,5 +11,5 @@ check('video')
 
 check('descripcion')
 .notEmpty().withMessage('Debe ingresar el cuerpo de la noticia').bail()
-.isLength({min:10, max:1000}).withMessage('La descripción puede tener entre 10 y 1000 carácteres')  
+.isLength({min:10, max:2000}).withMessage('La descripción puede tener entre 10 y 2000 carácteres')  
 ]

@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Noticias.init({
     titulo: DataTypes.STRING,
-    descripcion: DataTypes.STRING,
+    descripcion: DataTypes.TEXT,
     video: DataTypes.STRING
   }, {
     sequelize,
