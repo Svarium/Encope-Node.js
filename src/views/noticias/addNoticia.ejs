@@ -23,33 +23,34 @@
 
     <div class="container fluid mt-5">
         <div class="form-container bg-white p-3 text-black mt-1 rounded">
-            <form action="/noticias/add" method="POST" enctype="multipart/form-data" id="formAddLicitacion">
+            <form action="/noticias/add" method="POST" enctype="multipart/form-data" id="formAddNoticia">
                 <h3 class="text-center mb-4">Nueva Noticia + </h3>
                 <div class="row">
                     <div class="col-md-12 mb-2">
                         <label for="titulo" class="form-label">Titulo</label>
-                        <input  type="text" name="titulo" class="form-control rounded <%= (locals.errors && errors.titulo) && 'is-invalid'%>" id="titulo" value="<%= (locals.old && old.titulo) && old.titulo %>">
-                        <small id="errortitulo" class="text-danger ms-2"><%= locals.errors && errors.titulo ? errors.titulo.msg : null %></small>
+                        <input  type="text" name="titulo" class="form-control rounded <%= (locals.errors && errors.titulo) && 'is-invalid'%>" id="titulo" value="<%= (locals.old && old.titulo) && old.titulo %>" placeholder="Ingrese el título de la noticia">
+                        <small id="errorTitulo" class="text-danger ms-2"><%= locals.errors && errors.titulo ? errors.titulo.msg : null %></small>
                     </div>
                     <div class="col-md-12 mb-2">
-                        <label for="video" class="form-label">Link del Video</label>
-                        <input  type="text" name="video" class="form-control rounded <%= (locals.errors && errors.video) && 'is-invalid'%>" id="video" value="<%= (locals.old && old.video) && old.video %>">
-                        <small id="errorvideo" class="text-danger ms-2"><%= locals.errors && errors.video ? errors.video.msg : null %></small>
+                        <label for="images" class="form-label">Imagenes</label>
+                        <input type="file" name="images" multiple class="form-control rounded <%= (locals.errors && errors.images) && 'is-invalid'%>" id="images">
+                        <small id="errorImages" class="text-danger ms-2"><%= locals.errors && errors.images ? errors.images.msg : null %></small>
                     </div>
                 </div>
                 <div class="col-md-12 mb-2">
                     <label for="descripcion" class="form-label">Descripción</label>
-                    <textarea id="descripcion" class="form-control rounded <%= (locals.errors && errors.descripcion) && 'is-invalid'%>" name="descripcion"><%= (locals.old && old.descripcion) && old.descripcion %></textarea>
-                    <small id="errordescripcion" class="text-danger ms-2"><%= locals.errors && errors.descripcion ? errors.descripcion.msg : null %></small>
+                    <textarea id="descripcion" placeholder="Ingrese el cuerpo de la noticia" class="form-control rounded <%= (locals.errors && errors.descripcion) && 'is-invalid'%>" name="descripcion"><%= (locals.old && old.descripcion) && old.descripcion %></textarea>
+                    <small id="errorDescripcion" class="text-danger ms-2"><%= locals.errors && errors.descripcion ? errors.descripcion.msg : null %></small>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 mb-2">
-                        <label for="images" class="form-label">Imagenes</label>
-                        <input type="file" name="images" multiple class="form-control rounded <%= (locals.errors && errors.images) && 'is-invalid'%>" id="images">
-                        <small id="errorimages" class="text-danger ms-2"><%= locals.errors && errors.images ? errors.images.msg : null %></small>
+                    
+                    <div class="col-md-12 mb-2">
+                        <label for="video" class="form-label">Link del Video</label>
+                        <input  type="text" name="video" class="form-control rounded <%= (locals.errors && errors.video) && 'is-invalid'%>" id="video" value="<%= (locals.old && old.video) && old.video %>" placeholder="El link del video es opcional">
                     </div>
+
                     <div class="mb-3 text center">
-                        <small class="text-danger" id="errorFormAddLicitacion"></small>
+                        <small class="text-danger" id="errorFormAddNoticia"></small>
                       </div>  
                 </div>
                 <div class="text-center">
@@ -69,6 +70,6 @@
     
 
     <script src="https://unpkg.com/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/addLicitacion.js"></script>
+    <script src="/js/addnoticia.js"></script>
 </body>
 </html>

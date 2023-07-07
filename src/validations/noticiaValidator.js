@@ -6,8 +6,9 @@ check('titulo')
     .notEmpty().withMessage('El título de la noticia es obligatorio').bail()
     .isLength({min:5, max:50}).withMessage('El título debe tener entre 5 y 50 carácteres'),
 
-check('video')
-    .notEmpty().withMessage('Debe ingresar el link del video'),
+/* check('video')
+    .optional()
+    .notEmpty().withMessage('Debe ingresar el link del video'), */
 
 check('descripcion')
 .notEmpty().withMessage('Debe ingresar el cuerpo de la noticia').bail()
