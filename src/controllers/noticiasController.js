@@ -7,6 +7,13 @@ const { error } = require("console");
 
 module.exports = {
 
+
+    list: (req,res) => {
+      return res.render('noticias/allNoticias',{
+        title:"Todas las noticias"
+      })
+  },
+
     //renderiza la vista del detalle de la noticia
     detail : (req,res) => {
       const id = req.params.id

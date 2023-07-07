@@ -28,6 +28,7 @@ const noticiasRouter = require('./src/routes/noticias')
 //APIS
 const apiUsersRouter = require('./src/routes/apis/apiUsers');
 const apiLicitacionRouter = require('./src/routes/apis/apiLicitaciones')
+const apiNoticiasRouter = require('./src/routes/apis/apiNoticias')
 
 
 
@@ -65,6 +66,7 @@ app.use('/noticias', noticiasRouter)
 //APIS
 app.use('/api/users', apiUsersRouter)
 app.use('/api/licitacion', apiLicitacionRouter)
+app.use('/api/noticias', apiNoticiasRouter)
 
 
 // catch 404 and forward to error handler

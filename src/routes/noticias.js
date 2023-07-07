@@ -1,11 +1,15 @@
 const express = require('express');
-const { add, store, edit, update, detail, remove, destroy } = require('../controllers/noticiasController');
+const { add, store, edit, update, detail, remove, destroy, list } = require('../controllers/noticiasController');
 const { uploadNoticiasImages } = require('../middlewares/subirNoticia');
 const noticiaValidator = require('../validations/noticiaValidator');
 const checkUserEditorNoticias = require('../middlewares/checkUserEditorNoticias');
 const router = express.Router();
 
 /* llego con /noticias */
+
+
+//listar todas las noticias
+router.get('/', list)
 
 //Vista del detalle de la noticia
 router.get('/detalle/:id', detail)

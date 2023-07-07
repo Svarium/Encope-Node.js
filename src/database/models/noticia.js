@@ -1,4 +1,5 @@
 'use strict';
+const sequelizePaginate = require('sequelize-paginate')
 const {
   Model
 } = require('sequelize');
@@ -29,5 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Noticias',
   });
+
+  sequelizePaginate.paginate(Noticias)
   return Noticias;
 };

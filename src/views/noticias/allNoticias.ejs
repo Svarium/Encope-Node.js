@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es">
+
+
+<!-- HEAD -->
+<%- include('../partials/head') %> 
+
+<body>
+
+<!-- HEADER -->  
+  <%- include('../partials/header') %> 
+
+  <main>
+
+
+  <div class="container-fluid mb-5 mt-5 ">
+
+    <div class="d-flex justify-content-center align-items-center">
+      <%- include('../partials/paginateNoticias')  %>
+    </div>
+
+    <div class="row d-flex justify-content-center" id="section-noticias-card">
+      
+    </div>
+    
+
+  </div>
+
+
+
+
+  <!--LOGOS COLABORADORES-->
+  
+  <%- include('../partials/colab') %> 
+  
+  
+    </main>
+  
+   <!-- FOOTER -->
+  
+   <%- include('../partials/footer') %> 
+  
+  
+   <!-- SCRIPTS DE EFECTOS/BOOTSTRAP5 -->
+  
+  <%- include('../partials/scripts') %> 
+  
+<script src="/js/noticiasPaginate.js">
+
+</script>
+  
+  </body>
+  </html>
