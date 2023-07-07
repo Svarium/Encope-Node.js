@@ -1,6 +1,7 @@
 const { validationResult } = require("express-validator");
 const db = require("../database/models")
 const fs = require("fs");
+const path = require('path');
 const { error } = require("console");
 
 
@@ -111,31 +112,27 @@ module.exports = {
 
     //edita la noticia en la base de datos
     update: (req, res) => {
-        const errors = validationResult(req);
-        const idNoticia = req.params.id;
-      
-        if (errors.isEmpty()) {
-          let { 
-            titulo,
-            descripcion, 
-            video
-          } = req.body;
-      
-          db.Noticias.update(
-            {
-              titulo: titulo.trim(),
-              descripcion: descripcion.trim(),
-              video: video.trim()
-            },
-            {
-              where: {
-                id: idNoticia
-              }
+      const errors = validationResult(req);
+      const idNoticia = req.params.id;
+    
+      if (errors.isEmpty()) {
+        let { titulo, descripcion, video } = req.body;
+    
+        db.Noticias.update(
+          {
+            titulo: titulo.trim(),
+            descripcion: descripcion.trim(),
+            video: video.trim()
+          },
+          {
+            where: {
+              id: idNoticia
             }
-          )
+          }
+        )
           .then((result) => {
             if (result[0] > 0) {
-              // Si no reemplaza imagen
+              // Si no se reemplaza la imagen
               if (req.files.length === 0) {
                 return res.redirect("/inicio");
               } else {
@@ -145,49 +142,49 @@ module.exports = {
                     noticiaId: idNoticia
                   }
                 })
-                .then(() => {
-                  // 2- Eliminar los archivos de las imágenes antiguas
-                  db.Image.findAll({
-                    where: {
-                      noticiaId: idNoticia
-                    }
-                  })
-                  .then((images) => {
-                    images.forEach((noticiaImage) => {
-                      const imagePath = `./public/images/imagesNoticias/${noticiaImage.image}`;
-                      if (fs.existsSync(imagePath)) {
-                        try {
-                          fs.unlinkSync(imagePath);
-                        } catch (error) {
-                          throw new Error(error);
-                        }
-                      } else {
-                        console.log("No se encontró el archivo");
-                      }
-                    });
-                  })
-                  .catch((error) => {
-                    throw new Error(error);
-                  });
-      
-                  // 3- Crear los registros de las nuevas imágenes en la base de datos
-                  const files = req.files.map((file) => {
-                    return {
-                      name: file.filename,
-                      noticiaId: idNoticia
-                    };
-                  });
-                  db.Image.bulkCreate(files)
                   .then(() => {
-                    return res.redirect("/inicio");
+                    // 2- Eliminar los archivos de las imágenes antiguas
+                    db.Image.findAll({
+                      where: {
+                        noticiaId: idNoticia
+                      }
+                    })
+                      .then((images) => {
+                        const deletionPromises = images.map((noticiaImage) => {
+                          fs.existsSync(`./public/images/imagesNoticias/${noticiaImage.name}`) &&
+                          fs.unlinkSync(`./public/images/imagesNoticias/${noticiaImage.name}`);
+    
+                          return noticiaImage.destroy();
+                        });
+    
+                        Promise.all(deletionPromises)
+                          .then(() => {
+                            // 3- Crear los registros de las nuevas imágenes en la base de datos
+                            const files = req.files.map((file) => {
+                              return {
+                                name: file.filename,
+                                noticiaId: idNoticia
+                              };
+                            });
+                            db.Image.bulkCreate(files)
+                              .then(() => {
+                                return res.redirect("/inicio");
+                              })
+                              .catch((error) => {
+                                throw new Error(error);
+                              });
+                          })
+                          .catch((error) => {
+                            throw new Error(error);
+                          });
+                      })
+                      .catch((error) => {
+                        throw new Error(error);
+                      });
                   })
                   .catch((error) => {
                     throw new Error(error);
                   });
-                })
-                .catch((error) => {
-                  throw new Error(error);
-                });
               }
             } else {
               console.log("No se encontró la noticia");
@@ -197,91 +194,60 @@ module.exports = {
           .catch((error) => {
             throw new Error(error);
           });
-                         
-        
-        } else {
-
-            const { id } = req.params;
-
-            if (req.files.length) {
-                req.files.forEach((file) => {
-                  fs.existsSync(`./public/images/imagesNoticias/${file.filename}`) &&
-                    fs.unlinkSync(`./public/images/imagesNoticias/${file.filename}`);
-                });
-              }
-
-              db.Noticias.findByPk(id, {
-                include:["images"],
-            })
-            .then(noticia => {
-                return res.render('noticias/editNoticia',{
-                    noticia,
-                    title:"Editar Noticia"
-                })
-            })        
-        }
-
-    },
+      } else {
+        const { id } = req.params;
     
-    //elimina la noticia de la base de datos
-    remove:(req,res) => {
-        const idNoticia = req.params.id;
-
-        // 1- Eliminar las imágenes asociadas a la noticia de la base de datos
-        db.Image.destroy({
-          where: {
-            noticiaId: idNoticia
-          }
+        if (req.files.length) {
+          req.files.forEach((file) => {
+            fs.existsSync(`./public/images/imagesNoticias/${file.filename}`) &&
+              fs.unlinkSync(`./public/images/imagesNoticias/${file.filename}`);
+          });
+        }
+    
+        db.Noticias.findByPk(id, {
+          include: ["images"]
         })
-        .then(() => {
-          // 2- Eliminar los archivos de las imágenes asociadas a la noticia
-          db.Image.findAll({
-            where: {
-              noticiaId: idNoticia
-            }
-          })
-          .then((images) => {
-            images.forEach((noticiaImage) => {
-              const imagePath = `./public/images/imagesNoticias/${noticiaImage.image}`;
-              if (fs.existsSync(imagePath)) {
-                try {
-                  fs.unlinkSync(imagePath);
-                } catch (error) {
-                  throw new Error(error);
-                }
-              } else {
-                console.log("No se encontró el archivo");
-              }
-            });
-      
-            // 3- Eliminar la noticia de la base de datos
-            db.Noticias.destroy({
-              where: {
-                id: idNoticia
-              }
-            })
-            .then(() => {
-              return res.redirect("/inicio");
-            })
-            .catch((error) => {
-              throw new Error(error);
+          .then((noticia) => {
+            return res.render("noticias/editNoticia", {
+              noticia,
+              title: "Editar Noticia"
             });
           })
           .catch((error) => {
             throw new Error(error);
           });
+      }
+    },
+    
+    
+    //elimina la noticia de la base de datos
+    destroy: (req, res) => {
+      const idNoticia = req.params.id;
+
+  db.Image.findAll({
+    where: {
+      noticiaId: idNoticia,
+    },
+  })
+    .then((images) => {
+      const deletionPromises = images.map((noticiaImage) => {
+        fs.existsSync(`./public/images/imagesNoticias/${noticiaImage.name}`) &&
+        fs.unlinkSync(`./public/images/imagesNoticias/${noticiaImage.name}`);
+        return noticiaImage.destroy();
+      });
+
+      Promise.all(deletionPromises)
+        .then(() => {
+          db.Noticias.destroy({
+            where: {
+              id: idNoticia,
+            },
+          }).then(() => res.redirect("/inicio"));
         })
-        .catch((error) => {
-          throw new Error(error);
-        });
-    }
-
-
-
-
-
-
-
+        .catch((error) => console.log(error));
+    })
+    .catch((error) => console.log(error));
+}
 
 
 }

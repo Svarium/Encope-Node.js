@@ -1,5 +1,5 @@
 const express = require('express');
-const { add, store, edit, update, detail, remove } = require('../controllers/noticiasController');
+const { add, store, edit, update, detail, remove, destroy } = require('../controllers/noticiasController');
 const { uploadNoticiasImages } = require('../middlewares/subirNoticia');
 const noticiaValidator = require('../validations/noticiaValidator');
 const checkUserEditorNoticias = require('../middlewares/checkUserEditorNoticias');
@@ -23,7 +23,7 @@ router.get('/edit/:id',checkUserEditorNoticias, edit)
 router.put('/update/:id', uploadNoticiasImages, noticiaValidator, update)
 
 //Eliminado de la noticia
-router.delete('/delete/:id', remove)
+router.delete('/delete/:id', destroy)
 
 
 
