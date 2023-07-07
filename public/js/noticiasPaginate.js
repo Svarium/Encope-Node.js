@@ -5,7 +5,7 @@ const btnNext = $('#btn-next-card-noticia')
 const containerItemPage = $('#container-items-page-card-noticia')
 const sectionNoticiaCard = $('#section-noticias-card')
 
-const URL_API_SERVER= "http://localhost:3000"
+const URL_API_SERVER= "https://encope.wnpower.host"
 
 /* const URL_API_SERVER= "CAMBIAR A LA DIRECCION DE VNPOWER" */
 
@@ -104,9 +104,7 @@ window.addEventListener("load", async () => {
     try {
         const {
         data:{ pages, currentPage, noticia},
-            } = await getNoticias()
-
-        console.log(noticia);    
+            } = await getNoticias()  
 
       paintNoticias(noticia)    
       paintItemsPage({numberPages: pages, itemActive: currentPage})  
