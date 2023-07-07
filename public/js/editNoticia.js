@@ -69,27 +69,7 @@ const checkedFields = () => {
   })
 
 
-  /* INPUT IMAGEN */
 
-  const imageRegex = /\.(jpg|jpeg|png|gif|webp)$/i;
-
-  $('images').addEventListener('change', function(e){
-    switch (true) {
-        case !imageRegex.exec(this.value):
-            $('errorImages').innerHTML = "Solo se admiten archivos jpg, jpeg, png, gif, webp"
-            break;
-        case this.files.length > 4 :   
-        $('errorImages').innerHTML = "Solo hasta 4 imagenes"
-        break
-        default:
-            this.classList.add('is-valid')
-            checkedFields()
-            break;
-    }
-  });
-  $('images').addEventListener('focus', function(e) {
-    cleanError('errorImages', e)
-  })
 
 
         /* CHEQUEO DE ERRORES */
@@ -99,7 +79,7 @@ const checkedFields = () => {
         
             let error = false
         
-            for (let i = 0; i < this.elements.length -2; i++) {
+            for (let i = 0; i < this.elements.length -3; i++) {
                 
                 if(!this.elements[i].value.trim() || this.elements[i].classList.contains('errorInput')) {
                     error = true
