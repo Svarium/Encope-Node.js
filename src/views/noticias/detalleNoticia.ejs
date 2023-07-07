@@ -77,13 +77,56 @@
  <!-- IR ATRAS -->
 
  <div class="container">
-    <div class="ms-4 mt-3 col-xs-12 col-md-6 col-lg-3 d-block img-fluid">
+  <div class="row">
+    <div class="ms-4 mt-3 col-xs-12 col-md-6 col-lg-3 d-block img-fluid d-flex justify-content-between">
       <a href="/inicio">
-        <button class="btn btn-danger" onclick="history.back()">
-            <i class="fas fa-arrow-left"></i> ir al Inicio
+        <button class="btn btn-primary" onclick="history.back()">
+            <i class="fas fa-arrow-left"></i> Inicio
           </button>
       </a>
+
+      <% if (locals.userLogin) { %>
+        <% if (locals.userLogin.rol === 1 || locals.userLogin.rol === 2 || locals.userLogin.rol === 3) { %>
+      <a href="/noticias/edit/<%= noticia.id %>">
+        <button class="btn btn-success" onclick="history.back()">
+          <i class="fa fa-edit"></i> Editar
+          </button>
+      </a>
+
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <i class="fa fa-trash"></i> Borrar
+      </button>
+
+      <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">¡ATENCION!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       ¿Estas seguro de que quieres eliminar esta noticia?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+        <form action="/noticias/delete/<%= noticia.id %>?_method=DELETE" method="POST">
+          <button type="submit" class="btn btn-danger">
+            <i class="fa fa-trash"></i> Si, Borrar
+           </button>
+        </form>
+      </div>
     </div>
+  </div>
+</div>
+
+
+      <% } %>
+      <% } %>  
+    </div>
+  </div>
+   
   </div>
   </main>
 
