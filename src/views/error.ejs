@@ -36,8 +36,8 @@
         <h1 class="text-white text-start"><%= message %></h1>
         <h2 class="text-start text-white"><%= error.status %></h2>       
       </div>  
-      <div class="mb-3 btn-regresar">
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      <div class="mb-3">
+      <button type="button" class="btn btn-primary abrir" data-bs-toggle="modal" data-bs-target="#exampleModal">
         + Info
       </button>
       <!-- Modal -->
@@ -49,7 +49,12 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-         <pre class="text-justify ms-5 mb-5 text-muted"><%= error.stack %></pre>
+        <% if (locals.userLogin && (locals.userLogin.rol === 1 || locals.userLogin.rol === 2) ) { %>
+          <pre class="text-justify ms-5 mb-5 text-muted"><%= error.stack %></pre>
+        <% }else {  %>
+          <i class="fas fa-exclamation-triangle"></i>
+         <span>upss hubo un error...le sugerimos regresar al inicio del sitio mientras trabajamos en resolverlo.</span>
+          <% }  %>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

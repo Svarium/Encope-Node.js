@@ -24,3 +24,29 @@
     font-weight: bolder;
     font-size: 40px;
 }
+
+@media screen and (max-width:800px) {
+
+    .error-body{
+        background: url('/images/ERROR_VERTICAL.png');
+        background-repeat: no-repeat;
+        background-size: 100%;
+        background-attachment:fixed;
+    
+    }
+
+   .error-info{
+    top: 65vh;
+    left: 2vh;
+   }
+
+
+
+.abrir{
+    position: relative;
+    top: 30vh;
+    left: 2vh;
+}
+
+
+}
