@@ -236,20 +236,12 @@ module.exports = {
         .catch(error => console.log(error))     
     },
 
-    dashboard : (req,res) =>{
-        db.Usuario.findAll({
-            attributes:['name', 'surname', 'email', 'rolId', 'id', 'credencial'],
-            include : ['rol', 'destino']
-        }
-           
-        )
-        .then(usuarios =>{
+    dashboard : (req,res) =>{       
             return res.render('dashboard',{
                 title: "Panel de administración",
-                usuarios
+             
             })
-        })
-        .catch(error => console.log(error))
+      
     },
     editRol : async (req,res) => {
 

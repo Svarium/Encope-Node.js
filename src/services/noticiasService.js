@@ -9,6 +9,7 @@ module.exports = {
             include: [
               {
                 association: "images",
+                attributes:{exclude:['createdAt','updatedAt']},
               }
             ]
           };

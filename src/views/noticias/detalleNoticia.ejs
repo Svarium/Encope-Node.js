@@ -14,62 +14,73 @@
 
     <!-- SECCION NOTICIA -->
 
+    <% if (noticia) { %>
+           
     <div class="container">
-        <p style="font-size:13px;"><%= new Intl.DateTimeFormat('es-AR').format(new Date(noticia.createdAt)) %></p>
-        <hr>
-        <h4><%= noticia.titulo %></h4>
+      <p style="font-size:13px;"><%= new Intl.DateTimeFormat('es-AR').format(new Date(noticia.createdAt)) %></p>
+      <hr>
+      <h4><%= noticia.titulo %></h4>
+  </div>
+  <br>
+
+  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+
+      
+
+        <% noticia.images.forEach((image, index) => { %>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= index %>" <% if (index === 0) { %>class="active" aria-current="true"<% } %> aria-label="Slide <%= index + 1 %>"></button>
+        <% }); %>
+      </div>
+      <div class="carousel-inner">
+        <% noticia.images.forEach((image, index) => { %>
+          <div class="carousel-item <% if (index === 0) { %>active<% } %>">
+            <img src="/images/imagesNoticias/<%= image.name %>" class="carruselNoticias mx-auto img-fluid d-block w-100" alt="...">
+          </div>
+        <% }); %>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
+
     <br>
 
-    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-          <% noticia.images.forEach((image, index) => { %>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= index %>" <% if (index === 0) { %>class="active" aria-current="true"<% } %> aria-label="Slide <%= index + 1 %>"></button>
-          <% }); %>
-        </div>
-        <div class="carousel-inner">
-          <% noticia.images.forEach((image, index) => { %>
-            <div class="carousel-item <% if (index === 0) { %>active<% } %>">
-              <img src="/images/imagesNoticias/<%= image.name %>" class="carruselNoticias mx-auto img-fluid d-block w-100" alt="...">
-            </div>
-          <% }); %>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
+    <!-- texto -->
 
-      <br>
-
-      <!-- texto -->
-
-      <div class="container">
-        <div class="row">
-            <div class="mx-auto col-xs-12 col-md-6 col-lg-12">
-                <p class="textoNoticias"><%= noticia.descripcion %>                    
-                </p>
-            </div>
-        </div>
-      </div>
-
-      <% if (noticia.video) { %>
-
-        <div class="container "> 
-            <div class="row">
-                <div class="mx-auto col-xs-12 col-md-6 col-lg-12">
-                    <iframe width="550" height="415" src="https://www.youtube.com/embed/<%= noticia.video ? noticia.video.slice(17) : 'gb5Oek19Kr0' %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="videoNoticias"></iframe> 
-                </div>
-            </div>
+    <div class="container">
+      <div class="row">
+          <div class="mx-auto col-xs-12 col-md-6 col-lg-12">
+              <p class="textoNoticias"><%= noticia.descripcion %>                    
+              </p>
           </div>
-       
-      <% } %>
+      </div>
+    </div>
 
-            <!-- video -->
+    <% if (noticia.video) { %>
+
+      <div class="container "> 
+          <div class="row">
+              <div class="mx-auto col-xs-12 col-md-6 col-lg-12">
+                  <iframe width="550" height="415" src="https://www.youtube.com/embed/<%= noticia.video ? noticia.video.slice(17) : 'gb5Oek19Kr0' %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="videoNoticias"></iframe> 
+              </div>
+          </div>
+        </div>
+     
+    <% } %>
+
+          <!-- video -->
+      <% } else { %>
+
+        <h5 class="text-center mt-5">No se encontraron noticias...</h5>
+
+        <% } %>
+
 
 
       <!-- FINALIZA SECCION NOTICIA -->

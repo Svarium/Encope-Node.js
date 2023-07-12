@@ -12,6 +12,7 @@ getAllLicitaciones : async(req, {withPagination = "false", page= 1, limit=10} = 
             include: [
                 {
                     association:"tipo",
+                    attributes:{exclude:['createdAt','updatedAt']},
                 }
             ],
         }

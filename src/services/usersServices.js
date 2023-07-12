@@ -32,9 +32,11 @@ module.exports = {
                 include: [
                     {
                         association:"rol",
+                        attributes:{exclude:['createdAt','updatedAt']},
                     },
                     {
-                        association:"destino"
+                        association:"destino",
+                        attributes:{exclude:['createdAt','updatedAt']},
                     }
                 ],
             }

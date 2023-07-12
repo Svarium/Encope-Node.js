@@ -9,49 +9,28 @@ const db = require("../database/models")
 
 module.exports = {
 
-    list : (req,res) => {
-
-    db.Publicaciones.findAll({
-        order : [['id', 'DESC']],
-        include : ['tipo'],
-        
-    })
-    .then(publicaciones =>{
-       
+    list : (req,res) => {        
         return res.render('licitaciones',{
             title: 'Licitaciones',
-            publicaciones
-        })
-    })
-    .catch(error => console.log(error))
-
-
-       
+         
+        }) 
     },
 
-    verTodas : (req,res) => {
-        db.Publicaciones.findAll({
-            include : ['tipo']
-        })
-        .then(publicaciones =>{
-           
-      /*       return res.send(publicaciones) */
+    verTodas : (req,res) => {     
             return res.render('adminLicitaciones',{
-                title: 'Administrar Licitaciones',
-                publicaciones
-            })
-        })
-        .catch(error => console.log(error))
+                title: 'Administrar Licitaciones',              
+            })      
     },
 
 
     agregar : (req,res) => {
 
         db.Tipos.findAll({
+            attributes:{exclude:['createdAt','updatedAt']},
             order : [['nombre']],
         })
         .then(tipos =>{
-            /* return res.send(tipos) */
+
             return res.render('agregarLic',{
                 title: 'Nueva Publicación',
                 tipos
@@ -134,7 +113,9 @@ module.exports = {
 
         const publicacion = db.Publicaciones.findByPk(id) //busco la publicación en la base
 
-        const tipos =  db.Tipos.findAll() // busco los tipos para recorrerlos en el select del form
+        const tipos =  db.Tipos.findAll({
+            attributes:{exclude:['createdAt','updatedAt']},
+        }) // busco los tipos para recorrerlos en el select del form
 
         Promise.all(([publicacion, tipos])) //engloba las dos promesas anteriores y las envia a la vista
         .then(([publicacion, tipos]) =>{
@@ -162,8 +143,6 @@ module.exports = {
                     location : "file"
                 })
             }
-    
-            /* return res.send(errors.mapped()) */
     
             if(errors.isEmpty()){
     
@@ -195,7 +174,9 @@ module.exports = {
     
                 const publicacion = db.Publicaciones.findByPk(id) //busco la publicación en la base
         
-                const tipos =  db.Tipos.findAll() // busco los tipos para recorrerlos en el select del form
+                const tipos =  db.Tipos.findAll({
+                    attributes:{exclude:['createdAt','updatedAt']},
+                }) // busco los tipos para recorrerlos en el select del form
         
                 Promise.all(([publicacion, tipos])) //engloba las dos promesas anteriores y las envia a la vista
                 .then(([publicacion, tipos]) =>{
@@ -239,7 +220,8 @@ module.exports = {
                     [Op.like] : `%${query}%`
                 }
             },
-            include : ['tipo']
+            include : ['tipo'],
+            attributes:{exclude:['createdAt','updatedAt']},
         })
         .then(publicaciones => {
             return res.render('resultado',{
@@ -259,7 +241,9 @@ module.exports = {
                     [Op.like] : `%${querySearch}%`
                 }
             },
-            include : ['tipo']
+            include : ['tipo'],
+            attributes:{exclude:['createdAt','updatedAt']},
+
         })
         .then(publicaciones => {
             return res.render('searchLicitacion',{
