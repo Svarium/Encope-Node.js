@@ -1,0 +1,26 @@
+.error-body{
+    background: url('/images/ERROR.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-attachment:fixed;
+
+}
+
+.error-info{
+    position: relative;
+    top: 30vh;
+}
+
+.error-info h1{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+    font-weight: bolder;
+    font-size: 60px;
+}
+
+.error-info h2{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+    font-weight: bolder;
+    font-size: 40px;
+}
