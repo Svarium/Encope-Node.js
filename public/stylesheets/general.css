@@ -159,6 +159,7 @@ h3 {
     z-index: -1;
 }
 
+
 @media screen and (max-width:800px) {
     .content-modal{
         width: 90%;

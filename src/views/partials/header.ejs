@@ -34,19 +34,14 @@
                   <li class="nav-item">
                     <a class="nav-link active" href="/noticias">Noticias</a>
                 </li>
-                <% if (locals.userLogin) { %>
-                    <a class="nav-link active  me-3 text-muted" href="/users/perfil"><i class="fas fa-user-circle fa-lg"></i> Mi perfil</a>
-                <% } %>
-
                 <form action="/licitacion/searchLicitacion" method="get" class="d-flex my-2 my-lg-0">
                     <input  class="form-control me-sm-2" type="search" name="search" placeholder="Buscar Licitacion">
                     <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Buscar</button>
                   </form>
                 <% if (locals.userLogin) { %>
                     
-                    <li class="nav-item ms-3">
-                        <a href="/users/perfil" class="text-muted">Hola, <%= userLogin.name %>!  <img id="iconInicio" src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>"  alt="" class="iconProfile"></a>
-                       
+                    <li class="nav-item ms-3 saludo-user" >
+                        <a href="/users/perfil" class="text-muted ">Hola, <%= userLogin.name %> | Ir al perfil  <img id="iconInicio" src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>"  alt="" class="iconProfile"></a>                       
                     </li>   
                 
           <!--       <li class="nav-item ">
