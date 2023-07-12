@@ -69,28 +69,47 @@ const checkedFields = () => {
   })
 
 
-  /* INPUT IMAGEN */
+  /* INPUT IMAGENES */
 
   const imageRegex = /\.(jpg|jpeg|png|gif|webp)$/i;
-
+  const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+  
   $('images').addEventListener('change', function(e){
-    switch (true) {
-        case !imageRegex.exec(this.value):
-            $('errorImages').innerHTML = "Solo se admiten archivos jpg, jpeg, png, gif, webp"
-            break;
-        case this.files.length > 4 :   
-        $('errorImages').innerHTML = "Solo hasta 4 imagenes"
-        break
-        default:
-            this.classList.add('is-valid')
-            checkedFields()
-            break;
+    const files = this.files;
+    const errors = [];
+    
+    if (files.length > 4) {
+      errors.push('Solo se pueden subir hasta 4 imágenes');
+    }
+    
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      
+      if (!imageRegex.test(file.name)) {
+        errors.push("El archivo " + file.name + " no es una imagen válida");
+        continue;
+      }
+      
+      if (file.size > MAX_FILE_SIZE) {
+        errors.push("El archivo " + file.name + " es demasiado grande (máximo permitido: 2MB)");
+        continue;
+      }
+      
+      this.classList.add('is-valid');
+      checkedFields();
+    }
+    
+    if (errors.length > 0) {
+      $('errorImages').innerHTML = errors.join("<br>");
+      this.value = "";
+    } else {
+      $('errorImages').innerHTML = "";
     }
   });
+  
   $('images').addEventListener('focus', function(e) {
-    cleanError('errorImages', e)
-  })
-
+    cleanError('errorImages', e);
+  });
 
         /* CHEQUEO DE ERRORES */
 

@@ -30,7 +30,7 @@ const uploadNoticiasImages = (req,res,next) => {
 
     upload(req,res,function(error){
         if(error){
-            req.fileValidationError = "No más de 4 imágenes";
+            req.fileValidationError = "No más de 4 imágenes - 2mb máximo c/u";
         }
         next()
     });
