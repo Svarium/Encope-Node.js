@@ -4,7 +4,7 @@ module.exports = [
 
 check('titulo')
     .notEmpty().withMessage('El título de la noticia es obligatorio').bail()
-    .isLength({min:5, max:50}).withMessage('El título debe tener entre 5 y 50 carácteres'),
+    .isLength({min:5, max:150}).withMessage('El título debe tener entre 5 y 150 carácteres'),
 
 /* check('video')
     .optional()
@@ -12,5 +12,5 @@ check('titulo')
 
 check('descripcion')
 .notEmpty().withMessage('Debe ingresar el cuerpo de la noticia').bail()
-.isLength({min:10, max:2000}).withMessage('La descripción puede tener entre 10 y 2000 carácteres')  
+.isLength({min:10, max:5000}).withMessage('La descripción puede tener entre 10 y 5000 carácteres')  
 ]
