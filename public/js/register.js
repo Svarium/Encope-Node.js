@@ -213,6 +213,17 @@ $('name').addEventListener('blur', function(e){
         
     }
 
-    !error && this.submit()
+    if(!error){
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Registro exitoso',
+        showConfirmButton: false,
+        timer: 2000
+      })
+      setTimeout(function() {
+        $('formRegister').submit();
+      }, 2000); 
+     }
 
   })

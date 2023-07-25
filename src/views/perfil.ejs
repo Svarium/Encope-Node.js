@@ -1,16 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
     <%- include('./partials/head')  %>
-         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
-         <!-- BOOTSTRAP -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">        
+         <!-- bootstrap -->
+        
           
 <body  style="background-image: url('/images/imagen\ productos\ vector-03.png'); background-size: cover;">
   
-    <nav class="navbar navbar-expand-sm navbar-light bg-body-secondary ">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
         <div class="container">
         <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
           aria-expanded="false" aria-label="Toggle navigation">
@@ -65,7 +61,7 @@
 </div>
          
           <li class="nav-item me-3">
-            <a class="nav-link active" href="#" aria-current="page">Bienvenido, <%= userLogin.name %> <span class="visually-hidden">(current)</span></a>
+            <a class="nav-link active text-muted" href="#" aria-current="page">Bienvenido, <%= userLogin.name %> <span class="visually-hidden">(current)</span></a>
           </li>        
           <a href="/inicio"><img id="userIconProfile" src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>" class="iconProfile" alt=""></a>
         </div>
@@ -96,7 +92,7 @@
                 <hr>
                 <div class="row justify-content-center">
                   <small class="text-center  text-danger mb-2">* En caso de ser agente del spf ingrese su credencial y destino *</small>
-                  <form class="col-sm-12 col-md-6 col-lg-10" action="/users/update/<%- locals.userLogin.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+                  <form id="editInfo" class="col-sm-12 col-md-6 col-lg-10" action="/users/update/<%- locals.userLogin.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
                     <div class="row">
                       <div class="col-md-6 mb-3">
                         <label for="nombre" class="form-label">Nombre</label>
@@ -132,7 +128,7 @@
                       <small class="text-danger ms-2"><%= locals.errors && errors.icon ? errors.icon.msg : null %></small>
                     </div>
                     <div class="text-center mb-4">
-                      <button type="submit" class="btn btn-primary">Enviar</button>
+                      <button type="submit" onclick="showAlertAndSubmit(event)" class="btn btn-primary">Enviar</button>
                     </div>
                   </form>
                 </div>
@@ -160,6 +156,43 @@
 cardImg.addEventListener('error', () => {
   cardImg.src = 'https://cdn-icons-png.flaticon.com/512/149/149071.png'
 })
+
 </script>
+
+<script>
+  function showAlertAndSubmit(event) {
+    event.preventDefault();
+
+    Swal.fire({
+      title: 'Estas seguro de editar tu información?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, editar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Si el usuario confirmó el alert, envía el formulario manualmente
+        const form = document.getElementById("editInfo");
+        Swal.fire({
+  position: 'center',
+  icon: 'success',
+  title: 'Informacion editada correctamente',
+  showConfirmButton: false,
+  timer: 1500
+})
+
+        // Retraso de 5 segundos antes de enviar el formulario y cambiar la página
+        setTimeout(function() {
+          form.submit();
+        }, 5000); // 2000 milisegundos = 2 segundos
+      }
+    });
+  }
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+<%- include('./partials/scripts')  %>
 </body>
 </html>

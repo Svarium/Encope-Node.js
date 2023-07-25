@@ -153,6 +153,17 @@ $('expediente').addEventListener('blur', function(e){
         
     }
 
-    !error && this.submit()
+    if(!error){
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Publicación agregada correctamente!',
+        showConfirmButton: false,
+        timer: 2000
+      })
+      setTimeout(function() {
+        $('formAddLicitacion').submit();
+      }, 2000); 
+     }
 
   })

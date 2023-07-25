@@ -79,3 +79,38 @@ $('email').addEventListener('blur', function(e){
   $('password').addEventListener('focus', function(e) {
     cleanError('errorPass', e)
   })
+
+
+   /* CHEQUEO DE ERRORES */
+
+   $('formLogin').addEventListener('submit', function(e){
+    e.preventDefault();
+
+    let error = false
+
+    for (let i = 0; i < this.elements.length -2; i++) {
+        
+        if(!this.elements[i].value.trim() || this.elements[i].classList.contains('errorInput')) {
+            error = true
+            this.elements[i].classList.add('is-invalid')
+            $('errorFormAddNoticia').innerHTML = "Hay campos vacíos o con errores!"
+        }
+        
+    }
+
+   /*  !error && this.submit() */
+
+   if(!error){
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Bienvenido',
+      showConfirmButton: false,
+      timer: 2000
+    })
+    setTimeout(function() {
+      $('formLogin').submit();
+    }, 2000); 
+   }
+
+  })

@@ -128,6 +128,19 @@ const checkedFields = () => {
                 
             }
         
-            !error && this.submit()
+           /*  !error && this.submit() */
+
+           if(!error){
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Noticia agregada correctamente',
+              showConfirmButton: false,
+              timer: 2000
+            })
+            setTimeout(function() {
+              $('formAddNoticia').submit();
+            }, 2000); 
+           }
         
           })

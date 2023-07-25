@@ -89,6 +89,17 @@ const checkedFields = () => {
                 
             }
         
-            !error && this.submit()
+            if(!error){
+              Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Noticia editada correctamente',
+                showConfirmButton: false,
+                timer: 2000
+              })
+              setTimeout(function() {
+                $('formEditNoticia').submit();
+              }, 2000); 
+             }
         
           })

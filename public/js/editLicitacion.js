@@ -154,6 +154,17 @@ $('formEditLicitacion').addEventListener('submit', function(e){
         
     }
 
-    !error && this.submit()
+    if(!error){
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Publicación editada correctamente!',
+        showConfirmButton: false,
+        timer: 2000
+      })
+      setTimeout(function() {
+        $('formEditLicitacion').submit();
+      }, 2000); 
+     }
 
   })
