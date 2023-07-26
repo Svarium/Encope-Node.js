@@ -20,13 +20,14 @@
                 
                 <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menú</a>
                 <div class="dropdown-menu" aria-labelledby="dropdownId">
-                  <% if (locals.userLogin && (locals.userLogin.rol === 1 || locals.userLogin.rol === 2) ) { %>
-                    <a class="dropdown-item" href="/licitacion/publicaciones">Administrar Licitaciones</a>
-                    
+                  <% if (locals.userLogin && (locals.userLogin.rol === 1 || locals.userLogin.rol === 2 || locals.userLogin.rol === 4) ) { %>
+                    <a class="dropdown-item" href="/licitacion/publicaciones">Administrar Licitaciones</a>                    
                     <% } %>
+                    <% if (locals.userLogin && (locals.userLogin.rol === 1 || locals.userLogin.rol === 2 || locals.userLogin.rol === 3) ) { %>
+                      <a class="dropdown-item" href="/noticias/add">Agregar Nueva Noticia +</a>                    
+                      <% } %>
                 </div>
-              </li>
-           
+              </li>           
 
             <% if (locals.userLogin.rol === 1) { %>
                 <li class="nav-item">
