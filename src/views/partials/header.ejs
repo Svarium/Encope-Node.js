@@ -21,9 +21,6 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="/licitacion/listar" aria-current="page">Licitaciones <span class="visually-hidden">(current)</span></a>
                     </li>
-                  <!--   <li class="nav-item">
-                        <a class="nav-link active" href="./interno" aria-current="page">Uso Interno<span class="visually-hidden">(current)</span></a>
-                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link active" href="#">Contacto</a>
                     </li>
@@ -42,33 +39,16 @@
                     
                     <li class="nav-item ms-3 saludo-user" >
                         <a href="/users/perfil" class="text-muted ">Hola, <%= userLogin.name %> | Ir al perfil  <img id="iconInicioUser2" src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>"  alt="" class="iconProfile"></a>                       
-                    </li>   
-                
-          <!--       <li class="nav-item ">
-                    <a class="nav-link active text-secondary" href="/users/logout">Cerrar Sesion</a>
-                       
-                </li>  
-               -->
-                 
-
+                    </li>             
                  <% } else {%>
                     <li class="nav-item">
                         <a class="nav-link active" href="/users/login">Iniciar Sesión</a>
                     </li>
-                <% } %>
-
-
-                 
-                </ul>
-              
+                <% } %>                 
+                </ul>              
             </div>
       </div>
-    </nav>
-
-    
-   
-    <span class="redes-sociales-span">    
-
+    </nav>      
+    <span class="redes-sociales-span">  
     </span>
-
   </header>

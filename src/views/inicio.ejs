@@ -7,8 +7,59 @@
 
 <body>
 
-<!-- HEADER -->  
-  <%- include('./partials/header') %> 
+  <header>
+    <!-- place navbar here -->
+    <nav class="navbar navbar-expand-sm navbar-light" id="up">
+          <div class="container-fluid ms-3">
+            <a class="navbar-brand" href="/inicio"> 
+            <img src="/images/logo_home.png" width="150px" alt="" class="logo-web">
+            </a>
+            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavId">
+                <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+                    
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/inicio" aria-current="page">Home<span class="visually-hidden">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/nosotros" aria-current="page">Nosotros <span class="visually-hidden">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/licitacion/listar" aria-current="page">Licitaciones <span class="visually-hidden">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Contacto</a>
+                    </li>
+               
+                    <li class="nav-item">
+                      <a class="nav-link active" href="#">Mapa</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" href="/noticias">Noticias</a>
+                </li>
+                <form action="/licitacion/searchLicitacion" method="get" class="d-flex my-2 my-lg-0">
+                    <input  class="form-control me-sm-2" type="search" name="search" placeholder="Buscar Licitacion">
+                    <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Buscar</button>
+                  </form>
+                <% if (userLogin) { %>                    
+                    <li class="nav-item ms-3 saludo-user" >
+                        <a href="/users/perfil" class="text-muted ">Hola, <%= userLogin.name %> | Ir al perfil  <img id="iconInicioUser2" src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>"  alt="" class="iconProfile"></a>                       
+                    </li>             
+                 <% } else {%>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/users/login">Iniciar Sesión</a>
+                    </li>
+                <% } %>                 
+                </ul>              
+            </div>
+      </div>
+    </nav>      
+    <span class="redes-sociales-span">  
+    </span>
+  </header> 
 
 
   <!-- CARRUSEL BOOTSTRAP  -->
@@ -75,8 +126,8 @@
 
     <h2 id="noticias">NOTICIAS RECIENTES</h2>
 
-    <% if (locals.userLogin) { %>
-      <% if (locals.userLogin.rol === 1 || locals.userLogin.rol === 2 || locals.userLogin.rol === 3) { %>
+    <% if (userLogin) { %>
+      <% if (userLogin.rol === 1 || userLogin.rol === 2 || userLogin.rol === 3) { %>
 
         <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary ms-5" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
@@ -178,17 +229,6 @@
  <!-- SCRIPTS DE EFECTOS/BOOTSTRAP5 -->
 
 <%- include('./partials/scripts') %> 
-
-<script>
-/*  document.addEventListener('DOMContentLoaded', () => {
-      const iconInicio = document.getElementsByClassName('iconProfile')[0];
-      console.log(iconInicio);
-
-      iconInicio.addEventListener('error', () => {
-        iconInicio.src = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
-      });
-    }); */
-</script>
 
 </body>
 </html>

@@ -65,14 +65,7 @@
     </nav><br>
 
     <main>
-      <div class="d-flex justify-content-end m-2">
-        <button type="button" class="btn btn-primary btn-sm ms-1 mt-1 shadow" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          Solicitar cambio de rol
-      </button>
-      <form id="logoutUser" action="/users/logout" method="GET">
-        <button onclick="showAlertAndLogout(event)" type="submit" class="btn btn-danger shadow  ms-1 mt-1">Cerrar sesion</button>
-      </form>
-      </div>
+      
 
 
         <div class="container mb-5">
@@ -90,6 +83,14 @@
                     <li class="list-group-item">Credencial: <%= usuario.credencial? usuario.credencial : '-' %> </li>
                     <li class="list-group-item">Destino: <%= usuario.destino? usuario.destino.nombreDestino : '-' %> </li>                 
                   </ul>
+                  <div class="d-flex justify-content-center mb-1 mt-1">
+                    <button type="button" class="btn btn-primary ms-1 mt-1 shadow" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                       Cambio de rol
+                  </button>
+                  <form id="logoutUser" action="/users/logout" method="GET">
+                    <button onclick="showAlertAndLogout(event)" type="submit" class="btn btn-danger shadow  ms-1 mt-1">Cerrar Sesion</button>
+                  </form>
+                  </div>
         
                 </div>
               </div>

@@ -108,7 +108,7 @@ module.exports = {
             }
 
             
-            return res.redirect('/inicio')
+            return res.redirect('/users/perfil')
 
         })
         .catch(error => console.log(error))

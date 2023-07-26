@@ -9,6 +9,7 @@ module.exports = {
     
     },
     inicio : (req,res) =>{
+       userLogin = req.session.userLogin
         db.Noticias.findAll({
             include:["images"],
             order: [["createdAt", "DESC"]],
@@ -18,7 +19,8 @@ module.exports = {
            /*  return res.send(noticias) */
             return res.render('inicio', {
                 title: 'Encope',
-                noticias
+                noticias,
+                userLogin
             })
         })
       

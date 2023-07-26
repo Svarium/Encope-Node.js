@@ -38,7 +38,7 @@ module.exports = {
 
                res.cookie('userEncopeWeb', req.session.userLogin, {maxAge: 1000*60*5})
 
-               return res.redirect('/inicio')
+               return res.redirect('/users/perfil')
                
         } catch (error) {
             console.log(error);
