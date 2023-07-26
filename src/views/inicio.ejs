@@ -180,10 +180,14 @@
 <%- include('./partials/scripts') %> 
 
 <script>
-  const iconInicio = document.getElementById('iconInicio')
-  iconInicio.addEventListener('error', () => {
-    iconInicio.src='https://cdn-icons-png.flaticon.com/512/149/149071.png'
-  })
+/*  document.addEventListener('DOMContentLoaded', () => {
+      const iconInicio = document.getElementsByClassName('iconProfile')[0];
+      console.log(iconInicio);
+
+      iconInicio.addEventListener('error', () => {
+        iconInicio.src = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+      });
+    }); */
 </script>
 
 </body>
