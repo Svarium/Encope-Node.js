@@ -43,9 +43,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 app.use(session({
-  secret : "Encope web 2023",
+  secret : process.env.SESSION_SECRET || "Nueva web Encope 2023 con Node.js",
   resave : false,
-  saveUninitialized: true
+  saveUninitialized: true,
 }))
 app.use(cors());
 app.use(passport.initialize());
@@ -82,8 +82,10 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
+  const userLogin = req.session.userLogin
   res.render('error',{
-    title:"error"
+    title:"error",
+    userLogin
   });
 });
 

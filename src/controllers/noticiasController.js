@@ -9,14 +9,17 @@ module.exports = {
 
 
     list: (req,res) => {
+      const userLogin = req.session.userLogin
       return res.render('noticias/allNoticias',{
-        title:"Todas las noticias"
+        title:"Todas las noticias",
+        userLogin
       })
   },
 
     //renderiza la vista del detalle de la noticia
     detail : (req,res) => {
       const id = req.params.id
+      const userLogin = req.session.userLogin
 
 
       db.Noticias.findByPk(id, {
@@ -25,7 +28,8 @@ module.exports = {
       .then(noticia => {
         return res.render('noticias/detalleNoticia',{
           noticia,
-          title: "Noticias"
+          title: "Noticias",
+          userLogin
         })
       })
       .catch(error => console.log(error))
@@ -34,13 +38,16 @@ module.exports = {
 
     //renderiza la vista para el formulario de agregar noticia
     add:(req,res) => {
+      const userLogin = req.session.userLogin
         return res.render("noticias/addNoticia",{
-            title: "Agrega noticia"
+            title: "Agrega noticia",
+            userLogin
         })
     },
 
     //guarda la noticia en la base de datos
     store:(req,res) => {
+      const userLogin = req.session.userLogin
         const errors = validationResult(req);
         if (!req.files.length && !req.fileValidationError) {
             errors.errors.push({
@@ -94,7 +101,8 @@ module.exports = {
         return res.render("noticias/addNoticia",{
             errors:errors.mapped(),
             old:req.body,
-            title: "Agrega noticia"
+            title: "Agrega noticia",
+            userLogin
         })      
         
         }
@@ -105,6 +113,7 @@ module.exports = {
     //Renderiza el formulario de edicion para la noticia
     edit:(req,res)=>{
             const {id} = req.params;
+            const userLogin = req.session.userLogin
 
             db.Noticias.findByPk(id, {
                 include:["images"],
@@ -112,7 +121,8 @@ module.exports = {
             .then(noticia => {
                 return res.render('noticias/editNoticia',{
                     noticia,
-                    title:"Editar Noticia"
+                    title:"Editar Noticia",
+                    userLogin
                 })
             })            
     },
@@ -121,6 +131,7 @@ module.exports = {
     update: (req, res) => {
       const errors = validationResult(req);
       const idNoticia = req.params.id;
+      const userLogin = req.session.userLogin
     
       if (errors.isEmpty()) {
         let { titulo, descripcion, video } = req.body;
@@ -217,7 +228,8 @@ module.exports = {
           .then((noticia) => {
             return res.render("noticias/editNoticia", {
               noticia,
-              title: "Editar Noticia"
+              title: "Editar Noticia",
+              userLogin
             });
           })
           .catch((error) => {

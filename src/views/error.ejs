@@ -33,7 +33,7 @@
   <div class="container">
     <div class="row justify-content-start align-items-center ">
       <div class="d-flex flex-column error-info">
-        <h1 class="text-white text-start"><%= message %></h1>
+       
         <h2 class="text-start text-white"><%= error.status %></h2>       
       </div>  
       <div class="mb-3">
@@ -49,7 +49,8 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <% if (locals.userLogin && (locals.userLogin.rol === 1 || locals.userLogin.rol === 2) ) { %>
+        <% if (userLogin && (userLogin.rol === 1 || userLogin.rol === 2) ) { %>
+          <small class="text-white text-start"><%= message %></small>
           <pre class="text-justify ms-5 mb-5 text-muted"><%= error.stack %></pre>
         <% }else {  %>
           <i class="fas fa-exclamation-triangle"></i>

@@ -54,8 +54,8 @@ const checkedFields = () => {
         case !this.value.trim():
             msgError('errorDescripcion', "La descripción es obligatoria", e)
             break;
-        case this.value.trim().length < 2 || this.value.trim().length > 2000 :
-        msgError('errorDescripcion', "Entre 2 y 2000 caracteres",e)
+        case this.value.trim().length < 2 || this.value.trim().length > 5000 :
+        msgError('errorDescripcion', "Entre 2 y 5000 caracteres",e)
         break
         default:
             this.classList.add('is-valid')
@@ -79,16 +79,15 @@ const checkedFields = () => {
         
             let error = false
         
-            for (let i = 0; i < this.elements.length -3; i++) {
+            for (let i = 0; i < this.elements.length -4; i++) {
                 
                 if(!this.elements[i].value.trim() || this.elements[i].classList.contains('errorInput')) {
                     error = true
                     this.elements[i].classList.add('is-invalid')
                     $('errorFormEditNoticia').innerHTML = "Hay campos vacíos o con errores!"
                 }
-                
-            }
-        
+            }  
+            
             if(!error){
               Swal.fire({
                 position: 'center',

@@ -9,7 +9,7 @@ module.exports = {
     
     },
     inicio : (req,res) =>{
-       userLogin = req.session.userLogin
+    const userLogin = req.session.userLogin
         db.Noticias.findAll({
             include:["images"],
             order: [["createdAt", "DESC"]],
@@ -26,14 +26,18 @@ module.exports = {
       
     },
     nosotros : (req,res)=>{
+      const userLogin = req.session.userLogin
         return res.render('nosotros',{
-            title:'Nosotros'
+            title:'Nosotros',
+            userLogin
         })
     },
    
     interno : (req,res)=>{
+      const userLogin = req.session.userLogin
         return res.render('interno',{
-            title : 'Uso interno'
+            title : 'Uso interno',
+            userLogin
         })
     },
 

@@ -20,16 +20,16 @@
                 
                 <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menú</a>
                 <div class="dropdown-menu" aria-labelledby="dropdownId">
-                  <% if (locals.userLogin && (locals.userLogin.rol === 1 || locals.userLogin.rol === 2 || locals.userLogin.rol === 4) ) { %>
+                  <% if (userLogin && (userLogin.rol === 1 || userLogin.rol === 2 || userLogin.rol === 4) ) { %>
                     <a class="dropdown-item" href="/licitacion/publicaciones">Administrar Licitaciones</a>                    
                     <% } %>
-                    <% if (locals.userLogin && (locals.userLogin.rol === 1 || locals.userLogin.rol === 2 || locals.userLogin.rol === 3) ) { %>
+                    <% if (userLogin && (userLogin.rol === 1 || userLogin.rol === 2 || userLogin.rol === 3) ) { %>
                       <a class="dropdown-item" href="/noticias/add">Agregar Nueva Noticia +</a>                    
                       <% } %>
                 </div>
               </li>           
 
-            <% if (locals.userLogin.rol === 1) { %>
+            <% if (userLogin.rol === 1) { %>
                 <li class="nav-item">
                     <a class="nav-link active" href="/users/dashboard" aria-current="page">Dashboard<span class="visually-hidden">(current)</span></a>
                 </li> 
@@ -100,7 +100,7 @@
                 <hr>
                 <div class="row justify-content-center">
                   <small class="text-center  text-danger mb-2">* En caso de ser agente del spf ingrese su credencial y destino *</small>
-                  <form id="editInfo" class="col-sm-12 col-md-6 col-lg-10" action="/users/update/<%- locals.userLogin.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+                  <form id="editInfo" class="col-sm-12 col-md-6 col-lg-10" action="/users/update/<%- userLogin.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
                     <div class="row">
                       <div class="col-md-6 mb-3">
                         <label for="nombre" class="form-label">Nombre</label>

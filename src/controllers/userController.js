@@ -10,12 +10,15 @@ const db = require('../database/models')
 module.exports = {
 
     register : (req,res) =>{
+        const userLogin = req.session.userLogin
         return res.render('register',{
-            title: 'Registrate'
+            title: 'Registrate',
+            userLogin
         })
     },
     
     processRegister: (req,res)=>{
+        const userLogin = req.session.userLogin
 
         const errors = validationResult(req);
 
@@ -73,19 +76,23 @@ module.exports = {
             return res.render('register',{
                 errors : errors.mapped(),
                 old : req.body,
-                title: 'Registrate'
+                title: 'Registrate',
+                userLogin
             })
         }
            
     },
 
     login : (req,res) =>{
+        const userLogin = req.session.userLogin
         return res.render('login',{
-            title : "inicia sesión"
+            title : "inicia sesión",
+            userLogin
         })
     },
 
     processLogin: (req,res) =>{
+        const userLogin = req.session.userLogin
         const errors = validationResult(req);
 
       if(errors.isEmpty()){
@@ -115,7 +122,8 @@ module.exports = {
       }else{
         res.render('login',{
             title : "inicia sesión",
-            errors : errors.mapped()
+            errors : errors.mapped(),
+            userLogin
         })
       }
     },
@@ -123,6 +131,7 @@ module.exports = {
     updateUser: async (req,res) => {
 
         try {
+            const userLogin = req.session.userLogin
       
             const errors = validationResult(req);
       
@@ -163,7 +172,7 @@ module.exports = {
                 };
 
                 if (req.cookies.userEncopeWeb){
-                  res.cookie('userGuaridaDelLector', '', { maxAge: -1 });
+                  res.cookie('userEncopeWeb', '', { maxAge: -1 });
                   res.cookie('userEncopeWeb', req.session.userLogin, {maxAge: 1000*60*5});
                 }
     
@@ -192,7 +201,8 @@ module.exports = {
                         destino,
                         old:req.body,
                         errors: errors.mapped(),
-                        title: "Perfil de usuario"
+                        title: "Perfil de usuario",
+                        userLogin
                     })
                 })      
                 .catch(error => console.log(error))
@@ -205,12 +215,11 @@ module.exports = {
     logout: (req,res) =>{
         req.session.destroy();
         res.cookie('userEncopeWeb', null, {maxAge:-1})
-        return res.redirect('/inicio')
+        return res.redirect('/')
     },
 
     perfil: (req,res) =>{
-
-        
+        const userLogin = req.session.userLogin        
 
         const usuario = db.Usuario.findByPk(req.session.userLogin.id,{
             attributes : ['name', 'surname', 'email', 'icon', 'id', 'credencial', 'destinoId'],
@@ -228,17 +237,18 @@ module.exports = {
                 usuario,
                 destino,
                 title: "Perfil de usuario",
-               
-            }
-            
+                userLogin               
+            }            
             )
         })      
         .catch(error => console.log(error))     
     },
 
-    dashboard : (req,res) =>{       
+    dashboard : (req,res) =>{   
+        const userLogin = req.session.userLogin    
             return res.render('dashboard',{
                 title: "Panel de administración",
+                userLogin
              
             })
       
@@ -262,6 +272,7 @@ module.exports = {
          
     },                       
       searchUser : (req,res) => {
+        const userLogin = req.session.userLogin
         const query = req.query.search;
         db.Usuario.findAll({
             where : {
@@ -274,7 +285,8 @@ module.exports = {
         .then(users => {
             return res.render('searchUser',{
                 users,
-                title : 'Resultado de la busqueda'
+                title : 'Resultado de la busqueda',
+                userLogin
             })
         })
         .catch(error => console.log(error))

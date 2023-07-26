@@ -9,22 +9,26 @@ const db = require("../database/models")
 
 module.exports = {
 
-    list : (req,res) => {        
+    list : (req,res) => {   
+      const userLogin = req.session.userLogin     
         return res.render('licitaciones',{
             title: 'Licitaciones',
+            userLogin
          
         }) 
     },
 
     verTodas : (req,res) => {     
+      const userLogin = req.session.userLogin
             return res.render('adminLicitaciones',{
-                title: 'Administrar Licitaciones',              
+                title: 'Administrar Licitaciones',  
+                userLogin            
             })      
     },
 
 
     agregar : (req,res) => {
-
+      const userLogin = req.session.userLogin
         db.Tipos.findAll({
             attributes:{exclude:['createdAt','updatedAt']},
             order : [['nombre']],
@@ -33,7 +37,8 @@ module.exports = {
 
             return res.render('agregarLic',{
                 title: 'Nueva Publicación',
-                tipos
+                tipos,
+                userLogin
             })
         })
         .catch(error => console.log(error))
@@ -43,7 +48,7 @@ module.exports = {
 
         const errors = validationResult(req)
 
-      
+      const userLogin = req.session.userLogin
 
        if(req.fileValidationError){ //este if valida que solo se puedan subir extensiones (pdf)
         errors.errors.push({
@@ -96,7 +101,8 @@ module.exports = {
                 title: 'Nueva Publicación',
                 tipos,
                 errors : errors.mapped(),
-                old : req.body
+                old : req.body,
+                userLogin
             })
         })
         .catch(error => console.log(error))
@@ -108,6 +114,8 @@ module.exports = {
     },
 
     edit : (req,res) => {
+
+      const userLogin = req.session.userLogin
 
         const {id} = req.params;
 
@@ -123,7 +131,8 @@ module.exports = {
             return res.render('editarLic',{
                 tipos,
                 publicacion,
-                title : 'Editar Publicación'
+                title : 'Editar Publicación',
+                userLogin
             })
         })
         .catch(error => console.log(error))
@@ -133,6 +142,7 @@ module.exports = {
     update : async (req,res) => {
 
         try {
+          const userLogin = req.session.userLogin
             const errors = validationResult(req)
 
             if(req.fileValidationError){ //este if valida que solo se puedan subir extensiones (pdf)
@@ -186,7 +196,8 @@ module.exports = {
                         publicacion,
                         title : 'Editar Publicación',
                         errors : errors.mapped(),
-                        old : req.body
+                        old : req.body,
+                        userLogin
                     })
                 })
                 .catch(error => console.log(error))
@@ -212,6 +223,7 @@ module.exports = {
     }, 
 
     search : (req,res) => {
+      const userLogin = req.session.userLogin
 
         const query = req.query.search;
         db.Publicaciones.findAll({
@@ -226,13 +238,15 @@ module.exports = {
         .then(publicaciones => {
             return res.render('resultado',{
                 publicaciones,
-                title : 'Resultado de la busqueda'
+                title : 'Resultado de la busqueda',
+                userLogin
             })
         })
         .catch(error => console.log(error))
     },
 
     searchLicitacion : (req,res) => {
+        const userLogin = req.session.userLogin
 
         const querySearch = req.query.search;
         db.Publicaciones.findAll({
@@ -248,7 +262,8 @@ module.exports = {
         .then(publicaciones => {
             return res.render('searchLicitacion',{
                 publicaciones,
-                title : 'Resultado de la busqueda'
+                title : 'Resultado de la busqueda',
+                userLogin
             })
         })
         .catch(error => console.log(error))

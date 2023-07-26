@@ -96,8 +96,8 @@
           </button>
       </a>
 
-      <% if (locals.userLogin) { %>
-        <% if (locals.userLogin.rol === 1 || locals.userLogin.rol === 2 || locals.userLogin.rol === 3) { %>
+      <% if (userLogin) { %>
+        <% if (userLogin.rol === 1 || userLogin.rol === 2 || userLogin.rol === 3) { %>
       <a href="/noticias/edit/<%= noticia.id %>">
         <button class="btn btn-success" onclick="history.back()">
           <i class="fa fa-edit"></i> Editar

@@ -1,6 +1,6 @@
 module.exports = (req, res, next) => {
-    if(req.cookies.userGuaridaDelLector){
-        req.session.userLogin = req.cookies.userGuaridaDelLector
+    if(req.cookies.userEncopeWeb){
+        req.session.userLogin = req.cookies.userEncopeWeb
     }
 
     next()
