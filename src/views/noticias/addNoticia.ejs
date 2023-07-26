@@ -41,7 +41,8 @@
                     </div>
                 </div>
                 <div class="col-md-12 mb-2">
-                    <label for="descripcion" class="form-label">Descripción</label>
+                    <label for="descripcion" class="form-label">Descripción</label><small class="text-success-emphasis" id="descriptionInfo"
+                    hidden> (<span id="numberCharacters"></span> caracteres disponibles)</small>
                     <textarea id="descripcion" placeholder="Ingrese el cuerpo de la noticia" class="form-control rounded <%= (locals.errors && errors.descripcion) && 'is-invalid'%>" name="descripcion"><%= (locals.old && old.descripcion) && old.descripcion %></textarea>
                     <small id="errorDescripcion" class="text-danger ms-2"><%= locals.errors && errors.descripcion ? errors.descripcion.msg : null %></small>
                 </div>

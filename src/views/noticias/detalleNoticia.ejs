@@ -56,7 +56,12 @@
     <div class="container">
       <div class="row">
           <div class="mx-auto col-xs-12 col-md-6 col-lg-12">
-              <p class="textoNoticias"><%= noticia.descripcion %>                    
+              <p class="textoNoticias">
+                <% function addBreaks(text) {
+                  return text.replace(/\//g, "<br><br>");
+                } %>
+                <%-              
+               addBreaks(noticia.descripcion) %>                    
               </p>
           </div>
       </div>

@@ -64,10 +64,41 @@ const checkedFields = () => {
     }
   });
 
-  $('descripcion').addEventListener('focus', function(e) {
-    cleanError('errorDescripcion', e)
-  })
+/* contador de caracteres */
+let maxCharacters = 5000;
+let numberCharacters = 5000;
 
+$('descripcion').addEventListener('focus', function (event) {
+  cleanError('errorDescripcion', event)
+})
+
+let textValid;
+
+$('descripcion').addEventListener("keyup", function (event) {
+  if (textValid && event.key !== 'Backspace') {
+    this.value = textValid
+    msgError('errorDescripcion', "Máximo 500 caracteres", event)
+    return null
+  }
+  numberCharacters = maxCharacters - +this.value.length;
+
+  $('numberCharacters').innerHTML = numberCharacters;
+
+  if (numberCharacters === 0) {
+    textValid = this.value.trim()
+  } else {
+    textValid = null
+  }
+
+  if (numberCharacters <= 0) {
+    $('descriptionInfo').hidden = true;
+    msgError('errorDescripcion', "Máximo 500 caracteres", event)
+  } else {
+    $('descriptionInfo').hidden = false;
+    cleanError('errorDescripcion', event)
+  }
+
+})
 
   /* INPUT IMAGENES */
 
