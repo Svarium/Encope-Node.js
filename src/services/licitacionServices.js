@@ -9,6 +9,7 @@ getAllLicitaciones : async(req, {withPagination = "false", page= 1, limit=10} = 
     try {  
             
         let options = {
+            order: [["createdAt", "DESC"]],
             include: [
                 {
                     association:"tipo",
