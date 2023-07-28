@@ -33,13 +33,21 @@ module.exports = {
         })
     },
    
-    interno : (req,res)=>{
-      const userLogin = req.session.userLogin
-        return res.render('interno',{
-            title : 'Uso interno',
+    mapa: (req,res) => {
+        const userLogin = req.session.userLogin
+        return res.render('mapa',{
+            title:"Mapa",
             userLogin
         })
     },
+
+    contacto: (req,res) => {
+        const userLogin = req.session.userLogin
+        return res.render('contacto',{
+            userLogin,
+            title:'Contacto'
+        })
+    }
 
   
 }
