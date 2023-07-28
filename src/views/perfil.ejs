@@ -13,31 +13,42 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="collapsibleNavId">
-          <ul class="navbar-nav me-auto mt-2 mt-lg-0">
-            <a class="nav-link active" href="/inicio" aria-current="page">Ir al Inicio<span class="visually-hidden">(current)</span></a>
-            
-            <li class="nav-item dropdown">
-                
-                <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menú</a>
-                <div class="dropdown-menu" aria-labelledby="dropdownId">
+          <ul class="navbar-nav me-auto mt-2 mt-lg-0">          
+            <li class="nav-item dropdown">                
+                <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img id="userIconProfile" src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>" class="iconProfile" alt=""><%= userLogin.name %></a>
+                <div class="dropdown-menu p-3" aria-labelledby="dropdownId">
                   <% if (userLogin && (userLogin.rol === 1 || userLogin.rol === 2 || userLogin.rol === 4) ) { %>
-                    <a class="dropdown-item" href="/licitacion/publicaciones">Administrar Licitaciones</a>                    
+                    <a class="dropdown-item" href="/licitacion/publicaciones"><i class="far fa-file-alt fa-lg"></i>  Administrar Publicaciones</a>                    
                     <% } %>
                     <% if (userLogin && (userLogin.rol === 1 || userLogin.rol === 2 || userLogin.rol === 3) ) { %>
-                      <a class="dropdown-item" href="/noticias/add">Agregar Nueva Noticia +</a>                    
+                      <a class="dropdown-item" href="/noticias/add"><i class="far fa-newspaper fa-lg"></i> Agregar Nueva Noticia</a>                    
                       <% } %>
+                      <% if (userLogin.rol === 1) { %>                        
+                            <a class="dropdown-item" href="/users/dashboard" aria-current="page"><i class="fas fa-user-shield"></i> Panel de Usuarios<span class="visually-hidden">(current)</span></a>
+                    <% } %>
+                     <!-- Botón que abrirá el modal -->
+                <button type="button" class="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                  <i class="fas fa-link"></i>  Uso Interno
+               </button>
+               <button type="button" class="btn btn-primary dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="fas fa-user-edit"></i>  Cambio de rol
+           </button>
+                 <a class="dropdown-item" href="/inicio" aria-current="page"><i class="fas fa-home"></i> Ir al Inicio<span class="visually-hidden">(current)</span></a>
+                 <form id="logoutUser" action="/users/logout" method="GET">
+                  <button onclick="showAlertAndLogout(event)" type="submit" class="btn dropdown-item"><i class="fas fa-sign-out-alt"></i> Cerrar Sesion</button>
+                </form>
                 </div>
-              </li>           
+                
+           
+              </li> 
+         
+        </div>
+      </div>
+    </nav><br>
 
-            <% if (userLogin.rol === 1) { %>
-                <li class="nav-item">
-                    <a class="nav-link active" href="/users/dashboard" aria-current="page">Dashboard<span class="visually-hidden">(current)</span></a>
-                </li> 
-            <% } %>
-            <!-- Button trigger modal -->
+    <main>
 
-
-            <!-- Modal USO INTERNO-->
+       <!-- Modal USO INTERNO-->
 <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-fullscreen">
     <div class="modal-content">
@@ -146,24 +157,10 @@
     </div>
   </div>
 </div>
-         
-          <li class="nav-item me-3">
-            <a class="nav-link active text-muted" href="#" aria-current="page">Bienvenido, <%= userLogin.name %> <span class="visually-hidden">(current)</span></a>
-          </li>        
-          <a href="/inicio"><img id="userIconProfile" src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>" class="iconProfile" alt=""></a>
-        </div>
-      </div>
-    </nav><br>
-
-    <main>
       
 
 
         <div class="container mb-5">
-            <!-- Botón que abrirá el modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
-          Uso Interno
-          </button>
             <div class="row">
               <div class="col-12 col-md-3">
                 <div class="card">
@@ -178,14 +175,6 @@
                     <li class="list-group-item">Credencial: <%= usuario.credencial? usuario.credencial : '-' %> </li>
                     <li class="list-group-item">Destino: <%= usuario.destino? usuario.destino.nombreDestino : '-' %> </li>                 
                   </ul>
-                  <div class="d-flex justify-content-center mb-1 mt-1">
-                    <button type="button" class="btn btn-primary ms-1 mt-1 shadow" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                       Cambio de rol
-                  </button>
-                  <form id="logoutUser" action="/users/logout" method="GET">
-                    <button onclick="showAlertAndLogout(event)" type="submit" class="btn btn-danger shadow  ms-1 mt-1">Cerrar Sesion</button>
-                  </form>
-                  </div>
         
                 </div>
               </div>
