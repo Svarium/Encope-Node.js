@@ -7,7 +7,7 @@ const userTable = $("#userTable");
 
 let pageActive = 1;
 
-const apiGetUsers = "https://encope.wnpower.host/api/users/";
+const apiGetUsers = "https://encope.gob.ar/api/users/";
 const getUsers = ({page=1} = {}) => {
     users = fetch(`${apiGetUsers}?page=${page}`).then((res)=> res.json())
     console.log(users);

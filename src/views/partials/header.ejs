@@ -9,8 +9,8 @@
                 aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="collapsibleNavId">
-                <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+            <div class="collapse navbar-collapse mt-3" id="collapsibleNavId">
+                <ul class="navbar-nav  mt-2 mt-lg-0">
                     
                     <li class="nav-item">
                         <a class="nav-link active" href="/inicio" aria-current="page">Home<span class="visually-hidden">(current)</span></a>
@@ -28,17 +28,45 @@
                     <li class="nav-item">
                       <a class="nav-link active" href="/mapa">Mapa</a>
                   </li>
-                  <li class="nav-item">
+                  <li class="nav-item me-4">
                     <a class="nav-link active" href="/noticias">Noticias</a>
                 </li>
-                <form action="/licitacion/searchLicitacion" method="get" class="d-flex my-2 my-lg-0">
+                <form action="/licitacion/searchLicitacion" method="get" class="d-flex ">
                     <input  class="form-control me-sm-2" type="search" name="search" placeholder="Buscar Licitacion">
-                    <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Buscar</button>
+                    <button class="btn btn-outline-danger my-2 my-sm-0 me-3" type="submit">Buscar</button>
                   </form>
                 <% if (userLogin) { %>                    
-                    <li class="nav-item ms-3 saludo-user" >
-                        <a href="/users/perfil" class="text-muted ">Hola, <%= userLogin.name %> | Ir al perfil  <img id="iconInicioUser2" src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>"  alt="" class="iconProfile"></a>                       
-                    </li>             
+                    <div class="collapse navbar-collapse" id="collapsibleNavId">
+                        <ul class="navbar-nav me-auto mt-2 mt-lg-0">          
+                          <li class="nav-item dropdown">                
+                              <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img id="userIconProfile" src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>" class="iconProfile" alt=""> Bienvenido | <%= userLogin.name %></a>
+                              <div class="dropdown-menu p-3" aria-labelledby="dropdownId">
+                                <% if (userLogin && (userLogin.rol === 1 || userLogin.rol === 2 || userLogin.rol === 4) ) { %>
+                                  <a class="dropdown-item" href="/licitacion/publicaciones"><i class="far fa-file-alt fa-lg"></i>  Administrar Publicaciones</a>                    
+                                  <% } %>
+                                  <% if (userLogin && (userLogin.rol === 1 || userLogin.rol === 2 || userLogin.rol === 3) ) { %>
+                                    <a class="dropdown-item" href="/noticias/add"><i class="far fa-newspaper fa-lg"></i> Agregar Nueva Noticia</a>                    
+                                    <% } %>
+                                    <% if (userLogin.rol === 1) { %>                        
+                                          <a class="dropdown-item" href="/users/dashboard" aria-current="page"><i class="fas fa-user-shield"></i> Panel de Usuarios<span class="visually-hidden">(current)</span></a>
+                                  <% } %>
+                                   <!-- Botón que abrirá el modal -->
+                              <button type="button" class="btn dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                                <i class="fas fa-link"></i>  Uso Interno
+                             </button>
+                             <button type="button" class="btn btn-primary dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                              <i class="fas fa-user-edit"></i>  Cambio de rol
+                         </button>
+                               <a class="dropdown-item" href="/users/perfil" aria-current="page"><i class="fas fa-user"></i> Ir al Perfil<span class="visually-hidden">(current)</span></a>
+                               <form id="logoutUser" action="/users/logout" method="GET">
+                                <button onclick="showAlertAndLogout(event)" type="submit" class="btn dropdown-item"><i class="fas fa-sign-out-alt"></i> Cerrar Sesion</button>
+                              </form>
+                              </div>
+                              
+                         
+                            </li> 
+                       
+                      </div>       
                  <% } else {%>
                     <li class="nav-item">
                         <a class="nav-link active" href="/users/login">Iniciar Sesión</a>
@@ -50,4 +78,5 @@
     </nav>      
     <span class="redes-sociales-span">  
     </span>
+   
   </header>
