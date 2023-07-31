@@ -8,9 +8,9 @@ const licitacionesTable = $("#tabla-admin-licitaciones");
 
 let pageActive = 1;
 
-const apiGetLicitacion = "https://encope.gob.ar/api/licitacion/";
+/* const apiGetLicitacion = "https://encope.gob.ar/api/licitacion/"; */
 
-//const apiGetLicitacion = "http://localhost:3000/api/licitacion/";
+const apiGetLicitacion = "http://localhost:3000/api/licitacion/";
 
 const getLicitacion = ({page=1} = {}) => {
 
@@ -35,29 +35,11 @@ const paintLicitaciones = (licitacion) => {
                 <a class="btn  btn-primary" href="/images/licitaciones/${publicacion.archivo}">Ver</a>
                 <a class="btn  btn-success" href="/licitacion/editar/${publicacion.id}">Editar</i></a>              
           <div class="boton-modal detalle-comprar">
-              <label class="btn btn-success" for="btn-modal" style="background-color: rgb(199, 54, 66);">
-                Borrar
-              </label>
+          <button class="btn btn-danger btn-sm" onclick="removeLicitacion(${publicacion.id})">ELIMINAR <i class="fa-solid fa-trash"></i></button>
           </div>          
             </div>
     </td>
-      </tr>        
-   <input type="checkbox" id="btn-modal">
-   <div class="container-modal">
-       <div class="content-modal">
-           <h2>¡ATENCION!</h2>
-           <p>¿Estas seguro de que deseas eliminar esta publicación?</p>
-           <div class="btn-cerrar">
-             <div>
-               <button onclick="removeLicitacion(${publicacion.id})">ELIMINAR <i class="fa-solid fa-trash"></i></button>
-             </div> 
-               <label for="btn-modal">CANCELAR</label>
-           </div>
-       </div>
-       <label for="btn-modal" class="cerrar-modal"></label>
-   </div>
-   
-          
+      </tr>     
         `
         licitacionesTable.innerHTML += template
     });
@@ -66,18 +48,40 @@ const paintLicitaciones = (licitacion) => {
 
 
 const removeLicitacion = async (id) => {
-    const { ok } = await fetch(`${apiGetLicitacion}/${id}`, {
-      method: "DELETE",
-    }).then((res) => res.json());
-    if (ok) {
-      const {
-        data: { pages, currentPage, licitacion },
-      } = await getLicitacion({ page: pageActive });
-  
-      paintLicitaciones(licitacion);
-      paintItemsPage({ numberPages: pages, itemActive: currentPage });
-      statusPrevAndNext({ currentPage, pages });
-    }
+
+    Swal.fire({
+        title: 'Seguro quieres eliminar esta publicación?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, borrar!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+            const { ok } =  fetch(`${apiGetLicitacion}/${id}`, {
+                method: "DELETE",
+              }).then((res) => res.json());
+              if (ok) {
+                const {
+                  data: { pages, currentPage, licitacion },
+                } = getLicitacion({ page: pageActive });
+            
+                paintLicitaciones(licitacion);
+                paintItemsPage({ numberPages: pages, itemActive: currentPage });
+                statusPrevAndNext({ currentPage, pages });
+              }      
+
+          Swal.fire(
+            'Eliminada!',
+            'La publicación se eliminó correctamente',
+            'success'
+          )
+          location.reload();
+        }
+      })
+
+
+    
   };
   
 
