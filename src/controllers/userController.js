@@ -159,8 +159,8 @@ module.exports = {
     
                 user.name= name,
                 user.surname= surname,
-                user.credencial= credencial,
-                user.destinoId= destino,
+                user.credencial= user.credencial? +user.credencial : +credencial,
+                user.destinoId= destino ? +destino : user.destinoId,
                 user.icon= req.file ? req.file.filename : userSession.icon
                 
                 await user.save()

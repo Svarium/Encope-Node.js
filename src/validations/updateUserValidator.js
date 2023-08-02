@@ -22,11 +22,8 @@ module.exports = [
             ignore : " "
         }).withMessage('Solo caracteres alfabéticos'),
 
-    check('destino')
-    .notEmpty().withMessage('El destino es obligatorio'),
-
     check('credencial')
-    .notEmpty().withMessage('Ingresa tu credencial').bail()
+    .if((value, { req }) => req.body.credencial !== '').bail()
     .matches(/^[0-9]+$/).withMessage('La credencial es invalida').bail()
     .isLength({min:5, max:5}).withMessage('Ingresa una credencial válida').bail()
     .custom((value, {req}) => {

@@ -1,0 +1,54 @@
+<% if (userLogin) { %>
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">     
+      <h5 id="offcanvasRightLabel" class="d-flex align-items-center text-muted">
+        <img id="userIconProfile" src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>" class="iconProfile me-2" alt="">
+        <%= userLogin.name %>
+        <button type="button" class="btn-close btn-sm text-reset ms-auto" data-bs-dismiss="offcanvas" aria-label="Close"></button>       
+      </h5>
+     
+    </div>
+    <hr>
+    <div class="offcanvas-body text-center justify-content-center">
+      <% if (userLogin && (userLogin.rol === 1 || userLogin.rol === 2 || userLogin.rol === 4) ) { %>
+        <a class="btn btn-outline-danger w-75 mb-3 text-start" href="/licitacion/publicaciones">
+          <i class="far fa-file-alt fa-lg me-2"></i> Administrar Publicaciones
+        </a>
+      <% } %>
+  
+      <% if (userLogin && (userLogin.rol === 1 || userLogin.rol === 2 || userLogin.rol === 3) ) { %>
+        <a class="btn btn-outline-danger w-75 mb-3 text-start" href="/noticias/add">
+          <i class="far fa-newspaper fa-lg me-2"></i> Agregar Nueva Noticia
+        </a>
+      <% } %>
+  
+      <% if (userLogin.rol === 1) { %>
+        <a class="btn btn-outline-danger w-75 mb-3 text-start" href="/users/dashboard" aria-current="page">
+          <i class="fas fa-user-shield me-2"></i> Panel de Usuarios<span class="visually-hidden">(current)</span>
+        </a>
+      <% } %>
+  
+      <a class="btn btn-outline-danger w-75 mb-3 text-start" href="/users/perfil" aria-current="page">
+        <i class="fas fa-user me-2"></i> Ir al Perfil<span class="visually-hidden">(current)</span>
+      </a>      
+      
+       <button type="button" class="btn btn-outline-danger w-75 mb-3 text-start" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="fas fa-user-edit"></i>  Cambio de rol
+           </button>
+            <button type="button" class="btn btn-outline-danger w-75 mb-3 text-start" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                  <i class="fas fa-link"></i>  Uso Interno
+               </button>
+               <a class="btn btn-outline-danger w-75 mb-3 text-start" href="/inicio" aria-current="page">
+                <i class="fas fa-home me-2"></i> Ir al inicio<span class="visually-hidden">(current)</span>
+              </a>
+  
+      <form id="logoutUser" action="/users/logout" method="GET">
+        <button onclick="showAlertAndLogout(event)" type="submit" class="btn btn-outline-danger w-75 text-start">
+          <i class="fas fa-sign-out-alt me-2"></i> Cerrar Sesión
+        </button>
+      </form>
+    </div>
+  </div>
+  <% } %>
+
+

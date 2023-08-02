@@ -36,37 +36,8 @@
                     <button class="btn btn-outline-danger my-2 my-sm-0 me-3" type="submit">Buscar</button>
                   </form>
                 <% if (userLogin) { %>                    
-                    <div class="collapse navbar-collapse" id="collapsibleNavId">
-                        <ul class="navbar-nav me-auto mt-2 mt-lg-0">          
-                          <li class="nav-item dropdown">                
-                              <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img id="userIconProfile" src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>" class="iconProfile" alt=""> Bienvenido | <%= userLogin.name %></a>
-                              <div class="dropdown-menu p-3" aria-labelledby="dropdownId">
-                                <% if (userLogin && (userLogin.rol === 1 || userLogin.rol === 2 || userLogin.rol === 4) ) { %>
-                                  <a class="dropdown-item" href="/licitacion/publicaciones"><i class="far fa-file-alt fa-lg"></i>  Administrar Publicaciones</a>                    
-                                  <% } %>
-                                  <% if (userLogin && (userLogin.rol === 1 || userLogin.rol === 2 || userLogin.rol === 3) ) { %>
-                                    <a class="dropdown-item" href="/noticias/add"><i class="far fa-newspaper fa-lg"></i> Agregar Nueva Noticia</a>                    
-                                    <% } %>
-                                    <% if (userLogin.rol === 1) { %>                        
-                                          <a class="dropdown-item" href="/users/dashboard" aria-current="page"><i class="fas fa-user-shield"></i> Panel de Usuarios<span class="visually-hidden">(current)</span></a>
-                                  <% } %>
-                                   <!-- Botón que abrirá el modal -->
-                              <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal1">
-                              <a><i class="fas fa-link"></i> </a> Uso Interno
-                             </button>
-                             <button type="button" class="btn btn-primary dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                              <i class="fas fa-user-edit"></i>  Cambio de rol
-                         </button>
-                               <a class="dropdown-item" href="/users/perfil" aria-current="page"><i class="fas fa-user"></i> Ir al Perfil<span class="visually-hidden">(current)</span></a>
-                               <form id="logoutUser" action="/users/logout" method="GET">
-                                <button onclick="showAlertAndLogout(event)" type="submit" class="btn dropdown-item"><i class="fas fa-sign-out-alt"></i> Cerrar Sesion</button>
-                              </form>
-                              </div>
-                              
-                         
-                            </li> 
-                       
-                      </div>       
+                  <button class="btn btn-transparent" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><img id="userIconProfile" src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>" class="iconProfile me-2" alt="">
+                    <%= userLogin.name %> <i class="fa-solid fa-caret-down fa-lg"></i></button>
                  <% } else {%>
                     <li class="nav-item">
                         <a class="nav-link active" href="/users/login">Iniciar Sesión</a>
