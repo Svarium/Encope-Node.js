@@ -62,7 +62,7 @@ module.exports = {
                 };
 
                 if (req.body){
-                    res.cookie('userEncopeWeb', req.session.userLogin, {maxAge: 1000*60*5})
+                    res.cookie('userEncopeWeb', req.session.userLogin, {maxAge: 1000*60})
                 }
 
                 res.redirect('/users/perfil')
@@ -111,7 +111,7 @@ module.exports = {
             };
 
             if(req.body.rememberMe){
-                res.cookie('userEncopeWeb', req.session.userLogin, {maxAge : 100*60*2})
+                res.cookie('userEncopeWeb', req.session.userLogin, {maxAge : 100*60})
             }
 
             
@@ -173,7 +173,7 @@ module.exports = {
 
                 if (req.cookies.userEncopeWeb){
                   res.cookie('userEncopeWeb', '', { maxAge: -1 });
-                  res.cookie('userEncopeWeb', req.session.userLogin, {maxAge: 1000*60*5});
+                  res.cookie('userEncopeWeb', req.session.userLogin, {maxAge: 1000*60});
                 }
     
                
@@ -212,11 +212,21 @@ module.exports = {
             }
     },
 
-    logout: (req,res) =>{
-        req.session.destroy();
-        res.cookie('userEncopeWeb', null, {maxAge:-1})
-        return res.redirect('/')
-    },
+    logout: (req, res) => {
+        // Eliminar la sesión del usuario
+        req.session.destroy((err) => {
+          if (err) {
+            console.error('Error al destruir la sesión:', err);
+            // Puedes manejar el error de acuerdo a tus necesidades
+          }
+          
+          // Eliminar la cookie que almacena los datos de sesión
+          res.clearCookie('userEncopeWeb');
+      
+          // Redirigir al usuario a la página de inicio o a una página de confirmación de logout
+          return res.redirect('/');
+        });
+      },
 
     perfil: (req,res) =>{
         const userLogin = req.session.userLogin        

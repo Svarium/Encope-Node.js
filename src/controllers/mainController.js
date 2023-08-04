@@ -1,4 +1,5 @@
-const db = require("../database/models")
+const db = require("../database/models");
+const { update } = require("./noticiasController");
 
 module.exports = {
     home : (req,res) =>{
@@ -11,12 +12,20 @@ module.exports = {
     inicio : (req,res) =>{
     const userLogin = req.session.userLogin
         db.Noticias.findAll({
-            include:["images"],
+            include:[{
+                model:db.Image,
+                as:'images',
+                attributes:{
+                    exclude:["id", "noticiaId", "createdAt", "updatedAt" ]
+                }
+            }],
             order: [["createdAt", "DESC"]],
-            limit:4
+            limit:4,
+            attributes:{
+                exclude:["updatedAt"]
+            }
         })
         .then(noticias => {
-           /*  return res.send(noticias) */
             return res.render('inicio', {
                 title: 'Encope',
                 noticias,

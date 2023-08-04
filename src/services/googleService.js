@@ -12,7 +12,7 @@ const strategyConfig = new OAuth2Strategy({
     scope: ['profile', 'email']
 }, (accesToken, refreshToken, profile, done) => {
 
-    console.log(profile);
+   /*  console.log(profile); */
     done(null, profile)
 
 })

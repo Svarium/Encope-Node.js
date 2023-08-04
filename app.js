@@ -11,8 +11,8 @@ const session = require('express-session');
 const passport = require('passport')
 const { loginGoogleInitalize } = require('./src/services/googleService');
 const cors = require('cors')
-const localsUserCheck = require('./src/middlewares/localsUserCheck');
-const cookieCheck = require('./src/middlewares/cookieCheck');
+const localsUserCheckMiddleware = require('./src/middlewares/localsUserCheck');
+const cookieCheckMiddleware = require('./src/middlewares/cookieCheck');
 
 
 var app = express();
@@ -39,20 +39,25 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser(process.env.COOKIE_SECRET || 'CookieSecret'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 app.use(session({
   secret : process.env.SESSION_SECRET || "Nueva web Encope 2023 con Node.js",
   resave : false,
   saveUninitialized: true,
+  cookie:{
+    secure: true, // Requiere HTTPS en producción
+    httpOnly: true, // Impide el acceso a la cookie desde JavaScript en el cliente
+    sameSite: 'strict', // Mejora la seguridad contra ataques CSRF
+  }
 }))
 app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session())
 
-app.use(cookieCheck)
-app.use(localsUserCheck)
+app.use(cookieCheckMiddleware)
+app.use(localsUserCheckMiddleware)
 
 
 //rutas MVC

@@ -36,7 +36,7 @@ module.exports = {
                 socialId:googleId
                }
 
-               res.cookie('userEncopeWeb', req.session.userLogin, {maxAge: 1000*60*5})
+               res.cookie('userEncopeWeb', req.session.userLogin, {maxAge: 1000*60})
 
                return res.redirect('/users/perfil')
                
