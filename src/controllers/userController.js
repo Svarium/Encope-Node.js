@@ -62,7 +62,7 @@ module.exports = {
                 };
 
                 if (req.body){
-                    res.cookie('userEncopeWeb', req.session.userLogin, {maxAge: 1000*60})
+                    res.cookie('userEncopeWeb', req.session.userLogin, {maxAge: 1000*60*7})
                 }
 
                 res.redirect('/users/perfil')
@@ -111,7 +111,7 @@ module.exports = {
             };
 
             if(req.body.rememberMe){
-                res.cookie('userEncopeWeb', req.session.userLogin, {maxAge : 100*60})
+                res.cookie('userEncopeWeb', req.session.userLogin, {maxAge : 100*60*7})
             }
 
             
@@ -173,7 +173,7 @@ module.exports = {
 
                 if (req.cookies.userEncopeWeb){
                   res.cookie('userEncopeWeb', '', { maxAge: -1 });
-                  res.cookie('userEncopeWeb', req.session.userLogin, {maxAge: 1000*60});
+                  res.cookie('userEncopeWeb', req.session.userLogin, {maxAge: 1000*60*7});
                 }
     
                
