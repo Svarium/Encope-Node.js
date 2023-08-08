@@ -54,20 +54,24 @@
                 <hr>
 
 
-                <% if (users.length != 0) { %>
-                 <% users.forEach(user => { %>
+                <% if (user) { %>
+                
                     <div class="card mb-3 justify-content-center" style="background-color: white; box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);">
                         <div class="row g-0">
                           <div class="col-md-4">
                             <img id="userIconSearch" src="<%=/https:/.test(user.icon) ? user.icon : `/images/iconsProfile/${user.icon}` %>" class="img-fluid rounded-start" alt="...">
                             <small class="text-center ms-4 text-muted">Rol: <%= user.rol.nombre %></small>
+                             <!-- Button trigger modal -->
+                             <button type="button" class="btn btn-sm btn-success mb-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                              Reestablecer Contraseña
+                             </button> 
                           </div>
                           <div class="col-md-6">
                             <div class="card-body">
                               <h5 class="card-title"><%= user.name %> <%= user.surname %></h5>
                               <p class="card-text"><%= user.email %></p>
                               <p class="card-text"><small class="text-muted">Destino: <%= user.destino? user.destino.nombreDestino : '-' %></small></p>
-                              <p class="card-text"><small class="text-muted">Credencial: <%= user.credencial? user.credencial : '-' %></small></p>
+                              <p class="card-text"><small class="text-muted">Credencial: <%= user.credencial? user.credencial : '-' %></small></p>                              
                             </div>
                             <div class="d-flex">
                                 <form action="/users/rolUser/<%= user.id %>?_method=PUT" method="POST" class="row g-6">
@@ -88,18 +92,51 @@
                                   <button type="submit" class="btn btn-primary mt-1 mb-2">Actualizar rol de usuario</button>
                                 </div>               
                               </form>    
-                              </div>                                  
+                              </div>                            
+                            <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- <h5 class="modal-title" id="exampleModalLabel">Blanqueo de contraseña</h5> -->
+        <small class="text-danger">Debe tener mayuscula, numero y 6 a 12 caracteres (ej: Encope2023*)</small> 
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/users/resetPassUsers/<%= user.id %>?_method=PUT " method="POST">    
+          <div class="mb-3">
+              
+              <label for="password" class="form-label">Nueva contraseña</label>
+              <input type="password" name="newPass" class="form-control <%= (locals.errors && errors.newPass) && 'is-invalid'%>" id="newPass" required>
+              <small class="text-danger ms-2"><%= locals.errors && errors.newPass ? errors.newPass.msg : null %></small>
+            </div>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Resetear</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+       
+      </div>
+    </div>
+  </div>
+</div>
                           </div>
                         </div>
                       </div>                  
                                            
-                 <% }) %>
+              
                <% } else { %>
                 <div class="container">
                   <p class="text-center"><span class="text-bg-danger">No hay resultados para la busqueda del usuario</span></p>
                 </div>
                 <% } %>      
-            </div>          
+            </div>
+            <% if (locals.errors && errors.newPass) { %>
+              <h2 class="text-danger"><%= errors.newPass.msg %>
+              </h2>   
+              <h3 class="text-danger">Regresa al panel y vuelve a buscar el usuario para blanquear su clave</h3>
+            <% } %>   
+            
     </main>
 
 

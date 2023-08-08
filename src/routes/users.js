@@ -1,5 +1,5 @@
 var express = require('express');
-const { register, processLogin, processRegister, login, logout, perfil, dashboard, updateUser, editRol, searchUser } = require('../controllers/userController');
+const { register, processLogin, processRegister, login, logout, perfil, dashboard, updateUser, editRol, searchUser, resetPass, restetUserPass } = require('../controllers/userController');
 const { uploadIconImage } = require('../middlewares/iconProfile');
 const registerValidator = require('../validations/registerValidator');
 const loginValidator = require('../validations/loginValidator');
@@ -7,6 +7,8 @@ const checkUser = require('../middlewares/checkUser');
 const checkUserLogin = require('../middlewares/checkUserLogin');
 const checkUserAdmin = require('../middlewares/checkUserAdmin');
 const updateUserValidator = require('../validations/updateUserValidator');
+const resetPassUsersValidator = require('../validations/resetPassUsersValidator');
+const resetPassValidator = require('../validations/resetPassValidator');
 var router = express.Router();
 
 /* llego con /users*/
@@ -37,6 +39,12 @@ router.put('/rolUser/:id', editRol)
 /* Buscar un usuario */
 
 router.get('/search',checkUserLogin, searchUser)
+
+/* Resetear password de usuarios por parte de los admins */
+router.put('/resetPassUsers/:id',resetPassUsersValidator, resetPass)
+
+/* Resetear password por parte del usuario */
+router.put('/resetPass/:id', resetPassValidator, restetUserPass)
 
 
 

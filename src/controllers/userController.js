@@ -5,7 +5,8 @@ const bcrypt = require('bcrypt')
 const path = require('path');
 const { Op } = require("sequelize");
 
-const db = require('../database/models')
+const db = require('../database/models');
+const { error } = require('console');
 
 module.exports = {
 
@@ -285,7 +286,7 @@ module.exports = {
       searchUser : (req,res) => {
         const userLogin = req.session.userLogin
         const query = req.query.search;
-        db.Usuario.findAll({
+        db.Usuario.findOne({
             where : {
                 email : {
                     [Op.like] : `%${query}%`
@@ -293,14 +294,98 @@ module.exports = {
             },
             include : ['rol', 'destino']
         })
-        .then(users => {
+        .then(user => {
             return res.render('searchUser',{
-                users,
+                user,
                 title : 'Resultado de la busqueda',
                 userLogin
             })
         })
         .catch(error => console.log(error))
+      },
+
+      resetPass : (req,res) => {                /*Este método es para que los administradores puedan blaquear la clave de un usuario despues de buscarlo a través del buscador */
+        const errors = validationResult(req)
+        /* res.send(errors.mapped()) */
+        if(errors.isEmpty()){
+            db.Usuario.update({
+                password: bcrypt.hashSync(req.body.newPass,12)
+            },{
+                where:{
+                    id:req.params.id
+                }
+            }).then(user => {
+                return res.redirect('/users/dashboard')
+            }).catch(error => console.log(error))
+        } else {
+        const userLogin = req.session.userLogin
+        const query = req.query.search;
+        db.Usuario.findOne({
+            where : {
+                email : {
+                    [Op.like] : `%${query}%`
+                }
+            },
+            include : ['rol', 'destino']
+        })
+        .then(user => {
+            return res.render('searchUser',{
+                user,
+                title : 'Resultado de la busqueda',
+                userLogin,
+                errors:errors.mapped(),
+                old:req.body
+            })
+        })
+        .catch(error => console.log(error))
+        }        
+      },
+
+      restetUserPass : (req,res) => { /* este método se encarga del reseto de la password del usuario */
+
+        const errors = validationResult(req);
+
+        if(errors.isEmpty()){
+            db.Usuario.update({
+                password:bcrypt.hashSync(req.body.newPass,12),
+               },
+               {
+                where:{
+                    id:req.params.id
+                }
+               }).then(() => {
+                return res.redirect('/users/perfil');
+               }).catch(error => console.log(error))
+        } else {
+            const userLogin = req.session.userLogin        
+
+            const usuario = db.Usuario.findByPk(req.session.userLogin.id,{
+                attributes : ['name', 'surname', 'email', 'icon', 'id', 'credencial', 'destinoId'],
+                include : ['rol', 'destino']
+            })
+            const destino = db.destinoUsuario.findAll({
+                attributes : ['id', 'nombreDestino'],
+                order :[['nombreDestino']]
+            })
+    
+            Promise.all([usuario, destino])
+            .then(([usuario, destino])=>{
+                
+                return res.render('perfil',{
+                    usuario,
+                    destino,
+                    title: "Perfil de usuario",
+                    userLogin,
+                    errors:errors.mapped(),
+                    old:req.body               
+                }            
+                )
+            })      
+            .catch(error => console.log(error))     
+        }
+
+       
+
       }
 
 }

@@ -1,5 +1,7 @@
 const $ = (id) => document.getElementById(id)
 
+const emailInput = document.getElementById("email")
+
 
 const msgError = (element, message, {target}) => {
     $(element).innerHTML = message
@@ -23,6 +25,27 @@ const checkedFields = () => {
       }
     }
   };
+
+  const verifyPass = async (email, password) => {
+    try {
+      let response = await fetch("/api/users/verify-pass", {
+        method: "POST",
+        body: JSON.stringify({
+          email:email,
+          password:password
+        }),
+        headers: {
+          "Content-Type" : "application/json"
+        }
+        });
+  
+        let result = await response.json();
+        console.log(result);
+        return !result.data.existPass
+    } catch (error) {
+      console.error
+    }
+  }
 
 
   //expresiones regulares para comparar los campos
@@ -69,6 +92,8 @@ $('email').addEventListener('blur', function(e){
         case !regExPass.test(this.value.trim()):
             msgError('errorPass', "Debe ser entre 6 y 12 caracteres y tener una mayúscula, minúscula y un número",e)
         break
+        case await verifyPass(emailInput.value.trim(), this.value.trim()) :
+          msgError('errorPass', 'Credenciales inválidas', e)
         default:
             this.classList.add('is-valid')
             checkedFields();
@@ -99,18 +124,6 @@ $('email').addEventListener('blur', function(e){
     }
 
     !error && this.submit()
-
-   /* if(!error){
-    Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: 'Bienvenido',
-      showConfirmButton: false,
-      timer: 2000
-    })
-    setTimeout(function() {
-      $('formLogin').submit();
-    }, 2000); 
-   } */
+ 
 
   })

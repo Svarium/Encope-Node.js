@@ -35,7 +35,11 @@
                     <li class="list-group-item">Email: <%= usuario.email %> </li>
                    
                     <li class="list-group-item">Credencial: <%= usuario.credencial? usuario.credencial : '-' %> </li>
-                    <li class="list-group-item">Destino: <%= usuario.destino? usuario.destino.nombreDestino : '-' %> </li>                 
+                    <li class="list-group-item">Destino: <%= usuario.destino? usuario.destino.nombreDestino : '-' %> </li>
+                    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal3">
+Nueva Contraseña
+</button>                 
                   </ul>
         
                 </div>
@@ -93,6 +97,46 @@
                 </div>
               </div>           
           
+
+                <!-- Modal -->
+<div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Reestablecer Contraseña</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/users/resetPass/<%= userLogin.id %>?_method=PUT " method="POST" id="resetPassForm">
+
+          <div class="mb-3">
+              <label for="password" class="form-label">Ingrese su email</label>
+              <input type="email" name="email" class="form-control <%= (locals.errors && errors.email) && 'is-invalid'%>" id="email">
+              <small id="errorEmail" class="text-danger ms-2"><%= locals.errors && errors.email ? errors.email.msg : null %></small>
+            </div>
+         
+          <div class="mb-3">
+              <label for="password" class="form-label">Contraseña actual</label>
+              <input type="password" name="oldPass" class="form-control <%= (locals.errors && errors.oldPass) && 'is-invalid'%>" id="oldPass">
+              <small id="errorPass" class="text-danger ms-2"><%= locals.errors && errors.oldPass ? errors.oldPass.msg : null %></small>
+            </div>
+          <small class="text-danger "></small>
+          <div class="mb-3">
+              <label for="password" class="form-label">Nueva contraseña</label>
+              <input type="password" name="newPass" class="form-control <%= (locals.errors && errors.newPass) && 'is-invalid'%>" id="newPass">
+              <small id="errorPass2" class="text-danger ms-2"><%= locals.errors && errors.newPass ? errors.newPass.msg : null %></small>
+            </div>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+        </form>
+        <small id="errorPassForm" class="text-danger"></small>
+      </div>
+      <div class="modal-footer">
+        
+      </div>
+    </div>
+  </div>
+</div>
           
     </main>
 
@@ -141,6 +185,9 @@ cardImg.addEventListener('error', () => {
     });
   }
 </script>
+
 <%- include('./partials/scripts')  %>
+
+<script src="/js/resetUserPass.js"></script>
 </body>
 </html>
