@@ -35,9 +35,9 @@
                     <input  class="form-control me-sm-2" type="search" name="search" placeholder="Buscar Licitacion">
                     <button class="btn btn-outline-danger my-2 my-sm-0 me-3" type="submit">Buscar</button>
                   </form>
-                <% if (userLogin) { %>                    
-                  <button class="btn btn-transparent" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><img id="userIconProfile" src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>" class="iconProfile me-2" alt="">
-                    <%= userLogin.name %> <i class="fa-solid fa-caret-down fa-lg"></i></button>
+                <% if (locals.userLogin) { %>                    
+                  <button class="btn btn-transparent" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><img id="userIconProfile" src="<%= /http/.test(locals.userLogin.icon) ? locals.userLogin.icon : `/images/iconsProfile/${locals.userLogin.icon}` %>" class="iconProfile me-2" alt="">
+                    <%= locals.userLogin.name %> <i class="fa-solid fa-caret-down fa-lg"></i></button>
                  <% } else {%>
                     <li class="nav-item">
                         <a class="nav-link active" href="/users/login">Iniciar Sesión</a>

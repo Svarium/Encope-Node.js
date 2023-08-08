@@ -43,14 +43,9 @@ app.use(cookieParser(process.env.COOKIE_SECRET || 'CookieSecret'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 app.use(session({
-  secret : process.env.SESSION_SECRET || "Nueva web Encope 2023 con Node.js",
+  secret :"Nueva web Encope 2023 con Node.js",
   resave : false,
   saveUninitialized: true,
-  cookie:{
-    secure: true, // Requiere HTTPS en producción
-    httpOnly: true, // Impide el acceso a la cookie desde JavaScript en el cliente
-    sameSite: 'strict', // Mejora la seguridad contra ataques CSRF
-  }
 }))
 app.use(cors());
 app.use(passport.initialize());

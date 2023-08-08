@@ -92,14 +92,15 @@ module.exports = {
     },
 
     processLogin: (req,res) =>{
-        const userLogin = req.session.userLogin
+   
         const errors = validationResult(req);
+      /*   return res.send(errors.mapped()) */
 
       if(errors.isEmpty()){
-
+        const {email} = req.body
         db.Usuario.findOne({
             where : {
-                email : req.body.email
+                email 
             }
         }) 
         .then(({id, name, rolId, icon})=>{
@@ -113,8 +114,8 @@ module.exports = {
             if(req.body.rememberMe){
                 res.cookie('userEncopeWeb', req.session.userLogin, {maxAge : 100*60*7})
             }
-
             
+           
             return res.redirect('/users/perfil')
 
         })
@@ -122,8 +123,8 @@ module.exports = {
       }else{
         res.render('login',{
             title : "inicia sesión",
-            errors : errors.mapped(),
-            userLogin
+            errors : errors.mapped()
+           
         })
       }
     },

@@ -24,7 +24,7 @@ const checkedFields = () => {
 
   const verifyEmail = async (email) => {
     try {
-      let response = await fetch("http://localhost:3000/api/users/verify-email", {
+      let response = await fetch("http://www.encope.gob.ar/api/users/verify-email", {
         method: "POST",
         body: JSON.stringify({
           email:email
@@ -34,8 +34,7 @@ const checkedFields = () => {
         }
         });
   
-        let result = await response.json();
-        console.log(result);
+        let result = await response.json();    
         return result.data.existUser
     } catch (error) {
       console.error

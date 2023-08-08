@@ -19,7 +19,7 @@ const checkedFields = () => {
   
     for (let i = 0; i < elements.length - 2; i++) {
       if (elements[i].classList.contains("is-invalid")) {
-        $("errorFormLogin").innerHTML = "Hay campos con errores o están vacíos";
+        $("errorFormLogin").innerHTML = "Hay campos con errores o están vacíos!";
       }
     }
   };
@@ -93,14 +93,14 @@ $('email').addEventListener('blur', function(e){
         if(!this.elements[i].value.trim() || this.elements[i].classList.contains('errorInput')) {
             error = true
             this.elements[i].classList.add('is-invalid')
-            $('errorFormAddNoticia').innerHTML = "Hay campos vacíos o con errores!"
+            $('errorFormLogin').innerHTML = "Hay campos vacíos o con errores!"
         }
         
     }
 
-   /*  !error && this.submit() */
+    !error && this.submit()
 
-   if(!error){
+   /* if(!error){
     Swal.fire({
       position: 'center',
       icon: 'success',
@@ -111,6 +111,6 @@ $('email').addEventListener('blur', function(e){
     setTimeout(function() {
       $('formLogin').submit();
     }, 2000); 
-   }
+   } */
 
   })
