@@ -234,7 +234,7 @@ module.exports = {
         const userLogin = req.session.userLogin        
 
         const usuario = db.Usuario.findByPk(req.session.userLogin.id,{
-            attributes : ['name', 'surname', 'email', 'icon', 'id', 'credencial', 'destinoId'],
+            attributes : ['name', 'surname', 'email', 'icon', 'id', 'credencial', 'destinoId', 'updatedAt', 'socialProvider'],
             include : ['rol', 'destino']
         })
         const destino = db.destinoUsuario.findAll({
@@ -383,9 +383,17 @@ module.exports = {
             })      
             .catch(error => console.log(error))     
         }
+      
+      },
 
-       
-
+      destroy: (req,res) => {
+        db.Usuario.destroy({
+            where:{id:req.params.id},
+            force:true
+        }).then(() => {
+            return res.redirect('/users/dashboard')
+        })
+        .catch(error => console.log(error))
       }
 
 }

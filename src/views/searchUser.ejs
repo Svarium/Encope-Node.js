@@ -65,6 +65,11 @@
                              <button type="button" class="btn btn-sm btn-success mb-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
                               Reestablecer Contraseña
                              </button> 
+                             <form id="destroyUser" action="/users/delete/<%= user.id %>?_method=DELETE" method="POST">
+                              <button onclick="showAlertAndSubmit(event)" type="submit" class="btn btn-sm btn-danger mb-1">
+                                Eliminar a este usuario <i class="fa-solid fa-trash"></i>
+                               </button>
+                             </form>                             
                           </div>
                           <div class="col-md-6">
                             <div class="card-body">
@@ -140,13 +145,6 @@
     </main>
 
 
-
-
-
-
-
-    <!-- BOOTSTRAP -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 <script>
     const icon = document.getElementById('userIconSearch')
     icon.addEventListener('error', () => {
@@ -154,5 +152,38 @@
  
 })
 </script>
+<script>
+  function showAlertAndSubmit(event) {
+    event.preventDefault();
+
+    Swal.fire({
+      title: '¿Estas seguro de eliminar al usuario?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Si el usuario confirmó el alert, envía el formulario manualmente
+        const form = document.getElementById("destroyUser");
+        Swal.fire({
+  position: 'center',
+  icon: 'success',
+  title: 'Usuario Eliminado correctamente',
+  showConfirmButton: false,
+  timer: 1500
+})
+
+        // Retraso de 5 segundos antes de enviar el formulario y cambiar la página
+        setTimeout(function() {
+          form.submit();
+        }, 1000); // 2000 milisegundos = 2 segundos
+      }
+    });
+  }
+</script>
+<script src="https://kit.fontawesome.com/ce970c0111.js" crossorigin="anonymous"></script>
+<%- include('./partials/scripts')  %>
 </body>
 </html>

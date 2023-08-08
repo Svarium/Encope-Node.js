@@ -36,10 +36,21 @@
                    
                     <li class="list-group-item">Credencial: <%= usuario.credencial? usuario.credencial : '-' %> </li>
                     <li class="list-group-item">Destino: <%= usuario.destino? usuario.destino.nombreDestino : '-' %> </li>
-                    <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal3">
-Nueva Contraseña
-</button>                 
+
+                    <% const updatedAt = new Date(usuario.updatedAt); %> <!-- Convierte updatedAt en un objeto Date -->
+                    <% const currentTime = Date.now(); %> <!-- Obtiene la marca de tiempo actual -->
+                    
+                    <% const timeDifference = currentTime - updatedAt.getTime(); %> <!-- Calcula la diferencia de tiempo en milisegundos -->
+                    
+                    <% if (timeDifference < 1 * 60 * 60 * 1000 && usuario.socialProvider === null) { %> <!-- Si la diferencia es menor a un día (en milisegundos) -->
+                      <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal3">
+                  Nueva Contraseña
+                    </button>                 
+                    <% } else { %>
+                      <!-- No muestra el botón -->
+                    <% } %>
+                  
                   </ul>
         
                 </div>
@@ -126,8 +137,8 @@ Nueva Contraseña
               <input type="password" name="newPass" class="form-control <%= (locals.errors && errors.newPass) && 'is-invalid'%>" id="newPass">
               <small id="errorPass2" class="text-danger ms-2"><%= locals.errors && errors.newPass ? errors.newPass.msg : null %></small>
             </div>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-primary">Guardar cambios</button>
         </form>
         <small id="errorPassForm" class="text-danger"></small>
       </div>
