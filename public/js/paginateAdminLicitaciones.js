@@ -10,7 +10,6 @@ let pageActive = 1;
 
 const apiGetLicitacion = "https://encope.gob.ar/api/licitacion/";
 
-//const apiGetLicitacion = "http://localhost:3000/api/licitacion/";
 
 const getLicitacion = ({page=1} = {}) => {
 
@@ -28,7 +27,15 @@ const paintLicitaciones = (licitacion) => {
         <th scope="row">${publicacion.tipo.nombre}</th>
         <td>${publicacion.titulo}</td>
         <td>${publicacion.objetivo}</td>
-        <td>${publicacion.createdAt}</td>
+        <td data-label="fecha">${new Intl.DateTimeFormat('es-AR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+            timeZone: 'America/Argentina/Buenos_Aires'
+          }).format(new Date(publicacion.createdAt))}</td>
         <td>${publicacion.expediente}</td>
         <td>
             <div class="d-flex justify-content-center gap-2"> 

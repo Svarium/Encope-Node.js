@@ -160,9 +160,16 @@ h3 {
 }
 
 
+
+
 @media screen and (max-width:800px) {
     .content-modal{
         width: 90%;
+    }
+
+    .autoridades-small{
+        width: 410px;
+        margin: 0 auto;
     }
 }
 
