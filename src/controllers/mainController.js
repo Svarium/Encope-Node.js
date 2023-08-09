@@ -1,5 +1,12 @@
 const db = require("../database/models");
 const { update } = require("./noticiasController");
+const fs = require('fs');
+const path = require('path')
+
+const unidadFilePath = path.join(__dirname, '../data/mapa.json');
+const unidades = JSON.parse(fs.readFileSync(unidadFilePath, 'utf-8'));
+
+
 
 module.exports = {
     home : (req,res) =>{
@@ -43,10 +50,26 @@ module.exports = {
     },
    
     mapa: (req,res) => {
+        const unidadFilePath = path.join(__dirname, '../data/mapa.json');
+        const unidades = JSON.parse(fs.readFileSync(unidadFilePath, 'utf-8'));
         const userLogin = req.session.userLogin
         return res.render('mapa',{
             title:"Mapa",
-            userLogin
+            userLogin,
+            unidades
+        })
+    },
+
+    unidadDetail: (req,res) => {
+        const unidadFilePath = path.join(__dirname, '../data/mapa.json');
+        const unidades = JSON.parse(fs.readFileSync(unidadFilePath, 'utf-8'));
+        let id = req.params.id
+
+        let unidad = unidades.find(unidad => unidad.id == id)
+
+        return res.render('detalleMapa', {
+            unidad,
+            title:'Detalle de la unidad'
         })
     },
 
