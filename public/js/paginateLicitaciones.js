@@ -9,7 +9,8 @@ const botonPublicas = $('#licitacionPublica')
 
 let pageActive = 1;
 
-const apiGetLicitacion = "https://encope.gob.ar/api/licitacion/";
+/* const apiGetLicitacion = "https://encope.gob.ar/api/licitacion/"; */
+const apiGetLicitacion = "http://localhost:3000/api/licitacion/";
 
 const getLicitacion = ({page=1} = {}) => {
 
@@ -36,7 +37,7 @@ const paintLicitaciones = (licitacion) => {
                     second: 'numeric',
                     timeZone: 'America/Argentina/Buenos_Aires'
                   }).format(new Date(publica.createdAt))}</td>
-                <td data-label="descargar" class="boton-descarga"><a href="/images/licitaciones/ ${publica.archivo} " download="licitacionPublica"> <i class="fa-sharp fa-solid fa-cloud-arrow-down"></i></a><br><br>                 
+                <td data-label="descargar" class="boton-descarga"><a href="/images/licitaciones/${publica.archivo}"><i class="fa-sharp fa-solid fa-cloud-arrow-down"></i></a><br><br>                 
                 </td>
             </tr> 
         `

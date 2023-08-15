@@ -106,8 +106,6 @@ module.exports = {
             })
         })
         .catch(error => console.log(error))
-
-
     }
 
 
@@ -139,41 +137,42 @@ module.exports = {
 
     },
 
-    update : async (req,res) => {
-
+    update: async (req, res) => {
         try {
-          const userLogin = req.session.userLogin
-            const errors = validationResult(req)
-
-            if(req.fileValidationError){ //este if valida que solo se puedan subir extensiones (pdf)
+            const userLogin = req.session.userLogin;
+            const errors = validationResult(req);
+    
+            if (req.fileValidationError) {
                 errors.errors.push({
-                    value : "",
-                    msg : req.fileValidationError,
-                    param : "pdf",
-                    location : "file"
-                })
+                    value: "",
+                    msg: req.fileValidationError,
+                    param: "pdf",
+                    location: "file"
+                });
             }
     
-            if(errors.isEmpty()){
+            if (errors.isEmpty()) {
+                const { expediente, titulo, objetivo, tipo } = req.body;
+                const id = req.params.id;
     
-                const {expediente, titulo, objetivo, tipo} = req.body
-    
-                const id = req.params.id
-
-                const publicacion = await db.Publicaciones.findByPk(id)
-
-                publicacion.expediente = expediente.trim(),
-                publicacion.titulo = titulo.trim(),
-                publicacion.objetivo = objetivo.trim()
-                publicacion.tipoId = tipo,
-                publicacion.archivo = req.file ? req.file.filename : publicacion.archivo
-
-                await publicacion.save()
-
-                if(req.file){
-                    fs.existsSync(`./public/images/licitaciones/${publicacion.archivo}`) && fs.unlinkSync(`./public/images/licitaciones/${publicacion.archivo}`)  
+                if (req.file) {
+                    // Eliminar el archivo anterior solo si se subió uno nuevo
+                    const publicacion = await db.Publicaciones.findByPk(id);
+                    const filePath = `./public/images/licitaciones/${publicacion.archivo}`;
+                    if (fs.existsSync(filePath)) {
+                        fs.unlinkSync(filePath);
+                    }
                 }
-                return res.redirect('/licitacion/publicaciones')
+    
+                const publicacion = await db.Publicaciones.findByPk(id);
+                publicacion.expediente = expediente.trim();
+                publicacion.titulo = titulo.trim();
+                publicacion.objetivo = objetivo.trim();
+                publicacion.tipoId = tipo;
+                publicacion.archivo = req.file ? req.file.filename : publicacion.archivo;
+    
+                await publicacion.save();
+                return res.redirect('/licitacion/publicaciones');
 
             } else {
                 if(req.file){

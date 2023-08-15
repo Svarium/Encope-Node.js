@@ -8,8 +8,8 @@ const licitacionesTable = $("#tabla-admin-licitaciones");
 
 let pageActive = 1;
 
-const apiGetLicitacion = "https://encope.gob.ar/api/licitacion/";
-
+/* const apiGetLicitacion = "https://encope.gob.ar/api/licitacion/"; */
+const apiGetLicitacion = "http://localhost:3000/api/licitacion/";
 
 const getLicitacion = ({page=1} = {}) => {
 
