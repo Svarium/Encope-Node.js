@@ -23,7 +23,13 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey : 'destinoId',
         as : 'destino'
       })
-    }
+
+      Usuario.hasMany(models.Stock,{
+        foreignKey:'idUsuario',
+        as:'stock'
+      })
+    }  
+
   }
   Usuario.init({
     name: DataTypes.STRING,
