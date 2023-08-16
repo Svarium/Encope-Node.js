@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../partials/head')  %>
+      
+        
+          
+<body  style="background-image: url('/images/imagen\ productos\ vector-03.png'); background-size: cover;">
+  
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <div class="container">
+        <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+          aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <button class="btn btn-transparent" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><img id="userIconProfile" src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>" class="iconProfile me-2" alt="">
+          <%= userLogin.name %> <i class="fa-solid fa-caret-down fa-lg"></i></button>
+      </div>
+    </nav><br>
+
+    <main>
+      <%- include('../partials/modals')  %>    
+      <%- include('../partials/canvasMenu')  %> 
+     
+
+        <div class="container"><h2 class="text center">Stock de Cunitas - <%= stock[0].usuario.destino.nombreDestino %> </h2>
+            <hr>
+            <div class="row gap-2 justify-content-center">
+           <% stock.forEach(item  => { %>
+            <div class="col-md-3 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Stock de <%= item.producto.nombre.toUpperCase() %> </div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><%= item.cantidad %></div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fa-solid fa-gear fa-2x text-gray-300"></i>
+                    </div>  
+                    <small class="card-text">Stock Creado: <strong><%= new Intl.DateTimeFormat('es-AR', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      second: 'numeric',
+                      timeZone: 'America/Argentina/Buenos_Aires'
+                    }).format(new Date(item.createdAt)) %></strong></small>
+                    <small class="card-text">Stock Actualizado: <strong><%= new Intl.DateTimeFormat('es-AR', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      second: 'numeric',
+                      timeZone: 'America/Argentina/Buenos_Aires'
+                    }).format(new Date(item.updatedAt)) %></strong></small>        
+                  </div>
+                  
+                </div>
+               
+              </div>
+            </div>          
+            
+                     
+           <% }) %>
+          </div>
+             
+        </div>
+        
+    <!-- Button trigger modal -->
+    <div class="container">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#aumentar">
+            <i class="fa-solid fa-plus"></i> Agregar un producto al Stock
+        </button>  
+        <a href="#" class="btn btn-danger"><i class="fa-solid fa-minus"></i></a>
+    </div>
+    
+
+        <div class="container-fluid mb-3 mt-3 d-flex justify-content-center">
+            <div class="row m-5">
+              <% cunas.forEach((cuna) => { %>
+                <div class="col-lg-3 col-md-6 col-sm-12 mb-2">
+                  <div class="card" style="width: 18rem;">
+                    <img src="/images/cunitas/<%= cuna.imagen %>" class="card-img-top" alt="..." height="150px">
+                    <div class="card-body">
+                      <h5 class="card-title"><%=  cuna.nombre.toUpperCase() %></h5>
+                      <p class="card-text"><%= cuna.detalle %></p>  
+                      <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#update<%= cuna.id %>">
+                        Actualizar Stock
+                    </button>                   
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Modal EDITAR STOCK -->
+<div class="modal fade" id="update<%= cuna.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Actualizar stock de: <%= cuna.nombre.toUpperCase() %></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+   <!-- Modal AGREGAR AL STOCK-->
+<div class="modal fade" id="aumentar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Agregar al Stock</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-md-6">
+                <form action="/cunas/" method="POST">
+                  <div class="form-group">
+                    <label for="cantidad">Cantidad:</label>
+                    <input type="number" class="form-control <%= (locals.errors && errors.cantidad) && 'is-invalid'%>"  id="cantidad" name="cantidad" placeholder="Ingrese una cantidad">
+                    <small id="errorCantidad" class="text-danger ms-2"><%= locals.errors && errors.cantidad ? errors.cantidad.msg : null %></small>
+                  </div>
+                  <div class="form-group mb-2">
+                    <label for="selectValor">Seleccione:</label>
+                    <select class="form-control <%= (locals.errors && errors.producto) && 'is-invalid'%>" id="destino" name="producto">
+                      <option value="" selected hidden>Seleccione...</option>
+                      <% cunas.forEach(({nombre, id}) => { %>
+                        <option value="<%= id %>"><%= nombre.toUpperCase() %></option>
+                      <% }) %>                  
+                    </select>
+                    <small id="errorProducto" class="text-danger ms-2"><%= locals.errors && errors.tipo ? errors.tipo.msg : null %></small>
+                  </div>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                  <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+       
+        </div>
+      </div>
+    </div>
+  </div>
+
+              <% }); %>
+            </div>
+          </div>
+    
+
+        
+
+
+
+
+
+
+    </main>
+
+    <script>
+      const icon = document.getElementById('userIconProfile')
+      const cardImg = document.getElementById('imgIcon')
+      icon.addEventListener('error', () => {
+      icon.src = 'https://cdn-icons-png.flaticon.com/512/149/149071.png'
+    
+    })
+    
+    cardImg.addEventListener('error', () => {
+      cardImg.src = 'https://cdn-icons-png.flaticon.com/512/149/149071.png'
+    })
+    
+    </script>
+    
+    <script>
+      function showAlertAndSubmit(event) {
+        event.preventDefault();
+    
+        Swal.fire({
+          title: '¿Estas seguro de editar tu información?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, editar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Si el usuario confirmó el alert, envía el formulario manualmente
+            const form = document.getElementById("editInfo");
+            Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Informacion editada correctamente',
+      showConfirmButton: false,
+      timer: 1500
+    })
+    
+            // Retraso de 5 segundos antes de enviar el formulario y cambiar la página
+            setTimeout(function() {
+              form.submit();
+            }, 1000); // 2000 milisegundos = 2 segundos
+          }
+        });
+      }
+    </script>
+    
+    <%- include('../partials/scripts')  %>
+    
+    <script src="/js/resetUserPass.js"></script>
+    </body>
+    </html>

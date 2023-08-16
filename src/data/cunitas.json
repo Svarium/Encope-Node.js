@@ -1,0 +1,80 @@
+[
+    {
+        "id":1,
+        "nombre":"cunas",
+        "detalle":null,
+        "imagen":"cuna.png"        
+    },
+    {
+        "id":2,
+        "nombre":"moises",
+        "detalle":null,
+        "imagen":"moises.png" 
+    },
+    {
+        "id":3,
+        "nombre":"colchones",
+        "detalle":null,
+        "imagen":"colchon.png" 
+    },
+    {
+        "id":4,
+        "nombre":"salida de cama - batas",
+        "detalle":null,
+        "imagen":"bata.png" 
+    },
+    {
+        "id":5,
+        "nombre":"salida de cama - camisones",
+        "detalle":null,
+        "imagen":"camison.png" 
+    },
+    {
+        "id":6,
+        "nombre":"sabanas - planas",
+        "detalle":null,
+        "imagen":"sabana-plana.png" 
+    },
+    {
+        "id":7,
+        "nombre":"sabanas - planas",
+        "detalle":null,
+        "imagen":"sabana-ajustable.png" 
+    },
+    {
+        "id":8,
+        "nombre":"frazadas-polares",
+        "detalle":null,
+        "imagen":"frazada-polar.png" 
+    },
+    {
+        "id":9,
+        "nombre":"enterito jersey - manga corta",
+        "detalle":null,
+        "imagen":"jersey-manga-corta.jpg" 
+    },
+    {
+        "id":10,
+        "nombre":"enterito frisa - manga larga",
+        "detalle":null,
+        "imagen":"enterito-frisa-manga-larga.webp" 
+    },
+    {
+        "id":11,
+        "nombre":"bolso maternal - mochila",
+        "detalle":null,
+        "imagen":"bolso maternal - mochila.webp" 
+    },
+    {
+        "id":12,
+        "nombre":"bolso maternal - necesers",
+        "detalle":null,
+        "imagen":"bolso maternal - necesers.png" 
+    },
+    {
+        "id":14,
+        "nombre":"bolso maternal - cambiador",
+        "detalle":null,
+        "imagen":"bolso maternal - cambiador.png" 
+    }
+]
