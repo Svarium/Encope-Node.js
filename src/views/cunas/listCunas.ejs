@@ -22,8 +22,8 @@
       <%- include('../partials/canvasMenu')  %> 
      
 
-        <div class="container"><h2 class="text center texto-descrip-lic text-shadow"><strong>Stock de Cunitas - <%= user.destino.nombreDestino %></strong></h2>
-            <hr >
+        <div class="container"><p class="text-white h2 text-center shadow-3"><strong>Stock de Cunitas - <%= user.destino.nombreDestino %></strong></p>
+            <hr class="text-white">
             <div class="row gap-2 justify-content-center">
            <% stock.forEach(item  => { %>
             <div class="col-md-3 mb-4">
@@ -54,11 +54,17 @@
                       minute: 'numeric',
                       second: 'numeric',
                       timeZone: 'America/Argentina/Buenos_Aires'
-                    }).format(new Date(item.updatedAt)) %></strong></small>        
+                    }).format(new Date(item.updatedAt)) %></strong></small>    
+                    
+                      <img src="/images/cunitas/<%= item.producto.imagen %>" alt="" width="50px" height="150px" >  
+                                        
                   </div>
-                  <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#update<%= item.id %>">
-                    Actualizar Stock
-                </button>    
+                  
+                    <button type="button" class="btn btn-secondary mt-2" data-bs-toggle="modal" data-bs-target="#update<%= item.id %>">
+                      Actualizar Stock
+                  </button> 
+           
+                   
                   
                 </div>
                
@@ -102,11 +108,10 @@
         </div>
         
     <!-- Button trigger modal -->
-    <div class="container">
+    <div class="container mb-5">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#aumentar">
             <i class="fa-solid fa-plus"></i> Agregar un producto al Stock
         </button>  
-        <a href="#" class="btn btn-danger"><i class="fa-solid fa-minus"></i></a>
     </div>
     
                 
@@ -115,7 +120,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Agregar al Stock</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Agrega un producto a tu stock inicial</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
