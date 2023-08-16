@@ -22,8 +22,8 @@
       <%- include('../partials/canvasMenu')  %> 
      
 
-        <div class="container"><h2 class="text center">Stock de Cunitas - <%= stock[0].usuario.destino.nombreDestino %> </h2>
-            <hr>
+        <div class="container"><h2 class="text center texto-descrip-lic text-shadow"><strong>Stock de Cunitas - <%= user.destino.nombreDestino %></strong></h2>
+            <hr >
             <div class="row gap-2 justify-content-center">
            <% stock.forEach(item  => { %>
             <div class="col-md-3 mb-4">
@@ -46,7 +46,7 @@
                       second: 'numeric',
                       timeZone: 'America/Argentina/Buenos_Aires'
                     }).format(new Date(item.createdAt)) %></strong></small>
-                    <small class="card-text">Stock Actualizado: <strong><%= new Intl.DateTimeFormat('es-AR', {
+                    <small class="card-text">Última Actualización: <strong><%= new Intl.DateTimeFormat('es-AR', {
                       year: 'numeric',
                       month: 'long',
                       day: 'numeric',
@@ -56,17 +56,77 @@
                       timeZone: 'America/Argentina/Buenos_Aires'
                     }).format(new Date(item.updatedAt)) %></strong></small>        
                   </div>
+                  <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#update<%= item.id %>">
+                    Actualizar Stock
+                </button>    
                   
                 </div>
                
               </div>
-            </div>          
+            </div>   
+            <!-- Modal EDITAR STOCK -->
+<div class="modal fade" id="update<%= item.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Actualizar stock de: <%= item.producto.nombre.toUpperCase() %>  </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-6">
+              <form action="/cunas/addStock/<%= item.id %>?_method=PUT" method="POST">
+                <div class="form-group">
+                  <label for="cantidad">Cantidad a agregar:</label>
+                  <input type="number" class="form-control <%= (locals.errors && errors.cantidad) && 'is-invalid'%>"  id="cantidad" name="cantidad" placeholder="Ingrese una cantidad">
+                  <small id="errorCantidad" class="text-danger ms-2"><%= locals.errors && errors.cantidad ? errors.cantidad.msg : null %></small>
+                </div>                  
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>            
+                <button type="submit" class="btn btn-primary">Enviar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>       
             
                      
            <% }) %>
           </div>
              
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
     <!-- Button trigger modal -->
     <div class="container">
@@ -86,31 +146,12 @@
                     <div class="card-body">
                       <h5 class="card-title"><%=  cuna.nombre.toUpperCase() %></h5>
                       <p class="card-text"><%= cuna.detalle %></p>  
-                      <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#update<%= cuna.id %>">
-                        Actualizar Stock
-                    </button>                   
+                                    
                     </div>
                   </div>
                 </div>
 
-                <!-- Modal EDITAR STOCK -->
-<div class="modal fade" id="update<%= cuna.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Actualizar stock de: <%= cuna.nombre.toUpperCase() %></h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
+                
 
 
    <!-- Modal AGREGAR AL STOCK-->

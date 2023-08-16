@@ -76,5 +76,11 @@
         "nombre":"bolso maternal - cambiador",
         "detalle":null,
         "imagen":"bolso maternal - cambiador.png" 
+    },
+    {
+        "id":15,
+        "nombre":"Kit terminado",
+        "detalle":null,
+        "imagen":"kit.webp" 
     }
 ]
