@@ -56,7 +56,7 @@ module.exports = {
 
         Promise.all(([cunas, user, stock]))
         .then(([cunas, user, stock]) => {
-            /* return res.send(stock) */
+           /*  return res.send(stock) */
             return res.render("cunas/listCunas",{
                 cunas,
                 user,

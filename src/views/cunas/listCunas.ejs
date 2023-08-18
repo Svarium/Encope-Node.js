@@ -14,6 +14,32 @@
         </button>
         <button class="btn btn-transparent" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><img id="userIconProfile" src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>" class="iconProfile me-2" alt="">
           <%= userLogin.name %> <i class="fa-solid fa-caret-down fa-lg"></i></button>
+          <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalInicial">
+  Inicializar Stock de un Producto +
+</button>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalInicial" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Inicializar stock de un producto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="">Al hacer click en "Entiendo y deseo continuar" verás un formulario donde puedes establecer el stock inicial de un producto junto con su cantidad. Esto se hace UNA SOLA VEZ por cada producto. <br><br>
+          Una vez que envíes el formulario, podrás ver el producto junto con su stock en pantalla.
+          En el recuadro del producto, encontrarás un botón para actualizar el stock. Este botón te permite sumar más cantidad a ese producto. </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#aumentar">
+           Entiendo y deseo continuar
+      </button>  
+      </div>
+    </div>
+  </div>
+</div>
       </div>
     </nav><br>
 
@@ -22,9 +48,9 @@
       <%- include('../partials/canvasMenu')  %> 
      
 
-        <div class="container"><p class="text-white h2 text-center shadow-3"><strong>Stock de Cunitas - <%= user.destino.nombreDestino %></strong></p>
+        <div class="container-fluid"><p class="text-white h2 text-center shadow-3"><strong>Stock de Cunitas - <%= user.destino.nombreDestino %></strong></p>
             <hr class="text-white">
-            <div class="row gap-2 justify-content-center">
+            <div class="row  justify-content-center">
            <% stock.forEach(item  => { %>
             <div class="col-md-3 mb-4">
               <div class="card border-left-primary shadow h-100 py-2">
@@ -56,11 +82,11 @@
                       timeZone: 'America/Argentina/Buenos_Aires'
                     }).format(new Date(item.updatedAt)) %></strong></small>    
                     
-                      <img src="/images/cunitas/<%= item.producto.imagen %>" alt="" width="50px" height="150px" >  
+                      <img src="/images/cunitas/<%= item.producto.imagen %>" class="img-fluid img-thumbnail float-end " style="height: 100px; width: 139px;" >  
                                         
                   </div>
                   
-                    <button type="button" class="btn btn-secondary mt-2" data-bs-toggle="modal" data-bs-target="#update<%= item.id %>">
+                    <button type="button" class="btn btn-outline-primary mt-2" data-bs-toggle="modal" data-bs-target="#update<%= item.id %>">
                       Actualizar Stock
                   </button> 
            
@@ -84,7 +110,7 @@
             <div class="col-md-6">
               <form action="/cunas/addStock/<%= item.id %>?_method=PUT" method="POST">
                 <div class="form-group">
-                  <label for="cantidad">Cantidad a agregar:</label>
+                  <label for="cantidad">Cantidad a sumar:</label>
                   <input type="number" class="form-control <%= (locals.errors && errors.cantidad) && 'is-invalid'%>"  id="cantidad" name="cantidad" placeholder="Ingrese una cantidad">
                   <small id="errorCantidad" class="text-danger ms-2"><%= locals.errors && errors.cantidad ? errors.cantidad.msg : null %></small>
                 </div>                  
@@ -109,9 +135,10 @@
         
     <!-- Button trigger modal -->
     <div class="container mb-5">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#aumentar">
-            <i class="fa-solid fa-plus"></i> Agregar un producto al Stock
-        </button>  
+    
+            
+    
+        
     </div>
     
                 
@@ -120,15 +147,22 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Agrega un producto a tu stock inicial</h5>
+          <h5 class="modal-title text-center" id="exampleModalLabel">Carga el stock inicial de un producto</h5>
+         
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          
         </div>
         <div class="modal-body">
+          
           <div class="container">
+            
             <div class="row justify-content-center">
+             
               <div class="col-md-6">
+           
                 <form action="/cunas/" method="POST">
                   <div class="form-group">
+                   
                     <label for="cantidad">Cantidad:</label>
                     <input type="number" class="form-control <%= (locals.errors && errors.cantidad) && 'is-invalid'%>"  id="cantidad" name="cantidad" placeholder="Ingrese una cantidad">
                     <small id="errorCantidad" class="text-danger ms-2"><%= locals.errors && errors.cantidad ? errors.cantidad.msg : null %></small>
