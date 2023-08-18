@@ -137,9 +137,37 @@
                     <label for="selectValor">Seleccione:</label>
                     <select class="form-control <%= (locals.errors && errors.producto) && 'is-invalid'%>" id="destino" name="producto">
                       <option value="" selected hidden>Seleccione...</option>
-                      <% cunas.forEach(({nombre, id}) => { %>
-                        <option value="<%= id %>"><%= nombre.toUpperCase() %></option>
-                      <% }) %>                  
+                      <% if (user.destinoId == 31) { %>
+                        <% cunas.forEach(({nombre, id}) => { %>
+                          <option value="<%= id %>"><%= nombre.toUpperCase() %></option>
+                        <% }) %>    
+                        <% } else if (user.destinoId == 2) { %>
+                          <% cunas.forEach(({nombre, id}) => { %>
+                           <% if (id >= 3 && id <= 10) { %>
+                            <option value="<%= id %>"><%= nombre.toUpperCase() %></option>
+                           <% } %>
+                          <% }) %>                         
+                        <% } else if (user.destinoId == 27) { %>
+                          <% cunas.forEach(({nombre, id}) => { %>
+                            <% if (id >= 4 && id <= 5) { %>
+                             <option value="<%= id %>"><%= nombre.toUpperCase() %></option>
+                            <% } %>
+                           <% }) %>    
+                        <% } else if (user.destinoId == 7){ %>
+                          <% cunas.forEach(({nombre, id}) => { %>
+                            <% if (id >= 6 && id <= 7) { %>
+                             <option value="<%= id %>"><%= nombre.toUpperCase() %></option>
+                            <% } %>
+                           <% }) %>  
+                        <% } else if (user.destinoId == 3 || user.destinoId == 4 || user.destinoId == 9 ) {  %>
+                          <% cunas.forEach(({nombre, id}) => { %>
+                            <% if (id >= 11 && id <= 13) { %>
+                             <option value="<%= id %>"><%= nombre.toUpperCase() %></option>
+                            <% } %>
+                           <% }) %>  
+                          <% } %>
+                    
+
                     </select>
                     <small id="errorProducto" class="text-danger ms-2"><%= locals.errors && errors.tipo ? errors.tipo.msg : null %></small>
                   </div>
