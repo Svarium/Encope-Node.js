@@ -33,7 +33,8 @@ module.exports = {
                 name,
                 rol:user.rolId,
                 icon:user.icon,
-                socialId:googleId
+                socialId:googleId,
+                destino:user.destinoId ? user.destinoId : null
                }
 
                res.cookie('userEncopeWeb', req.session.userLogin, {maxAge: 1000*60*7})

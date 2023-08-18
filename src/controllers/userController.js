@@ -104,12 +104,13 @@ module.exports = {
                 email 
             }
         }) 
-        .then(({id, name, rolId, icon})=>{
+        .then(({id, name, rolId, icon, destinoId})=>{
             req.session.userLogin = {
                 id, 
                 name,
                 rol : rolId,
-                icon 
+                icon,
+                destino:destinoId ? destinoId : null 
             };
 
             if(req.body.rememberMe){
@@ -170,7 +171,8 @@ module.exports = {
                 req.session.userLogin = {
                   ...userSession,
                   name: user.name,
-                  icon: user.icon
+                  icon: user.icon,
+                  destino: user.destinoId? user.destinoId : null
                 };
 
                 if (req.cookies.userEncopeWeb){

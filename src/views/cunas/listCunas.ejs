@@ -139,7 +139,9 @@
                       <option value="" selected hidden>Seleccione...</option>
                       <% if (user.destinoId == 31) { %>
                         <% cunas.forEach(({nombre, id}) => { %>
-                          <option value="<%= id %>"><%= nombre.toUpperCase() %></option>
+                     
+                            <option value="<%= id %>"><%= nombre.toUpperCase() %></option>
+                                                
                         <% }) %>    
                         <% } else if (user.destinoId == 2) { %>
                           <% cunas.forEach(({nombre, id}) => { %>
