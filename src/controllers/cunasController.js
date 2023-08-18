@@ -181,35 +181,65 @@ module.exports = {
         }      
     },
 
-    updateStock: (req,res) => {
-                
+    updateStock: (req, res) => {
         const errors = validationResult(req);
- /*        return res.send(req.params.id) */
-
-        if(errors.isEmpty()){
-            const idStock = req.params.id;  
-            const idUser = req.session.userLogin.id         
-            const addCantidad = req.body.cantidad
-
+        if (errors.isEmpty()) {
+            const idStock = req.params.id;
+            const idUser = req.session.userLogin.id;
+            const addCantidad = req.body.cantidad;
+    
             db.Stock.findOne({
-                where:{
-                    id:idStock
+                where: {
+                    id: idStock
                 }
             }).then(stock => {
-                const updatedCantidad = parseInt(stock.cantidad,10) + parseInt(addCantidad,10);
-                db.Stock.update({
-                    cantidad: updatedCantidad
-                },
-                {
-                 where:{
-                    id: idStock
-                 }
-                })
-                .then(() => {
-                    return res.redirect('/cunas/listar')
-                })
-            })
-            .catch(error => console.log(error))
+                if (stock.idProducto === 14) {
+                    const updatedCantidad = parseInt(stock.cantidad, 10) + parseInt(addCantidad, 10);
+    
+                    // Actualizar el stock seleccionado
+                    db.Stock.update({
+                        cantidad: updatedCantidad
+                    }, {
+                        where: {
+                            id: idStock
+                        }
+                    }).then(() => {
+                        // Restar la cantidad de producto del stock seleccionado de los demás stocks
+                        return db.Stock.update({
+                            cantidad: db.Sequelize.literal(`cantidad - ${addCantidad}`)
+                        }, {
+                            where: {
+                                idUsuario: idUser,
+                                idProducto: { [db.Sequelize.Op.ne]: 14 }
+                            }
+                        });
+                    }).then(() => {
+                        return res.redirect('/cunas/listar');
+                    }).catch(error => {
+                        console.log(error);
+                        // Manejo de errores en la actualización
+                    });
+                } else {
+                    // Si no es idProducto 14, simplemente actualizar el stock seleccionado
+                    const updatedCantidad = parseInt(stock.cantidad, 10) + parseInt(addCantidad, 10);
+    
+                    db.Stock.update({
+                        cantidad: updatedCantidad
+                    }, {
+                        where: {
+                            id: idStock
+                        }
+                    }).then(() => {
+                        return res.redirect('/cunas/listar');
+                    }).catch(error => {
+                        console.log(error);
+                        // Manejo de errores en la actualización
+                    });
+                }
+            }).catch(error => {
+                console.log(error);
+                // Manejo de errores en la consulta del stock
+            });
         } else {
    
                 const userLogin = req.session.userLogin;
