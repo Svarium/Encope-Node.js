@@ -30,6 +30,7 @@ const cunasRouter = require('./src/routes/cunas');
 const apiUsersRouter = require('./src/routes/apis/apiUsers');
 const apiLicitacionRouter = require('./src/routes/apis/apiLicitaciones')
 const apiNoticiasRouter = require('./src/routes/apis/apiNoticias')
+const apiCunasRouter = require('./src/routes/apis/apiCunas')
 
 
 
@@ -69,6 +70,7 @@ app.use('/cunas', cunasRouter)
 app.use('/api/users', apiUsersRouter)
 app.use('/api/licitacion', apiLicitacionRouter)
 app.use('/api/noticias', apiNoticiasRouter)
+app.use('/api/cunas', apiCunasRouter)
 
 
 // catch 404 and forward to error handler

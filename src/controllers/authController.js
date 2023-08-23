@@ -24,7 +24,8 @@ module.exports = {
                     email,         
                     icon: picture,   
                     socialId:googleId,
-                    socialProvider: provider    
+                    socialProvider: provider,
+
                 }
                });
 
@@ -34,7 +35,7 @@ module.exports = {
                 rol:user.rolId,
                 icon:user.icon,
                 socialId:googleId,
-                destino:user.destinoId ? user.destinoId : null
+                destinoId:user.destinoId ? user.destinoId : null
                }
 
                res.cookie('userEncopeWeb', req.session.userLogin, {maxAge: 1000*60*7})
@@ -43,8 +44,6 @@ module.exports = {
                
         } catch (error) {
             console.log(error);
-        }
-
-       
+        }       
     },
 };

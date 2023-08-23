@@ -4,7 +4,7 @@ const { Op } = require('sequelize');
 
 
 module.exports = {
-    list : (req,res) => {
+    list : async (req,res) => {
         const userLogin = req.session.userLogin;
 
         const stock = db.Stock.findAll({ //ESTA CONSULTA ME TRAE UNA LISTA DE EL STOCK ASOCIADO A UN USUARIO Y POR ENDE A UN DESTINO
