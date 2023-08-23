@@ -4,9 +4,9 @@
       
         
           
-<body  style="background-image: url('/images/imagen\ productos\ vector-03.png'); background-size: cover;">
+<body  style="background-color: rgb(243, 241, 238);">
   
-    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-3">
         <div class="container">
         <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
           aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +48,7 @@
       <%- include('../partials/canvasMenu')  %> 
      
 
-        <div class="container-fluid"><p class="text-white h2 text-center shadow-3"><strong>Stock de Cunitas - <%= user.destino.nombreDestino %></strong></p>
+        <div class="container-fluid"><p class="text-black h2 text-center shadow-3"><strong>Stock de Cunitas - <%= user.destino.nombreDestino %></strong></p>
             <hr class="text-white">
             <div class="row  justify-content-center">
            <% stock.forEach(item  => { %>
@@ -58,40 +58,36 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Stock de <%= item.producto.nombre.toUpperCase() %> </div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800"><%= item.cantidad %></div>
+                     
                     </div>
                     <div class="col-auto">
                       <i class="fa-solid fa-gear fa-2x text-gray-300"></i>
                     </div>  
-                    <small class="card-text">Stock Creado: <strong><%= new Intl.DateTimeFormat('es-AR', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                      hour: 'numeric',
-                      minute: 'numeric',
-                      second: 'numeric',
-                      timeZone: 'America/Argentina/Buenos_Aires'
-                    }).format(new Date(item.createdAt)) %></strong></small>
-                    <small class="card-text">Última Actualización: <strong><%= new Intl.DateTimeFormat('es-AR', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                      hour: 'numeric',
-                      minute: 'numeric',
-                      second: 'numeric',
-                      timeZone: 'America/Argentina/Buenos_Aires'
-                    }).format(new Date(item.updatedAt)) %></strong></small>    
+                   
                     
                       <img src="/images/cunitas/<%= item.producto.imagen %>" class="img-fluid img-thumbnail float-end " style="height: 100px; width: 139px;" >  
                                         
                   </div>
-                  
-                    <button type="button" class="btn btn-outline-primary mt-2" data-bs-toggle="modal" data-bs-target="#update<%= item.id %>">
+                  <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#update<%= item.id %>">
+                    <%= item.cantidad %> Unidades
+                </button> 
+                    <button type="button" class="btn btn-outline-danger mt-2" data-bs-toggle="modal" data-bs-target="#update<%= item.id %>">
                       Actualizar Stock
                   </button>                   
-                </div>               
+                </div> 
+                <small class="card-text">Actualizado: <strong><%= new Intl.DateTimeFormat('es-AR', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  second: 'numeric',
+                  timeZone: 'America/Argentina/Buenos_Aires'
+                }).format(new Date(item.updatedAt)) %></strong></small>                  
               </div>
             </div>   
+
+
             <!-- Modal EDITAR STOCK -->
 <div class="modal fade" id="update<%= item.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -155,14 +151,9 @@
               <div class="col-md-6">
            
                 <form action="/cunas/" method="POST">
-                  <div class="form-group">
-                   
-                    <label for="cantidad">Cantidad:</label>
-                    <input type="number" class="form-control <%= (locals.errors && errors.cantidad) && 'is-invalid'%>"  id="cantidad" name="cantidad" placeholder="Ingrese una cantidad">
-                    <small id="errorCantidad" class="text-danger ms-2"><%= locals.errors && errors.cantidad ? errors.cantidad.msg : null %></small>
-                  </div>
+                  
                   <div class="form-group mb-2">
-                    <label for="selectValor">Seleccione:</label>
+                    <label for="selectValor">Seleccione el producto:</label>
                     <select class="form-control <%= (locals.errors && errors.producto) && 'is-invalid'%>" id="destino" name="producto">
                       <option value="" selected hidden>Seleccione...</option>
                       <% if (user.destinoId == 31) { %>
@@ -200,6 +191,11 @@
 
                     </select>
                     <small id="errorProducto" class="text-danger ms-2"><%= locals.errors && errors.tipo ? errors.tipo.msg : null %></small>
+                  </div>
+                  <div class="form-group">                   
+                    <label for="cantidad">Cantidad Inicial:</label>
+                    <input type="number" class="form-control <%= (locals.errors && errors.cantidad) && 'is-invalid'%>"  id="cantidad" name="cantidad" placeholder="Ingrese una cantidad">
+                    <small id="errorCantidad" class="text-danger ms-2"><%= locals.errors && errors.cantidad ? errors.cantidad.msg : null %></small>
                   </div>
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                   <button type="submit" class="btn btn-primary">Enviar</button>

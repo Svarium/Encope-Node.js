@@ -67,8 +67,8 @@ const paintKitsDone = fetch(`${endpointURL}/kits`)
             const template = `
                              <div class="col-lg-4 mb-3">
                             <div class="card bg-dark text-white shadow">
-                            <div class="card-body text-center p-2">
-                              <small><strong>${stock.producto.nombre.toUpperCase()}: ${stock.cantidad}</strong></small>                            
+                            <div class="card-body  p-2">
+                              <small>${stock.producto.nombre.toUpperCase()}: <strong>${stock.cantidad}</strong></small>                            
                         </div>
                             </div>
                                 </div>
