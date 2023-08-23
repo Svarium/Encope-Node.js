@@ -29,6 +29,9 @@ module.exports = {
                     attributes: {exclude:['detalle','createdAt', 'updatedAt' ]}
                 }
                 
+            ],
+            order:[
+                ['idProducto', 'DESC']
             ]
         })
 
