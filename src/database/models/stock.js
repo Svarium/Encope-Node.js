@@ -17,6 +17,11 @@ module.exports = (sequelize, DataTypes) => {
         as:'usuario'
       });
 
+      Stock.belongsTo(models.destinoUsuario,{
+        foreignKey:'idDestino',
+        as:'destino'
+      });
+
       Stock.belongsTo(models.Producto,{
         foreignKey: 'idProducto',
         as:'producto'
@@ -26,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
   Stock.init({
     idUsuario: DataTypes.INTEGER,
     idProducto: DataTypes.INTEGER,
+    idDestino: DataTypes.INTEGER,
     cantidad: DataTypes.INTEGER
   }, {
     sequelize,

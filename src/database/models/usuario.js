@@ -17,14 +17,13 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey : 'rolId',
         as : 'rol'
       })
-
       
       Usuario.belongsTo(models.destinoUsuario,{
         foreignKey : 'destinoId',
         as : 'destino'
       })
 
-      Usuario.hasMany(models.Stock,{
+     Usuario.hasMany(models.Stock,{
         foreignKey:'idUsuario',
         as:'stock'
       })

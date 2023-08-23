@@ -69,6 +69,47 @@ module.exports = {
                 message:error.message,
             }        
         }
+    },
+
+    getAllProducts: async () => {
+      try {
+      const allProducts =  db.Producto.findAll({
+          attributes:{exclude:["id", "imagen", "createdAt", "updatedAt"]}
+        })
+
+        return allProducts
+        
+      } catch (error) {
+        console.log(error);
+            throw{
+                status:500,
+                message:error.message,
+            }        
+      }
+    },
+
+    getAllEditors: async () => {
+      try {
+
+        const allEditors = db.Usuario.findAll({
+          where: { rolId: 5 },
+      attributes: {
+        exclude: ["id", "name", "surname", "password", "icon", "socialId", "createdAt", "updatedAt","socialProvider"],
+      },
+        }
+        )
+
+        return allEditors
+
+      } catch (error) {
+        console.log(error);
+            throw{
+                status:500,
+                message:error.message,
+            }        
+      }
     }
+
+
 
 }

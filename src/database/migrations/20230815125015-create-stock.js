@@ -25,6 +25,14 @@ module.exports = {
         },
         allowNull:false,
       },
+      idDestino: {
+        type: Sequelize.INTEGER,
+        references:{
+          model:'destinoUsuarios',
+          key:'id',
+        },
+        allowNull:false,
+      },
       cantidad: {
         type: Sequelize.INTEGER
       },

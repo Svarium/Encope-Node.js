@@ -33,6 +33,9 @@ module.exports = {
             }
         })
         .then(noticias => {
+     /*  if(req.session.userLogin){
+        console.log(req.session.userLogin.destinoId);
+      } */
             return res.render('inicio', {
                 title: 'Encope',
                 noticias,

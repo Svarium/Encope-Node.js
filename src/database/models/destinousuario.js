@@ -16,6 +16,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey:"destinoId",
         onDelete:"CASCADE"
       })
+
+      destinoUsuario.hasMany(models.Stock,{
+        foreignKey:'idDestino',
+        as:'destinoStock'
+      })
     }
   }
   destinoUsuario.init({

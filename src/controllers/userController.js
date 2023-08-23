@@ -110,7 +110,7 @@ module.exports = {
                 name,
                 rol : rolId,
                 icon,
-                destino:destinoId ? destinoId : null 
+                destinoId: destinoId ? destinoId : 50
             };
 
             if(req.body.rememberMe){
@@ -172,7 +172,7 @@ module.exports = {
                   ...userSession,
                   name: user.name,
                   icon: user.icon,
-                  destino: user.destinoId? user.destinoId : null
+                  destino: user.destinoId ? user.destinoId : null
                 };
 
                 if (req.cookies.userEncopeWeb){

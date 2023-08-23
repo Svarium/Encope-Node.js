@@ -9,7 +9,7 @@ module.exports = {
 
         const stock = db.Stock.findAll({ //ESTA CONSULTA ME TRAE UNA LISTA DE EL STOCK ASOCIADO A UN USUARIO Y POR ENDE A UN DESTINO
             where:{
-                idUsuario:userLogin.id
+                idDestino:userLogin.destinoId
             },
             include:[
                 {model:db.Usuario,
@@ -70,18 +70,35 @@ module.exports = {
          
         const errors = validationResult(req);
         
-        if(req.session.userLogin.destino !== 31) {
+       
             if(errors.isEmpty()){
                 const {cantidad, producto} = req.body;
                 const id = req.session.userLogin.id
+                const destino = req.session.userLogin.destinoId
     
                 db.Stock.create({
                     idUsuario:id,
                     idProducto:producto,
+                    idDestino:destino,
                     cantidad:cantidad
+
                 })
                 .then(stock => {
-                    return res.redirect('/cunas/listar')
+                    if(stock.idProducto == 14){
+                         db.Stock.update({
+                            cantidad: db.Sequelize.literal(`cantidad - ${stock.cantidad}`)
+                        }, {
+                            where: {
+                                idDestino: req.session.userLogin.destinoId,
+                                idProducto: { [db.Sequelize.Op.ne]: 14 }
+                            }
+                        })
+                        .then(() => {
+                            return res.redirect('/cunas/listar')
+                        })
+                    } else {
+                        return res.redirect('/cunas/listar')
+                    }                
                 })
                 .catch(error => console.log(error))
     
@@ -111,8 +128,7 @@ module.exports = {
                             }
                             
                         ]
-                    })
-    
+                    })  
             
     
                     const cunas = db.Producto.findAll({
@@ -148,37 +164,8 @@ module.exports = {
                             old:req.body
                         })
                     })       
-                }
-        } else {
-            if (errors.isEmpty()) {
-                const { cantidad, producto } = req.body;
-                const id = req.session.userLogin.id;
-              
-                db.Stock.create({
-                  idUsuario: id,
-                  idProducto: producto,
-                  cantidad: cantidad
-                })
-                .then(kit => {
-                    if(kit.idProducto == 14){
-                        return db.Stock.update({
-                            cantidad:db.Sequelize.literal(`cantidad - ${kit.cantidad}`)},
-                            {
-                                where:{
-                                    idUsuario:id,
-                                    idProducto: {[Op.ne]: 14}
-                                }
-                            })
-                    } else {
-                        return null
-                    }
-                })
-                .then(() => {
-                    return res.redirect('/cunas/listar')
-                })
-                .catch(error => console.log(error))
-            }
-        }      
+                }       
+            
     },
 
     updateStock: (req, res) => {
@@ -186,6 +173,7 @@ module.exports = {
         if (errors.isEmpty()) {
             const idStock = req.params.id;
             const idUser = req.session.userLogin.id;
+            const destino = req.session.userLogin.destinoId
             const addCantidad = req.body.cantidad;
     
             db.Stock.findOne({
@@ -209,7 +197,7 @@ module.exports = {
                             cantidad: db.Sequelize.literal(`cantidad - ${addCantidad}`)
                         }, {
                             where: {
-                                idUsuario: idUser,
+                                idDestino: req.session.userLogin.destinoId,
                                 idProducto: { [db.Sequelize.Op.ne]: 14 }
                             }
                         });

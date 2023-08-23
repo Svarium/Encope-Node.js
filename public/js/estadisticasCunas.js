@@ -2,12 +2,14 @@ const $ = (el) => document.querySelector(el);
 
 const sectionKits = document.getElementById("kits");
 const sectionStocks = document.getElementById("stocksPorDestino");
+const productsInDb = document.getElementById("productos");
+const editoresIndb = document.getElementById("editores");
 
 /* const URL_API_SERVER= "https://encope.gob.ar" */
 
-const endpoitURL = "http://localhost:3000/api/cunas/";
+const endpointURL = "http://localhost:3000/api/cunas/";
 
-const paintKitsDone = fetch(`${endpoitURL}/kits`)
+const paintKitsDone = fetch(`${endpointURL}/kits`)
   .then((response) => response.json())
   .then((data) => {
     if (data.ok) {
@@ -19,7 +21,17 @@ const paintKitsDone = fetch(`${endpoitURL}/kits`)
 	  <div class="text-center">
 		<img class="img-fluid px-3 px-sm-4 mt-3 mb-4 " style="width: 100%;" src="/images/cunitas/kit.webp" alt=" Star Wars - Mandalorian">
 									</div>
-									<p>Total de kits terminados y en stock en el CPFII:</p>
+									<p>Total de kits terminados y en stock en el CPFII (Última actualización:
+                    ${new Intl.DateTimeFormat('es-AR', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      second: 'numeric',
+                      timeZone: 'America/Argentina/Buenos_Aires'
+                    }).format(new Date(data.data.data[0].updatedAt))}
+                    )</p>
 									<a class="btn btn-danger" target="_blank" rel="nofollow" href="/"><strong>${data.data.data[0].cantidad}</strong> Kits terminados</a>
 								</div>
 							</div>
@@ -29,29 +41,57 @@ const paintKitsDone = fetch(`${endpoitURL}/kits`)
   });
 
 
-  const paintStockDestinos = fetch(`${endpoitURL}/stocks`)
+  const paintStockDestinos = fetch(`${endpointURL}/stocks`)
   .then((response) => response.json())
   .then((data) => {
     if(data.ok){
 
         data.data.stocks.forEach(stock => {
             const template = `
-                             <div class="col-lg-6 mb-4">
+                             <div class="col-lg-6 mb-3">
                             <div class="card bg-dark text-white shadow">
-                            <div class="card-body">
-                              <p>${stock.usuario.destino.nombreDestino}</p>
-                              <small>Total de ${stock.producto.nombre}: ${stock.cantidad}</small>
+                            <div class="card-body text-center">
+                              <small><strong>${stock.producto.nombre.toUpperCase()}: ${stock.cantidad}</strong></small>
+                            
                         </div>
                             </div>
                                 </div>
             
-            `;
-    
+            `;    
             sectionStocks.innerHTML += template
-            
-        });
-
-      
+                    });     
 
     }
   });
+
+  const paintProductosInDb = fetch(`${endpointURL}/productos`)
+  .then((response) => response.json())
+  .then((data) => {
+    if(data.ok){
+
+      productsInDb.innerHTML +=  `
+      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Productos en Base de Datos</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">${data.total}</div>
+      `
+     
+    }
+  });
+
+  const paintEditores = fetch(`${endpointURL}/editores`)
+  .then((response) => response.json())
+  .then((data) => {
+    if(data.ok){
+      editoresIndb.innerHTML += `
+      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Usuarios Editores
+											</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">${data.total}</div>
+      `
+    }
+  })
+
+
+
+  
+
+
+ 

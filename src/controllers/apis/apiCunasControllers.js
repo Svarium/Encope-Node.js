@@ -1,5 +1,5 @@
 const createResponseError = require('../../helpers/createResponseError');
-const { getAllKits, getAllStocks } = require('../../services/cunasServices');
+const { getAllKits, getAllStocks, getAllProducts, getAllEditors } = require('../../services/cunasServices');
 
 
 module.exports = {
@@ -39,6 +39,41 @@ module.exports = {
             console.log(error);
             return createResponseError(res, error)
         }
+    },
+
+    allProducts : async(req,res) => {
+        try {
+            const products = await getAllProducts()
+
+            return res.status(200).json({
+                ok:true,
+                message:"Productos en base de datos",
+                products,
+                total:products.length
+            })
+
+        } catch (error) {
+            console.log(error);
+            return createResponseError(res, error)
+        }
+    },
+
+    allEditors : async(req,res) => {
+        try {
+            const editors = await getAllEditors()
+            return res.status(200).json({
+                ok:true,
+                message:"Editores en base de datos",
+                editors,
+                total:editors.length
+            })
+
+        } catch (error) {
+            console.log(error);
+            return createResponseError(res, error)
+        }
     }
+
+
 
 }
