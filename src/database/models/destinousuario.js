@@ -21,7 +21,14 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey:'idDestino',
         as:'destinoStock'
       })
+
+      destinoUsuario.hasMany(models.detalleRetiro,{
+        foreignKey:'idDestino',
+        as:'retiro'
+      })
     }
+
+
   }
   destinoUsuario.init({
     nombreDestino: DataTypes.STRING,

@@ -19,6 +19,9 @@ router.get('/estadistica',checkUserEditorIntranet, estadisticas)
 //Ruta para sumar al stock
 router.put('/addStock/:id', updateStockValidator ,updateStock)
 
+//Ruta para la vista de retiros de stock
+router.get('retiros')
+
 
 
 

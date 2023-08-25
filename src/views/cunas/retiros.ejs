@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../partials/head')  %>
+      
+        
+          
+<body  style="background-color: rgb(243, 241, 238);">
+  
+    <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-3">
+        <div class="container">
+        <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+          aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <button class="btn btn-transparent" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><img id="userIconProfile" src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>" class="iconProfile me-2" alt="">
+          <%= userLogin.name %> <i class="fa-solid fa-caret-down fa-lg"></i></button>
+          <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalInicial">
+  Inicializar Stock de un Producto +
+</button>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalInicial" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Inicializar stock de un producto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="">Al hacer click en "Entiendo y deseo continuar" verás un formulario donde puedes establecer el stock inicial de un producto junto con su cantidad. Esto se hace UNA SOLA VEZ por cada producto. <br><br>
+          Una vez que envíes el formulario, podrás ver el producto junto con su stock en pantalla.
+          En el recuadro del producto, encontrarás un botón para actualizar el stock. Este botón te permite sumar más cantidad a ese producto. </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#aumentar">
+           Entiendo y deseo continuar
+      </button>  
+      </div>
+    </div>
+  </div>
+</div>
+      </div>
+    </nav><br>
+
+    <main>
+      <%- include('../partials/modals')  %>    
+      <%- include('../partials/canvasMenu')  %> 
+     
+
+        <div class="container-fluid"><p class="text-black h2 text-center shadow-3"><strong>Retiros de stock</strong></p>
+            <hr class="text-white">
+          </div>
+    </main>
+
+    <script>
+      const icon = document.getElementById('userIconProfile')
+      const cardImg = document.getElementById('imgIcon')
+      icon.addEventListener('error', () => {
+      icon.src = 'https://cdn-icons-png.flaticon.com/512/149/149071.png'
+    
+    })
+    
+    cardImg.addEventListener('error', () => {
+      cardImg.src = 'https://cdn-icons-png.flaticon.com/512/149/149071.png'
+    })
+    
+    </script>
+    
+    <script>
+      function showAlertAndSubmit(event) {
+        event.preventDefault();
+    
+        Swal.fire({
+          title: '¿Estas seguro de editar tu información?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, editar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Si el usuario confirmó el alert, envía el formulario manualmente
+            const form = document.getElementById("editInfo");
+            Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Informacion editada correctamente',
+      showConfirmButton: false,
+      timer: 1500
+    })
+    
+            // Retraso de 5 segundos antes de enviar el formulario y cambiar la página
+            setTimeout(function() {
+              form.submit();
+            }, 1000); // 2000 milisegundos = 2 segundos
+          }
+        });
+      }
+    </script>
+    
+    <%- include('../partials/scripts')  %>
+    
+    <script src="/js/resetUserPass.js"></script>
+    </body>
+    </html>
