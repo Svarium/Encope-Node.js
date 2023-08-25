@@ -339,7 +339,7 @@
     }
     
     .table tbody td:hover {
-        background-color: #46878a;
+        background-color: #d3e1e2;
     }
     
     @media screen and (max-width: 600px) {

@@ -33,7 +33,21 @@
 			<hr class="sidebar-divider">
 
 			<!-- Heading -->
-			<div class="sidebar-heading">Actions</div>
+			<div class="sidebar-heading mb-1">Menú kits</div>
+
+			<!-- Nav Item - Charts -->
+			<li class="nav-item">			
+				<button type="button" class="btn btn-success nav-link mb-1" data-bs-toggle="modal" data-bs-target="#tablaDeStock">
+					<span><i class="fa-solid fa-table"></i></span>Tabla de stock
+					  </button>
+		</li>
+
+			<!-- Nav Item - Charts -->
+			<li class="nav-item">
+					<button type="button" class="btn btn-primary nav-link" data-bs-toggle="modal" data-bs-target="#kitsTerminados">
+					<span><i class="fa-solid fa-gears"></i></span>	Kits Terminados
+					  </button>
+			</li>
 
 			<!-- Nav Item - Pages -->
 			<li class="nav-item">
@@ -49,13 +63,6 @@
 					<i class="fas fa-fw fa-chart-area"></i>
 					<span>Stock</span></a>
 			</li>
-
-				<!-- Nav Item - Charts -->
-				<li class="nav-item">
-						<button type="button" class="btn btn-primary nav-link" data-bs-toggle="modal" data-bs-target="#kitsTerminados">
-						<span><i class="fa-solid fa-gears"></i></span>	Kits Terminados
-						  </button>
-				</li>
 
 			<!-- Nav Item - Tables -->
 			<li class="nav-item">
@@ -183,9 +190,14 @@
 	
 					<!-- Content Row Last Movie in Data Base -->
 					<div class="row">
+
 						<!-- Last Movie in DB -->
 						<div class="col-lg-12 mb-4" id="kits">
 							
+						</div>
+
+						<div id="stockGeneral">
+
 						</div>
 						<!-- End content row last movie in Data Base -->
 
@@ -196,8 +208,39 @@
 			</div>
 			<!-- End of MainContent -->
 
-
-
+			<div class="modal fade" id="tablaDeStock" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-xl">
+				  <div class="modal-content">
+					<div class="modal-header">
+					  <h5 class="modal-title" id="exampleModalLabel">Tabla de Stock General</h5>
+					  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+					 
+					<div class="contenedor">
+				<table class="table">     
+					<thead>
+						<tr>
+							<th>Destino</th>
+							<th>Producto</th>
+							<th>Stock</th>
+							<th>Fecha de creación</th>
+							<th>Última Actualización</th>
+						</tr>
+					</thead>
+					<tbody id="tablaStockGeneral">   
+					
+					
+					</tbody>
+				</table>
+			  </div>
+					</div>
+					<div class="modal-footer">
+					  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+					</div>
+				  </div>
+				</div>
+			  </div>
 
     </main>
 

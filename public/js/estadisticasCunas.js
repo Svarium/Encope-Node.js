@@ -4,6 +4,7 @@ const sectionKits = document.getElementById("kits");
 const sectionStocks = document.getElementById("stocksPorDestino");
 const productsInDb = document.getElementById("productos");
 const editoresIndb = document.getElementById("editores");
+const stockGeneral = document.getElementById("tablaStockGeneral")
 
 /* const URL_API_SERVER= "https://encope.gob.ar" */
 
@@ -102,6 +103,47 @@ const paintKitsDone = fetch(`${endpointURL}/kits`)
 											</div>
 											<div class="h5 mb-0 font-weight-bold text-gray-800">${data.total}</div>
       `
+    }
+  })
+
+
+  const paintTableStock = fetch(`${endpointURL}/allstock`)
+  .then((response) => response.json())
+  .then((data) => {
+    if(data.ok){
+      stockGeneral.innerHTML = ""
+
+      data.stock.forEach(stock => {
+        const template = `
+        <tr>
+        <td data-label="Destino">${stock.destino.nombreDestino}</td>
+        <td data-label="Producto">${stock.producto.nombre} </td>
+        <td data-label="Stock">${stock.cantidad}</td>
+        <td data-label="Creado" class="text-black"> ${new Intl.DateTimeFormat('es-AR', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+          second: 'numeric',
+          timeZone: 'America/Argentina/Buenos_Aires'
+        }).format(new Date(stock.createdAt))} </td>
+        <td data-label="Actualizado">${new Intl.DateTimeFormat('es-AR', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+          second: 'numeric',
+          timeZone: 'America/Argentina/Buenos_Aires'
+        }).format(new Date(stock.updatedAt))}</td>
+      </tr>
+        
+        `;
+
+        stockGeneral.innerHTML += template
+      })
+
     }
   })
 

@@ -1,5 +1,5 @@
 const createResponseError = require('../../helpers/createResponseError');
-const { getAllKits, getAllStocks, getAllProducts, getAllEditors } = require('../../services/cunasServices');
+const { getAllKits, getAllStocks, getAllProducts, getAllEditors, getGeneralStock } = require('../../services/cunasServices');
 
 
 module.exports = {
@@ -68,6 +68,24 @@ module.exports = {
                 total:editors.length
             })
 
+        } catch (error) {
+            console.log(error);
+            return createResponseError(res, error)
+        }
+    },
+
+    generalStock : async(req,res) => {
+        try {
+
+            const stock = await getGeneralStock()
+            return res.status(200).json({
+                ok:true,
+                message:"Stock general de productos",
+                stock,
+                total:stock.length
+            })
+
+            
         } catch (error) {
             console.log(error);
             return createResponseError(res, error)

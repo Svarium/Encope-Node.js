@@ -108,6 +108,24 @@ module.exports = {
                 message:error.message,
             }        
       }
+    },
+
+    getGeneralStock: async () => {
+      try {
+
+        const generalStock = await db.Stock.findAll({
+          include:["destino", "producto"]
+        })
+
+        return generalStock
+        
+      } catch (error) {
+        console.log(error);
+            throw{
+                status:500,
+                message:error.message,
+            }        
+      }
     }
 
 
