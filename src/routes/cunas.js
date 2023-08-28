@@ -1,8 +1,9 @@
 var express = require('express');
-const { list, moreStock, estadisticas, updateStock } = require('../controllers/cunasController');
+const { list, moreStock, estadisticas, updateStock, retiros, retirarStock } = require('../controllers/cunasController');
 const addStockValidator = require('../validations/addStockValidator');
 const updateStockValidator = require('../validations/updateStockValidator');
 const checkUserEditorIntranet = require('../middlewares/checkUserEditorIntranet');
+const retirarStockValidator = require('../validations/retirarStockValidator');
 var router = express.Router();
 
 // llego con /cunas
@@ -20,8 +21,10 @@ router.get('/estadistica',checkUserEditorIntranet, estadisticas)
 router.put('/addStock/:id', updateStockValidator ,updateStock)
 
 //Ruta para la vista de retiros de stock
-router.get('retiros')
+router.get('/retiros', retiros)
 
+//Ruta retirar del stock
+router.post('/retiros/:id', retirarStockValidator, retirarStock)
 
 
 

@@ -4,7 +4,7 @@
       
         
           
-<body  style="background-color: rgb(243, 241, 238);">
+<body  style="background-color: rgb(243, 241, 241);">
   
     <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-3">
         <div class="container">
@@ -13,33 +13,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <button class="btn btn-transparent" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><img id="userIconProfile" src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>" class="iconProfile me-2" alt="">
-          <%= userLogin.name %> <i class="fa-solid fa-caret-down fa-lg"></i></button>
-          <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalInicial">
-  Inicializar Stock de un Producto +
-</button>
-<!-- Modal -->
-<div class="modal fade" id="exampleModalInicial" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Inicializar stock de un producto</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p class="">Al hacer click en "Entiendo y deseo continuar" verás un formulario donde puedes establecer el stock inicial de un producto junto con su cantidad. Esto se hace UNA SOLA VEZ por cada producto. <br><br>
-          Una vez que envíes el formulario, podrás ver el producto junto con su stock en pantalla.
-          En el recuadro del producto, encontrarás un botón para actualizar el stock. Este botón te permite sumar más cantidad a ese producto. </p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#aumentar">
-           Entiendo y deseo continuar
-      </button>  
-      </div>
-    </div>
-  </div>
-</div>
+          <%= userLogin.name %> <i class="fa-solid fa-caret-down fa-lg"></i></button>        
       </div>
     </nav><br>
 
@@ -51,6 +25,118 @@
         <div class="container-fluid"><p class="text-black h2 text-center shadow-3"><strong>Retiros de stock</strong></p>
             <hr class="text-white">
           </div>
+
+
+
+          <div class="container-fluid">
+            <table class="table">                
+                <thead>
+                    <tr>
+                        <th>Destino</th>
+                        <th>Producto</th>
+                        <th>Stock</th>
+                        <th>Última Actualización</th>
+                        <th>Retirar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <% stocks.forEach(stock => { %>
+                    <tr>
+                      <td data-label="Destino"><%= stock.destino.nombreDestino %></td>
+                      <td data-label="Producto"><%= stock.producto.nombre %></td>
+                      <td data-label="Cantidad"><%= stock.cantidad %></td>
+                      <td data-label="ültima Actualización"><%= new Intl.DateTimeFormat('es-AR', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        second: 'numeric',
+                        timeZone: 'America/Argentina/Buenos_Aires'
+                      }).format(new Date(stock.updatedAt)) %> </td>
+                      <td data-label="Retirar Stock">
+                        <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#retiroStock<%= stock.id %>">
+                            Retirar
+                    </button>
+                    <!-- Modal -->
+<div class="modal fade" id="retiroStock<%= stock.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Retirar del Stock</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <div class="col-md-12">
+              <form action="/cunas/retiros/<%= stock.id %>" method="POST">
+                <div class="form-group">
+                  <label for="destino">Destino del retiro</label>
+                  <select class="form-control <%= (locals.errors && errors.destino) && 'is-invalid'%>" id="destino" name="destino">
+                    <option value="<%= stock.destino.id %>" selected hidden><%= stock.destino.nombreDestino %></option>
+                  </select>
+                  <small id="errorDestino" class="text-danger ms-2"><%= locals.errors && errors.destino ? errors.destino.msg : null %></small>
+                </div>
+                <div class="form-group">
+                  <label for="producto">Producto a retirar</label>
+                  <select class="form-control <%= (locals.errors && errors.producto) && 'is-invalid'%>" id="producto" name="producto">
+                    <option value="<%= stock.producto.id %>" selected hidden><%= stock.producto.nombre %></option>
+                  </select>
+                  <small id="errorProducto" class="text-danger ms-2"><%= locals.errors && errors.producto ? errors.producto.msg : null %></small>
+                </div>
+                <div class="form-group row"> 
+                  <div class="col-md-6"> <!-- Dividir en 2 columnas para que cada campo ocupe la mitad de la fila -->
+                    <label for="cantidad">Cantidad a Retirar:</label>
+                    <input type="number" class="form-control <%= (locals.errors && errors.cantidad) && 'is-invalid'%>"  id="cantidad" name="cantidad" placeholder="Ingrese cantidad">
+                    <small id="errorCantidad" class="text-danger ms-2"><%= locals.errors && errors.cantidad ? errors.cantidad.msg : null %></small>
+                  </div>
+                  <div class="col-md-6"> <!-- Dividir en 2 columnas para que cada campo ocupe la mitad de la fila -->
+                    <label for="acta">Acta de entrega</label>
+                    <input type="text" class="form-control <%= (locals.errors && errors.acta) && 'is-invalid'%>"  id="acta" name="acta" placeholder="Numero de acta">
+                    <small id="errorActa" class="text-danger ms-2"><%= locals.errors && errors.acta ? errors.acta.msg : null %></small>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>                  
+                      </td>
+                  </tr>      
+                  <% }) %>                  
+                </tbody>
+            </table>
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </main>
 
     <script>

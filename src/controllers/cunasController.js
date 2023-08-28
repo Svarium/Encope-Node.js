@@ -302,5 +302,77 @@ module.exports = {
         return res.render('cunas/estadistica',{
             title:'Estadisticas'
         })
+    },
+
+    retiros: (req,res) => {
+        db.Stock.findAll({
+            include:["destino", "producto"]
+        })
+        .then(stocks => {
+          /*   return res.send(stocks) */
+            return res.render('cunas/retiros',{
+                title:"Retiros",
+                stocks
+            })  
+        })      
+    },
+
+    retirarStock: (req,res) => {
+
+        const errors = validationResult(req);
+
+       if (errors.isEmpty()) {
+
+        const {destino,producto,cantidad,acta} = req.body;
+        const usuario = req.session.userLogin.id
+        const idStock = req.params.id
+
+        db.detalleRetiro.create({
+            idDestino: destino,
+            idUsuario:usuario,
+            idProducto:producto,
+            idStock:idStock,
+            cantidadRetirada:cantidad,
+            actaEntrega:acta.trim()
+        })
+        .then(retiroStock => {
+
+            db.Stock.update({
+                cantidad: db.Sequelize.literal(`cantidad - ${retiroStock.cantidadRetirada}`)
+            },
+                
+            {
+                where: {id:retiroStock.idStock}
+            })
+        })
+        .then(() => {        
+        
+                db.Stock.update({
+                    cantidad: db.Sequelize.literal(`cantidad + ${req.body.cantidad}`)
+                },{
+                    where: {
+                        idDestino:31,
+                        idProducto:req.body.producto
+                    }
+                })
+                .then(() => {
+                    return res.redirect('/cunas/retiros')
+                })            
+        })
+        .catch(error => console.log(error))         
+
+       } else {
+        db.Stock.findAll({
+            include:["destino", "producto"]
+        })
+        .then(stocks => {        
+            return res.render('cunas/retiros',{
+                title:"Retiros",
+                stocks,
+                old:req.body,
+                errors:errors.mapped()
+            })  
+        })  
+       }
     }
 }
