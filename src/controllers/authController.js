@@ -25,6 +25,7 @@ module.exports = {
                     icon: picture,   
                     socialId:googleId,
                     socialProvider: provider,
+                    rolId:7
 
                 }
                });

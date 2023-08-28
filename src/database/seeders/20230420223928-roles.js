@@ -7,6 +7,7 @@ let listadoRoles = [
   "Editor-Noticias",
   "Editor-Licitaciones",
   "Editor-Intranet",
+  "Editor-Cunas",
   "Visitante"
 ]
 

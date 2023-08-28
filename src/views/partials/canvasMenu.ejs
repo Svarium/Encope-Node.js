@@ -21,9 +21,14 @@
           <i class="far fa-newspaper fa-lg me-2"></i> Agregar Nueva Noticia
         </a>
       <% } %>
-      <% if (locals.userLogin && (locals.userLogin.rol === 1 || locals.userLogin.rol === 2 || locals.userLogin.rol === 5) ) { %>
+      <% if (locals.userLogin && (locals.userLogin.rol === 1 || locals.userLogin.rol === 2 || locals.userLogin.rol === 6) ) { %>
         <a class="btn btn-outline-danger w-75 mb-3 text-start" href="/cunas/estadistica">
           <i class="fa-solid fa-baby-carriage"></i> Modulo Cunitas
+        </a>
+      <% } %>
+      <% if (locals.userLogin && (locals.userLogin.rol === 1 || locals.userLogin.rol === 2 || locals.userLogin.rol === 5) ) { %>
+        <a class="btn btn-outline-danger w-75 mb-3 text-start" href="/cunas/listar">
+          <i class="fa-solid fa-arrow-trend-up"></i> Stock Cunitas
         </a>
       <% } %>
   

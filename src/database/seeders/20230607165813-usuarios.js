@@ -12,7 +12,8 @@ module.exports = {
         email : 'EzeMunoz@gmail.com',
         password : '$2b$10$XxaRcb63amBM6nwDp3glMO7lQpNcerGAIJlXf09dFKif51JbbPah2',
         icon : '1680639888293_icons_.jpg',
-        rolId: 1,
+        rolId: 1, 
+        destinoId:31,     
         createdAt: new Date,  
         updatedAt: new Date
       }], {});

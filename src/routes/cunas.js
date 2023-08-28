@@ -4,6 +4,7 @@ const addStockValidator = require('../validations/addStockValidator');
 const updateStockValidator = require('../validations/updateStockValidator');
 const checkUserEditorIntranet = require('../middlewares/checkUserEditorIntranet');
 const retirarStockValidator = require('../validations/retirarStockValidator');
+const checkUserEditorCunas = require('../middlewares/checkUserEditorCunas');
 var router = express.Router();
 
 // llego con /cunas
@@ -15,13 +16,13 @@ router.get('/listar', checkUserEditorIntranet, list);
 router.post('/',addStockValidator, moreStock)
 
 //Ruta para mostrar estadisticas sobre el stock
-router.get('/estadistica',checkUserEditorIntranet, estadisticas)
+router.get('/estadistica',checkUserEditorCunas, estadisticas)
 
 //Ruta para sumar al stock
 router.put('/addStock/:id', updateStockValidator ,updateStock)
 
 //Ruta para la vista de retiros de stock
-router.get('/retiros', retiros)
+router.get('/retiros', checkUserEditorCunas, retiros)
 
 //Ruta retirar del stock
 router.post('/retiros/:id', retirarStockValidator, retirarStock)

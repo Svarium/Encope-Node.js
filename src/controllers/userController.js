@@ -51,7 +51,7 @@ module.exports = {
                 surname : surname.trim(),
                 email: email.trim(),
                 password : hashSync(password, 12),
-                rolId: 6,
+                rolId: 7,
                 icon: req.file ? req.file.filename : "not image.png",
             }).then(user =>{
 
