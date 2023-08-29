@@ -146,6 +146,34 @@ module.exports = {
             message:error.message,
         }       
       }
+    },
+
+    chequearCantidadRetirada: async(data, idStock) => {
+
+      try {
+
+        const stock = await db.Stock.findOne({
+          where: {
+            id:idStock
+          }
+        })
+
+       
+
+        if(stock.cantidad < data){
+          return false
+        } else {
+          return true
+        }
+        
+      } catch (error) {
+        console.log(error);
+        throw{
+            status:500,
+            message:error.message,
+        }       
+      }
+
     }
 
 

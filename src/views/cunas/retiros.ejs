@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-    <%- include('../partials/head')  %>
-      
-        
-          
+    <%- include('../partials/head')  %>    
 <body  style="background-color: rgb(243, 241, 241);">
   
     <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-3">
@@ -32,9 +29,10 @@
             <table class="table">                
                 <thead>
                     <tr>
+                      <th>ID Stock</th>
                         <th>Destino</th>
                         <th>Producto</th>
-                        <th>Stock</th>
+                        <th>Cantidad</th>
                         <th>Última Actualización</th>
                         <th>Retirar</th>
                     </tr>
@@ -44,6 +42,7 @@
 
                     <% if (stock.destino.id !== 31) { %>
                       <tr>
+                        <td data-label="ID stock" id="idStock"><%= stock.id %></td>
                         <td data-label="Destino"><%= stock.destino.nombreDestino %></td>
                         <td data-label="Producto"><%= stock.producto.nombre %></td>
                         <td data-label="Cantidad"><%= stock.cantidad %></td>
@@ -73,7 +72,7 @@
           <div class="container-fluid">
             <div class="row justify-content-center">
               <div class="col-md-12">
-                <form action="/cunas/retiros/<%= stock.id %>" method="POST">
+                <form action="/cunas/retiros/<%= stock.id %>" method="POST" id="retirosForm">
                   <div class="form-group">
                     <label for="destino">Destino del retiro</label>
                     <select class="form-control <%= (locals.errors && errors.destino) && 'is-invalid'%>" id="destino" name="destino">
@@ -103,6 +102,7 @@
                   <button type="submit" class="btn btn-primary">Enviar</button>
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 </form>
+                <small id="errorRetirosForm" class="text-danger"></small>
               </div>
             </div>
           </div>
@@ -118,25 +118,6 @@
                 </tbody>
             </table>
           </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -190,6 +171,6 @@
     
     <%- include('../partials/scripts')  %>
     
-    <script src="/js/resetUserPass.js"></script>
+    <script src="/js/retiros.js"></script>
     </body>
     </html>
