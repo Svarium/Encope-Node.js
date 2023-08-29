@@ -100,15 +100,16 @@
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-md-6">
-              <form action="/cunas/addStock/<%= item.id %>?_method=PUT" method="POST">
+              <form action="/cunas/addStock/<%= item.id %>?_method=PUT" method="POST" id="editStock">
                 <div class="form-group">
-                  <label for="cantidad">Cantidad a sumar:</label>
-                  <input type="number" class="form-control <%= (locals.errors && errors.cantidad) && 'is-invalid'%>"  id="cantidad" name="cantidad" placeholder="Ingrese una cantidad">
-                  <small id="errorCantidad" class="text-danger ms-2"><%= locals.errors && errors.cantidad ? errors.cantidad.msg : null %></small>
+                    <label for="cantidad">Cantidad a sumar:</label>
+                    <input type="number" class="form-control <%= (locals.errors && errors.cantidad) && 'is-invalid'%>" id="editCantidad" name="cantidad" placeholder="Ingrese una cantidad" required >
+                    <small id="errorCantidadEdit" class="text-danger ms-2"><%= locals.errors && errors.cantidad ? errors.cantidad.msg : null %></small>
                 </div>                  
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>            
-                <button type="submit" class="btn btn-primary">Enviar</button>
-              </form>
+                <button type="submit" class="btn btn-primary" id="submitButton">Enviar</button>
+            </form>
+              <small id="errorEditStock" class="text-danger"></small>
             </div>
           </div>
         </div>
@@ -137,8 +138,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title text-center" id="exampleModalLabel">Carga el stock inicial de un producto</h5>
-         
+          <h5 class="modal-title text-center" id="exampleModalLabel">Carga el stock inicial de un producto</h5>         
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           
         </div>
@@ -150,11 +150,11 @@
              
               <div class="col-md-6">
            
-                <form action="/cunas/" method="POST">
+                <form action="/cunas/" method="POST" id="iniciarStock">
                   
                   <div class="form-group mb-2">
                     <label for="selectValor">Seleccione el producto:</label>
-                    <select class="form-control <%= (locals.errors && errors.producto) && 'is-invalid'%>" id="destino" name="producto">
+                    <select class="form-control <%= (locals.errors && errors.producto) && 'is-invalid'%>" id="producto" name="producto">
                       <option value="" selected hidden>Seleccione...</option>
                       <% if (user.destinoId == 31) { %>
                         <% cunas.forEach(({nombre, id}) => { %>
@@ -192,16 +192,17 @@
                     
 
                     </select>
-                    <small id="errorProducto" class="text-danger ms-2"><%= locals.errors && errors.tipo ? errors.tipo.msg : null %></small>
+                    <small id="errorProducto" class="text-danger ms-2"><%= locals.errors && errors.producto ? errors.producto.msg : null %></small>
                   </div>
                   <div class="form-group">                   
                     <label for="cantidad">Cantidad Inicial:</label>
                     <input type="number" class="form-control <%= (locals.errors && errors.cantidad) && 'is-invalid'%>"  id="cantidad" name="cantidad" placeholder="Ingrese una cantidad">
-                    <small id="errorCantidad" class="text-danger ms-2"><%= locals.errors && errors.cantidad ? errors.cantidad.msg : null %></small>
+                    <small id="errorCantidadInicial" class="text-danger ms-2"><%= locals.errors && errors.cantidad ? errors.cantidad.msg : null %></small>
                   </div>
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                  <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                   <button type="submit" class="btn btn-primary">Enviar</button>
                 </form>
+                <small id="errorFormStock" class="text-danger"></small>
               </div>
             </div>
           </div>
@@ -262,8 +263,8 @@
       }
     </script>
     
-    <%- include('../partials/scripts')  %>
-    
-    <script src="/js/resetUserPass.js"></script>
+    <%- include('../partials/scripts')  %>    
+  
+    <script src="/js/stockCunas.js"></script>
     </body>
     </html>

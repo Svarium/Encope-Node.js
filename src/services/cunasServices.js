@@ -126,6 +126,26 @@ module.exports = {
                 message:error.message,
             }        
       }
+    },
+
+    validarCantidad: async(data) => {
+      try {
+
+        const stocks = await db.Stock.findAll()
+
+        const cantidades = stocks.map(item => item.cantidad)
+
+        const isValid = cantidades.every(cantidad => data <= cantidad)
+
+        return !isValid ? false : true
+        
+      } catch (error) {
+        console.log(error);
+        throw{
+            status:500,
+            message:error.message,
+        }       
+      }
     }
 
 

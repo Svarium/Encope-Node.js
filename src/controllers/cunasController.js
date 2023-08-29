@@ -110,7 +110,7 @@ module.exports = {
 
                     const stock = db.Stock.findAll({ //ESTA CONSULTA ME TRAE UNA LISTA DE EL STOCK ASOCIADO A UN USUARIO Y POR ENDE A UN DESTINO
                         where:{
-                            idUsuario:userLogin.id
+                            idDestino:userLogin.destinoId
                         },
                         include:[
                             {model:db.Usuario,
@@ -130,16 +130,18 @@ module.exports = {
                                 attributes: {exclude:['detalle','createdAt', 'updatedAt' ]}
                             }
                             
+                        ],
+                        order:[
+                            ['idProducto', 'DESC']
                         ]
-                    })  
+                    })
             
-    
-                    const cunas = db.Producto.findAll({
+                    const cunas = db.Producto.findAll({ //ESTA CONSULTA TRAE TODOS LOS PRODUCTOS PARA MOSTRAR EN LA VISTA
                         attributes:{exclude:['createdAt','updatedAt']},
                         order : [['id']],
                     })
             
-                    const user = db.Usuario.findOne({
+                    const user = db.Usuario.findOne({ //ESTA VISTA ME TRAE EL USUARIO
                         where:{
                             id:userLogin.id
                         },
@@ -151,24 +153,24 @@ module.exports = {
                             }
                         }],
                         attributes:{
-                            exclude:["name", "surname", "email", "password", "icon","socialId", "socialProvider", "rolId", "credencial", "createdAt", "updatedat"]
+                            exclude:["name", "surname", "email", "password", "icon","socialId", "socialProvider", "rolId", "credencial", "createdAt", "updatedAt"]
                         }
                     })
             
             
                     Promise.all(([cunas, user, stock]))
                     .then(([cunas, user, stock]) => {
+                       /*  return res.send(stock) */
                         return res.render("cunas/listCunas",{
                             cunas,
-                            stock,
                             user,
+                            stock,
                             title:"Stock de Cunas",
-                            errors:errors.mapped(),
-                            old:req.body
+                            old:req.body,
+                            errors: errors.mapped()
                         })
-                    })       
-                }       
-            
+                    })
+                }            
     },
 
     updateStock: (req, res) => {
@@ -232,70 +234,71 @@ module.exports = {
                 // Manejo de errores en la consulta del stock
             });
         } else {
-   
-                const userLogin = req.session.userLogin;
-        
-                const stock = db.Stock.findAll({ //ESTA CONSULTA ME TRAE UNA LISTA DE EL STOCK ASOCIADO A UN USUARIO Y POR ENDE A UN DESTINO
-                    where:{
-                        idUsuario:userLogin.id
-                    },
-                    include:[
-                        {model:db.Usuario,
-                         as:'usuario',
-                         attributes:{exclude:["name", "surname", "email", "password", "icon","socialId", "socialProvider", "rolId", "credencial", "createdAt", "updatedAt"]},
-                         include: [
-                           { model: db.destinoUsuario,
-                            as: 'destino',
-                            attributes:{exclude:['provincia', 'ciudad', 'createdAt', 'updatedAt']}
-                            }
-                         ]                  
-                        
-                        },
-                        {
-                            model: db.Producto,
-                            as:'producto',
-                            attributes: {exclude:['detalle','createdAt', 'updatedAt' ]}
+            const userLogin = req.session.userLogin;
+
+            const stock = db.Stock.findAll({ //ESTA CONSULTA ME TRAE UNA LISTA DE EL STOCK ASOCIADO A UN USUARIO Y POR ENDE A UN DESTINO
+                where:{
+                    idDestino:userLogin.destinoId
+                },
+                include:[
+                    {model:db.Usuario,
+                     as:'usuario',
+                     attributes:{exclude:["name", "surname", "email", "password", "icon","socialId", "socialProvider", "rolId", "credencial", "createdAt", "updatedAt"]},
+                     include: [
+                       { model: db.destinoUsuario,
+                        as: 'destino',
+                        attributes:{exclude:['provincia', 'ciudad', 'createdAt', 'updatedAt']}
                         }
-                        
-                    ]
-                })
-        
-                const cunas = db.Producto.findAll({ //ESTA CONSULTA TRAE TODOS LOS PRODUCTOS PARA MOSTRAR EN LA VISTA
-                    attributes:{exclude:['createdAt','updatedAt']},
-                    order : [['id']],
-                })
-        
-                const user = db.Usuario.findOne({ //ESTA VISTA ME TRAE EL USUARIO
-                    where:{
-                        id:userLogin.id
+                     ]                  
+                    
                     },
-                    include:[{
-                        model: db.destinoUsuario,
-                        as:'destino',
-                        attributes:{
-                            exclude:["provincia", "ciudad", "createdAt", "updatedAt"]
-                        }
-                    }],
-                    attributes:{
-                        exclude:["name", "surname", "email", "password", "icon","socialId", "socialProvider", "rolId", "credencial", "createdAt", "updatedAt"]
+                    {
+                        model: db.Producto,
+                        as:'producto',
+                        attributes: {exclude:['detalle','createdAt', 'updatedAt' ]}
                     }
+                    
+                ],
+                order:[
+                    ['idProducto', 'DESC']
+                ]
+            })
+    
+            const cunas = db.Producto.findAll({ //ESTA CONSULTA TRAE TODOS LOS PRODUCTOS PARA MOSTRAR EN LA VISTA
+                attributes:{exclude:['createdAt','updatedAt']},
+                order : [['id']],
+            })
+    
+            const user = db.Usuario.findOne({ //ESTA VISTA ME TRAE EL USUARIO
+                where:{
+                    id:userLogin.id
+                },
+                include:[{
+                    model: db.destinoUsuario,
+                    as:'destino',
+                    attributes:{
+                        exclude:["provincia", "ciudad", "createdAt", "updatedAt"]
+                    }
+                }],
+                attributes:{
+                    exclude:["name", "surname", "email", "password", "icon","socialId", "socialProvider", "rolId", "credencial", "createdAt", "updatedAt"]
+                }
+            })
+    
+    
+            Promise.all(([cunas, user, stock]))
+            .then(([cunas, user, stock]) => {
+               /*  return res.send(stock) */
+                return res.render("cunas/listCunas",{
+                    cunas,
+                    user,
+                    stock,
+                    title:"Stock de Cunas",
+                    old:req.body,
+                    errors: errors.mapped()
                 })
-        
-        
-                Promise.all(([cunas, user, stock]))
-                .then(([cunas, user, stock]) => {
-                    /* return res.send(stock) */
-                    return res.render("cunas/listCunas",{
-                        cunas,
-                        user,
-                        stock,
-                        title:"Stock de Cunas",
-                        errors:errors.mapped(),
-                        old:req.body
-                    })
-                })
-        }
-   
+            })
+        }      
     },
 
     estadisticas: (req,res) => {

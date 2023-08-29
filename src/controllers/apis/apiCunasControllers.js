@@ -1,5 +1,5 @@
 const createResponseError = require('../../helpers/createResponseError');
-const { getAllKits, getAllStocks, getAllProducts, getAllEditors, getGeneralStock } = require('../../services/cunasServices');
+const { getAllKits, getAllStocks, getAllProducts, getAllEditors, getGeneralStock, validarCantidad } = require('../../services/cunasServices');
 
 
 module.exports = {
@@ -86,6 +86,26 @@ module.exports = {
             })
 
             
+        } catch (error) {
+            console.log(error);
+            return createResponseError(res, error)
+        }
+    },
+
+    cantidadValidaKit : async(req,res) => {
+        try {
+
+            const kitCantidad = req.body.cantidad;
+            
+            const validateCantidad = await validarCantidad(kitCantidad)
+
+            return res.status(200).json({
+                ok:true,
+                data:{
+                    validateCantidad
+                }
+            })
+
         } catch (error) {
             console.log(error);
             return createResponseError(res, error)
