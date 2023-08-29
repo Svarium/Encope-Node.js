@@ -6,6 +6,9 @@ module.exports = [
     .notEmpty().withMessage('La cantidad es requerida')
     .isInt({min:1}).withMessage('La cantidad debe ser un numero entero mayor que cero')
     .custom((value,{req})=> {
+        if (req.session.userLogin.destinoId != 31) {
+            return true; // No se dispara la validación custom porque el destino es distinto qu cpfII
+        }
         return db.Stock.findAll({
          })
          .then(stock => {

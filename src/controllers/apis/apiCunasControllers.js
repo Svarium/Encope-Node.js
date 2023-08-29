@@ -96,16 +96,16 @@ module.exports = {
         try {
 
             const kitCantidad = req.body.cantidad;
-            
-            const validateCantidad = await validarCantidad(kitCantidad)
 
-            return res.status(200).json({
-                ok:true,
-                data:{
-                    validateCantidad
-                }
-            })
-
+            if(req.session.userLogin.destinoId == 31){
+                const validateCantidad = await validarCantidad(kitCantidad)
+                return res.status(200).json({
+                    ok:true,
+                    data:{
+                        validateCantidad
+                    }
+                })
+            }   
         } catch (error) {
             console.log(error);
             return createResponseError(res, error)
