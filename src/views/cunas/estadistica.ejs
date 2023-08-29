@@ -103,13 +103,17 @@
 									<% } %>									
 								</a>
 							</li>	
-						</ul>	
+						</ul>
+							
 					</nav>
+
 					<!-- End of Topbar -->
 
-
+				
         <!-- Content Row Top -->
 				<div class="container-fluid mt-3">
+
+				
 					
 				
 					<!-- Content Row Movies-->
@@ -179,6 +183,44 @@
 								</div>
 							</div>
 						</div>
+
+							
+					<div class="container-fluid">
+						<div class="row justify-content-center">
+							<div class="col-md-12">
+								<h4 class="mb-3">Buscar Stock</h4>
+								<hr>
+								<form action="/cunas/buscarStock" method="POST">
+									<div class="row mb-3">
+										<div class="col-md-5">
+											
+											<select class="form-control <%= (locals.errors && errors.producto) && 'is-invalid'%>" id="producto" name="producto">
+												<option value="" selected hidden>Seleccione el producto</option>
+												<% productos.forEach(({id, nombre}) => { %>
+													<option value="<%= id %>"><%= nombre.toUpperCase() %></option>
+												<% }) %>
+											</select>
+											<small id="errorProducto" class="text-danger ms-2"><%= locals.errors && errors.producto ? errors.producto.msg : null %></small>
+										</div>
+										<div class="col-md-5">
+											
+											<select class="form-control <%= (locals.errors && errors.destino) && 'is-invalid'%>" id="destino" name="destino">
+												<option value="" selected hidden>Seleccione el destino</option>
+												<% destinos.forEach(({id, nombreDestino}) => { %>
+													<option value="<%= id %>"><%= nombreDestino.toUpperCase() %></option>
+												<% }) %>
+											</select>
+											<small id="errorCantidadInicial" class="text-danger ms-2"><%= locals.errors && errors.destino ? errors.destino.msg : null %></small>
+										</div>
+										<div class="col-md-2 align-self-end">
+											<button type="submit" class="btn btn-primary w-100">Buscar</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+
 					
 	
 					<!-- Content Row Last Movie in Data Base -->

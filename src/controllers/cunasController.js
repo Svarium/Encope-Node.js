@@ -302,9 +302,24 @@ module.exports = {
     },
 
     estadisticas: (req,res) => {
-        return res.render('cunas/estadistica',{
-            title:'Estadisticas'
+
+        const productos = db.Producto.findAll({
+            attributes: ['id', 'nombre']
         })
+
+        const destinos = db.destinoUsuario.findAll({
+            attributes:['id', 'nombreDestino' ]
+        })
+
+        Promise.all(([productos, destinos]))
+        .then(([productos, destinos]) => {
+            return res.render('cunas/estadistica',{
+                title:'Estadisticas',
+                productos,
+                destinos
+            })
+        })
+      
     },
 
     retiros: (req,res) => {
@@ -377,5 +392,57 @@ module.exports = {
             })  
         })  
        }
+    },
+
+    buscarStock : (req,res) => {
+
+        const errors = validationResult(req);
+
+        if (errors.isEmpty()) {
+            const {producto, destino} = req.body
+
+            db.Stock.findOne({
+                where:{
+                    idProducto:producto,
+                    idDestino:destino
+                },
+                include : [
+                    {
+                        model: db.destinoUsuario,
+                        as:'destino',
+                        attributes:['id', 'nombreDestino']
+                    },
+                    {
+                        model: db.Producto,
+                        as: 'producto',
+                        attributes:['id', 'nombre', 'imagen']
+                    }
+                ]
+            })
+            .then(stock => {
+                return res.send(stock)
+            })
+        } else{
+            const productos = db.Producto.findAll({
+                attributes: ['id', 'nombre']
+            })
+    
+            const destinos = db.destinoUsuario.findAll({
+                attributes:['id', 'nombreDestino' ]
+            })
+    
+            Promise.all(([productos, destinos]))
+            .then(([productos, destinos]) => {
+                return res.render('cunas/estadistica',{
+                    title:'Estadisticas',
+                    productos,
+                    destinos,
+                    old:req.body,
+                    errors:errors.mapped()
+                })
+            })
+
+        }       
+       
     }
 }

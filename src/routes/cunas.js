@@ -1,10 +1,11 @@
 var express = require('express');
-const { list, moreStock, estadisticas, updateStock, retiros, retirarStock } = require('../controllers/cunasController');
+const { list, moreStock, estadisticas, updateStock, retiros, retirarStock, buscarStock } = require('../controllers/cunasController');
 const addStockValidator = require('../validations/addStockValidator');
 const updateStockValidator = require('../validations/updateStockValidator');
 const checkUserEditorIntranet = require('../middlewares/checkUserEditorIntranet');
 const retirarStockValidator = require('../validations/retirarStockValidator');
 const checkUserEditorCunas = require('../middlewares/checkUserEditorCunas');
+const buscarStockValidator = require('../validations/buscarStockValidator');
 var router = express.Router();
 
 // llego con /cunas
@@ -26,6 +27,9 @@ router.get('/retiros', checkUserEditorCunas, retiros)
 
 //Ruta retirar del stock
 router.post('/retiros/:id', retirarStockValidator, retirarStock)
+
+//Ruta para el buscador de stock
+router.post('/buscarStock',buscarStockValidator, buscarStock )
 
 
 
