@@ -420,7 +420,10 @@ module.exports = {
                 ]
             })
             .then(stock => {
-                return res.send(stock)
+                return res.render('cunas/searchStock',{
+                    title:'Resultado de la busqueda',
+                    stock
+                })
             })
         } else{
             const productos = db.Producto.findAll({
