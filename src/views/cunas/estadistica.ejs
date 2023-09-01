@@ -53,7 +53,7 @@
 			<li class="nav-item">
 				<a class="nav-link collapsed" href="/cunas/retiros">
 					<i class="fa-solid fa-truck fa-folder"></i>
-					<span>Retiros</span>
+					<span>Registro de Retiros</span>
 				</a>
 			</li>
 
@@ -86,11 +86,7 @@
 						</button>
 	
 						<!-- Topbar Navbar -->
-						<ul class="navbar-nav ml-auto">
-	
-							
-	
-							
+						<ul class="navbar-nav ml-auto">					
 	
 							<div class="topbar-divider d-none d-sm-block"></div>
 	
@@ -104,6 +100,10 @@
 								</a>
 							</li>	
 						</ul>
+
+						
+
+						
 							
 					</nav>
 
@@ -170,6 +170,31 @@
 					</div>
 					<!-- End movies in Data Base -->
 
+					<div class="container-fluid">
+						<div class="row justify-content-center">
+							<div class="col-md-12">
+								<h4 class="mb-3">Buscar Stock por Destino</h4>
+								<hr>
+								<form action="/cunas/StockPorDestino" method="POST">
+									<div class="row mb-3 align-items-center"> <!-- Agregamos 'align-items-center' para centrar verticalmente -->
+										<div class="col-md-6">
+											<select class="form-control <%= (locals.errors && errors.destino) && 'is-invalid'%>" id="destino" name="destino">
+												<option value="" selected hidden>Seleccione el destino</option>
+												<% destinos.forEach(({id, nombreDestino}) => { %>
+													<option value="<%= id %>"><%= nombreDestino.toUpperCase() %></option>
+												<% }) %>
+											</select>
+											<small id="errorCantidadInicial" class="text-danger ms-2"><%= locals.errors && errors.destino ? errors.destino.msg : null %></small>
+										</div>
+										<div class="col-md-2"> <!-- Eliminamos 'align-self-center' y 'justify-content-center' -->
+											<button type="submit" class="btn btn-primary w-100 d-flex justify-content-center align-items-center mb-4">Buscar</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+
 						<!-- Genres in DB -->
 						<div class="col-lg-12 mb-4">						
 							<div class="card shadow mb-4">
@@ -213,14 +238,14 @@
 											<small id="errorCantidadInicial" class="text-danger ms-2"><%= locals.errors && errors.destino ? errors.destino.msg : null %></small>
 										</div>
 										<div class="col-md-2 align-self-end">
-											<button type="submit" class="btn btn-primary w-100">Buscar</button>
+											<button type="submit" class="btn btn-primary w-100 mb-4">Buscar</button>
 										</div>
 									</div>
 								</form>
 							</div>
 						</div>
 					</div>
-
+					
 					
 	
 					<!-- Content Row Last Movie in Data Base -->

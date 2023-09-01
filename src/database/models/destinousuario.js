@@ -37,6 +37,10 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'destinoUsuario',
+    // Opciones de orden para la tabla destinoUsuario
+    defaultScope: {
+      order: [['nombreDestino', 'ASC']] // Ordena por nombreDestino en orden ascendente
+    }
   });
   return destinoUsuario;
 };

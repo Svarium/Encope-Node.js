@@ -322,8 +322,8 @@ module.exports = {
       
     },
 
-    retiros: (req,res) => {
-        db.Stock.findAll({
+    registroRetiros: (req,res) => {
+        db.detalleRetiro.findAll({
             include:["destino", "producto"]
         })
         .then(stocks => {
@@ -384,7 +384,7 @@ module.exports = {
             include:["destino", "producto"]
         })
         .then(stocks => {        
-            return res.render('cunas/retiros',{
+            return res.render('cunas/searchStockPorDestino',{
                 title:"Retiros",
                 stocks,
                 old:req.body,
@@ -410,21 +410,23 @@ module.exports = {
                     {
                         model: db.destinoUsuario,
                         as:'destino',
-                        attributes:['id', 'nombreDestino']
+                        attributes:['id', 'nombreDestino'],
+                        order:[['nombreDestino', 'ASC']]
                     },
                     {
                         model: db.Producto,
                         as: 'producto',
                         attributes:['id', 'nombre', 'imagen']
                     }
-                ]
+                ],
+              
             })
             .then(stock => {
                 return res.render('cunas/searchStock',{
                     title:'Resultado de la busqueda',
                     stock
                 })
-            })
+            }).catch(error => console.log(error))
         } else{
             const productos = db.Producto.findAll({
                 attributes: ['id', 'nombre']
@@ -447,5 +449,52 @@ module.exports = {
 
         }       
        
+    },
+
+    buscarStockPorDestino : (req,res) => {
+        const errors = validationResult(req);
+
+        if(errors.isEmpty()){
+            db.Stock.findAll({
+                where:{idDestino:req.body.destino},
+                include : [
+                    {
+                        model: db.destinoUsuario,
+                        as:'destino',
+                        attributes:['id', 'nombreDestino'],
+                        order:[['nombreDestino', 'ASC']]
+                    },
+                    {
+                        model: db.Producto,
+                        as: 'producto',
+                        attributes:['id', 'nombre', 'imagen']
+                    }
+                ],
+            }).then(stocks => {
+                return res.render('cunas/searchStockPorDestino',{
+                    title:'Resultado de la busqueda',
+                    stocks
+                })
+            })
+        } else {
+            const productos = db.Producto.findAll({
+                attributes: ['id', 'nombre']
+            })
+    
+            const destinos = db.destinoUsuario.findAll({
+                attributes:['id', 'nombreDestino' ]
+            })
+    
+            Promise.all(([productos, destinos]))
+            .then(([productos, destinos]) => {
+                return res.render('cunas/estadistica',{
+                    title:'Estadisticas',
+                    productos,
+                    destinos,
+                    old:req.body,
+                    errors:errors.mapped()
+                })
+            })
+        }    
     }
 }
