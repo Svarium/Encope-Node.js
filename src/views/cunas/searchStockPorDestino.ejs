@@ -25,92 +25,98 @@
     </nav><br>
 
     <main>
-
+      <div class="container-fluid">
         <div class="row ms-3 me-3 justify-content-center mb-5">
             <div class="col-md-6">
-                <h4 class="text-center">Resultado de la busqueda de stock en: <% if (stocks) { %>
-                 <%= stocks[0].destino.nombreDestino %>
-                <% } %></h4>
-                <hr>
-
-
-                <% if (stocks) { %> 
-                  <% stocks.forEach(stock => { %>
-                   
+                <h4 class="text-center">Resultado de la búsqueda de stock en:
+                </h4>
+                <hr>  
+            </div>    
+            </div>    
+            
+            <div class="container-fluid justify-content-center ">
+            
+                <% if (stocks.length != 0) { %>
+                  <div class="row mx-auto justify-content-center">
+                    <h5 class="text-center"><%= stocks[0].destino.nombreDestino %></h5>
+                      <% stocks.forEach(stock => { %>
                        
+                      <div class="col-md-3 mb-3">
                           <div class="card mx-auto" style="width: 18rem;">
-                            <img src="/images/cunitas/<%= stock.producto.imagen %>" class="card-img-top" alt="...">
-                            <div class="card-body">
-                              <h5 class="card-title"> <%= stock.destino.nombreDestino %></h5>
-                              <p class="card-text h6"><%= stock.producto.nombre.toUpperCase() %></p>
-                              <a href="#" class="btn btn-primary">Unidades: <%= stock.cantidad %></a>
-                              <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#retiroStock<%= stock.id %>">
-                                <i class="fa-solid fa-truck fa-folder"></i> Retirar
-                        </button>
-                        <!-- Modal -->
-    <div class="modal fade" id="retiroStock<%= stock.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Retirar del Stock</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div class="container-fluid">
-              <div class="row justify-content-center">
-                <div class="col-md-12">
-                  <form action="/cunas/retiros/<%= stock.id %>" method="POST" id="retirosForm">
-                    <div class="form-group">
-                      <label for="destino">Destino del retiro</label>
-                      <select class="form-control destinoRetiro <%= (locals.errors && errors.destino) && 'is-invalid'%>" id="destino" name="destino">
-                        <option value="<%= stock.destino.id %>" ><%= stock.destino.nombreDestino %></option>
-                      </select>
-                      <small id="errorDestino" class="text-danger ms-2"><%= locals.errors && errors.destino ? errors.destino.msg : null %></small>
+                              <img src="/images/cunitas/<%= stock.producto.imagen %>" class="card-img-top" alt="...">
+                              <div class="card-body" style="margin-bottom: 20px;"> <!-- Agregamos margen inferior -->
+                                  <h5 class="card-title"> <%= stock.destino.nombreDestino %></h5>
+                                  <p class="card-text h6"><%= stock.producto.nombre.toUpperCase() %></p>
+                                  <a href="#" class="btn btn-primary">Unidades: <%= stock.cantidad %></a>
+                                  <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                      data-bs-target="#retiroStock<%= stock.id %>">
+                                      <i class="fa-solid fa-truck fa-folder"></i> Retirar
+                                  </button>
+                        </div>            
+                        
+                      <!-- Modal -->
+  <div class="modal fade" id="retiroStock<%= stock.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Retirar del Stock</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="row justify-content-center">
+              <div class="col-md-12">
+                <form action="/cunas/retiros/<%= stock.id %>" method="POST" id="retirosForm">
+                  <div class="form-group">
+                    <label for="destino">Destino del retiro</label>
+                    <select class="form-control destinoRetiro <%= (locals.errors && errors.destino) && 'is-invalid'%>" id="destino" name="destino">
+                      <option value="<%= stock.destino.id %>" ><%= stock.destino.nombreDestino %></option>
+                    </select>
+                    <small id="errorDestino" class="text-danger ms-2"><%= locals.errors && errors.destino ? errors.destino.msg : null %></small>
+                  </div>
+                  <div class="form-group">
+                    <label for="producto">Producto a retirar</label>
+                    <select class="form-control productoRetiro <%= (locals.errors && errors.producto) && 'is-invalid'%>" id="producto" name="producto">
+                      <option value="<%= stock.producto.id %>" ><%= stock.producto.nombre %></option>
+                    </select>
+                    <small id="errorProducto" class="text-danger ms-2"><%= locals.errors && errors.producto ? errors.producto.msg : null %></small>
+                  </div>
+                  <div class="form-group row"> 
+                    <div class="col-md-6"> <!-- Dividir en 2 columnas para que cada campo ocupe la mitad de la fila -->
+                      <label for="cantidad">Cantidad a Retirar:</label>
+                      <input type="number" class="form-control cantidadRetiro <%= (locals.errors && errors.cantidad) && 'is-invalid'%>"  id="cantidadRetiro" name="cantidad" placeholder="Ingrese cantidad">
+                      <small id="errorCantidad" class="text-danger ms-2"><%= locals.errors && errors.cantidad ? errors.cantidad.msg : null %></small>
                     </div>
-                    <div class="form-group">
-                      <label for="producto">Producto a retirar</label>
-                      <select class="form-control productoRetiro <%= (locals.errors && errors.producto) && 'is-invalid'%>" id="producto" name="producto">
-                        <option value="<%= stock.producto.id %>" ><%= stock.producto.nombre %></option>
-                      </select>
-                      <small id="errorProducto" class="text-danger ms-2"><%= locals.errors && errors.producto ? errors.producto.msg : null %></small>
+                    <div class="col-md-6"> <!-- Dividir en 2 columnas para que cada campo ocupe la mitad de la fila -->
+                      <label for="acta">Acta de entrega</label>
+                      <input type="number" class="form-control actaRetiro <%= (locals.errors && errors.acta) && 'is-invalid'%>"  id="acta" name="acta" placeholder="Numero de acta">
+                      <small id="errorActa" class="text-danger ms-2"><%= locals.errors && errors.acta ? errors.acta.msg : null %></small>
                     </div>
-                    <div class="form-group row"> 
-                      <div class="col-md-6"> <!-- Dividir en 2 columnas para que cada campo ocupe la mitad de la fila -->
-                        <label for="cantidad">Cantidad a Retirar:</label>
-                        <input type="number" class="form-control cantidadRetiro <%= (locals.errors && errors.cantidad) && 'is-invalid'%>"  id="cantidadRetiro" name="cantidad" placeholder="Ingrese cantidad">
-                        <small id="errorCantidad" class="text-danger ms-2"><%= locals.errors && errors.cantidad ? errors.cantidad.msg : null %></small>
-                      </div>
-                      <div class="col-md-6"> <!-- Dividir en 2 columnas para que cada campo ocupe la mitad de la fila -->
-                        <label for="acta">Acta de entrega</label>
-                        <input type="number" class="form-control actaRetiro <%= (locals.errors && errors.acta) && 'is-invalid'%>"  id="acta" name="acta" placeholder="Numero de acta">
-                        <small id="errorActa" class="text-danger ms-2"><%= locals.errors && errors.acta ? errors.acta.msg : null %></small>
-                      </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Retirar</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                  </form>
-                  <small id="errorRetirosForm" class="text-danger"></small>
-                </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Retirar</button>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </form>
+                <small id="errorRetirosForm" class="text-danger"></small>
               </div>
             </div>
-    
           </div>
+  
         </div>
       </div>
-    </div>               
-                            </div>
+    </div>
+  </div>               
                           </div>
-                          <% }) %> 
-                <% } else { %>
-
-                    <h5 class="text-center">No se encontraron resultados para tu busqueda...</h5>
-
-                  <!--   <div class="container mt-4">
-                      <iframe width="560" height="315" src="https://www.youtube.com/embed/tW2tyE4rpRw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
+                        <% }) %> 
                     </div>
-                   -->
-                  <% } %>
-            </div>          
+                   
+                  <% } else { %>
+  
+                      <h5 class="text-center">No se encontraron resultados para tu busqueda...</h5>
+                    <% } %>
+
+              </div>
+            
     </main>
 
 

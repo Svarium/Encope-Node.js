@@ -381,16 +381,28 @@ module.exports = {
 
        } else {
         db.Stock.findAll({
-            include:["destino", "producto"]
-        })
-        .then(stocks => {        
+            where:{idDestino:req.body.destino},
+            include : [
+                {
+                    model: db.destinoUsuario,
+                    as:'destino',
+                    attributes:['id', 'nombreDestino'],
+                    order:[['nombreDestino', 'ASC']]
+                },
+                {
+                    model: db.Producto,
+                    as: 'producto',
+                    attributes:['id', 'nombre', 'imagen']
+                }
+            ],
+        }).then(stocks => {
             return res.render('cunas/searchStockPorDestino',{
-                title:"Retiros",
+                title:'Resultado de la busqueda',
                 stocks,
                 old:req.body,
                 errors:errors.mapped()
-            })  
-        })  
+            })
+        })
        }
     },
 

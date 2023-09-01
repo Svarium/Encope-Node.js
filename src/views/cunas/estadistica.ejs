@@ -181,7 +181,9 @@
 											<select class="form-control <%= (locals.errors && errors.destino) && 'is-invalid'%>" id="destino" name="destino">
 												<option value="" selected hidden>Seleccione el destino</option>
 												<% destinos.forEach(({id, nombreDestino}) => { %>
-													<option value="<%= id %>"><%= nombreDestino.toUpperCase() %></option>
+													<% if ([2,31,27,7,3,9,4].includes(id)) { %>
+														<option value="<%= id %>"><%= nombreDestino.toUpperCase() %></option>
+													<% } %>													
 												<% }) %>
 											</select>
 											<small id="errorCantidadInicial" class="text-danger ms-2"><%= locals.errors && errors.destino ? errors.destino.msg : null %></small>
