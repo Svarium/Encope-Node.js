@@ -1,5 +1,12 @@
 const $ = (id) => document.getElementById(id)
 
+const destino = document.getElementById("destino");
+const producto = document.getElementById("producto");
+const cantidad = document.getElementById("cantidadRetiro");
+
+
+
+
 
 const msgError = (element, message, {target}) => {
     $(element).innerHTML = message
@@ -24,6 +31,47 @@ const checkedFields = () => {
       }
     }
   };
+
+
+
+
+
+
+  verifyCantidadRetiro = async (cantidad, producto, destino) => {
+    try {
+      let response = await fetch("http://localhost:3000/api/cunas/retiroStock/",{
+        method: "POST",
+        body: JSON.stringify({
+          cantidad:cantidad,
+          producto:producto,
+          destino:destino,
+         
+        }),
+        headers:{
+          "Content-Type" : "application/json"
+        }
+      });
+
+      if (!response.ok) {
+        // Manejar errores de respuesta HTTP aquí si es necesario
+        console.error(`Respuesta HTTP no exitosa: ${response.status} ${response.statusText}`);
+        return false;
+      }
+      
+      let result = await response.json();  
+      if (result && result.data && result.data.cantidadValida !== undefined) {
+        console.log(result.data.cantidadValida);
+        return !result.data.cantidadValida;
+      } else {
+        // Manejar la respuesta con una estructura inesperada aquí si es necesario
+        console.error("La respuesta de la API tiene una estructura inesperada");
+        return false;
+      }
+       
+    } catch (error) {
+      console.error
+    }
+  }
 
 
 
@@ -66,8 +114,8 @@ const checkedFields = () => {
     
 
        /* INPUT CANTIDAD */
-
-  $('cantidad').addEventListener('blur', async function(e){
+   
+ cantidad.addEventListener('change', async function(e){
     switch (true) {
         case !this.value.trim():
             msgError('errorCantidad', "La cantidad es obligatoria", e)
@@ -75,9 +123,9 @@ const checkedFields = () => {
             case this.value <= 0:
             msgError('errorCantidad', "La cantidad tiene que ser mayor o igual a 1", e)
             break;
-            /* case await verifyCantidad(this.value) :           
-              msgError('errorCantidad', "La cantidad de productos es insuficiente para armar nuevos kits", e)            
-              break */
+            case await verifyCantidadRetiro(cantidad.value, producto.value, destino.value) :                    
+              msgError('errorCantidad', "La cantidad a retirar no puede ser mayor que el stock existente", e)            
+              break
         default:
             this.classList.add('is-valid')
             checkedFields()
@@ -85,8 +133,8 @@ const checkedFields = () => {
     }
   });
 
-  $('cantidad').addEventListener('focus', function(e) {
-    cleanError('errorCantidadInicial', e)
+  $('cantidadRetiro').addEventListener('focus', function(e) {
+    cleanError('errorCantidad', e)
   })
 
 

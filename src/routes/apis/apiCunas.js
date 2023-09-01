@@ -23,7 +23,7 @@ router.get('/allStock', generalStock)
 router.post('/cantidadKit', cantidadValidaKit)
 
 //endpoint para validar la cantidad correcta de retiros de stock
-router.post('/retiroStock/:id', validarRetiroDeStock)
+router.post('/retiroStock', validarRetiroDeStock)
 
 
 

@@ -148,17 +148,16 @@ module.exports = {
       }
     },
 
-    chequearCantidadRetirada: async(data, idStock) => {
+    chequearCantidadRetirada: async(data, idProducto, idDestino) => {
 
       try {
 
         const stock = await db.Stock.findOne({
           where: {
-            id:idStock
+            idDestino:idDestino,
+            idProducto:idProducto,
           }
-        })
-
-       
+        })      
 
         if(stock.cantidad < data){
           return false

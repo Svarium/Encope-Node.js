@@ -115,10 +115,11 @@ module.exports = {
     validarRetiroDeStock : async (req,res) => {
         try {
 
-            const idStock = req.params.id
-            const data = req.body.cantidad
+            const idDestino = req.body.destino;
+            const idProducto = req.body.producto;
+            const data = req.body.cantidad;
 
-            const cantidadValida = await chequearCantidadRetirada(data, idStock)
+            const cantidadValida = await chequearCantidadRetirada(data, idProducto, idDestino)
 
 
             return res.status(200).json({

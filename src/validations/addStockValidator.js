@@ -7,7 +7,7 @@ module.exports = [
     .isInt({min:1}).withMessage('La cantidad debe ser un numero entero mayor que cero')
     .custom((value,{req})=> {
         if (req.session.userLogin.destinoId != 31) {
-            return true; // No se dispara la validación custom porque el destino es distinto qu cpfII
+            return true; // No se dispara la validación custom porque el destino es distinto que cpfII
         }
         return db.Stock.findAll({
          })
