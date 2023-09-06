@@ -12,7 +12,7 @@ module.exports = {
                 ok:true,
                 data:{
                     message:"Kits terminados",
-                    total:kits[0].cantidad,
+                    total:kits.cantidad,
                     data:kits
                 }
             })

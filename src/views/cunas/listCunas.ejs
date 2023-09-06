@@ -15,9 +15,13 @@
         <button class="btn btn-transparent" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><img id="userIconProfile" src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>" class="iconProfile me-2" alt="">
           <%= userLogin.name %> <i class="fa-solid fa-caret-down fa-lg"></i></button>
           <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalInicial">
-  Inicializar Stock de un Producto +
-</button>
+    
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalInicial">
+              Inicializar Stock de un Producto +
+            </button>
+        
+        </div>
+     
 <!-- Modal -->
 <div class="modal fade" id="exampleModalInicial" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -45,95 +49,158 @@
 
     <main>
       <%- include('../partials/modals')  %>    
-      <%- include('../partials/canvasMenu')  %> 
-     
+      <%- include('../partials/canvasMenu')  %>     
 
         <div class="container-fluid"><p class="text-black h2 text-center shadow-3"><strong>Stock de Cunitas - <%= user.destino.nombreDestino %></strong></p>
             <hr class="text-white">
             <div class="row  justify-content-center">
-           <% stock.forEach(item  => { %>
-            <div class="col-md-3 mb-4">
-              <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Stock de <%= item.producto.nombre.toUpperCase() %> </div>
-                     
+              <% if (locals.userLogin && (locals.userLogin.destinoId == 31)) { %>
+                <% const filteredStock = stock.filter(item => {
+                  return item.idProducto === 1 || item.idProducto === 11 || item.idProducto === 12 || item.idProducto === 13
+                }) %>
+                <% filteredStock.forEach(item  => { %>
+              
+                  <div class="col-md-3 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                      <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                          <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Stock de <%= item.producto.nombre.toUpperCase() %></div>                           
+                          </div>
+                          <div class="col-auto">
+                            <i class="fa-solid fa-gear fa-2x text-gray-300"></i>
+                          </div>               
+                            <img src="/images/cunitas/<%= item.producto.imagen %>" class="img-fluid img-thumbnail float-end " style="height: 100px; width: 139px;" >             
+                        </div>
+                        <button type="button" class="btn btn-primary mt-2">
+                          <%= item.cantidad %> Unidades
+                      </button> 
+                          <button type="button" class="btn btn-outline-danger mt-2" data-bs-toggle="modal" data-bs-target="#update<%= item.id %>">
+                            Actualizar Stock
+                        </button>                   
+                      </div> 
+                      <small class="card-text">Actualizado: <strong><%= new Intl.DateTimeFormat('es-AR', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        second: 'numeric',
+                        timeZone: 'America/Argentina/Buenos_Aires'
+                      }).format(new Date(item.updatedAt)) %></strong></small>                  
                     </div>
-                    <div class="col-auto">
-                      <i class="fa-solid fa-gear fa-2x text-gray-300"></i>
-                    </div>  
-                   
-                    
-                      <img src="/images/cunitas/<%= item.producto.imagen %>" class="img-fluid img-thumbnail float-end " style="height: 100px; width: 139px;" >  
-                                        
+                  </div>   
+          
+                
+      <div class="modal fade" id="update<%= item.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Actualizar stock de: <%= item.producto.nombre.toUpperCase() %>  </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="container">
+                <div class="row justify-content-center">
+                  <div class="col-md-6">
+                    <form action="/cunas/addStock/<%= item.id %>?_method=PUT" method="POST" id="editStock">
+                      <div class="form-group">
+                          <label for="cantidad">Cantidad a sumar:</label>
+                          <input type="number" class="form-control <%= (locals.errors && errors.cantidad) && 'is-invalid'%>" id="editCantidad" name="cantidad" placeholder="Ingrese una cantidad" required >
+                          <small id="errorCantidadEdit" class="text-danger ms-2"><%= locals.errors && errors.cantidad ? errors.cantidad.msg : null %></small>
+                      </div>                  
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>            
+                      <button type="submit" class="btn btn-primary" id="submitButton">Enviar</button>
+                  </form>
+                    <small id="errorEditStock" class="text-danger"></small>
                   </div>
-                  <button type="button" class="btn btn-primary mt-2">
-                    <%= item.cantidad %> Unidades
-                </button> 
-                    <button type="button" class="btn btn-outline-danger mt-2" data-bs-toggle="modal" data-bs-target="#update<%= item.id %>">
-                      Actualizar Stock
-                  </button>                   
-                </div> 
-                <small class="card-text">Actualizado: <strong><%= new Intl.DateTimeFormat('es-AR', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                  hour: 'numeric',
-                  minute: 'numeric',
-                  second: 'numeric',
-                  timeZone: 'America/Argentina/Buenos_Aires'
-                }).format(new Date(item.updatedAt)) %></strong></small>                  
+                </div>
               </div>
-            </div>   
-
-
-            <!-- Modal EDITAR STOCK -->
-<div class="modal fade" id="update<%= item.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Actualizar stock de: <%= item.producto.nombre.toUpperCase() %>  </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-md-6">
-              <form action="/cunas/addStock/<%= item.id %>?_method=PUT" method="POST" id="editStock">
-                <div class="form-group">
-                    <label for="cantidad">Cantidad a sumar:</label>
-                    <input type="number" class="form-control <%= (locals.errors && errors.cantidad) && 'is-invalid'%>" id="editCantidad" name="cantidad" placeholder="Ingrese una cantidad" required >
-                    <small id="errorCantidadEdit" class="text-danger ms-2"><%= locals.errors && errors.cantidad ? errors.cantidad.msg : null %></small>
-                </div>                  
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>            
-                <button type="submit" class="btn btn-primary" id="submitButton">Enviar</button>
-            </form>
-              <small id="errorEditStock" class="text-danger"></small>
+            </div>
+            <div class="modal-footer">
             </div>
           </div>
         </div>
-      </div>
-      <div class="modal-footer">
-      </div>
-    </div>
-  </div>
-</div>                            
-           <% }) %>
+      </div>                            
+                 <% }) %>
+                <% } else {%>    
+                  <% stock.forEach(item  => { %>
+                  <div class="col-md-3 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                      <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                          <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Stock de <%= item.producto.nombre.toUpperCase() %> </div>
+                           
+                          </div>
+                          <div class="col-auto">
+                            <i class="fa-solid fa-gear fa-2x text-gray-300"></i>
+                          </div>  
+                         
+                          
+                            <img src="/images/cunitas/<%= item.producto.imagen %>" class="img-fluid img-thumbnail float-end " style="height: 100px; width: 139px;" >  
+                                              
+                        </div>
+                        <button type="button" class="btn btn-primary mt-2">
+                          <%= item.cantidad %> Unidades
+                      </button> 
+                          <button type="button" class="btn btn-outline-danger mt-2" data-bs-toggle="modal" data-bs-target="#update<%= item.id %>">
+                            Actualizar Stock
+                        </button>                   
+                      </div> 
+                      <small class="card-text">Actualizado: <strong><%= new Intl.DateTimeFormat('es-AR', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        second: 'numeric',
+                        timeZone: 'America/Argentina/Buenos_Aires'
+                      }).format(new Date(item.updatedAt)) %></strong></small>                  
+                    </div>
+                  </div>   
+      
+     
+                  
+      <div class="modal fade" id="update<%= item.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Actualizar stock de: <%= item.producto.nombre.toUpperCase() %>  </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="container">
+                <div class="row justify-content-center">
+                  <div class="col-md-6">
+                    <form action="/cunas/addStock/<%= item.id %>?_method=PUT" method="POST" id="editStock">
+                      <div class="form-group">
+                          <label for="cantidad">Cantidad a sumar:</label>
+                          <input type="number" class="form-control <%= (locals.errors && errors.cantidad) && 'is-invalid'%>" id="editCantidad" name="cantidad" placeholder="Ingrese una cantidad" required >
+                          <small id="errorCantidadEdit" class="text-danger ms-2"><%= locals.errors && errors.cantidad ? errors.cantidad.msg : null %></small>
+                      </div>                  
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>            
+                      <button type="submit" class="btn btn-primary" id="submitButton">Enviar</button>
+                  </form>
+                    <small id="errorEditStock" class="text-danger"></small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+            </div>
           </div>
-             
         </div>
-        
-    <!-- Button trigger modal -->
-    <div class="container mb-5">
-    
-            
-    
-        
-    </div>
-    
+      </div>                            
+                 <% }) %>
+                <% } %>    
+          </div>
+           
+        </div>
+      
+ 
                 
-   <!-- Modal AGREGAR AL STOCK-->
+
 <div class="modal fade" id="aumentar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -142,6 +209,8 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           
         </div>
+
+
         <div class="modal-body">
           
           <div class="container">
@@ -159,7 +228,7 @@
                       <% if (user.destinoId == 31) { %>
                         <% cunas.forEach(({nombre, id}) => { %>
                           
-                          <% if (id >= 14) { %>
+                          <% if ((id != 13) && (id != 12) && (id != 11) && (id != 1)) { %>
                             <option value="<%= id %>"><%= nombre.toUpperCase() %></option>
                            <% } %>
                                                 
@@ -188,8 +257,7 @@
                              <option value="<%= id %>"><%= nombre.toUpperCase() %></option>
                             <% } %>
                            <% }) %>  
-                          <% } %>
-                    
+                          <% } %>                  
 
                     </select>
                     <small id="errorProducto" class="text-danger ms-2"><%= locals.errors && errors.producto ? errors.producto.msg : null %></small>
@@ -208,63 +276,62 @@
           </div>
         </div>
         <div class="modal-footer">
-       
+    
         </div>
       </div>
     </div>
-  </div> 
+    
+  </div>  
             </div>
-          </div> 
+
+
+            <% if (locals.userLogin && locals.userLogin.destinoId == 31) { %>
+            </div> <hr>
+          <div class="container-fluid">
+            <h4 class="text-center">Tabla de stock</h4>
+            <table class="table">
+  <thead>
+   
+    <tr>
+ 
+      <th scope="col">Producto</th>
+      <th scope="col">Cantidad</th>
+      <th scope="col">ultima Actualización</th>
+    </tr>
+  </thead>
+  <tbody>    
+    <tr >
+      <% stock.forEach(item => { %>     
+      <td class="text-center"><%= item.producto.nombre %></td>
+      <td><%= item.cantidad %></td>
+      <td><%= new Intl.DateTimeFormat('es-AR', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        second: 'numeric',
+                        timeZone: 'America/Argentina/Buenos_Aires'
+                      }).format(new Date(item.updatedAt)) %></td>
+    </tr>   
+ <% }) %>
+      
+  </tbody>
+</table>
+            </div>         
+
+         <% } %>
+         
     </main>
 
-    <script>
-      const icon = document.getElementById('userIconProfile')
-      const cardImg = document.getElementById('imgIcon')
-      icon.addEventListener('error', () => {
-      icon.src = 'https://cdn-icons-png.flaticon.com/512/149/149071.png'
+
     
-    })
     
-    cardImg.addEventListener('error', () => {
-      cardImg.src = 'https://cdn-icons-png.flaticon.com/512/149/149071.png'
-    })
-    
-    </script>
-    
-    <script>
-      function showAlertAndSubmit(event) {
-        event.preventDefault();
-    
-        Swal.fire({
-          title: '¿Estas seguro de editar tu información?',
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Si, editar'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            // Si el usuario confirmó el alert, envía el formulario manualmente
-            const form = document.getElementById("editInfo");
-            Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: 'Informacion editada correctamente',
-      showConfirmButton: false,
-      timer: 1500
-    })
-    
-            // Retraso de 5 segundos antes de enviar el formulario y cambiar la página
-            setTimeout(function() {
-              form.submit();
-            }, 1000); // 2000 milisegundos = 2 segundos
-          }
-        });
-      }
-    </script>
     
     <%- include('../partials/scripts')  %>    
   
     <script src="/js/stockCunas.js"></script>
+    <script src="//code.tidio.co/hlix5kfat3m92rb4tfebsyogegqfbmo3.js" async></script>
     </body>
+
     </html>

@@ -87,13 +87,13 @@ module.exports = {
 
                 })
                 .then(stock => {
-                    if(stock.idProducto == 14){
+                    if(stock.idProducto == 13){
                          db.Stock.update({
                             cantidad: db.Sequelize.literal(`cantidad - ${stock.cantidad}`)
                         }, {
                             where: {
                                 idDestino: req.session.userLogin.destinoId,
-                                idProducto: { [db.Sequelize.Op.ne]: 14 }
+                                idProducto: { [db.Sequelize.Op.ne]: 13 }
                             }
                         })
                         .then(() => {
@@ -186,7 +186,7 @@ module.exports = {
                     id: idStock
                 }
             }).then(stock => {
-                if (stock.idProducto === 14) {
+                if (stock.idProducto === 13) {
                     const updatedCantidad = parseInt(stock.cantidad, 10) + parseInt(addCantidad, 10);
     
                     // Actualizar el stock seleccionado
@@ -203,17 +203,27 @@ module.exports = {
                         }, {
                             where: {
                                 idDestino: req.session.userLogin.destinoId,
-                                idProducto: { [db.Sequelize.Op.ne]: 14 }
+                                idProducto: { [db.Sequelize.Op.ne]: 13 }
                             }
                         });
                     }).then(() => {
-                        return res.redirect('/cunas/listar');
+                        return db.Stock.update({
+                            cantidad: db.Sequelize.literal(`cantidad - ${addCantidad}`)
+                        }, {
+                            where: {
+                                idDestino: req.session.userLogin.destinoId,
+                                idProducto: 7,
+                            }
+                        })
+                        .then(() => {
+                            return res.redirect('/cunas/listar');
+                        } )
                     }).catch(error => {
                         console.log(error);
                         // Manejo de errores en la actualización
                     });
                 } else {
-                    // Si no es idProducto 14, simplemente actualizar el stock seleccionado
+                    // Si no es idProducto 13, simplemente actualizar el stock seleccionado
                     const updatedCantidad = parseInt(stock.cantidad, 10) + parseInt(addCantidad, 10);
     
                     db.Stock.update({

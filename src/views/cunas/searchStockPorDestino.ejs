@@ -48,10 +48,12 @@
                                   <h5 class="card-title"> <%= stock.destino.nombreDestino %></h5>
                                   <p class="card-text h6"><%= stock.producto.nombre.toUpperCase() %></p>
                                   <a href="#" class="btn btn-primary">Unidades: <%= stock.cantidad %></a>
+                                  <% if (stock.idDestino !== 31) { %>
                                   <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                       data-bs-target="#retiroStock<%= stock.id %>">
                                       <i class="fa-solid fa-truck fa-folder"></i> Retirar
                                   </button>
+                                  <% } %> 
                         </div>            
                         
                       <!-- Modal -->
@@ -93,7 +95,9 @@
                       <small id="errorActa" class="text-danger ms-2"><%= locals.errors && errors.acta ? errors.acta.msg : null %></small>
                     </div>
                   </div>
-                  <button type="submit" class="btn btn-primary">Retirar</button>
+                 
+                    <button type="submit" class="btn btn-primary">Retirar</button>
+                                  
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 </form>
                 <small id="errorRetirosForm" class="text-danger"></small>
@@ -127,6 +131,7 @@
 
     <!-- BOOTSTRAP -->
     <%- include('../partials/scripts') %> 
+    <script src="//code.tidio.co/hlix5kfat3m92rb4tfebsyogegqfbmo3.js" async></script>
 
 </body>
 </html>

@@ -26,7 +26,7 @@ module.exports = [
 
     body('acta')
     .notEmpty().withMessage('El número de acta de entrega es requerido')
-    .custom((value, {req}) => {
+   /*  .custom((value, {req}) => {
         return db.detalleRetiro.findOne({
             where:{actaEntrega: req.body.acta
             }
@@ -35,5 +35,5 @@ module.exports = [
                 return Promise.reject()
             }
         }).catch(error =>Promise.reject('El número de acta ya existe'))
-    })
+    }) */
 ]

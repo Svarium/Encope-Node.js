@@ -1,5 +1,6 @@
 const {body} = require('express-validator');
 const db = require("../database/models");
+const { Op } = require('sequelize');
 
 
 module.exports = [
@@ -12,31 +13,45 @@ module.exports = [
         }
     
         const kit = await db.Stock.findOne({
-            where: { id: req.params.id }
+            where: { id: req.params.id,
+                     
+            }
         });
     
         // Verificar si stock.idProducto es igual a 14
-        if (kit.idProducto !== 14) {
+        if (kit.idProducto !== 13) {
             return true; // No se ejecuta la validación si no es igual a 14
         }
+       
     
         try {
-            const stocks = await db.Stock.findAll();
+            const stocks = await db.Stock.findAll({
+                where:{
+                    idDestino:31, 
+                    idProducto: { [db.Sequelize.Op.ne]: 13 }}
+            });
+            const frazada = await db.Stock.findOne({
+                where:{ idProducto: 7}
+            });
+
     
-            const kitCantidad = kit.cantidad;
+            const kitCantidad = +req.body.cantidad
             const cantidades = stocks.map(item => item.cantidad);
     
             const isValid = cantidades.every(cantidad => kitCantidad <= cantidad);
+            const frazadasValid = (frazada.cantidad >= (2 * kitCantidad));          
     
             if (!isValid) {
                 return Promise.reject('No hay productos suficientes para actualizar la cantidad de kits');
+            } else if (!frazadasValid) {
+                return Promise.reject('No hay frazadas suficientes para actualizar la cantidad de kits');
+            } else {
+                return true; // La validación es exitosa
             }
-    
-            return true; // La validación es exitosa
+               
     
         } catch (error) {
             return Promise.reject('Ocurrió un error al procesar la solicitud');
         }
     })
-
 ]

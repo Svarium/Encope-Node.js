@@ -7,7 +7,7 @@ module.exports = {
 
             const kitsDone = await db.Stock.findAll({
                 where:{
-                    idProducto:14
+                    idProducto:13
                 },
                 attributes:{exclude:['id','idUsuario']}
             })

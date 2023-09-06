@@ -10,7 +10,7 @@ const stockGeneral = document.getElementById("tablaStockGeneral")
 
 const endpointURL = "http://localhost:3000/api/cunas/";
 
-const paintKitsDone = fetch(`${endpointURL}/kits`)
+const paintKitsDone = fetch(`${endpointURL}kits`)
   .then((response) => response.json())
   .then((data) => {
     if (data.ok) {
