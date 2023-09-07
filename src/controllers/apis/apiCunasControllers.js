@@ -1,5 +1,5 @@
 const createResponseError = require('../../helpers/createResponseError');
-const { getAllKits, getAllStocks, getAllProducts, getAllEditors, getGeneralStock, validarCantidad, chequearCantidadRetirada } = require('../../services/cunasServices');
+const { getAllKits, getAllStocks, getAllProducts, getAllEditors, getGeneralStock, validarCantidad, chequearCantidadRetirada, getAllKitsOuts } = require('../../services/cunasServices');
 
 
 module.exports = {
@@ -58,14 +58,21 @@ module.exports = {
         }
     },
 
-    allEditors : async(req,res) => {
+    kitsEntregados : async(req,res) => {
         try {
-            const editors = await getAllEditors()
+            const kits = await getAllKitsOuts()
+
+            let total = 0;
+
+            for (const kit of kits){
+                total += kit.cantidadRetirada;
+            }
+
             return res.status(200).json({
                 ok:true,
-                message:"Editores en base de datos",
-                editors,
-                total:editors.length
+                message:"Kits entregados",
+                kits,
+                total,             
             })
 
         } catch (error) {

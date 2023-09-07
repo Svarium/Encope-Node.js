@@ -88,18 +88,15 @@ module.exports = {
       }
     },
 
-    getAllEditors: async () => {
+    getAllKitsOuts: async () => {
       try {
 
-        const allEditors = db.Usuario.findAll({
-          where: { rolId: 5 },
-      attributes: {
-        exclude: ["id", "name", "surname", "password", "icon", "socialId", "createdAt", "updatedAt","socialProvider"],
-      },
+        const kitsEntregados = db.retiroKit.findAll({       
+      attributes: ["cantidadRetirada"],
         }
         )
 
-        return allEditors
+        return kitsEntregados
 
       } catch (error) {
         console.log(error);

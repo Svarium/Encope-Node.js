@@ -1,5 +1,5 @@
 const express = require('express');
-const { allkits, allStock, allProducts, allEditors, generalStock, cantidadValidaKit, validarRetiroDeStock } = require('../../controllers/apis/apiCunasControllers');
+const { allkits, allStock, allProducts, generalStock, cantidadValidaKit, validarRetiroDeStock, kitsEntregados } = require('../../controllers/apis/apiCunasControllers');
 const router = express.Router();
 
 //llego con api/cunas
@@ -14,7 +14,7 @@ router.get('/stocks', allStock)
 router.get('/productos', allProducts)
 
 //endpoint para listar los usuarios editores
-router.get('/editores', allEditors)
+router.get('/kitsOuts', kitsEntregados)
 
 //endpoint para listar todo el stock 
 router.get('/allStock', generalStock)

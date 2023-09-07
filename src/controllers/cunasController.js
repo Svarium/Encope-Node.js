@@ -518,5 +518,72 @@ module.exports = {
                 })
             })
         }    
+    },
+
+    retirarKits: (req,res) => {
+
+        db.Stock.findOne({
+            where:{
+                idProducto:13,
+                idDestino:31,
+                idUsuario:1
+            },
+            include:['destino', 'producto']
+        }).then(kitStock => {
+            return res.render('cunas/entregaKits',{
+                title:'Entregar Kits',
+                kitStock
+            })
+        })      
+    },
+
+    entregarKit: (req,res) => {
+
+        const errors = validationResult(req);
+
+        if (errors.isEmpty()) {
+
+        const idUsuario = req.session.userLogin.id;
+        const {cantidad, producto, destino, acta } = req.body    
+
+        db.retiroKit.create({
+            idUsuario: idUsuario,
+            idProducto:producto,
+            cantidadRetirada:cantidad,
+            actaRemito:acta,
+            idDestino:destino,
+            idStock:13
+        }).then(kitRetirado => {
+        db.Stock.update({
+            cantidad: db.Sequelize.literal(`cantidad - ${kitRetirado.cantidadRetirada}`)
+        },
+        {
+            where:{
+                id:13
+            }
+        }).then(() => {
+            return res.redirect('/cunas/estadistica')
+        })
+       
+        }).catch(error => console.log(error));
+            
+        } else{
+            db.Stock.findOne({
+                where:{
+                    idProducto:13,
+                    idDestino:31,
+                    idUsuario:1
+                },
+                include:['destino', 'producto']
+            }).then(kitStock => {
+                return res.render('cunas/entregaKits',{
+                    title:'Entregar Kits',
+                    kitStock,
+                    old:req.body,
+                    errors:errors.mapped()
+                })
+            })      
+
+        }
     }
 }

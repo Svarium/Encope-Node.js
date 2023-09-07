@@ -1,5 +1,5 @@
 var express = require('express');
-const { list, moreStock, estadisticas, updateStock, retiros, retirarStock, buscarStock, registroRetiros, buscarStockPorDestino } = require('../controllers/cunasController');
+const { list, moreStock, estadisticas, updateStock, retiros, retirarStock, buscarStock, registroRetiros, buscarStockPorDestino, retirarKits, entregarKit } = require('../controllers/cunasController');
 const addStockValidator = require('../validations/addStockValidator');
 const updateStockValidator = require('../validations/updateStockValidator');
 const checkUserEditorIntranet = require('../middlewares/checkUserEditorIntranet');
@@ -7,6 +7,7 @@ const retirarStockValidator = require('../validations/retirarStockValidator');
 const checkUserEditorCunas = require('../middlewares/checkUserEditorCunas');
 const buscarStockValidator = require('../validations/buscarStockValidator');
 const buscarStockPorDestinoValidator = require('../validations/buscarStockPorDestinoValidator');
+const entregarKitValidator = require('../validations/entregarKitValidator');
 var router = express.Router();
 
 // llego con /cunas
@@ -34,6 +35,10 @@ router.post('/buscarStock',buscarStockValidator, buscarStock )
 
 //Ruta para el buscador de stock por destino
 router.post('/StockPorDestino', buscarStockPorDestinoValidator , buscarStockPorDestino)
+
+//Rutas para la entrega de kits al ministerio
+router.get('/entregarKit',checkUserEditorCunas, retirarKits)
+router.post('/entregarKit',entregarKitValidator, entregarKit)
 
 
 

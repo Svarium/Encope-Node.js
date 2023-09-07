@@ -94,12 +94,12 @@ const paintKitsDone = fetch(`${endpointURL}kits`)
     }
   });
 
-  const paintEditores = fetch(`${endpointURL}/editores`)
+  const paintEditores = fetch(`${endpointURL}/kitsOuts`)
   .then((response) => response.json())
   .then((data) => {
     if(data.ok){
       editoresIndb.innerHTML += `
-      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Usuarios Editores
+      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total de Kits Entregados
 											</div>
 											<div class="h5 mb-0 font-weight-bold text-gray-800">${data.total}</div>
       `

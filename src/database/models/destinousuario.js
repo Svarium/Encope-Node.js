@@ -26,6 +26,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey:'idDestino',
         as:'retiro'
       })
+
+      destinoUsuario.hasMany(models.retiroKit,{
+        foreignKey:'idDestino',
+        as:'retiroKit'
+      })
     }
 
 

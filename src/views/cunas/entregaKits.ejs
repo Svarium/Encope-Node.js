@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../partials/head')  %>
+         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+         <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">        
+          
+    <body style="background-color: rgb(243, 241, 238);">
+  
+      <nav class="navbar navbar-expand-sm navbar-light bg-body-secondary">
+          <div class="container">
+          <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="collapsibleNavId">
+            <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+              <a class="nav-link active" href="/cunas/estadistica" aria-current="page">Regresar<span class="visually-hidden"></a>          
+            </ul>
+        </div>
+      </div>
+    </nav><br>
+
+    <main>
+
+        <div class="container">
+            <h4>Entrega de Kits Terminados</h4>
+            <strong class="text-bg-danger">Stock actual: <%= kitStock.cantidad %></strong>
+            <hr>
+        </div>
+       <br>
+        <div class="container-fluid mt-2">
+            <div class="row justify-content-center">
+              <div class="col-md-7 shadow">
+                <form action="/cunas/entregarKit/" method="POST" id="retirosKitForm">
+                  <div class="form-group">
+                    <label for="destino">Destino del retiro</label>
+                    <select class="form-control destinoRetiro <%= (locals.errors && errors.destino) && 'is-invalid'%>" id="destino" name="destino">
+                      <option value="<%= kitStock.destino.id %>" selected ><%= kitStock.destino.nombreDestino %></option>
+                    </select>
+                    <small id="errorDestino" class="text-danger ms-2"><%= locals.errors && errors.destino ? errors.destino.msg : null %></small>
+                  </div>
+                  <div class="form-group">
+                    <label for="producto">Producto a entregar</label>
+                    <select class="form-control productoRetiro <%= (locals.errors && errors.producto) && 'is-invalid'%>" id="producto" name="producto">
+                      <option value="<%= kitStock.producto.id %>" selected><%= kitStock.producto.nombre %></option>
+                    </select>
+                    <small id="errorProducto" class="text-danger ms-2"><%= locals.errors && errors.producto ? errors.producto.msg : null %></small>
+                  </div>
+                  <div class="form-group row"> 
+                    <div class="col-md-6"> <!-- Dividir en 2 columnas para que cada campo ocupe la mitad de la fila -->
+                      <label for="cantidad">Cantidad a Retirar:</label>
+                      <input type="number" class="form-control cantidadRetiro <%= (locals.errors && errors.cantidad) && 'is-invalid'%>"  id="cantidadRetiro" name="cantidad" placeholder="Ingrese cantidad">
+                      <small id="errorCantidad" class="text-danger ms-2"><%= locals.errors && errors.cantidad ? errors.cantidad.msg : null %></small>
+                    </div>
+                    <div class="col-md-6"> <!-- Dividir en 2 columnas para que cada campo ocupe la mitad de la fila -->
+                      <label for="acta">Acta/Remito</label>
+                      <input type="text" class="form-control actaRetiro <%= (locals.errors && errors.acta) && 'is-invalid'%>"  id="acta" name="acta" placeholder="Ingrese acta o recibo">
+                      <small id="errorActa" class="text-danger ms-2"><%= locals.errors && errors.acta ? errors.acta.msg : null %></small>
+                    </div>
+                  </div>
+                 
+                  <button type="submit" class="btn btn-primary mb-2">Retirar</button>
+                                  
+                  <button type="button" class="btn btn-secondary mb-2" data-bs-dismiss="modal">Cerrar</button>
+                </form>
+                <small id="errorKitForm" class="text-danger"></small>
+              </div>
+      
+    </main>
+
+
+
+
+
+
+
+    <!-- BOOTSTRAP -->
+    <%- include('../partials/scripts') %> 
+   <!--  <script src="//code.tidio.co/hlix5kfat3m92rb4tfebsyogegqfbmo3.js" async></script -->>
+
+</body>
+</html>
