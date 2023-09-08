@@ -8,7 +8,7 @@ const stockGeneral = document.getElementById("tablaStockGeneral")
 
 /* const URL_API_SERVER= "https://encope.gob.ar" */
 
-const endpointURL = "http://localhost:3000/api/cunas/";
+const endpointURL = "https://encope.gob.ar/api/cunas/";
 
 const paintKitsDone = fetch(`${endpointURL}kits`)
   .then((response) => response.json())
