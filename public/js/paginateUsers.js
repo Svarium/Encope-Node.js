@@ -43,7 +43,9 @@ const paintUsers = (users) => {
                   <option value="3">Editor-Noticias</option>
                   <option value="4">Editor-Licitaciones</option>
                   <option value="5">Editor-Intranet</option>
-                  <option value="6">Visitante</option>
+                  <option value="6">Editor Cunas</option>
+                  <option value="7">Visitante</option>
+                  <option value="8">Agente</option>
                 </select>
                 <button type="submit" class="btn btn-primary mt-1">Actualizar</button>
               </div>               

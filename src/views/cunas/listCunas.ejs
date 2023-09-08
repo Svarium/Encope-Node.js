@@ -56,7 +56,7 @@
             <div class="row  justify-content-center">
               <% if (locals.userLogin && (locals.userLogin.destinoId == 31)) { %>
                 <% const filteredStock = stock.filter(item => {
-                  return item.idProducto === 1 || item.idProducto === 11 || item.idProducto === 12 || item.idProducto === 13
+                  return item.idProducto === 1 || item.idProducto === 11 || item.idProducto === 12 || item.idProducto === 13 || item.idProducto === 10
                 }) %>
                 <% filteredStock.forEach(item  => { %>
               
@@ -228,7 +228,7 @@
                       <% if (user.destinoId == 31) { %>
                         <% cunas.forEach(({nombre, id}) => { %>
                           
-                          <% if ((id != 13) && (id != 12) && (id != 11) && (id != 1)) { %>
+                          <% if ((id != 13) && (id != 12) && (id != 11) && (id != 1) && (id != 10)) { %>
                             <option value="<%= id %>"><%= nombre.toUpperCase() %></option>
                            <% } %>
                                                 
@@ -330,7 +330,7 @@
     
     <%- include('../partials/scripts')  %>    
   
-    <script src="/js/stockCunas.js"></script>
+  
     <script src="//code.tidio.co/hlix5kfat3m92rb4tfebsyogegqfbmo3.js" async></script>
     </body>
 

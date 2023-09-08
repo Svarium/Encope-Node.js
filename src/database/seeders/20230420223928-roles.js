@@ -8,7 +8,8 @@ let listadoRoles = [
   "Editor-Licitaciones",
   "Editor-Intranet",
   "Editor-Cunas",
-  "Visitante"
+  "Visitante",
+  "Agente",
 ]
 
 let roles = listadoRoles.map(rol=>{

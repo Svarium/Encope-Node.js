@@ -26,7 +26,6 @@ module.exports = {
                     socialId:googleId,
                     socialProvider: provider,
                     rolId:7
-
                 }
                });
 

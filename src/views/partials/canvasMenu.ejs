@@ -45,9 +45,11 @@
        <button type="button" class="btn btn-outline-danger w-75 mb-3 text-start" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 <i class="fas fa-user-edit"></i>  Cambio de rol
            </button>
+           <% if (locals.userLogin && locals.userLogin.rol != 7 ) { %>
             <button type="button" class="btn btn-outline-danger w-75 mb-3 text-start" data-bs-toggle="modal" data-bs-target="#exampleModal1">
-                  <i class="fas fa-link"></i>  Uso Interno
-               </button>
+              <i class="fas fa-link"></i>  Uso Interno
+           </button>
+           <% } %>            
                <a class="btn btn-outline-danger w-75 mb-3 text-start" href="/inicio" aria-current="page">
                 <i class="fas fa-home me-2"></i> Ir al inicio<span class="visually-hidden">(current)</span>
               </a>

@@ -9,6 +9,12 @@ module.exports = [
         if (req.session.userLogin.destinoId != 31) {
             return true; // No se dispara la validación custom porque el destino es distinto que cpfII
         }
+
+        if(req.body.producto != 13){
+            return true
+        }
+
+      
         return db.Stock.findAll({
          })
          .then(stock => {

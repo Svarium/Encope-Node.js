@@ -10,88 +10,29 @@
     {
         "id":2,
         "idUsuario":1,
-        "idProducto":2,
+        "idProducto":10,
         "idDestino":31,
         "cantidad":0
     },
     {
         "id":3,
         "idUsuario":1,
-        "idProducto":3,
+        "idProducto":11,
         "idDestino":31,
         "cantidad":0
     },
     {
         "id":4,
         "idUsuario":1,
-        "idProducto":4,
+        "idProducto":12,
         "idDestino":31,
         "cantidad":0
     },
     {
         "id":5,
         "idUsuario":1,
-        "idProducto":5,
-        "idDestino":31,
-        "cantidad":0
-    },
-    {
-        "id":6,
-        "idUsuario":1,
-        "idProducto":6,
-        "idDestino":31,
-        "cantidad":0
-    },
-
-    {
-        "id":7,
-        "idUsuario":1,
-        "idProducto":7,
-        "idDestino":31,
-        "cantidad":0
-    },
-    {
-        "id":8,
-        "idUsuario":1,
-        "idProducto":8,
-        "idDestino":31,
-        "cantidad":0
-    },
-    {
-        "id":9,
-        "idUsuario":1,
-        "idProducto":9,
-        "idDestino":31,
-        "cantidad":0
-    },
-    {
-        "id":10,
-        "idUsuario":1,
-        "idProducto":10,
-        "idDestino":31,
-        "cantidad":0
-    },
-    {
-        "id":11,
-        "idUsuario":1,
-        "idProducto":11,
-        "idDestino":31,
-        "cantidad":0
-    },
-    {
-        "id":12,
-        "idUsuario":1,
-        "idProducto":12,
-        "idDestino":31,
-        "cantidad":0
-    },
-    {
-        "id":13,
-        "idUsuario":1,
         "idProducto":13,
         "idDestino":31,
         "cantidad":0
     }
-
-
 ]

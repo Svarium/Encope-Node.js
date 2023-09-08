@@ -552,14 +552,14 @@ module.exports = {
             cantidadRetirada:cantidad,
             actaRemito:acta,
             idDestino:destino,
-            idStock:13
+            idStock:5
         }).then(kitRetirado => {
         db.Stock.update({
             cantidad: db.Sequelize.literal(`cantidad - ${kitRetirado.cantidadRetirada}`)
         },
         {
             where:{
-                id:13
+                id:5
             }
         }).then(() => {
             return res.redirect('/cunas/estadistica')
