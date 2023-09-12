@@ -18,24 +18,33 @@
 
 
       <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Tutorial Modulo Cunitas
-</button>
+      <% if (locals.userLogin && (locals.userLogin.rol != 7) && (locals.userLogin.rol != 4) && (locals.userLogin.rol != 3)) { %>
+        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#tutorialModuloCunitas">
+          Tutorial Modulo Cunitas
+        </button>
+      <% } %>
+
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg ">
+<div class="modal fade" id="tutorialModuloCunitas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Tutorial uso del modulo Stock de Cunitas</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Tutorial uso del módulo Stock de Cunitas</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-     <% if (locals.userLogin && (locals.userLogin.rol == 5) && (locals.userLogin.destinoId != 31)) { %>
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/hWE9kVfhUDI?si=sOTVdmtnl1_FVyZX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-      <% } else if (locals.userLogin && locals.userLogin.rol == 6) { %>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/nh33Xojugt0?si=-369yyK9oIoYCszD" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-<% } else if (locals.userLogin && locals.userLogin.rol == 5 && locals.userLogin.destinoId == 31) { %>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/1c9vY3niQOQ?si=o7cqnl57zlZVZfIk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      <div class="modal-body text-center"> <!-- Agregamos la clase "text-center" para centrar el contenido -->
+        <% if (locals.userLogin && (locals.userLogin.rol == 5) && (locals.userLogin.destinoId != 31)) { %>
+          <div class="embed-responsive embed-responsive-16by9"> <!-- Clase para hacerlo responsivo -->
+            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/hWE9kVfhUDI?si=sOTVdmtnl1_FVyZX" title="YouTube video player" allowfullscreen></iframe>
+          </div>
+        <% } else if (locals.userLogin && locals.userLogin.rol == 6) { %>
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/nh33Xojugt0?si=-369yyK9oIoYCszD" title="YouTube video player" allowfullscreen></iframe>
+          </div>
+        <% } else if (locals.userLogin && locals.userLogin.rol == 5 && locals.userLogin.destinoId == 31) { %>
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/1c9vY3niQOQ?si=o7cqnl57zlZVZfIk" title="YouTube video player" allowfullscreen></iframe>
+          </div>
         <% } %>
       </div>
       <div class="modal-footer">

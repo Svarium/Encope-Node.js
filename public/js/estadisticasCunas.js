@@ -63,6 +63,7 @@ const paintKitsDone = fetch(`${endpointURL}kits`)
   .then((response) => response.json())
   .then((data) => {
     if(data.ok){
+      console.log(data.data.stocks);
 
         data.data.stocks.forEach(stock => {
             const template = `
@@ -72,8 +73,7 @@ const paintKitsDone = fetch(`${endpointURL}kits`)
                               <small>${stock.producto.nombre.toUpperCase()}: <strong>${stock.cantidad}</strong></small>                            
                         </div>
                             </div>
-                                </div>
-            
+                                </div>            
             `;    
             sectionStocks.innerHTML += template
                     });     

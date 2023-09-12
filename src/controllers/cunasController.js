@@ -212,7 +212,9 @@ module.exports = {
                         }, {
                             where: {
                                 idDestino: req.session.userLogin.destinoId,
-                                idProducto: 7,
+                                idProducto: {
+                                    [db.Sequelize.Op.in]: [5, 6, 7] // Aquí puedes especificar los valores de idProducto que deseas actualizar
+                                },
                             }
                         })
                         .then(() => {

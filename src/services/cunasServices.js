@@ -24,18 +24,11 @@ module.exports = {
     },
 
     getAllStocks : async () => {
-        try {
-            const usersWithDestino31 = await db.Usuario.findAll({
-              where: {
-                destinoId: 31
-              }
-            });
-        
-            const userIds = usersWithDestino31.map(user => user.id);
+        try {    
         
             const stockDestino = await db.Stock.findAll({
               where: {
-                idUsuario: userIds
+                idDestino: 31
               },
               include: [
                 {
