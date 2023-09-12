@@ -1,5 +1,5 @@
 const express = require('express');
-const { allkits, allStock, allProducts, generalStock, cantidadValidaKit, validarRetiroDeStock, kitsEntregados } = require('../../controllers/apis/apiCunasControllers');
+const { allkits, allStock, allProducts, generalStock, cantidadValidaKit, validarRetiroDeStock, kitsEntregados, ultimosRetiros } = require('../../controllers/apis/apiCunasControllers');
 const router = express.Router();
 
 //llego con api/cunas
@@ -7,7 +7,7 @@ const router = express.Router();
 // endpoit para traer el total de kits de terminados
 router.get('/kits', allkits)
 
-//endpoint para traer el total de stocks por unidad
+//endpoint para traer el total de stocks en CPFII
 router.get('/stocks', allStock)
 
 //endpoint para listar la cantidad de productos
@@ -24,6 +24,9 @@ router.post('/cantidadKit', cantidadValidaKit)
 
 //endpoint para validar la cantidad correcta de retiros de stock
 router.post('/retiroStock', validarRetiroDeStock)
+
+//endopoint para consultar los ultimos 10 retiros realizados en un destino
+router.get('/ultimosRetiros/:id', ultimosRetiros)
 
 
 

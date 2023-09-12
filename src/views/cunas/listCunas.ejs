@@ -103,6 +103,13 @@
       <%- include('../partials/modals') %> <%- include('../partials/canvasMenu')
       %>
 
+      <div class="container">
+        <button type="button" onclick="obtenerUltimosRetiros('<%= locals.userLogin.destinoId %>')"  class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalRetiros">
+          Revisar Retiros
+        </button>
+      </div>
+
+
       <div class="container-fluid">
         <p class="text-black h2 text-center shadow-3">
           <strong>Stock de Cunitas - <%= user.destino.nombreDestino %></strong>
@@ -494,12 +501,13 @@
       <% } %>
     </main>
 
-
     <%- include('../partials/scripts') %>
 
     <script
       src="//code.tidio.co/hlix5kfat3m92rb4tfebsyogegqfbmo3.js"
       async
     ></script>
+
+    <script src="/js/listarCunas.js"></script>
   </body>
 </html>

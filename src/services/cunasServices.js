@@ -163,8 +163,29 @@ module.exports = {
         }       
       }
 
+    },
+
+    obtenerUltimosRetiros : async (data) => {
+        try {
+          const retiros = await db.detalleRetiro.findAll({
+            where:{idDestino:data},
+            include:[{
+              model: db.Producto,
+              as:"producto",
+              attributes:["nombre"]
+            }]
+          },
+          
+          )
+
+          return retiros
+        } catch (error) {
+          console.log(error);
+          throw{
+              status:500,
+              message:error.message,
+          }       
+        }
     }
-
-
 
 }

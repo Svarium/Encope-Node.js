@@ -1,5 +1,5 @@
 const createResponseError = require('../../helpers/createResponseError');
-const { getAllKits, getAllStocks, getAllProducts, getAllEditors, getGeneralStock, validarCantidad, chequearCantidadRetirada, getAllKitsOuts } = require('../../services/cunasServices');
+const { getAllKits, getAllStocks, getAllProducts, getAllEditors, getGeneralStock, validarCantidad, chequearCantidadRetirada, getAllKitsOuts, obtenerUltimosRetiros } = require('../../services/cunasServices');
 
 
 module.exports = {
@@ -136,6 +136,24 @@ module.exports = {
                 }
             })
 
+            
+        } catch (error) {
+            console.log(error);
+            return createResponseError(res, error)
+        }
+    },
+
+    ultimosRetiros : async (req,res) => {
+        try {
+
+            const data = req.params.id
+
+            const retirosEnDestino = await obtenerUltimosRetiros(data)
+
+            return res.status(200).json({
+                ok:true,
+                retirosEnDestino
+            })
             
         } catch (error) {
             console.log(error);
