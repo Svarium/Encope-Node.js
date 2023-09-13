@@ -173,7 +173,8 @@ module.exports = {
               model: db.Producto,
               as:"producto",
               attributes:["nombre"]
-            }]
+            }],
+            limit:5
           },
           
           )
