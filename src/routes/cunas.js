@@ -8,6 +8,7 @@ const checkUserEditorCunas = require('../middlewares/checkUserEditorCunas');
 const buscarStockValidator = require('../validations/buscarStockValidator');
 const buscarStockPorDestinoValidator = require('../validations/buscarStockPorDestinoValidator');
 const entregarKitValidator = require('../validations/entregarKitValidator');
+const checkUserEditor = require('../middlewares/checkUserEditor');
 var router = express.Router();
 
 // llego con /cunas
@@ -25,7 +26,7 @@ router.get('/estadistica',checkUserEditorCunas, estadisticas)
 router.put('/addStock/:id', updateStockValidator ,updateStock)
 
 //Ruta para la vista de retiros de stock
-router.get('/retiros', checkUserEditorCunas, registroRetiros)
+router.get('/retiros', checkUserEditor, registroRetiros)
 
 //Ruta retirar del stock
 router.post('/retiros/:id', retirarStockValidator, retirarStock)

@@ -103,10 +103,13 @@
       <%- include('../partials/modals') %> <%- include('../partials/canvasMenu')
       %>
 
-      <div class="container">
+      <div class="container-fluid mb-3">
         <button type="button" id="botonRetiros" onclick="obtenerUltimosRetiros('<%= locals.userLogin.destinoId %>')"  class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalRetiros">
           Revisar Retiros
         </button>
+        <a type="button" href="/cunas/retiros" class="btn btn-outline-primary">
+          Registro de retiros
+        </a>
       </div>
 
 

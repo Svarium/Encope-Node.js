@@ -23,10 +23,11 @@ module.exports = {
         }
     },
 
-    getAllUsers : async(req, {withPagination = "false", page=1, limit=4} = {}) => {
+    getAllUsers : async(req, {withPagination = "false", page=1, limit=10} = {}) => {
         try {  
             
             let options = {
+                order: [["id", "DESC"]],
                 include: [
                     {
                         association:"rol",

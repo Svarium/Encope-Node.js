@@ -65,7 +65,7 @@ const obtenerUltimosRetiros = (idDestino) => {
           tabla.appendChild(tbody);
   
           Swal.fire({
-            title: '<strong>¡Hay nuevos retiros de stock!</strong>',
+            title: '<strong>¡Últimos retiros de stock!</strong>',
             icon: 'info',
             html: tabla.outerHTML,
             showCloseButton: true,

@@ -22,12 +22,13 @@ const paintUsers = (users) => {
     users.forEach((user)=> {
         const template = `        
           <tr>
+          <th scope="row">${user.id}</th>
           <th scope="row">${user.name}</th>
           <td>${user.surname}</td>
           <td>${user.email}</td>
           <td>${user.rol.nombre}</td>
           <td> ${user.credencial? user.credencial : '-'} </td>
-          <td>${user.destino ? user.destino.nombreDestino : '-'}</td>
+          <td> <small> ${user.destino ? user.destino.nombreDestino : '-'}</small></td>
           <td>
             <div class="d-flex">
               <form action="/users/rolUser/${user.id} ?_method=PUT" method="POST" id="formRolUser" class="row g-6">

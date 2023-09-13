@@ -20,7 +20,7 @@ module.exports = {
 
     allUsers : async (req,res) => {
         try {
-            const {withPagination = "true", page=1, limit = 4} = req.query
+            const {withPagination = "true", page=1, limit = 10} = req.query
             const {users, count, pages} = await getAllUsers(req,{
                 withPagination,
                 page,
