@@ -1,6 +1,8 @@
 const db = require("../database/models")
 const {validationResult} = require('express-validator')
 const { Op } = require('sequelize');
+const { getAllStocks } = require("../services/cunasServices");
+const ExcelJS = require('exceljs');
 
 
 module.exports = {
@@ -587,5 +589,45 @@ module.exports = {
             })      
 
         }
+    },
+
+    descargarTablaStock : async (req,res) => {
+
+        
+
+        try {
+
+        const datosStock = await getAllStocks() // Traigo mi consulta de stock
+
+        /* return res.send(datosStock) */
+
+        const workbook = new ExcelJS.Workbook(); //Funcion constructora del Excell
+
+        const worksheet = workbook.addWorksheet('Sheet 1'); //Crea una hoja de excell (CREO)
+
+        datosStock.forEach(stock => {
+            worksheet.addRow([stock.usuario.destino.nombreDestino,stock.producto.nombre, stock.cantidad, stock.updatedAt]);
+        })    
+
+
+        const fecha = new Date(Date.now())
+
+        // Define el nombre del archivo Excel
+        res.setHeader('Content-Disposition', `attachment; filename="${fecha.toISOString().substring(0,10)}-stock.xlsx"`); // agregar al nombre la fecha con New Date()
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+           // Envia el archivo Excel como respuesta al cliente
+        await workbook.xlsx.write(res);
+
+        // Finaliza la respuesta
+        res.end();
+
+        /* return res.send(datosStock) */
+            
+        } catch (error) {
+            console.log(error);
+        }
+
+
     }
 }

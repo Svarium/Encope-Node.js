@@ -1,5 +1,5 @@
 var express = require('express');
-const { list, moreStock, estadisticas, updateStock, retiros, retirarStock, buscarStock, registroRetiros, buscarStockPorDestino, retirarKits, entregarKit } = require('../controllers/cunasController');
+const { list, moreStock, estadisticas, updateStock, retiros, retirarStock, buscarStock, registroRetiros, buscarStockPorDestino, retirarKits, entregarKit, descargarTablaStock } = require('../controllers/cunasController');
 const addStockValidator = require('../validations/addStockValidator');
 const updateStockValidator = require('../validations/updateStockValidator');
 const checkUserEditorIntranet = require('../middlewares/checkUserEditorIntranet');
@@ -40,6 +40,9 @@ router.post('/StockPorDestino', buscarStockPorDestinoValidator , buscarStockPorD
 //Rutas para la entrega de kits al ministerio
 router.get('/entregarKit',checkUserEditorCunas, retirarKits)
 router.post('/entregarKit',entregarKitValidator, entregarKit)
+
+//ruta para descargar tabla de stock en excell
+router.get('/tablaStock', descargarTablaStock)
 
 
 
