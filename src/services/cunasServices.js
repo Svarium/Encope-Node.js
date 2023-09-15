@@ -27,9 +27,11 @@ module.exports = {
         try {    
         
             const stockDestino = await db.Stock.findAll({
+             
               where: {
                 idDestino: 31
               },
+            
               include: [
                 {
                   model: db.Usuario,
@@ -104,7 +106,8 @@ module.exports = {
       try {
 
         const generalStock = await db.Stock.findAll({
-          include:["destino", "producto"]
+          include:["destino", "producto"],
+          order: [["updatedAt", "DESC"]],
         })
 
         return generalStock

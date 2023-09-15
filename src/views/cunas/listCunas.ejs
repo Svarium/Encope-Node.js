@@ -406,13 +406,13 @@
                           </option>
                           <% } %> <% }) %> <% } else if (user.destinoId == 2) {
                           %> <% cunas.forEach(({nombre, id}) => { %> <% if (id
-                          >= 3 && id <= 10 && !productoEnStock(id)) { %>
+                          >= 2 && id <= 10 && !productoEnStock(id)) { %>
                           <option value="<%= id %>">
                             <%= nombre.toUpperCase() %>
                           </option>
                           <% } %> <% }) %> <% } else if (user.destinoId == 27) {
                           %> <% cunas.forEach(({nombre, id}) => { %> <% if (id
-                          >= 4 && id <= 5 && !productoEnStock(id)) { %>
+                          >= 3 && id <= 4 && !productoEnStock(id)) { %>
                           <option value="<%= id %>">
                             <%= nombre.toUpperCase() %>
                           </option>
