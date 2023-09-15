@@ -1,5 +1,5 @@
 var express = require('express');
-const { list, moreStock, estadisticas, updateStock, retiros, retirarStock, buscarStock, registroRetiros, buscarStockPorDestino, retirarKits, entregarKit, descargarTablaStock, descargarTablaRetirosStock } = require('../controllers/cunasController');
+const { list, moreStock, estadisticas, updateStock, retiros, retirarStock, buscarStock, registroRetiros, buscarStockPorDestino, retirarKits, entregarKit, descargarTablaStock, descargarTablaRetirosStock, descargarTablaStockCPFII } = require('../controllers/cunasController');
 const addStockValidator = require('../validations/addStockValidator');
 const updateStockValidator = require('../validations/updateStockValidator');
 const checkUserEditorIntranet = require('../middlewares/checkUserEditorIntranet');
@@ -46,6 +46,9 @@ router.get('/tablaStock', descargarTablaStock)
 
 //ruta para descargar tabla de retiros de stock en excel
 router.get('/tablaRetirosStock', descargarTablaRetirosStock)
+
+//ruta para descargar tabla de stock del CPFII
+router.get('/stockCPFII', descargarTablaStockCPFII)
 
 
 
