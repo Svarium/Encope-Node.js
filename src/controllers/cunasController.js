@@ -338,7 +338,8 @@ module.exports = {
 
     registroRetiros: (req,res) => {
         db.detalleRetiro.findAll({
-            include:["destino", "producto"]
+            include:["destino", "producto"],
+              order: [["updatedAt", "DESC"]],
         })
         .then(stocks => {
           /*   return res.send(stocks) */
