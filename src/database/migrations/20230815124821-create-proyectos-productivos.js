@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Productos', {
+    await queryInterface.createTable('proyectosProductivos', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -12,36 +12,49 @@ module.exports = {
       nombre: {
         type: Sequelize.STRING
       },
-      detalle: {
+      expediente: {
         type: Sequelize.STRING
-      },
-      imagen: {
-        type: Sequelize.STRING
-      },
-      idProyecto:{
-        type: Sequelize.INTEGER,
-        allowNull:false,
-        references: {
-          model: {
-            tableName:"proyectosProductivos"
-          },
-          key:"id"
-        }
       },
       idTalleres: {
         type: Sequelize.INTEGER,
         allowNull:false,
         references: {
-          model: {
+          model:{
             tableName:"Talleres"
           },
           key:"id"
         }
+      },      
+      cantidadAProducir: {
+        type: Sequelize.INTEGER
       },
-      unidadDeMedida: {
+      detalle: {
         type: Sequelize.STRING
-      }
-      ,
+      },
+      procedencia: {
+        type: Sequelize.STRING
+      },
+      duracion: {
+        type: Sequelize.STRING
+      },
+      unidadDuracion: {
+        type: Sequelize.STRING
+      },
+      costoTotal: {
+        type: Sequelize.INTEGER
+      },
+      costoUnitario: {
+        type: Sequelize.INTEGER
+      },
+      idProducto:{
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: "Productos"
+          },
+          key:"id"
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -53,6 +66,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Productos');
+    await queryInterface.dropTable('proyectosProductivos');
   }
 };

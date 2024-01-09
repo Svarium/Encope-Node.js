@@ -1,5 +1,5 @@
 var express = require('express');
-const { list, moreStock, estadisticas, updateStock, retiros, retirarStock, buscarStock, registroRetiros, buscarStockPorDestino, retirarKits, entregarKit, descargarTablaStock, descargarTablaRetirosStock, descargarTablaStockCPFII } = require('../controllers/stockController');
+const { list, estadisticas, descargarTablaStock, descargarTablaRetirosStock, descargarTablaStockCPFII, newProduct, storageProduct } = require('../controllers/stockController');
 
 const checkUserEditorIntranet = require('../middlewares/checkUserEditorIntranet');
 
@@ -9,6 +9,11 @@ var router = express.Router();
 
 //accedo a la vista para la carga de stock y actualizacion
 router.get('/listar', checkUserEditorIntranet, list);
+
+//accedo a la vista con el formulario para crear un nuevo producto
+router.get('/newProduct', newProduct)
+router.post('/newProduct', storageProduct)
+
 
 
 

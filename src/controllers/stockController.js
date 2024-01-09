@@ -13,15 +13,17 @@ module.exports = {
             })     
     },
 
-    newProducto : (req,res) => {
-
+    newProduct : (req,res) => {
+        return res.render('stock/addproduct',{
+            title:"Nuevo Producto"
+        })
     },
 
-    storageProducto : (req,res) => {
-
+    storageProduct: (req,res) => {
+        return res.send(req.body)
     },
 
-    
+
 
 
 

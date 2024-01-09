@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+
+  <body style="background-color: rgb(243, 241, 238)">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-3">
+      <div class="container">
+        <button
+          class="navbar-toggler d-lg-none"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapsibleNavId"
+          aria-controls="collapsibleNavId"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <button
+          class="btn btn-transparent"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasRight"
+          aria-controls="offcanvasRight"
+        >
+          <img
+            id="userIconProfile"
+            src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>"
+            class="iconProfile me-2"
+            alt=""
+          />
+          <%= userLogin.name %> <i class="fa-solid fa-caret-down fa-lg"></i>
+        </button>       
+    </nav>
+
+    <main>
+      <%- include('../partials/modals') %> <%- include('../partials/canvasMenu')
+      %>
+
+
+      <!-- TITULO H1 -->
+      <div class="container-fluid mt-4">
+        <p class="text-black h2 text-center shadow-3">
+          <strong>Agregar un nuevo Producto +</strong>
+        </p>
+        <hr class="text-black" />        
+    
+
+        <!-- FORMULARIO AGREGAR PRODUCTO -->
+
+
+        <div class="container shadow">
+          <form>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" id="nombre" placeholder="Ingrese su nombre">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="unidadDeMedida">Unidad de Medida</label>
+                <select class="form-control" id="unidadDeMedida">
+                  <option value="">Seleccione</option>
+                  <option value="kg">Kilogramos</option>
+                  <option value="g">Gramos</option>
+                  <option value="l">Litros</option>
+                  <!-- Agrega más opciones según tus necesidades -->
+                </select>
+              </div>
+              <div class="form-group col-md-12">
+                <label for="detalle">Detalle</label>
+                <textarea class="form-control" id="detalle" placeholder="Ingrese el detalle"></textarea>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="imagen">Imagen (opcional)</label>
+                <input type="file" class="form-control-file" id="imagen">
+              </div>              
+            </div>
+            <button type="submit" class="btn btn-primary mb-3">Enviar</button>
+          </form>
+        </div>
+
+    </main>
+
+    <%- include('../partials/scripts') %>
+
+    <script
+      src="//code.tidio.co/hlix5kfat3m92rb4tfebsyogegqfbmo3.js"
+      async
+    ></script>
+  </body>
+</html>
