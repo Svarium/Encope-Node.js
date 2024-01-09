@@ -1,5 +1,5 @@
 const createResponseError = require('../../helpers/createResponseError');
-const { getAllKits, getAllStocks, getAllProducts, getAllEditors, getGeneralStock, validarCantidad, chequearCantidadRetirada, getAllKitsOuts, obtenerUltimosRetiros } = require('../../services/cunasServices');
+const { getAllKits, getAllStocks, getAllProducts, getAllEditors, getGeneralStock, validarCantidad, chequearCantidadRetirada, getAllKitsOuts, obtenerUltimosRetiros } = require('../../services/stockServices');
 
 
 module.exports = {

@@ -24,13 +24,13 @@ const usersRouter = require('./src/routes/users');
 const authRouter = require('./src/routes/auth')
 const licitacionRouter = require('./src/routes/licitacion');
 const noticiasRouter = require('./src/routes/noticias');
-const cunasRouter = require('./src/routes/cunas');
+const stockRouter = require('./src/routes/stock');
 
 //APIS
 const apiUsersRouter = require('./src/routes/apis/apiUsers');
 const apiLicitacionRouter = require('./src/routes/apis/apiLicitaciones')
 const apiNoticiasRouter = require('./src/routes/apis/apiNoticias')
-const apiCunasRouter = require('./src/routes/apis/apiCunas')
+const apiStockRouter = require('./src/routes/apis/apiStock')
 
 
 
@@ -64,13 +64,13 @@ app.use('/licitacion', licitacionRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter)
 app.use('/noticias', noticiasRouter)
-app.use('/cunas', cunasRouter)
+app.use('/stock', stockRouter)
 
 //APIS
 app.use('/api/users', apiUsersRouter)
 app.use('/api/licitacion', apiLicitacionRouter)
 app.use('/api/noticias', apiNoticiasRouter)
-app.use('/api/cunas', apiCunasRouter)
+app.use('/api/stock', apiStockRouter)
 
 
 // catch 404 and forward to error handler
