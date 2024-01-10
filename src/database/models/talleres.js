@@ -16,11 +16,6 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey:'idTaller',
         as:'proyectoTaller'
       })
-
-      Taller.hasMany(models.Producto,{
-        foreignKey:'idTaller',
-        as:'productoTaller'
-      })
     }
   }
   Taller.init({

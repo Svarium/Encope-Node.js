@@ -3,6 +3,8 @@ const {validationResult} = require('express-validator')
 const { Op } = require('sequelize');
 const { getAllStocks, getGeneralStock } = require("../services/stockServices");
 const ExcelJS = require('exceljs');
+const fs = require('fs');
+const path = require('path');
 
 
 module.exports = {
@@ -20,7 +22,52 @@ module.exports = {
     },
 
     storageProduct: (req,res) => {
-        return res.send(req.body)
+
+        const errors = validationResult(req);
+
+        if (req.fileValidationError) {
+            errors.errors.push({
+                value: "",
+                msg: req.fileValidationError,
+                param: "producto",
+                location: "file"
+            });
+        } else if (!req.file) {
+            errors.errors.push({
+                value: "",
+                msg: "Debes subir la imagen del producto",
+                param: "producto",
+                location: "file"
+            });
+        }
+    
+
+        if(errors.isEmpty()){
+            const {nombre, medida, detalle} = req.body
+
+            db.Producto.create({
+                nombre:nombre.trim(),
+                unidadDeMedida: medida,
+                detalle:detalle.trim(),
+                imagen: req.file ? req.file.filename : null
+            })
+            .then(producto => {
+               return res.redirect('/stock/listar')
+            })
+            .catch(error => console.log(error))
+        } else {
+
+            if(req.file){
+               fs.existsSync(path.join(__dirname, `../../public/images/productos/${req.file.filename}`)) && fs.unlinkSync(path.join(__dirname, `../../public/images/productos/${req.file.filename}`))
+            }
+
+            return res.render('stock/addproduct',{
+                title:"Nuevo Producto",
+                errors: errors.mapped(),
+                old: req.body
+            })   
+    
+        }
     },
 
 

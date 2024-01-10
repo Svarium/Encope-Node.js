@@ -50,32 +50,35 @@
 
 
         <div class="container shadow">
-          <form>
+          <form action="/stock/newProduct" method="POST" enctype="multipart/form-data">
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="nombre">Nombre</label>
-                <input type="text" class="form-control" id="nombre" placeholder="Ingrese su nombre">
+                <input type="text" class="form-control <%= (locals.errors && errors.nombre) && 'is-invalid'%>" id="nombre" name="nombre" placeholder="Ingrese su nombre" value="<%= (locals.old && old.nombre) && old.nombre %>">
+                <small id="errorNombre" class="text-danger ms-2"><%= locals.errors && errors.nombre ? errors.nombre.msg : null %></small>
               </div>
               <div class="form-group col-md-6">
                 <label for="unidadDeMedida">Unidad de Medida</label>
-                <select class="form-control" id="unidadDeMedida">
+                <select class="form-control <%= (locals.errors && errors.medida) && 'is-invalid'%>" id="unidadDeMedida" name="medida">
                   <option value="">Seleccione</option>
                   <option value="kg">Kilogramos</option>
                   <option value="g">Gramos</option>
                   <option value="l">Litros</option>
                   <!-- Agrega más opciones según tus necesidades -->
                 </select>
+                <small id="errorNombre" class="text-danger ms-2"><%= locals.errors && errors.medida ? errors.medida.msg : null %></small>
               </div>
               <div class="form-group col-md-12">
                 <label for="detalle">Detalle</label>
-                <textarea class="form-control" id="detalle" placeholder="Ingrese el detalle"></textarea>
+                <textarea name="detalle" class="form-control <%= (locals.errors && errors.detalle) && 'is-invalid'%>" id="detalle" placeholder="Ingrese el detalle"></textarea>
               </div>
+              <small id="errorDetalle" class="text-danger ms-2"><%= locals.errors && errors.detalle ? errors.detalle.msg : null %></small>
             </div>
             <div class="form-row">
-              <div class="form-group col-md-12">
-                <label for="imagen">Imagen (opcional)</label>
-                <input type="file" class="form-control-file" id="imagen">
-              </div>              
+              <div class="form-group col-md-12 mt-3">       
+                <input type="file" name="producto" class="form-control rounded <%= (locals.errors && errors._undefined) && 'is-invalid'%>" id="producto">
+                <small id="errorProducto" class="text-danger ms-2"><%= locals.errors && errors._undefined ? errors._undefined.msg : null %></small>      
+              </div>                      
             </div>
             <button type="submit" class="btn btn-primary mb-3">Enviar</button>
           </form>
