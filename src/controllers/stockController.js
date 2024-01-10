@@ -5,6 +5,7 @@ const { getAllStocks, getGeneralStock } = require("../services/stockServices");
 const ExcelJS = require('exceljs');
 const fs = require('fs');
 const path = require('path');
+const { error } = require("console");
 
 
 module.exports = {
@@ -19,6 +20,16 @@ module.exports = {
         return res.render('stock/addproduct',{
             title:"Nuevo Producto"
         })
+    },
+    listProducts : (req,res) => {
+        db.Producto.findAll()
+        .then(productos => {
+            return res.render('stock/productos',{
+                title:'Productos',
+                productos
+            })
+        })
+        .catch(error => console.log(error))
     },
 
     storageProduct: (req,res) => {
@@ -52,7 +63,13 @@ module.exports = {
                 imagen: req.file ? req.file.filename : null
             })
             .then(producto => {
-               return res.redirect('/stock/listar')
+                db.Producto.findAll()
+        .then(productos => {
+            return res.render('stock/productos',{
+                title:'Productos',
+                productos
+            })
+        })
             })
             .catch(error => console.log(error))
         } else {
@@ -70,7 +87,98 @@ module.exports = {
         }
     },
 
+    editProduct : (req,res) => {
 
+        const id = req.params.id
+
+        db.Producto.findOne({
+            where:{
+                id:id
+            }
+        })
+        .then(producto => {
+            return res.render('stock/editProduct',{
+                title: 'Editar producto',
+                producto
+            })
+        }).catch(error => console.log(error))
+
+    },
+    
+    updateProduct : (req,res) => {
+
+        const errors = validationResult(req);
+
+        if (req.fileValidationError) {
+            errors.errors.push({
+                value: "",
+                msg: req.fileValidationError,
+                param: "producto",
+                location: "file"
+            });
+        
+        }
+
+        if(errors.isEmpty()){
+            const id = req.params.id;
+
+            const {nombre, detalle, medida} = req.body;
+
+            let oldImage; 
+
+            db.Producto.findByPk(id)
+            .then(producto => {  
+                oldImage = producto.imagen;    
+
+                return producto.update({
+                    nombre: nombre.trim(),
+                    detalle: detalle.trim(),
+                    unidadDeMedida: medida,
+                    imagen: req.file ? req.file.filename : producto.imagen
+                });
+            })
+            .then(() => {
+
+                if(req.file){
+                    fs.existsSync(path.join(__dirname, `../../public/images/productos/${oldImage}`)) && fs.unlinkSync(path.join(__dirname, `../../public/images/productos/${oldImage}`))
+                 }
+
+                return res.redirect('/stock/products')
+            })
+            .catch(error => console.log(error))
+
+     
+        } else {
+            if(req.file){
+                fs.existsSync(path.join(__dirname, `../../public/images/productos/${req.file.filename}`)) && fs.unlinkSync(path.join(__dirname, `../../public/images/productos/${req.file.filename}`))
+             }
+
+             const id = req.params.id
+
+             db.Producto.findOne({
+                 where:{
+                     id:id
+                 }
+             })
+             .then(producto => {
+                 return res.render('stock/editProduct',{
+                     title: 'Editar producto',
+                     producto,
+                     errors: errors.mapped(),
+                     old: req.body,
+                 })
+             }).catch(error => console.log(error))
+
+
+        }
+
+    },
+
+    deleteProduct : (req,res) => {
+
+    },
+
+   
 
 
 

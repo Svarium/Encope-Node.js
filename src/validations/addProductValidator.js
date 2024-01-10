@@ -10,18 +10,23 @@ module.exports = [
         ignore:" "
     }).withMessage("Solo carácteres alfabéticos").bail()
     .custom((value, {req}) =>{
-        return db.Producto.findOne({
-            where:{
-                nombre:value
-            }
-        }).then(producto => {
-            if(producto){
-                return Promise.reject()
-            }
-        }).catch(error => {
-            console.log(error);
-            return Promise.reject('El Producto ya existe en la base de datos')
-        })      
+
+        if(req.params.id){
+            return true
+        } else {
+            return db.Producto.findOne({
+                where:{
+                    nombre:value
+                }
+            }).then(producto => {
+                if(producto){
+                    return Promise.reject()
+                }
+            }).catch(error => {
+                console.log(error);
+                return Promise.reject('El Producto ya existe en la base de datos')
+            })      
+        }       
     }),
 
     check('medida')
