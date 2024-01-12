@@ -207,8 +207,7 @@ module.exports = {
                 title: 'resultado de la busqueda',
                 producto
             })
-        })
-
+        }).catch(errors => console.log(errors))
     },
 
    

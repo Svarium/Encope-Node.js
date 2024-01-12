@@ -90,14 +90,14 @@
       <!-- BUSCADOR DE PRODUCTO -->
     <div class="container mt-5 shadow">
       <h4>Buscar Producto</h4>
-      <form action="/stock/searchProduct" class="row g-3">
-          <div class="col-md-6">
-              <input type="search" class="form-control" id="inputProducto" name="search" placeholder="Escribe el nombre del producto">
-          </div>
-          <div class="col-md-6 mb-4">
-              <button type="submit" class="btn btn-primary">Buscar</button>
-          </div>
-      </form>
+      <form action="/stock/searchProduct" class="row g-3" id="searchProduct" onsubmit="return validarFormulario()">
+        <div class="col-md-6">
+            <input type="search" class="form-control" id="inputProducto" name="search" placeholder="Escribe el nombre del producto">
+        </div>
+        <div class="col-md-6 mb-4">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+    </form>
   </div>
     </section>
 
@@ -112,5 +112,25 @@
       src="//code.tidio.co/hlix5kfat3m92rb4tfebsyogegqfbmo3.js"
       async
     ></script>
+    <script>
+
+      function validarFormulario(){
+        const inputSearch = document.getElementById('inputProducto');
+
+if(inputSearch.value.trim() === ''){
+
+  Swal.fire({
+icon: "error",
+title: "Oops...",
+text: "Debes ingresar el nombre del producto"
+});
+
+return false;
+}
+return true;      
+
+
+      }
+    </script>
   </body>
 </html>

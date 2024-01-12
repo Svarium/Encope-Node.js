@@ -30,7 +30,16 @@
             alt=""
           />
           <%= userLogin.name %> <i class="fa-solid fa-caret-down fa-lg"></i>
-        </button>       
+        </button>   
+        <!-- Menú de navegación -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto"> <!-- 'ms-auto' para alinear a la derecha -->
+            <li class="nav-item">
+              <a class="nav-link" href="/stock">Regresar</a>
+            </li>
+          </ul>
+        </div>
+      </div>    
     </nav>
 
     <main>
@@ -73,9 +82,9 @@
                             <a href="/stock/editProduct/<%= item.id %>"><button class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></button></a>
                             
                             <!-- Formulario para eliminar -->
-                            <form action="/stock/delete/<%= item.id %>?_method=DELETE" method="POST" id="deleteProduct">                                
-                                <button type="submit" class="btn btn-danger mt-2"><i class="fa-solid fa-trash"></i></button>
-                            </form>
+                            <form action="/stock/delete/<%= item.id %>?_method=DELETE" method="POST" class="deleteProductForm">
+                              <button type="submit" class="btn btn-danger mt-2"><i class="fa-solid fa-trash"></i></button>
+                          </form>
                         </td>
                     </tr>
                 <% }) %>
@@ -95,31 +104,33 @@
     ></script>
 
     <script>
-      const botonBorrar = document.getElementById('deleteProduct')
+      const deleteForms = document.querySelectorAll('.deleteProductForm');
 
-      botonBorrar.addEventListener('submit', function() {
-        event.preventDefault()
+deleteForms.forEach(form => {
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
         Swal.fire({
-  title: "Seguro quieres borrar el producto??",
-  text: "Chequea bien el producto que deseas eliminar",
-  icon: "warning",
-  showCancelButton: true,
-  confirmButtonColor: "#3085d6",
-  cancelButtonColor: "#d33",
-  confirmButtonText: "Si, eliminar!"
-}).then((result) => {
-  if (result.isConfirmed) {
-    Swal.fire({
-      title: "Eliminado!",
-      text: "El producto fue eliminado",
-      icon: "success"
+            title: "Seguro quieres borrar el producto??",
+            text: "Chequea bien el producto que deseas eliminar",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, eliminar!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Eliminado!",
+                    text: "El producto fue eliminado",
+                    icon: "success"
+                });
+
+                form.submit();
+            }
+        });
     });
-
-    botonBorrar.submit();
-
-  }
 });
-      })
     </script>
   </body>
 </html>
