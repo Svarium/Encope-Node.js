@@ -1,5 +1,5 @@
 var express = require('express');
-const { list, estadisticas, descargarTablaStock, descargarTablaRetirosStock, descargarTablaStockCPFII, newProduct, storageProduct, listProducts, editProduct, updateProduct } = require('../controllers/stockController');
+const { list, estadisticas, descargarTablaStock, descargarTablaRetirosStock, descargarTablaStockCPFII, newProduct, storageProduct, listProducts, editProduct, updateProduct, deleteProduct } = require('../controllers/stockController');
 
 const checkUserEditorIntranet = require('../middlewares/checkUserEditorIntranet');
 const { uploadProductosFiles } = require('../middlewares/subirProductos');
@@ -21,6 +21,7 @@ router.post('/newProduct', uploadProductosFiles.single('producto'),addProductVal
 router.get('/products', listProducts)
 router.get('/editProduct/:id', editProduct)
 router.put('/editProduct/:id',uploadProductosFiles.single('producto'),addProductValidator, updateProduct)
+router.delete('/delete/:id', deleteProduct)
 
 
 module.exports = router;

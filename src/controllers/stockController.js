@@ -176,6 +176,19 @@ module.exports = {
 
     deleteProduct : (req,res) => {
 
+      
+            const id = req.params.id
+
+            db.Producto.findByPk(id)
+            .then(producto => {
+                fs.existsSync(path.join(__dirname, `../../public/images/productos/${producto.imagen}`)) && fs.unlinkSync(path.join(__dirname, `../../public/images/productos/${producto.imagen}`));
+
+            db.Producto.destroy({
+                where:{id:producto.id},
+            }).then(() => {
+                return res.redirect('/stock/products')
+            }).catch(errors => console.log(errors))
+            })
     },
 
    

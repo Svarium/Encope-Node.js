@@ -5,37 +5,56 @@
   <body style="background-color: rgb(243, 241, 238)">
     <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-3">
       <div class="container">
-        <button
-          class="navbar-toggler d-lg-none"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#collapsibleNavId"
-          aria-controls="collapsibleNavId"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <button
-          class="btn btn-transparent"
-          type="button"
-          data-bs-toggle="offcanvas"
-          data-bs-target="#offcanvasRight"
-          aria-controls="offcanvasRight"
-        >
-          <img
-            id="userIconProfile"
-            src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>"
-            class="iconProfile me-2"
-            alt=""
-          />
-          <%= userLogin.name %> <i class="fa-solid fa-caret-down fa-lg"></i>
-        </button>       
+        <div class="d-flex">
+          <!-- Botón para abrir el menú a la izquierda -->
+          <button
+            class="navbar-toggler d-lg-none order-0 me-2"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapsibleNavId"
+            aria-controls="collapsibleNavId"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+    
+          <!-- Botón para abrir el menú canvas a la derecha -->
+          <button
+            class="btn btn-transparent order-1"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasRight"
+            aria-controls="offcanvasRight"
+          >
+            <img
+              id="userIconProfile"
+              src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>"
+              class="iconProfile me-2"
+              alt=""
+            />
+            <%= userLogin.name %><i class="fa-solid fa-caret-down fa-lg"></i>
+          </button>
+        </div>
+    
+        <!-- Menú de navegación -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto"> <!-- 'ms-auto' para alinear a la derecha -->
+            <li class="nav-item">
+              <a class="nav-link" href="/stock/products">Productos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Talleres</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Proyectos</a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </nav>
-
     <main>
-      <%- include('../partials/modals') %> <%- include('../partials/canvasMenu')
-      %>
+      <%- include('../partials/modals') %> <%- include('../partials/canvasMenu')%>
 
 
       <!-- TITULO H1 -->
@@ -51,16 +70,16 @@
       <div class="container text-center">
 
          <!-- BOTON PARA AGREGAR NUEVO PRODUCTO -->
-         <a href="/stock/newProduct"><button type="button" class="btn btn-primary">
-          Dar de alta un nuevo producto +
+         <a href="/stock/newProduct" class="btnAction me-1  shadow"><button type="button" class="btn btn-primary font-weight-bold slide">
+           Nuevo producto  <br><i class="fa-solid fa-tag fa-lg"></i>
         </button></a>
         <!-- BOTON PARA AGREGAR NUEVO TALLER -->
-        <a href=""><button type="button" class="btn btn-success">
-          Dar de alta un nuevo taller +
+        <a href="" class="btnAction shadow me-1"><button type="button" class="btn btn-success font-weight-bold">
+          Nuevo taller <br> <i class="fa-solid fa-screwdriver-wrench fa-lg"></i>
         </button></a>     
          <!-- BOTON PARA AGREGAR NUEVO PROYECTO PRODUCTIVO -->
-         <a href=""> <button type="button" class="btn btn-danger">
-          Nuevo proyecto productivo +
+         <a href="" class="btnAction  shadow"> <button type="button" class="btn btn-danger font-weight-bold">
+          Nuevo proyecto <br><i class="fa-solid fa-receipt fa-lg"></i>
        </button></a>
         
 
