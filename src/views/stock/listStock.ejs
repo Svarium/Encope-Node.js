@@ -54,71 +54,56 @@
       </div>
     </nav>
     <main>
+
       <%- include('../partials/modals') %> <%- include('../partials/canvasMenu')%>
 
 
       <!-- TITULO H1 -->
       <div class="container-fluid mt-4">
         <p class="text-black h2 text-center shadow-3">
-          <strong>Stock</strong>
+          <strong> Módulo de Stock</strong>
         </p>
         <hr class="text-black" />        
       </div>
 
       <!-- BOTONES DE ACCIÓN PARA PRODUCCIÓN -->
 
-      <div class="container text-center">
+      <section>
+        <div class="container text-center">
+          <!-- BOTON PARA AGREGAR NUEVO PRODUCTO -->
+          <a href="/stock/newProduct" class="btnAction me-1  shadow"><button type="button" class="btn btn-primary font-weight-bold slide">
+            Nuevo producto  <br><i class="fa-solid fa-tag fa-lg"></i>
+         </button></a>
+         <!-- BOTON PARA AGREGAR NUEVO TALLER -->
+         <a href="" class="btnAction shadow me-1"><button type="button" class="btn btn-success font-weight-bold">
+           Nuevo taller <br> <i class="fa-solid fa-screwdriver-wrench fa-lg"></i>
+         </button></a>     
+          <!-- BOTON PARA AGREGAR NUEVO PROYECTO PRODUCTIVO -->
+          <a href="" class="btnAction  shadow"> <button type="button" class="btn btn-danger font-weight-bold">
+           Nuevo proyecto <br><i class="fa-solid fa-receipt fa-lg"></i>
+        </button></a>       
+      </div>      
+       </div>    
+      </section>
 
-         <!-- BOTON PARA AGREGAR NUEVO PRODUCTO -->
-         <a href="/stock/newProduct" class="btnAction me-1  shadow"><button type="button" class="btn btn-primary font-weight-bold slide">
-           Nuevo producto  <br><i class="fa-solid fa-tag fa-lg"></i>
-        </button></a>
-        <!-- BOTON PARA AGREGAR NUEVO TALLER -->
-        <a href="" class="btnAction shadow me-1"><button type="button" class="btn btn-success font-weight-bold">
-          Nuevo taller <br> <i class="fa-solid fa-screwdriver-wrench fa-lg"></i>
-        </button></a>     
-         <!-- BOTON PARA AGREGAR NUEVO PROYECTO PRODUCTIVO -->
-         <a href="" class="btnAction  shadow"> <button type="button" class="btn btn-danger font-weight-bold">
-          Nuevo proyecto <br><i class="fa-solid fa-receipt fa-lg"></i>
-       </button></a>
-        
-
-     </div>      
-
-      </div>
+    <section>
+      <!-- BUSCADOR DE PRODUCTO -->
+    <div class="container mt-5 shadow">
+      <h4>Buscar Producto</h4>
+      <form action="/stock/searchProduct" class="row g-3">
+          <div class="col-md-6">
+              <input type="search" class="form-control" id="inputProducto" name="search" placeholder="Escribe el nombre del producto">
+          </div>
+          <div class="col-md-6 mb-4">
+              <button type="submit" class="btn btn-primary">Buscar</button>
+          </div>
+      </form>
+  </div>
+    </section>
 
      
-      <!-- TABLA DE STOCK  -->
-      <% if (locals.userLogin && locals.userLogin.destinoId == 31) { %>
-      <hr />
-      <div class="container-fluid">
-        <h4 class="text-center">Tabla de stock</h4>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Producto</th>
-              <th scope="col">Cantidad</th>
-              <th scope="col">ultima Actualización</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <% stock.forEach(item => { %>
-              <td class="text-center"><%= item.producto.nombre %></td>
-              <td><%= item.cantidad %></td>
-              <td>
-                <%= new Intl.DateTimeFormat('es-AR', { year: 'numeric', month:
-                'long', day: 'numeric', hour: 'numeric', minute: 'numeric',
-                second: 'numeric', timeZone: 'America/Argentina/Buenos_Aires'
-                }).format(new Date(item.updatedAt)) %>
-              </td>
-            </tr>
-            <% }) %>
-          </tbody>
-        </table>
-      </div>
 
-      <% } %>
+
     </main>
 
     <%- include('../partials/scripts') %>

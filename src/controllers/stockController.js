@@ -191,6 +191,26 @@ module.exports = {
             })
     },
 
+    searchProduct : (req,res) => {
+
+        const querySearch = req.query.search;
+
+        db.Producto.findAll({
+            where:{
+                nombre: {
+                    [Op.like] : `%${querySearch}%`
+                }
+            }
+        }) .then(producto => {
+           /*  return res.send(producto) */
+            return res.render('stock/searchProduct',{
+                title: 'resultado de la busqueda',
+                producto
+            })
+        })
+
+    },
+
    
 
 
