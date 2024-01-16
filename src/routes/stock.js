@@ -3,6 +3,8 @@ const { list, estadisticas, descargarTablaStock, descargarTablaRetirosStock, des
 const { uploadProductosFiles } = require('../middlewares/subirProductos');
 const addProductValidator = require('../validations/addProductValidator');
 const checkUserEditorIntranetCentral = require('../middlewares/checkUserEditorIntranetCentral');
+const { newTaller, storageTaller } = require('../controllers/talleresController');
+const addTallerValidator = require('../validations/addTallerValidator');
 
 
 var router = express.Router();
@@ -24,6 +26,15 @@ router.put('/editProduct/:id',uploadProductosFiles.single('producto'),addProduct
 router.delete('/delete/:id',checkUserEditorIntranetCentral ,deleteProduct)
 router.get('/searchProduct', checkUserEditorIntranetCentral , searchProduct)
 router.get('/ProductsTable',checkUserEditorIntranetCentral ,productsTableExcel)
+
+
+
+/* TALLERES */
+
+//crud talleres
+
+router.get('/newTaller', newTaller)
+router.post('/newTaller',addTallerValidator, storageTaller)
 
 
 module.exports = router;

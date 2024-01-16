@@ -8,10 +8,10 @@ const path = require('path');
 
 
 module.exports = {
-    list : async (req,res) => {
-        const userLogin = req.session.userLogin;     
+    list : (req,res) => {
+         
             return res.render("stock/listStock",{               
-                title:"Stock de Cunas"
+                title:"Modulo de stock"
             })     
     },
 
