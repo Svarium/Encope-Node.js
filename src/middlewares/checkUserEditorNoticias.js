@@ -6,10 +6,6 @@ module.exports = (req, res, next) => {
         return next();
     } else {
         return res.redirect('/inicio')
-        res.render("inicio",{
-            title:"Encope"
-    }
-        )}
-
+      }
 
 }; 

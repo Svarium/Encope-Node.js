@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <%- include('../partials/head') %>
+  <%- include('../../partials/head') %>
 
   <body style="background-color: rgb(243, 241, 238)">
     <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-3">
@@ -34,14 +34,14 @@
     </nav>
 
     <main>
-      <%- include('../partials/modals') %> <%- include('../partials/canvasMenu')
+      <%- include('../../partials/modals') %> <%- include('../../partials/canvasMenu')
       %>
 
 
       <!-- TITULO H1 -->
       <div class="container-fluid mt-4">
         <p class="text-black h2 text-center shadow-3">
-          <strong>Agregar un nuevo Producto +</strong>
+          <strong>Editar Producto: <%= producto.nombre %></strong>
         </p>
         <hr class="text-black" />        
     
@@ -50,11 +50,11 @@
 
 
         <div class="container shadow">
-          <form action="/stock/newProduct" method="POST" enctype="multipart/form-data">
+          <form action="/stock/editProduct/<%= producto.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="nombre">Nombre</label>
-                <input type="text" class="form-control <%= (locals.errors && errors.nombre) && 'is-invalid'%>" id="nombre" name="nombre" placeholder="Ingrese su nombre" value="<%= (locals.old && old.nombre) && old.nombre %>">
+                <input type="text" class="form-control <%= (locals.errors && errors.nombre) && 'is-invalid'%>" id="nombre" name="nombre" placeholder="Ingrese su nombre" value="<%= producto.nombre %>">
                 <small id="errorNombre" class="text-danger ms-2"><%= locals.errors && errors.nombre ? errors.nombre.msg : null %></small>
               </div>
               <div class="form-group col-md-6">
@@ -70,7 +70,7 @@
               </div>
               <div class="form-group col-md-12">
                 <label for="detalle">Detalle</label>
-                <textarea name="detalle" class="form-control <%= (locals.errors && errors.detalle) && 'is-invalid'%>" id="detalle" placeholder="Ingrese el detalle" value="<%= (locals.old && old.detalle) && old.detalle %>"></textarea>
+                <textarea name="detalle" class="form-control <%= (locals.errors && errors.detalle) && 'is-invalid'%>" id="detalle" placeholder="Ingrese el detalle" ><%= producto.detalle %></textarea>
               </div>
               <small id="errorDetalle" class="text-danger ms-2"><%= locals.errors && errors.detalle ? errors.detalle.msg : null %></small>
             </div>
@@ -86,7 +86,7 @@
 
     </main>
 
-    <%- include('../partials/scripts') %>
+    <%- include('../../partials/scripts') %>
 
     <script
       src="//code.tidio.co/hlix5kfat3m92rb4tfebsyogegqfbmo3.js"

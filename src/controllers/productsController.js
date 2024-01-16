@@ -1,11 +1,10 @@
 const db = require("../database/models")
 const {validationResult} = require('express-validator')
 const { Op } = require('sequelize');
-const { getAllStocks, getGeneralStock } = require("../services/stockServices");
 const ExcelJS = require('exceljs');
 const fs = require('fs');
 const path = require('path');
-const { error } = require("console");
+
 
 
 module.exports = {
@@ -17,14 +16,14 @@ module.exports = {
     },
 
     newProduct : (req,res) => {
-        return res.render('stock/addproduct',{
+        return res.render('stock/products/addproduct',{
             title:"Nuevo Producto"
         })
     },
     listProducts : (req,res) => {
         db.Producto.findAll()
         .then(productos => {
-            return res.render('stock/productos',{
+            return res.render('stock/products/productos',{
                 title:'Productos',
                 productos
             })
@@ -65,7 +64,7 @@ module.exports = {
             .then(producto => {
                 db.Producto.findAll()
         .then(productos => {
-            return res.render('stock/productos',{
+            return res.render('stock/products/productos',{
                 title:'Productos',
                 productos
             })
@@ -78,7 +77,7 @@ module.exports = {
                fs.existsSync(path.join(__dirname, `../../public/images/productos/${req.file.filename}`)) && fs.unlinkSync(path.join(__dirname, `../../public/images/productos/${req.file.filename}`))
             }
 
-            return res.render('stock/addproduct',{
+            return res.render('stock/products/addproduct',{
                 title:"Nuevo Producto",
                 errors: errors.mapped(),
                 old: req.body
@@ -97,7 +96,7 @@ module.exports = {
             }
         })
         .then(producto => {
-            return res.render('stock/editProduct',{
+            return res.render('stock/products/editProduct',{
                 title: 'Editar producto',
                 producto
             })
@@ -161,7 +160,7 @@ module.exports = {
                  }
              })
              .then(producto => {
-                 return res.render('stock/editProduct',{
+                 return res.render('stock/products/editProduct',{
                      title: 'Editar producto',
                      producto,
                      errors: errors.mapped(),
@@ -203,7 +202,7 @@ module.exports = {
             }
         }) .then(producto => {
            /*  return res.send(producto) */
-            return res.render('stock/searchProduct',{
+            return res.render('stock/products/searchProduct',{
                 title: 'resultado de la busqueda',
                 producto
             })
@@ -277,7 +276,7 @@ module.exports = {
             const fecha = new Date(Date.now());
     
             // Define el nombre del archivo Excel
-            res.setHeader('Content-Disposition', `attachment; filename="${fecha.toISOString().substring(0, 10)}-stock.xlsx"`); // agregar al nombre la fecha con New Date()
+            res.setHeader('Content-Disposition', `attachment; filename="${fecha.toISOString().substring(0, 10)}-productos.xlsx"`); // agregar al nombre la fecha con New Date()
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     
             // Envia el archivo Excel como respuesta al cliente

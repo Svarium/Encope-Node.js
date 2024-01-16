@@ -6,8 +6,8 @@ let listadoRoles = [
   "Admin",
   "Editor-Noticias",
   "Editor-Licitaciones",
-  "Editor-Intranet",
-  "Editor-Cunas",
+  "Editor-Intranet-Central",
+  "Editor-Intranet-Unidades",
   "Visitante",
   "Agente",
 ]
