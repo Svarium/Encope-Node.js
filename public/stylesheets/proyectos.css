@@ -261,8 +261,12 @@
 
  @media (max-width: 420px) {
   
-    .card-slider-item { width: 100%;}
+    .card-slider-item { width: 100%!important;}
   }
+
+
+
+
 
 
   @keyframes spin {
@@ -283,4 +287,12 @@
   
   .rocketIcon {
     animation: moveUp 1s infinite ease-in-out; /* Puedes ajustar la duración y el tipo de animación según tus preferencias */
+  }
+
+  .imgProductosYTalleres{
+    height: 250px !important;
+  }
+
+  .cardsProductosProyects:hover{
+      cursor:pointer;
   }
