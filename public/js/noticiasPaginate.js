@@ -22,12 +22,12 @@ const paintNoticias = (noticia) => {
 
     noticia.forEach(noti => {
         const template = `        
-        <div class="card ms-3 mb-3" style="width: 18rem;">
-        <img src="/images/imagesNoticias/${noti.images[0].name}" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">${noti.titulo}</h5>
+        <div class="card ms-3 mb-3" style="width: 18rem; height: 400px;">
+        <img src="/images/imagesNoticias/${noti.images[0].name}" class="card-img-top card-img-custom" alt="...">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title card-title-cut">${noti.titulo}</h5>
           <p class="card-text">${noti.descripcion.slice(0,100)}...</p>
-          <a href="/noticias/detalle/${noti.id}" class="btn btn-primary">Leer más</a>
+          <a href="/noticias/detalle/${noti.id}" class="btn btn-primary mt-auto">Leer más</a>
         </div>
       </div>      
         `;

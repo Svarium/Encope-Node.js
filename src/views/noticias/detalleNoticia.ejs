@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="es">
-
-
+  
 <!-- HEAD -->
 <%- include('../partials/head') %> 
 
@@ -9,12 +8,15 @@
 
 <!-- HEADER -->  
   <%- include('../partials/header') %> 
+  <%- include('../partials/modals')  %> 
+  <%- include('../partials/canvasMenu')  %> 
 
   <main>
 
     <!-- SECCION NOTICIA -->
 
     <% if (noticia) { %>
+
            
     <div class="container">
       <p style="font-size:13px;"><%= new Intl.DateTimeFormat('es-AR').format(new Date(noticia.createdAt)) %></p>
@@ -23,49 +25,34 @@
   </div>
   <br>
 
-  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-indicators">
-
-      
-
-        <% noticia.images.forEach((image, index) => { %>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= index %>" <% if (index === 0) { %>class="active" aria-current="true"<% } %> aria-label="Slide <%= index + 1 %>"></button>
-        <% }); %>
-      </div>
-      <div class="carousel-inner">
-        <% noticia.images.forEach((image, index) => { %>
-          <div class="carousel-item <% if (index === 0) { %>active<% } %>">
-            <img src="/images/imagesNoticias/<%= image.name %>" class="carruselNoticias mx-auto img-fluid d-block w-100" alt="...">
-          </div>
-        <% }); %>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
+  <div class="container">
+    <div class="row">
+        <div class="mx-auto col-xs-12 col-md-6 col-lg-12">
+            <p class="textoNoticias">
+              <% function addBreaks(text) {
+                return text.replace(/\//g, "<br><br>");
+              } %>
+              <%-              
+             addBreaks(noticia.descripcion) %>                    
+            </p>
+        </div>
     </div>
+  </div>
 
-    <br>
+  <div class="ful-img" id="fulImgBox">
+    <img src="imgs/1.jpg" id="fulImg" alt="">
+    <span onclick="closeImg()"><i class="fa-solid fa-circle-xmark"></i></span>
+</div>
 
-    <!-- texto -->
+  <div class="img-gallery">
+    <% noticia.images.forEach(image => { %>
+      <img src="/images/imagesNoticias/<%= image.name %>" onclick="openFulImg(this.src)" alt="" class="imgNoticiasPics shadow"> 
+    <% }) %>     
+</div>
 
-    <div class="container">
-      <div class="row">
-          <div class="mx-auto col-xs-12 col-md-6 col-lg-12">
-              <p class="textoNoticias">
-                <% function addBreaks(text) {
-                  return text.replace(/\//g, "<br><br>");
-                } %>
-                <%-              
-               addBreaks(noticia.descripcion) %>                    
-              </p>
-          </div>
-      </div>
-    </div>
+
+  
+
 
     <% if (noticia.video) { %>
 
@@ -96,7 +83,7 @@
   <div class="row">
     <div class="ms-4 mt-3 col-xs-12 col-md-6 col-lg-3 d-block img-fluid d-flex justify-content-between">
       <a href="/inicio">
-        <button class="btn btn-primary" onclick="history.back()">
+        <button class="btn btn-primary me-2" onclick="history.back()">
             <i class="fas fa-arrow-left"></i> Inicio
           </button>
       </a>
@@ -104,7 +91,7 @@
       <% if (userLogin) { %>
         <% if (userLogin.rol === 1 || userLogin.rol === 2 || userLogin.rol === 3) { %>
       <a href="/noticias/edit/<%= noticia.id %>">
-        <button class="btn btn-success" onclick="history.back()">
+        <button class="btn btn-success me-2" onclick="history.back()">
           <i class="fa fa-edit"></i> Editar
           </button>
       </a>
@@ -115,15 +102,13 @@
           <i class="fa fa-trash"></i> Borrar
          </button>
       </form>   
-
-
       <% } %>
       <% } %>  
     </div>
   </div>
    
   </div>
-  </main>
+  </main><br>
 
 <!--LOGOS COLABORADORES-->
 
@@ -141,12 +126,7 @@
 
 <%- include('../partials/scripts') %> 
 
-<script>
-  const iconInicio = document.getElementById('iconInicio')
-  iconInicio.addEventListener('error', () => {
-    iconInicio.src='https://cdn-icons-png.flaticon.com/512/149/149071.png'
-  })
-</script>
+
 <script>
   function showAlertAndSubmit(event) {
     event.preventDefault();
@@ -177,6 +157,19 @@
       }
     });
   }
+</script>
+
+<script>
+const fulImgBox = document.getElementById("fulImgBox"),
+fulImg = document.getElementById("fulImg");
+
+function openFulImg(reference){
+    fulImgBox.style.display = "flex";
+    fulImg.src = reference
+}
+function closeImg(){
+    fulImgBox.style.display = "none";
+}
 </script>
 
 </body>
