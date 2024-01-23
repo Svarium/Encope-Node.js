@@ -20,5 +20,14 @@ module.exports = [
     check('expediente')
     .notEmpty().withMessage('Debe ingresar el numero de expediente').bail()
     .matches(/^EX-\d{4}-\d{9}-APN-DS#[A-Z0-9]+$/)
-    .withMessage('El formato del número de expediente no es válido'),
+    .withMessage('El formato del número de expediente no es válido').bail()
+    .custom((value, {req}) => {
+        if (req.params){
+            return true
+        } else {
+            return db.Taller.finOne({
+                
+            })
+        }
+    })
 ]

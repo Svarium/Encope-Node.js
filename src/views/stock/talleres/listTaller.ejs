@@ -50,7 +50,7 @@
       <!-- TITULO H1 -->
       <div class="container-fluid mt-4">
         <p class="text-black h2 text-center shadow-3">
-          <strong>Productos</strong>
+          <strong>Talleres</strong>
         </p>
         <hr class="text-black" />        
       </div>
@@ -61,28 +61,38 @@
   
       <div class="container-fluid">
         <button type="button" class="btn btn-outline-primary ms-3 btn-sm mt-1 mb-2" onclick="window.location.href='/stock/ProductsTable'">
-          <i class="fa-solid fa-download"></i>Exportar Excel</i>
+          <i class="fa-solid fa-download"></i> Exportar Excel</i>
         </button><br> 
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Producto</th>
+                    <th scope="col">Taller</th>
                     <th scope="col">Detalle</th>
-                    <th scope="col">Unidad de Medida</th>
-                    <th scope="col">Imagen</th>
+                    <th scope="col">Expediente</th>
+                    <th scope="col">Creado</th>
+                    <th scope="col">Destino</th>
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                <% productos.forEach(item => { %>
+                <% talleres.forEach(item => { %>
                     <tr>
                         <td class="text-center"><%= item.nombre %></td>
                         <td><%= item.detalle %></td>
-                        <td><%= item.unidadDeMedida %></td>
-                        <td><img src="/images/productos/<%= item.imagen %>" alt="" width="70px" height="70px" class="rounded"></td>
+                        <td><%= item.expediente %></td>
+                        <td><%= new Intl.DateTimeFormat('es-AR', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                          hour: 'numeric',
+                          minute: 'numeric',
+                          second: 'numeric',
+                          timeZone: 'America/Argentina/Buenos_Aires'
+                        }).format(new Date(item.createdAt))%></td>
+                        <td><%= item.destinoTaller.nombreDestino %></td>
                         <td>
                             <!-- Enlace para editar -->
-                            <a href="/stock/editProduct/<%= item.id %>"><button class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></button></a>
+                            <a href="/stock/editTaller/<%= item.id %>"><button class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></button></a>
                             
                             <!-- Formulario para eliminar -->
                             <form action="/stock/delete/<%= item.id %>?_method=DELETE" method="POST" class="deleteProductForm">
