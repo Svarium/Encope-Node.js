@@ -1,6 +1,6 @@
 <header>
     <!-- place navbar here -->
-    <nav class="navbar navbar-expand-sm navbar-light" id="up">
+    <nav class="navbar navbar-expand-sm navbar-light" id="up" data-aos="zoom-in" data-aos-duration="1000">
           <div class="container-fluid ms-3">
             <a class="navbar-brand" href="/inicio"> 
             <img src="/images/logo_home.png" width="150px" alt="" class="logo-web">
@@ -13,23 +13,26 @@
                 <ul class="navbar-nav  mt-2 mt-lg-0">
                     
                     <li class="nav-item">
-                        <a class="nav-link active" href="/inicio" aria-current="page">Home<span class="visually-hidden">(current)</span></a>
+                        <a class="nav-link " href="/inicio" aria-current="page">Home<span class="visually-hidden">(current)</span></a>
+                    </li>
+                    <li class="nav-item" data-aos="zoom-in" data-aos-duration="3000">
+                        <a class="nav-link  " href="/nosotros" aria-current="page">¿Quiénes somos? <span class="visually-hidden">(current)</span></a>
+                    </li>
+                    <li class="nav-item" >
+                        <a class="nav-link  " href="/proyectos" aria-current="page">Nuestros Productos<span class="visually-hidden">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/nosotros" aria-current="page">Nosotros <span class="visually-hidden">(current)</span></a>
+                        <a class="nav-link " href="/licitacion/listar" aria-current="page">Licitaciones <span class="visually-hidden">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/licitacion/listar" aria-current="page">Licitaciones <span class="visually-hidden">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/contacto">Contacto</a>
+                        <a class="nav-link " href="/contacto">Contacto</a>
                     </li>
                
                     <li class="nav-item">
-                      <a class="nav-link active" href="/mapa">Mapa</a>
+                      <a class="nav-link " href="/mapa">Mapa</a>
                   </li>
                   <li class="nav-item me-4">
-                    <a class="nav-link active" href="/noticias">Noticias</a>
+                    <a class="nav-link " href="/noticias">Noticias</a>
                 </li>
                 <form action="/licitacion/searchLicitacion" method="get" class="d-flex ">
                     <input  class="form-control me-sm-2" type="search" name="search" placeholder="Buscar Licitacion">
