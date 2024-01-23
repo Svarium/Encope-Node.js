@@ -82,13 +82,7 @@ module.exports = {
             userLogin,
             title:'Contacto'
         })
-    },
-
-    nuestrosProyectos: (req,res) => {
-        return res.render('nuestrosProyectos',{
-            title:'Nuestros proyectos'
-        })
-    },
+    }
 
   
 }
