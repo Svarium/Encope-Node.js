@@ -101,7 +101,7 @@ module.exports = {
     processLogin: (req,res) =>{
    
         const errors = validationResult(req);
-      /*   return res.send(errors.mapped()) */
+      
 
       if(errors.isEmpty()){
         const {email} = req.body

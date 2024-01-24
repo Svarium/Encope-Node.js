@@ -5,6 +5,7 @@ const addProductValidator = require('../validations/addProductValidator');
 const checkUserEditorIntranetCentral = require('../middlewares/checkUserEditorIntranetCentral');
 const { newTaller, storageTaller, listTaller, editTaller, updateTaller, deleteTaller, ExcelTalleres, searchTaller } = require('../controllers/talleresController');
 const addTallerValidator = require('../validations/addTallerValidator');
+const { addNewProyect } = require('../controllers/proyectosController');
 
 
 var router = express.Router();
@@ -33,13 +34,21 @@ router.get('/ProductsTable',checkUserEditorIntranetCentral ,productsTableExcel)
 
 //crud talleres
 
-router.get('/newTaller', newTaller)
-router.post('/newTaller',addTallerValidator, storageTaller)
-router.get('/talleresTable', listTaller)
-router.get('/editTaller/:id', editTaller)
-router.put('/editTaller/:id',addTallerValidator ,updateTaller)
-router.delete('/deleteTaller/:id', deleteTaller)
-router.get('/excelTalleres', ExcelTalleres)
-router.post('/searchTaller', searchTaller)
+router.get('/newTaller',checkUserEditorIntranetCentral, newTaller)
+router.post('/newTaller',addTallerValidator,checkUserEditorIntranetCentral, storageTaller)
+router.get('/talleresTable',checkUserEditorIntranetCentral, listTaller)
+router.get('/editTaller/:id',checkUserEditorIntranetCentral ,editTaller)
+router.put('/editTaller/:id',addTallerValidator, checkUserEditorIntranetCentral ,updateTaller)
+router.delete('/deleteTaller/:id',checkUserEditorIntranetCentral, deleteTaller)
+router.get('/excelTalleres', checkUserEditorIntranetCentral ,ExcelTalleres)
+router.post('/searchTaller', checkUserEditorIntranetCentral, searchTaller)
+
+
+/* PROYECTOS PRODUCTIVOS */
+
+//crud proyectos
+
+router.get('/newProyect', addNewProyect)
+
 
 module.exports = router;
