@@ -22,12 +22,21 @@ module.exports = [
     .matches(/^EX-\d{4}-\d{9}-APN-DS#[A-Z0-9]+$/)
     .withMessage('El formato del número de expediente no es válido').bail()
     .custom((value, {req}) => {
-        if (req.params){
+
+        if(req.params.id){
             return true
         } else {
-            return db.Taller.finOne({
-                
+            return db.Taller.findOne({
+                where:{expediente:req.body.expediente}
+            }).then(expediente => {
+                if (expediente) {
+                    return Promise.reject()
+                }
+            }).catch(error => {
+                console.log(error);
+                return Promise.reject('El expediente ya existe en la base de datos')
             })
-        }
+        }      
+       
     })
 ]

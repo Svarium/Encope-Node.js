@@ -3,7 +3,7 @@ const { list, estadisticas, descargarTablaStock, descargarTablaRetirosStock, des
 const { uploadProductosFiles } = require('../middlewares/subirProductos');
 const addProductValidator = require('../validations/addProductValidator');
 const checkUserEditorIntranetCentral = require('../middlewares/checkUserEditorIntranetCentral');
-const { newTaller, storageTaller, listTaller, editTaller, updateTaller } = require('../controllers/talleresController');
+const { newTaller, storageTaller, listTaller, editTaller, updateTaller, deleteTaller, ExcelTalleres, searchTaller } = require('../controllers/talleresController');
 const addTallerValidator = require('../validations/addTallerValidator');
 
 
@@ -38,5 +38,8 @@ router.post('/newTaller',addTallerValidator, storageTaller)
 router.get('/talleresTable', listTaller)
 router.get('/editTaller/:id', editTaller)
 router.put('/editTaller/:id',addTallerValidator ,updateTaller)
+router.delete('/deleteTaller/:id', deleteTaller)
+router.get('/excelTalleres', ExcelTalleres)
+router.post('/searchTaller', searchTaller)
 
 module.exports = router;

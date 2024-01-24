@@ -8,10 +8,13 @@ const path = require('path');
 
 
 module.exports = {
-    list : (req,res) => {
+    list : async (req,res) => {
+
+       const destinos = await db.destinoUsuario.findAll()
          
             return res.render("stock/listStock",{               
-                title:"Modulo de stock"
+                title:"Modulo de stock",
+                destinos
             })     
     },
 

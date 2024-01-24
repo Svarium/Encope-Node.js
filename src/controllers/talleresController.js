@@ -126,5 +126,99 @@ module.exports = {
                })
             }).catch(errors => console.log(errors));    
         }
+    },
+
+    deleteTaller : (req,res) => {
+        const id = req.params.id
+
+        db.Taller.destroy({
+            where:{id:id}
+        }).then(() => {
+            return res.redirect('/stock/talleresTable')
+        }).catch(errors => console.log(errors))
+    },
+
+
+
+    ExcelTalleres : async (req,res) => {      
+
+        try {
+            const tablaTalleres = await db.Taller.findAll({
+                include: ['destinoTaller']
+            }); // Traigo mi consulta de stock
+    
+            const workbook = new ExcelJS.Workbook(); // Función constructora del Excel
+            const worksheet = workbook.addWorksheet('Sheet 1'); // Crea una hoja de Excel 
+    
+            // Agregar títulos de columnas
+            const titleRow = worksheet.addRow(["Nombre Taller", "Detalle", "Expediente", "Creado", "Destino"]);
+    
+            // Aplicar formato al título
+            titleRow.eachCell((cell) => {
+                cell.font = { bold: true }; // Establece el texto en negrita
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: 'FFFF00' } // Cambia el color de fondo a amarillo (puedes cambiar 'FFFF00' por el código del color que prefieras)
+                };
+    
+                // Agregar bordes
+                cell.border = {
+                    top: { style: 'thin' },
+                    left: { style: 'thin' },
+                    bottom: { style: 'thin' },
+                    right: { style: 'thin' }
+                };
+            });
+    
+            tablaTalleres.forEach(taller => {
+                const row = worksheet.addRow([taller.nombre, taller.detalle, taller.expediente, taller.createdAt, taller.destinoTaller.nombreDestino]);
+                
+                // Aplicar bordes a las celdas de la fila de datos
+                row.eachCell((cell) => {
+                    cell.border = {
+                        top: { style: 'thin' },
+                        left: { style: 'thin' },
+                        bottom: { style: 'thin' },
+                        right: { style: 'thin' }
+                    };
+                });
+            });
+    
+            const fecha = new Date(Date.now());
+    
+            // Define el nombre del archivo Excel
+            res.setHeader('Content-Disposition', `attachment; filename="${fecha.toISOString().substring(0, 10)}-talleres.xlsx"`); // agregar al nombre la fecha con New Date()
+            res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    
+            // Envia el archivo Excel como respuesta al cliente
+            await workbook.xlsx.write(res);
+    
+            // Finaliza la respuesta
+            res.end();
+        } catch (error) {
+            console.log(error);
+        }
+
+    },
+
+    searchTaller: (req,res) => {     
+
+        const {nombre, destino} = req.body;
+
+        db.Taller.findOne({
+            where:{
+                nombre:nombre,
+                idDestino:destino
+            },
+            include: ['destinoTaller']        
+        }).then(taller => {
+           
+           return res.render('stock/talleres/searchTaller',{
+            title:'Resultado de la busqueda',
+            taller
+           })           
+        }).catch(errors => console.log(errors))
     }
+
 }

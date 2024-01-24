@@ -89,7 +89,7 @@
     <section>
       <!-- BUSCADOR DE PRODUCTO -->
     <div class="container mt-5 shadow">
-      <h4>Buscar Producto</h4>
+      <h4 class="text-center mb-3">Buscar Producto</h4>
       <form action="/stock/searchProduct" class="row g-3" id="searchProduct" onsubmit="return validarFormulario()">
         <div class="col-md-6">
             <input type="search" class="form-control" id="inputProducto" name="search" placeholder="Escribe el nombre del producto">
@@ -101,6 +101,29 @@
   </div>
     </section>
 
+    <!-- BUSCADOR DE TALLERES -->
+
+    <section>
+      <div class="container mt-5 shadow">
+        <h4 class="text-center mb-3">Buscar Taller</h4>
+        <form action="/stock/searchTaller" method="POST" class="row g-3"  onsubmit="return validarFormBuscarTaller()">
+          <div class="col-md-6">
+              <input type="search" class="form-control" id="inputTaller" name="nombre" placeholder="Escribe el nombre del taller">
+          </div>
+          <div class="col-md-6">
+            <select id="inputDestino" class="form-control rounded <%= (locals.errors && errors.destino) && 'is-invalid'%>" name="destino">
+              <option value="" selected hidden>Seleccione el destino del taller...</option>
+              <% destinos.forEach(({nombreDestino, id}) => { %>
+              <option value="<%= id %>"> <%= nombreDestino %> </option>
+              <% }) %>
+          </select>
+        </div>          
+          <div class="col-md-6 mb-4">
+              <button type="submit" class="btn btn-primary">Buscar</button>
+          </div>
+      </form>
+    </div>
+    </section>
      
 
 
@@ -108,28 +131,41 @@
 
     <%- include('../partials/scripts') %>
 
-    <script
-      src="//code.tidio.co/hlix5kfat3m92rb4tfebsyogegqfbmo3.js"
-      async
-    ></script>
+   
     <script>
 
-      function validarFormulario(){
+      function validarFormulario() {
         const inputSearch = document.getElementById('inputProducto');
 
-if(inputSearch.value.trim() === ''){
+        if (inputSearch.value.trim() === '') {
 
-  Swal.fire({
-icon: "error",
-title: "Oops...",
-text: "Debes ingresar el nombre del producto"
-});
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Debes ingresar el nombre del producto"
+          });
 
-return false;
-}
-return true;      
+          return false;
+        }
+        return true;
+      }
 
+      function validarFormBuscarTaller() {
 
+        const inputTaller = document.getElementById('inputTaller');
+        const inputDestino = document.getElementById('inputDestino');
+
+        if (inputDestino.value.trim() === '' && inputTaller.value.trim() === '') {
+
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Debes ingresar el nombre y el destino del taller"
+          });
+
+          return false
+        }
+        return true
       }
     </script>
   </body>

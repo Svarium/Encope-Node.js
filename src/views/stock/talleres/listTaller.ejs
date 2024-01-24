@@ -60,7 +60,7 @@
       <!-- TABLA DE PRODUCTOS -->
   
       <div class="container-fluid">
-        <button type="button" class="btn btn-outline-primary ms-3 btn-sm mt-1 mb-2" onclick="window.location.href='/stock/ProductsTable'">
+        <button type="button" class="btn btn-outline-primary ms-3 btn-sm mt-1 mb-2" onclick="window.location.href='/stock/excelTalleres'">
           <i class="fa-solid fa-download"></i> Exportar Excel</i>
         </button><br> 
         <table class="table">
@@ -95,7 +95,7 @@
                             <a href="/stock/editTaller/<%= item.id %>"><button class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></button></a>
                             
                             <!-- Formulario para eliminar -->
-                            <form action="/stock/delete/<%= item.id %>?_method=DELETE" method="POST" class="deleteProductForm">
+                            <form action="/stock/deleteTaller/<%= item.id %>?_method=DELETE" method="POST" class="deleteTallerForm">
                               <button type="submit" class="btn btn-danger mt-2"><i class="fa-solid fa-trash"></i></button>
                           </form>
                         </td>
@@ -117,14 +117,14 @@
     ></script>
 
     <script>
-      const deleteForms = document.querySelectorAll('.deleteProductForm');
+      const deleteForms = document.querySelectorAll('.deleteTallerForm');
 
 deleteForms.forEach(form => {
     form.addEventListener('submit', function (event) {
         event.preventDefault();
 
         Swal.fire({
-            title: "Seguro quieres borrar el producto??",
+            title: "¿Seguro quieres borrar el producto?",
             text: "Chequea bien el producto que deseas eliminar",
             icon: "warning",
             showCancelButton: true,
