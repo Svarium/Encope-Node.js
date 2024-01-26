@@ -97,6 +97,19 @@ module.exports = {
                 })
             }).catch(error => console.log(error));    
         }      
+    },
+
+    listProyects : (req, res) => {
+
+        db.Proyecto.findAll()
+        .then(proyectos => {
+            return res.render('stock/proyectos/proyectos',{
+                title:'Proyectos Productivos',
+                proyectos
+            }) 
+        }).catch(error => console.log(error))
+
+       
     }
 
 
