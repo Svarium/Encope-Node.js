@@ -52,82 +52,93 @@
         <div class="container shadow">
           <form action="/stock/newProyect" method="POST">
             <div class="form-row">
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-12">
                 <label for="nombre">Nombre</label>
-                <input type="text" class="form-control <%= (locals.errors && errors.nombre) && 'is-invalid'%>" id="nombre" name="nombre" placeholder="Ingrese el nombre del taller" value="<%= (locals.old && old.nombre) && old.nombre %>">
+                <input type="text" class="form-control <%= (locals.errors && errors.nombre) && 'is-invalid'%>" id="nombre" name="nombre" placeholder="Ingrese el nombre del proyecto productivo" value="<%= (locals.old && old.nombre) && old.nombre %>">
                 <small id="errorNombre" class="text-danger ms-2"><%= locals.errors && errors.nombre ? errors.nombre.msg : null %></small>
               </div>
-              <div class="form-group col-md-6">
-                <div class="form-group col-md-12">
+         
+                <div class="form-group col-md-6">
                   <label for="expediente">Expediente</label>
                   <input type="text" class="form-control <%= (locals.errors && errors.expediente) && 'is-invalid'%>" id="expediente" name="expediente" placeholder="Ingrese n° de expediente" value="<%= (locals.old && old.expediente) && old.expediente %>">
                   <small id="errorNombre" class="text-danger ms-2"><%= locals.errors && errors.expediente ? errors.expediente.msg : null %></small>
                 </div>    
-              </div>           
+                       
 
               <div class="form-group col-md-6">
                 <label for="destino" class="form-label">Taller</label>
                 <select id="destino" class="form-control rounded <%= (locals.errors && errors.destino) && 'is-invalid'%>" name="destino">
-                    <!-- aca recorro los talleres existentes con un foreach -->
+                  <option value="" selected hidden>Seleccione el taller...</option>
+                    <% talleres.forEach(({nombre, id, destinoTaller}) => { %>
+                    <option value="<%= id %>"> <%= nombre %> - <%= destinoTaller.nombreDestino %> </option>
+                    <% }) %>
                 </select>
                 <small id="errorNombre" class="text-danger "><%= locals.errors && errors.destino ? errors.destino.msg : null %></small>
               </div>  
 
               <div class="form-group col-md-6">
-                <label for="detalle">Producto</label>
-                <select id="destino" class="form-control rounded <%= (locals.errors && errors.destino) && 'is-invalid'%>" name="destino">
-                  <!-- aca recorro los productos existentes con un foreach -->
+                <label for="destino">Producto</label>
+                <select id="destino" class="form-control rounded <%= (locals.errors && errors.producto) && 'is-invalid'%>" name="producto">
+                  <option value="" selected hidden>Seleccione el producto...</option>
+                    <% productos.forEach(({nombre, id}) => { %>
+                    <option value="<%= id %>"> <%= nombre %> </option>
+                    <% }) %>
               </select>
-                <small id="errorDetalle" class="text-danger ms-2"><%= locals.errors && errors.detalle ? errors.detalle.msg : null %></small>               
+                <small id="errorDetalle" class="text-danger ms-2"><%= locals.errors && errors.producto ? errors.producto.msg : null %></small>               
               </div>     
+
+              
+            <div class="form-group col-md-6">
+              <label for="cantidad">Cantidad a producir</label>
+              <input type="number" class="form-control <%= (locals.errors && errors.nombre) && 'is-invalid'%>" id="cantidad" name="cantidad" placeholder="Ingrese cantidad a producir" value="<%= (locals.old && old.nombre) && old.nombre %>">
+              <small id="errorNombre" class="text-danger ms-2"><%= locals.errors && errors.nombre ? errors.nombre.msg : null %></small>
+            </div>
 
             <div class="form-group col-md-12">
               <label for="detalle">Detalle</label>
               <textarea name="detalle" class="form-control <%= (locals.errors && errors.detalle) && 'is-invalid'%>" id="detalle" placeholder="Ingrese el detalle" value="<%= (locals.old && old.detalle) && old.detalle %>"></textarea>    
               <small id="errorDetalle" class="text-danger ms-2"><%= locals.errors && errors.detalle ? errors.detalle.msg : null %></small>               
-            </div>   
-            
-            <div class="form-group col-md-6">
-              <label for="nombre">Cantidad a producir</label>
-              <input type="number" class="form-control <%= (locals.errors && errors.nombre) && 'is-invalid'%>" id="nombre" name="nombre" placeholder="Ingrese el nombre del taller" value="<%= (locals.old && old.nombre) && old.nombre %>">
-              <small id="errorNombre" class="text-danger ms-2"><%= locals.errors && errors.nombre ? errors.nombre.msg : null %></small>
-            </div>
-
-            
-            <div class="form-group col-md-6">
-              <label for="detalle">Procedencia</label>
-              <select id="destino" class="form-control rounded <%= (locals.errors && errors.destino) && 'is-invalid'%>" name="destino">
-                <!-- aca van las opciones si es de unidad o desde sede centrarl -->
-            </select>
-              <small id="errorDetalle" class="text-danger ms-2"><%= locals.errors && errors.detalle ? errors.detalle.msg : null %></small>               
-            </div> 
+            </div>           
 
             <div class="form-group col-md-6">
               <label for="nombre">Duración</label>
-              <input type="number" class="form-control <%= (locals.errors && errors.nombre) && 'is-invalid'%>" id="nombre" name="nombre" placeholder="Ingrese el nombre del taller" value="<%= (locals.old && old.nombre) && old.nombre %>">
-              <small id="errorNombre" class="text-danger ms-2"><%= locals.errors && errors.nombre ? errors.nombre.msg : null %></small>
+              <input type="number" class="form-control <%= (locals.errors && errors.nombre) && 'is-invalid'%>" id="duracion" name="duracion"  value="<%= (locals.old && old.nombre) && old.nombre %>">
+              <small id="errorNombre" class="text-danger ms-2"><%= locals.errors && errors.duracion ? errors.duracion.msg : null %></small>
             </div>
 
             <div class="form-group col-md-6">
-              <label for="detalle">Unidad de duración</label>
-              <select id="destino" class="form-control rounded <%= (locals.errors && errors.destino) && 'is-invalid'%>" name="destino">
-                <!-- aca recorro con un foreach los distintos tipos de medida que cargue desde un seeder -->
-            </select>
-              <small id="errorDetalle" class="text-danger ms-2"><%= locals.errors && errors.detalle ? errors.detalle.msg : null %></small>               
-            </div> 
+              <label for="unidadDuracion">Unidad de Duración</label>
+              <select class="form-control <%= (locals.errors && errors.unidadDuracion) && 'is-invalid'%>" id="unidadDuracion" name="unidadDuracion">
+                <option value="">Seleccione</option>
+                <option value="día">Días</option>
+                <option value="semana">Semanas</option>
+                <option value="mes">Meses</option>
+                <!-- Agrega más opciones según tus necesidades -->
+              </select>
+              <small id="unidadDuracion" class="text-danger ms-2"><%= locals.errors && errors.unidadDuracion ? errors.unidadDuracion.msg : null %></small>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="costoTotal">Costo total</label>
+              <input type="number" class="form-control <%= (locals.errors && errors.costoTotal) && 'is-invalid'%>" id="costoTotal" name="costoTotal" placeholder="Ingrese el costo total" value="<%= (locals.old && old.costoTotal) && old.costoTotal %>">
+              <small id="errorcosto" class="text-danger ms-2"><%= locals.errors && errors.costoTotal ? errors.costoTotal.msg : null %></small>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="costoUnitario">Costo Unitario</label>
+              <input type="number" class="form-control <%= (locals.errors && errors.costoUnitario) && 'is-invalid'%>" id="costoUnitario" name="costoUnitario" placeholder="Ingrese el costo unitario" value="<%= (locals.old && old.costoUnitario) && old.costoUnitario %>">
+              <small id="errorcostoUnitario" class="text-danger ms-2"><%= locals.errors && errors.costoUnitario ? errors.costoUnitario.msg : null %></small>
+            </div>
+
 
           </div>
-            <button type="submit" class="btn btn-primary mb-3">Enviar</button>
+            <button type="submit" class="btn col-md-12 btn-primary mb-3 text-center">Enviar</button>
           </form>
         </div>
 
     </main>
 
-    <%- include('../../partials/scripts') %>
+   
 
-    <script
-      src="//code.tidio.co/hlix5kfat3m92rb4tfebsyogegqfbmo3.js"
-      async
-    ></script>
   </body>
 </html>

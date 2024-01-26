@@ -5,7 +5,8 @@ const addProductValidator = require('../validations/addProductValidator');
 const checkUserEditorIntranetCentral = require('../middlewares/checkUserEditorIntranetCentral');
 const { newTaller, storageTaller, listTaller, editTaller, updateTaller, deleteTaller, ExcelTalleres, searchTaller } = require('../controllers/talleresController');
 const addTallerValidator = require('../validations/addTallerValidator');
-const { addNewProyect } = require('../controllers/proyectosController');
+const { addNewProyect, storeProyect } = require('../controllers/proyectosController');
+const addProyectValidator = require('../validations/addProyectValidator');
 
 
 var router = express.Router();
@@ -49,6 +50,7 @@ router.post('/searchTaller', checkUserEditorIntranetCentral, searchTaller)
 //crud proyectos
 
 router.get('/newProyect', addNewProyect)
+router.post('/newProyect', addProyectValidator , storeProyect)
 
 
 module.exports = router;
