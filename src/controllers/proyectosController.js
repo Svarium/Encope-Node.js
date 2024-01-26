@@ -42,7 +42,7 @@ module.exports = {
 
         if(errors.isEmpty()){
 
-            const {nombre, expediente, destino, producto, cantidad, detalle, duracion, unidadDuracion, costoTotal, costoUnitario} = req.body
+            const {nombre, expediente, destino, producto, cantidad, detalle, duracion, unidadDuracion, costoUnitario} = req.body
 
             const usuario = await db.Usuario.findOne({
                 where: {destinoId : req.session.userLogin.destinoId},
@@ -65,7 +65,7 @@ module.exports = {
                 procedencia: procedencia,
                 duracion: duracion,
                 unidadDuracion: unidadDuracion,
-                costoTotal: costoTotal,
+                costoTotal: cantidad * costoUnitario,
                 costoUnitario:costoUnitario,
                 idProducto: producto
             }).then(() => {

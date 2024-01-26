@@ -53,9 +53,6 @@ module.exports = [
     check('unidadDuracion')
     .notEmpty().withMessage('Debes seleccionar la unidad de duración del proyecto'),
 
-    check('costoTotal')
-    .notEmpty().withMessage('Debes ingresar el costo total del proyecto'),
-
     check('costoUnitario')
     .notEmpty().withMessage('Debes ingresar el costo unitario del proyecto'),
 ]
