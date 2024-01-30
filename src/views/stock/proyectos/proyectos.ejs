@@ -60,13 +60,14 @@
       <!-- TABLA DE PRODUCTOS -->
   
       <div class="container-fluid">
-        <button type="button" class="btn btn-outline-primary ms-3 btn-sm mt-1 mb-2" onclick="window.location.href='/stock/ProductsTable'">
-          <i class="fa-solid fa-download"></i>Exportar Excel</i>
-        </button><br> 
+        <button type="button" class="btn btn-outline-primary ms-3 btn-sm mt-1 mb-2" onclick="window.location.href='/stock/proyectsTable'">
+          <i class="fa-solid fa-download"></i> Exportar Excel</i>
+        </button>
+              <br> 
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Producto</th>
+                    <th scope="col">proyecto</th>
                     <th scope="col">Detalle</th>
                     <th scope="col">Expediente</th>
                     <th scope="col">Procedencia</th>
@@ -78,31 +79,53 @@
                 </tr>
             </thead>
             <tbody>
-                <% proyectos.forEach(item => { %>
-                    <tr>
-                        <td class="text-center"><%= item.nombre %></td>
-                        <td><%= item.detalle %></td>
-                        <td><%= item.expediente %></td>
-                        <td><%= item.procedencia %></td>
-                        <td><%= item.duracion %> <%= item.unidadDuracion %></td>
-                        <td><%= item.cantidadAProducir %></td>
-                        <td>$ <%= item.costoUnitario %></td>
-                        <td>$ <%= item.costoTotal %></td>
-                        <td> 
-                            <!-- Enlace para editar -->
-                            <a href="/stock/editProduct/<%= item.id %>"><button class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></button></a>
-                            
-                            <!-- Formulario para eliminar -->
-                            <form action="/stock/delete/<%= item.id %>?_method=DELETE" method="POST" class="deleteProductForm">
-                              <button type="submit" class="btn btn-danger mt-2"><i class="fa-solid fa-trash"></i></button>
-                          </form>
-                        </td>
-                    </tr>
+              <% proyectos.forEach(item=> { %>
+                <tr>
+                  <td class="text-center">
+                    <%= item.nombre %>
+                  </td>
+                  <td>
+                    <%= item.detalle %>
+                  </td>
+                  <td>
+                    <%= item.expediente %>
+                  </td>
+                  <td>
+                    <%= item.procedencia %>
+                  </td>
+                  <td>
+                    <%= item.duracion %>
+                      <%= item.unidadDuracion %>
+                  </td>
+                  <td>
+                    <%= item.cantidadAProducir %>
+                  </td>
+                  <td>$ <%= item.costoUnitario %>
+                  </td>
+                  <td>$ <%= item.costoTotal %>
+                  </td>
+                  <td>
+                    <div class="d-flex align-content-center justify-content-center gap-1">
+                      <!-- Enlace para editar -->
+                      <a href="/stock/editProyect/<%= item.id %>"><button class="btn btn-success"><i
+                            class="fa-solid fa-pen-to-square"></i></button></a>
+            
+                      <!-- Formulario para eliminar -->
+                      <form action="/stock/deleteProyect/<%= item.id %>?_method=DELETE" method="POST" class="deleteProductForm">
+                        <button type="submit" class="btn btn-danger "><i class="fa-solid fa-trash"></i></button>
+                      </form>
+            
+                      <!-- Boton descarga historial de reformulaciones en excel -->
+                      <a href="/stock/reformulaciones/<%= item.id %>"><button class="btn btn-primary "><i
+                            class="fa-solid fa-clock-rotate-left"></i></button></a>
+                    </div>
+            
+                  </td>
+                </tr>
                 <% }) %>
             </tbody>
-        </table>
-    </div>
-    
+            </table>
+            </div>
 
    
     </main>

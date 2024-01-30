@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Proyectos', {
+    await queryInterface.createTable('Historials', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -24,12 +24,12 @@ module.exports = {
           },
           key:"id"
         }
-      },      
-      cantidadAProducir: {
-        type: Sequelize.INTEGER
       },
       detalle: {
         type: Sequelize.STRING
+      },
+      cantidadAProducir: {
+        type: Sequelize.INTEGER
       },
       procedencia: {
         type: Sequelize.STRING
@@ -46,7 +46,7 @@ module.exports = {
       costoUnitario: {
         type: Sequelize.INTEGER
       },
-      idProducto:{
+      idProducto: {
         type: Sequelize.INTEGER,
         references: {
           model: {
@@ -54,6 +54,9 @@ module.exports = {
           },
           key:"id"
         }
+      },
+      idProyecto: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -66,6 +69,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Proyectos');
+    await queryInterface.dropTable('Historials');
   }
 };

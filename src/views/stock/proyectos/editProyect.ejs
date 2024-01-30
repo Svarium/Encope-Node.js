@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../../partials/head') %>
+
+  <body style="background-color: rgb(243, 241, 238)">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-3">
+      <div class="container">
+        <button
+          class="navbar-toggler d-lg-none"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapsibleNavId"
+          aria-controls="collapsibleNavId"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <button
+          class="btn btn-transparent"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasRight"
+          aria-controls="offcanvasRight"
+        >
+          <img
+            id="userIconProfile"
+            src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>"
+            class="iconProfile me-2"
+            alt=""
+          />
+          <%= userLogin.name %> <i class="fa-solid fa-caret-down fa-lg"></i>
+        </button>       
+    </nav>
+
+    <main>
+      <%- include('../../partials/modals') %> <%- include('../../partials/canvasMenu')
+      %>
+
+
+      <!-- TITULO H1 -->
+      <div class="container-fluid mt-4">
+        <p class="text-black h2 text-center shadow-3">
+          <strong>Editar: <%= proyecto.nombre %></strong>
+        </p>
+        <hr class="text-black" />        
+    
+
+        <!-- FORMULARIO AGREGAR TALLER -->
+
+
+        <div class="container shadow">
+          <form action="/stock/editProyect/<%= proyecto.id %>?_method=PUT" method="POST">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control <%= (locals.errors && errors.nombre) && 'is-invalid'%>" id="nombre" name="nombre" placeholder="Ingrese el nombre del proyecto productivo" value="<%= proyecto.nombre %>">
+                <small id="errorNombre" class="text-danger ms-2"><%= locals.errors && errors.nombre ? errors.nombre.msg : null %></small>
+              </div>
+         
+                <div class="form-group col-md-6">
+                  <label for="expediente">Expediente</label>
+                  <input type="text" class="form-control <%= (locals.errors && errors.expediente) && 'is-invalid'%>" id="expediente" name="expediente" placeholder="Ingrese n° de expediente" value="<%= proyecto.expediente %>">
+                  <small id="errorNombre" class="text-danger ms-2"><%= locals.errors && errors.expediente ? errors.expediente.msg : null %></small>
+                </div>    
+                       
+
+              <div class="form-group col-md-6">
+                <label for="destino" class="form-label">Taller</label>
+                <select id="destino" class="form-control rounded <%= (locals.errors && errors.destino) && 'is-invalid'%>" name="destino">
+                  <option value="" selected hidden>Seleccione el taller...</option>
+                    <% talleres.forEach(({nombre, id, destinoTaller}) => { %>
+                    <option value="<%= id %>" <%= id === proyecto.idTaller && 'selected' %> > <%= nombre %> - <%= destinoTaller.nombreDestino %> </option>
+                    <% }) %>
+                </select>
+                <small id="errorNombre" class="text-danger "><%= locals.errors && errors.destino ? errors.destino.msg : null %></small>
+              </div>  
+
+              <div class="form-group col-md-6">
+                <label for="destino">Producto</label>
+                <select id="destino" class="form-control rounded <%= (locals.errors && errors.producto) && 'is-invalid'%>" name="producto">
+                  <option value="" selected hidden>Seleccione el producto...</option>
+                    <% productos.forEach(({nombre, id}) => { %>
+                    <option value="<%= id %>" <%= id === proyecto.idProducto && 'selected' %>> <%= nombre %> </option>
+                    <% }) %>
+              </select>
+                <small id="errorDetalle" class="text-danger ms-2"><%= locals.errors && errors.producto ? errors.producto.msg : null %></small>               
+              </div>     
+
+              
+            <div class="form-group col-md-6">
+              <label for="cantidad">Cantidad a producir</label>
+              <input type="number" class="form-control <%= (locals.errors && errors.nombre) && 'is-invalid'%>" id="cantidad" name="cantidad" placeholder="Ingrese cantidad a producir" value="<%= proyecto.cantidadAProducir %>">
+              <small id="errorNombre" class="text-danger ms-2"><%= locals.errors && errors.nombre ? errors.nombre.msg : null %></small>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="costoUnitario">Costo Unitario</label>
+              <input type="number" class="form-control <%= (locals.errors && errors.costoUnitario) && 'is-invalid'%>" id="costoUnitario" name="costoUnitario" placeholder="Ingrese el costo unitario" value="<%= proyecto.costoUnitario %>">
+              <small id="errorcostoUnitario" class="text-danger ms-2"><%= locals.errors && errors.costoUnitario ? errors.costoUnitario.msg : null %></small>
+            </div>   
+
+            <div class="form-group col-md-12">
+              <label for="detalle">Detalle</label>
+              <textarea name="detalle" class="form-control <%= (locals.errors && errors.detalle) && 'is-invalid'%>" id="detalle" placeholder="Ingrese el detalle" value="<%= (locals.old && old.detalle) && old.detalle %>"><%= proyecto.detalle %></textarea>    
+              <small id="errorDetalle" class="text-danger ms-2"><%= locals.errors && errors.detalle ? errors.detalle.msg : null %></small>               
+            </div>       
+             
+
+            <div class="form-group col-md-6">
+              <label for="nombre">Duración</label>
+              <input type="number" class="form-control <%= (locals.errors && errors.nombre) && 'is-invalid'%>" id="duracion" name="duracion"  value="<%= proyecto.duracion %>">
+              <small id="errorNombre" class="text-danger ms-2"><%= locals.errors && errors.duracion ? errors.duracion.msg : null %></small>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="unidadDuracion">Unidad de Duración en</label>
+              <select class="form-control <%= (locals.errors && errors.unidadDuracion) && 'is-invalid'%>" id="unidadDuracion" name="unidadDuracion">
+                <option value="">Seleccione</option>
+                <option value="día" <%= proyecto.unidadDuracion === 'día' && 'selected' %>>Días</option>
+                <option value="semana" <%= proyecto.unidadDuracion === 'semana' && 'selected' %>>Semanas</option>
+                <option value="mes" <%= proyecto.unidadDuracion === 'mes' && 'selected' %>>Meses</option>
+                <!-- Agrega más opciones según tus necesidades -->
+              </select>
+              <small id="unidadDuracion" class="text-danger ms-2"><%= locals.errors && errors.unidadDuracion ? errors.unidadDuracion.msg : null %></small>
+            </div>     
+          </div>
+            <button type="submit" class="btn col-md-12 btn-primary mb-3 text-center">Enviar</button>
+          </form>
+        </div>
+
+    </main>
+
+   
+
+  </body>
+</html>

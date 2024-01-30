@@ -16,6 +16,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey:'idProducto',
         as:'productoProyecto'
       })
+
+      Producto.hasMany(models.Historial,{
+        foreignKey:'idProducto',
+        as:'historialProyecto'
+      })
     }
   }
   Producto.init({

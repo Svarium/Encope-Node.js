@@ -1,11 +1,11 @@
 var express = require('express');
-const { list, estadisticas, descargarTablaStock, descargarTablaRetirosStock, descargarTablaStockCPFII, newProduct, storageProduct, listProducts, editProduct, updateProduct, deleteProduct, searchProduct, productsTableExcel } = require('../controllers/productsController');
+const { list, estadisticas, newProduct, storageProduct, listProducts, editProduct, updateProduct, deleteProduct, searchProduct, productsTableExcel } = require('../controllers/productsController');
 const { uploadProductosFiles } = require('../middlewares/subirProductos');
 const addProductValidator = require('../validations/addProductValidator');
 const checkUserEditorIntranetCentral = require('../middlewares/checkUserEditorIntranetCentral');
 const { newTaller, storageTaller, listTaller, editTaller, updateTaller, deleteTaller, ExcelTalleres, searchTaller } = require('../controllers/talleresController');
 const addTallerValidator = require('../validations/addTallerValidator');
-const { addNewProyect, storeProyect, listProyects } = require('../controllers/proyectosController');
+const { addNewProyect, storeProyect, listProyects, editProyect, updateProyect, deleteProyect, downloadExcelHistorial, downloadExcelProyects } = require('../controllers/proyectosController');
 const addProyectValidator = require('../validations/addProyectValidator');
 
 
@@ -34,7 +34,6 @@ router.get('/ProductsTable',checkUserEditorIntranetCentral ,productsTableExcel)
 /* TALLERES */
 
 //crud talleres
-
 router.get('/newTaller',checkUserEditorIntranetCentral, newTaller)
 router.post('/newTaller',addTallerValidator,checkUserEditorIntranetCentral, storageTaller)
 router.get('/talleresTable',checkUserEditorIntranetCentral, listTaller)
@@ -48,10 +47,14 @@ router.post('/searchTaller', checkUserEditorIntranetCentral, searchTaller)
 /* PROYECTOS PRODUCTIVOS */
 
 //crud proyectos
-
 router.get('/newProyect', addNewProyect)
 router.post('/newProyect', addProyectValidator , storeProyect)
 router.get('/listProyects', listProyects)
+router.get('/editProyect/:id', editProyect)
+router.put('/editProyect/:id',addProyectValidator, updateProyect)
+router.delete('/deleteProyect/:id', deleteProyect)
+router.get('/reformulaciones/:id', downloadExcelHistorial)
+router.get('/proyectsTable', downloadExcelProyects)
 
 
 module.exports = router;

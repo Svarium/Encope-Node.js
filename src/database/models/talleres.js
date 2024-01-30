@@ -21,6 +21,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey:'idTaller',
         as:'proyectoTaller'
       })
+
+      Taller.hasMany(models.Historial,{
+        foreignKey:'idTaller',
+        as:'historialTaller'
+      })
     }
   }
   Taller.init({
