@@ -381,4 +381,25 @@ module.exports = {
 
     },
 
+    searchProyect: (req,res) => {
+
+            const query = req.query.search;
+
+            db.Proyecto.findOne({
+                where: {
+                    expediente :{
+                        [Op.like] : `%${query}%`
+                    }
+                },              
+            }).then( proyecto => {
+            
+                return res.render('stock/proyectos/searchProyect',{
+                    title: 'Resultado de la busqueda',
+                    proyecto
+                })
+
+            }).catch (error => console.log(error))
+
+    }
+
 }

@@ -69,17 +69,17 @@
       <!-- BOTONES DE ACCIÓN PARA PRODUCCIÓN -->
 
       <section>
-        <div class="container text-center">
+        <div class="container text-center d-flex justify-content-center align-content-center">
           <!-- BOTON PARA AGREGAR NUEVO PRODUCTO -->
-          <a href="/stock/newProduct" class="btnAction me-1  shadow"><button type="button" class="btn btn-primary font-weight-bold slide">
+          <a href="/stock/newProduct" class="btnAction me-1  shadow"><button type="button" class="btn btn-primary btn-sm font-weight-bold slide">
             Nuevo producto  <br><i class="fa-solid fa-tag fa-lg"></i>
          </button></a>
          <!-- BOTON PARA AGREGAR NUEVO TALLER -->
-         <a href="/stock/newTaller" class="btnAction shadow me-1"><button type="button" class="btn btn-success font-weight-bold">
+         <a href="/stock/newTaller" class="btnAction shadow me-1"><button type="button" class="btn btn-sm btn-success font-weight-bold">
            Nuevo taller <br> <i class="fa-solid fa-screwdriver-wrench fa-lg"></i>
          </button></a>     
           <!-- BOTON PARA AGREGAR NUEVO PROYECTO PRODUCTIVO -->
-          <a href="/stock/newProyect" class="btnAction  shadow"> <button type="button" class="btn btn-danger font-weight-bold">
+          <a href="/stock/newProyect" class="btnAction  shadow"> <button type="button" class="btn btn-sm btn-danger font-weight-bold">
            Nuevo proyecto <br><i class="fa-solid fa-receipt fa-lg"></i>
         </button></a>       
       </div>      
@@ -89,12 +89,12 @@
     <section>
       <!-- BUSCADOR DE PRODUCTO -->
     <div class="container mt-5 shadow">
-      <h4 class="text-center mb-3">Buscar Producto</h4>
+      <h5 class="text-center mb-3">Buscar Producto <i class="fa-solid fa-tag fa-sm"></i></h5>
       <form action="/stock/searchProduct" class="row g-3" id="searchProduct" onsubmit="return validarFormulario()">
-        <div class="col-md-6">
+        <div class="col-md-11">
             <input type="search" class="form-control" id="inputProducto" name="search" placeholder="Escribe el nombre del producto">
         </div>
-        <div class="col-md-6 mb-4">
+        <div class="col-md-1 mb-4">
             <button type="submit" class="btn btn-primary">Buscar</button>
         </div>
     </form>
@@ -105,25 +105,44 @@
 
     <section>
       <div class="container mt-3 shadow">
-        <h4 class="text-center mb-3">Buscar Taller</h4>
-        <form action="/stock/searchTaller" method="POST" class="row g-3"  onsubmit="return validarFormBuscarTaller()">
-          <div class="col-md-6">
-              <input type="search" class="form-control" id="inputTaller" name="nombre" placeholder="Escribe el nombre del taller">
-          </div>
-          <div class="col-md-6">
-            <select id="inputDestino" class="form-control rounded <%= (locals.errors && errors.destino) && 'is-invalid'%>" name="destino">
-              <option value="" selected hidden>Seleccione el destino del taller...</option>
-              <% destinos.forEach(({nombreDestino, id}) => { %>
-              <option value="<%= id %>"> <%= nombreDestino %> </option>
-              <% }) %>
-          </select>
-        </div>          
+        <h5 class="text-center mb-3">Buscar Taller <i class="fa-solid fa-screwdriver-wrench fa-sm"></i></h5>
+        
+          <form action="/stock/searchTaller" method="POST" class="row g-3"  onsubmit="return validarFormBuscarTaller()">
+            <div class="col-md-6">
+                <input type="search" class="form-control" id="inputTaller" name="nombre" placeholder="Escribe el nombre del taller">
+            </div>
+            <div class="col-md-6">
+              <select id="inputDestino" class="form-control rounded <%= (locals.errors && errors.destino) && 'is-invalid'%>" name="destino">
+                <option value="" selected hidden>Seleccione el destino del taller...</option>
+                <% destinos.forEach(({nombreDestino, id}) => { %>
+                <option value="<%= id %>"> <%= nombreDestino %> </option>
+                <% }) %>
+            </select>
+          </div> 
           <div class="col-md-6 mb-4">
-              <button type="submit" class="btn btn-primary">Buscar</button>
-          </div>
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>         
+           
+          
       </form>
     </div>
     </section>
+
+    <section class="mb-5">
+      <!-- BUSCADOR DE PROYECTOS -->
+    <div class="container mt-3 shadow">
+      <h5 class="text-center mb-3">Buscar Proyecto <i class="fa-solid fa-receipt fa-sm"></i></h5>
+      <form action="/stock/searchProyect" class="row g-3" id="searchProyect" onsubmit="return validarFormSearchProyect()">
+        <div class="col-md-11">
+            <input type="search" class="form-control" id="inputProyecto" name="search" placeholder="Ingresa numero de expediente (ej: EX-2023-114492446-APN-DS#ENCOPE)">
+        </div>
+        <div class="col-md-1 mb-4">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+    </form>
+  </div>
+    </section><br><br><br>
+
      
 
 
@@ -167,6 +186,24 @@
         }
         return true
       }
+
+      function validarFormSearchProyect() {
+        const inputSearch = document.getElementById('inputProyecto');
+
+        if (inputSearch.value.trim() === '') {
+
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Debes ingresar el nombre del Proyecto"
+          });
+
+          return false;
+        }
+        return true;
+      }
+
+    
     </script>
   </body>
 </html>

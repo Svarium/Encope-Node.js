@@ -5,7 +5,7 @@ const addProductValidator = require('../validations/addProductValidator');
 const checkUserEditorIntranetCentral = require('../middlewares/checkUserEditorIntranetCentral');
 const { newTaller, storageTaller, listTaller, editTaller, updateTaller, deleteTaller, ExcelTalleres, searchTaller } = require('../controllers/talleresController');
 const addTallerValidator = require('../validations/addTallerValidator');
-const { addNewProyect, storeProyect, listProyects, editProyect, updateProyect, deleteProyect, downloadExcelHistorial, downloadExcelProyects } = require('../controllers/proyectosController');
+const { addNewProyect, storeProyect, listProyects, editProyect, updateProyect, deleteProyect, downloadExcelHistorial, downloadExcelProyects, searchProyect } = require('../controllers/proyectosController');
 const addProyectValidator = require('../validations/addProyectValidator');
 
 
@@ -55,6 +55,7 @@ router.put('/editProyect/:id',addProyectValidator, updateProyect)
 router.delete('/deleteProyect/:id', deleteProyect)
 router.get('/reformulaciones/:id', downloadExcelHistorial)
 router.get('/proyectsTable', downloadExcelProyects)
+router.get('/searchProyect', searchProyect)
 
 
 module.exports = router;
