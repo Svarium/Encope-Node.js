@@ -263,7 +263,7 @@ module.exports = {
         
         try {
             const id = req.params.id
-            const tablaProyects = await db.Historial.findAll({where:{idProyecto:id}}); // Traigo mi consulta de stock
+            const tablaHistorial = await db.Historial.findAll({where:{idProyecto:id}}); // Traigo mi consulta de stock
     
             const workbook = new ExcelJS.Workbook(); // Función constructora del Excel
             const worksheet = workbook.addWorksheet('Sheet 1'); // Crea una hoja de Excel 
@@ -306,7 +306,7 @@ module.exports = {
             const fecha = new Date(Date.now());
     
             // Define el nombre del archivo Excel
-            res.setHeader('Content-Disposition', `attachment; filename="${fecha.toISOString().substring(0, 10)}-historialReformulaciónProyecto.xlsx"`); // agregar al nombre la fecha con New Date()
+            res.setHeader('Content-Disposition', `attachment; filename="${fecha.toISOString().substring(0, 10)}-historialReformulaciónes.xlsx"`); // agregar al nombre la fecha con New Date()
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     
             // Envia el archivo Excel como respuesta al cliente
