@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+  
     <%- include('../../partials/head')  %>
-        
+   
+ 
+    
+    
           
     <body>
   
@@ -67,7 +71,7 @@
                     <th scope="col">Restante a producir</th>
                     <th scope="col">Stock en taller</th>
                     <th scope="col">Egresos</th>
-                    <th scope="col">Observaciones</th>
+                    <th scope="col">Detalles</th>
                   
                    
                       </tr>
@@ -101,15 +105,39 @@
                         
                       </tr>                  
                     </tbody>
-                  </table>
-                           
-
-                  
-                
-                   
+                  </table>                       
             </div>          
     </main>
 
+    <section>
+      <div class="container shadow mb-5">
+        <h5 class="text-center">Editar parte</h5>
+        <hr>
+        <form action="/stock/partes/<%= parte.id %>?_method=PUT" method="POST"  class="mb-5">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="cantidad">Cantidad Producida</label>
+              <input type="number" class="form-control <%= (locals.errors && errors.cantidad) && 'is-invalid'%>" id="cantidad" name="cantidad" placeholder="ingrese cantidad producida" value="<%= (locals.old && old.cantidad) && old.cantidad %>">
+              <small id="errorCantidad" class="text-danger ms-2"><%= locals.errors && errors.cantidad ? errors.cantidad.msg : null %></small>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="egresos">Egresos</label>
+              <input type="number" class="form-control <%= (locals.errors && errors.egresos) && 'is-invalid'%>" id="egresos" name="egresos" placeholder="Ingrese egresos" value="<%= (locals.old && old.egresos) && old.egresos %>">
+              <small id="erroregresos" class="text-danger ms-2"><%= locals.errors && errors.egresos ? errors.egresos.msg : null %></small>
+            </div>
+            <div class="form-group col-md-12">
+              <label for="observaciones">Observaciones</label>
+              <textarea name="observaciones" class="form-control <%= (locals.errors && errors.observaciones) && 'is-invalid'%>" id="observaciones" placeholder="Ingrese las observaciones" value="<%= (locals.old && old.observaciones) && old.observaciones %>"></textarea>
+            </div>
+            <small id="errorobservaciones" class="text-danger ms-2"><%= locals.errors && errors.observaciones ? errors.observaciones.msg : null %></small>
+          </div>
+          
+          <button type="submit" class="btn btn-primary mb-5">Enviar</button>
+        </form>
+      </div>
+    </section><br><br>
+
+  
    
 <script>
   const icon = document.getElementById('userIconProfileSearch')
@@ -123,35 +151,7 @@ cardImg.addEventListener('error', () => {
   cardImg.src = 'https://cdn-icons-png.flaticon.com/512/149/149071.png'
 })
 </script>
-<script>
-  const deleteForms = document.querySelectorAll('.deleteProyectForm');
 
-deleteForms.forEach(form => {
-form.addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    Swal.fire({
-        title: "Seguro quieres borrar el producto??",
-        text: "Chequea bien el producto que deseas eliminar",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Si, eliminar!"
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                title: "Eliminado!",
-                text: "El producto fue eliminado",
-                icon: "success"
-            });
-
-            form.submit();
-        }
-    });
-});
-});
-</script>
 <%- include('../../partials/scripts') %>
 </body>
 </html>

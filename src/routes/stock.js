@@ -8,6 +8,7 @@ const addTallerValidator = require('../validations/addTallerValidator');
 const { addNewProyect, storeProyect, listProyects, editProyect, updateProyect, deleteProyect, downloadExcelHistorial, downloadExcelProyects, searchProyect } = require('../controllers/proyectosController');
 const addProyectValidator = require('../validations/addProyectValidator');
 const { listPartes, editParte, updateParte } = require('../controllers/partesController');
+const editParteValidator = require('../validations/editParteValidator');
 
 
 var router = express.Router();
@@ -64,6 +65,6 @@ router.get('/searchProyect',checkUserEditorIntranetCentral, searchProyect)
 
 router.get('/partes', checkUserEditorIntranetCentral, listPartes)
 router.get('/partes/:id',checkUserEditorIntranetCentral, editParte)
-router.put('/partes/:id',checkUserEditorIntranetCentral, updateParte )
+router.put('/partes/:id',checkUserEditorIntranetCentral, editParteValidator ,updateParte)
 
 module.exports = router;

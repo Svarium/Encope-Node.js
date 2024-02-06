@@ -56,5 +56,49 @@ module.exports = {
 
     updateParte : (req,res) => {
 
+        const errors = validationResult(req);
+        const id = req.params.id;
+
+        if (errors.isEmpty()){
+
+         const  {cantidad, egresos, observaciones} = req.body   
+
+         db.Parte.findOne({
+            where:{
+                id:id
+            }
+         }).then(parte => {
+            db.Parte.update({
+                cantidadProducida: parseInt(parte.cantidadProducida) + parseInt(cantidad),
+                egresos: parseInt(parte.egresos) + parseInt(egresos),
+                observaciones: observaciones ?  observaciones.trim() : parte.observaciones,
+                restanteAProducir: parseInt(parte.cantidadAProducir) - parseInt(cantidad) - parseInt(parte.cantidadProducida),
+                stockEnTaller: egresos?  (parseInt(cantidad) + parseInt(parte.cantidadProducida)) - (parseInt(parte.egresos) + parseInt(egresos)) :parseInt(cantidad) + parseInt(parte.cantidadProducida),
+             },{
+                where:{
+                    id:id
+                }
+         })        
+         }).then( parte => {
+            return res.redirect('/stock/partes/'+id)
+         }).catch(error => console.log(error))
+
+
+        } else {          
+
+            db.Parte.findOne({
+             where:{
+                 id:id
+             }
+            }).then(parte => {
+             return res.render('stock/partes/editParte',{
+                 title: 'Editar parte',
+                 parte,
+                 old:req.body,
+                 errors:errors.mapped()
+             })
+            }).catch(error => console.log(error))
+        }
+        
     }
 }
