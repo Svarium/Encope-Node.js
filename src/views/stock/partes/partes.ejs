@@ -50,7 +50,7 @@
       <!-- TITULO H1 -->
       <div class="container-fluid mt-4">
         <p class="text-black h2 text-center shadow-3">
-          <strong>Proyectos Productivos</strong>
+          <strong>Proyectos Productivos en: <%= procedencia.nombreDestino %></strong>
         </p>
         <hr class="text-black" />        
       </div>
@@ -107,20 +107,13 @@
                   <td>
                     <div class="d-flex align-content-center justify-content-center gap-1">
                       <!-- Enlace para editar -->
-                      <a href="/stock/editProyect/<%= item.id %>"><button class="btn btn-success"><i
-                            class="fa-solid fa-pen-to-square"></i></button></a>
-            
-                      <!-- Formulario para eliminar -->
-                      <form action="/stock/deleteProyect/<%= item.id %>?_method=DELETE" method="POST" class="deleteProductForm">
-                        <button type="submit" class="btn btn-danger "><i class="fa-solid fa-trash"></i></button>
-                      </form>
+                      <a href="/stock/partes/<%= item.id %>"><button class="btn btn-success"><i class="fa-solid fa-calendar-days"></i></button></a>           
+                     
             
                       <!-- Boton descarga historial de reformulaciones en excel -->
                       <a href="/stock/reformulaciones/<%= item.id %>"><button class="btn btn-primary "><i
                             class="fa-solid fa-clock-rotate-left"></i></button></a>
-                    </div>
-                  
-            
+                    </div>                 
                   </td>
                 </tr>
                 <% }) %>

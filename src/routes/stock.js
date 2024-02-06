@@ -7,6 +7,7 @@ const { newTaller, storageTaller, listTaller, editTaller, updateTaller, deleteTa
 const addTallerValidator = require('../validations/addTallerValidator');
 const { addNewProyect, storeProyect, listProyects, editProyect, updateProyect, deleteProyect, downloadExcelHistorial, downloadExcelProyects, searchProyect } = require('../controllers/proyectosController');
 const addProyectValidator = require('../validations/addProyectValidator');
+const { listPartes, editParte, updateParte } = require('../controllers/partesController');
 
 
 var router = express.Router();
@@ -47,15 +48,22 @@ router.post('/searchTaller', checkUserEditorIntranetCentral, searchTaller)
 /* PROYECTOS PRODUCTIVOS */
 
 //crud proyectos
-router.get('/newProyect', addNewProyect)
-router.post('/newProyect', addProyectValidator , storeProyect)
-router.get('/listProyects', listProyects)
-router.get('/editProyect/:id', editProyect)
-router.put('/editProyect/:id',addProyectValidator, updateProyect)
-router.delete('/deleteProyect/:id', deleteProyect)
-router.get('/reformulaciones/:id', downloadExcelHistorial)
-router.get('/proyectsTable', downloadExcelProyects)
-router.get('/searchProyect', searchProyect)
+router.get('/newProyect',checkUserEditorIntranetCentral ,addNewProyect)
+router.post('/newProyect',checkUserEditorIntranetCentral, addProyectValidator , storeProyect)
+router.get('/listProyects',checkUserEditorIntranetCentral, listProyects)
+router.get('/editProyect/:id',checkUserEditorIntranetCentral, editProyect)
+router.put('/editProyect/:id',checkUserEditorIntranetCentral,addProyectValidator, updateProyect)
+router.delete('/deleteProyect/:id',checkUserEditorIntranetCentral, deleteProyect)
+router.get('/reformulaciones/:id',checkUserEditorIntranetCentral, downloadExcelHistorial)
+router.get('/proyectsTable',checkUserEditorIntranetCentral, downloadExcelProyects)
+router.get('/searchProyect',checkUserEditorIntranetCentral, searchProyect)
 
+
+
+/* PARTE SEMANAL DE PROYECTOS */
+
+router.get('/partes', checkUserEditorIntranetCentral, listPartes)
+router.get('/partes/:id',checkUserEditorIntranetCentral, editParte)
+router.put('/partes/:id',checkUserEditorIntranetCentral, updateParte )
 
 module.exports = router;

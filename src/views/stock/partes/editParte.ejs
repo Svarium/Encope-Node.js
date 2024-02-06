@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../../partials/head')  %>
+        
+          
+    <body>
+  
+        <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-3">
+            <div class="container">
+              <div class="d-flex">
+                <!-- Botón para abrir el menú a la izquierda -->
+                <button
+                  class="navbar-toggler d-lg-none order-0 me-2"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapsibleNavId"
+                  aria-controls="collapsibleNavId"
+                  aria-expanded="false"
+                  aria-label="Toggle navigation"
+                >
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+          
+                <!-- Botón para abrir el menú canvas a la derecha -->
+                <button
+                  class="btn btn-transparent order-1"
+                  type="button"
+                  data-bs-toggle="offcanvas"
+                  data-bs-target="#offcanvasRight"
+                  aria-controls="offcanvasRight"
+                >
+                  <img
+                    id="userIconProfile"
+                    src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>"
+                    class="iconProfile me-2"
+                    alt=""
+                  />
+                  <%= userLogin.name %><i class="fa-solid fa-caret-down fa-lg"></i>
+                </button>
+              </div>
+          
+              <!-- Menú de navegación -->
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto"> <!-- 'ms-auto' para alinear a la derecha -->
+                  <li class="nav-item">
+                    <a class="nav-link" href="/stock/">Regresar</a>
+                  </li>              
+                </ul>
+              </div>
+            </div>
+          </nav> <br>
+
+    <main>
+            <div class="row ms-3 me-3 justify-content-center mb-5">
+            <div class="col-md-12">
+                <h4 class="text-center">Parte semanal: <%= parte.nombre %></h4>
+                <hr>              
+ 
+                  <table class="table">
+                    <thead>
+                      <tr>
+                    <th scope="col">proyecto</th>
+                    <th scope="col">Detalle</th>
+                    <th scope="col">Expediente</th>                   
+                    <th scope="col">Cantidad a producir</th>
+                    <th scope="col">Cantidad producida</th>
+                    <th scope="col">Restante a producir</th>
+                    <th scope="col">Stock en taller</th>
+                    <th scope="col">Egresos</th>
+                    <th scope="col">Observaciones</th>
+                  
+                   
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="text-center">
+                          <%= parte.nombre %>
+                        </td>
+                        <td>
+                          <%= parte.detalle %>
+                        </td>
+                        <td>
+                          <%= parte.expediente %>
+                        </td>
+                        <td>
+                          <%= parte.cantidadAProducir %>
+                        </td>
+                        <td>
+                          <%= parte.cantidadProducida %>
+                        </td>
+                        <td>
+                          <%= parte.restanteAProducir %>
+                        </td>
+                        <td> <%= parte.stockEnTaller %>
+                        </td>
+                        <td> <%= parte.egresos %>
+                        </td>
+                        <td> <%= parte.observaciones %>
+                        </td>
+                        
+                      </tr>                  
+                    </tbody>
+                  </table>
+                           
+
+                  
+                
+                   
+            </div>          
+    </main>
+
+   
+<script>
+  const icon = document.getElementById('userIconProfileSearch')
+  const cardImg = document.getElementById('imgIcon')
+  icon.addEventListener('error', () => {
+  icon.src = 'https://cdn-icons-png.flaticon.com/512/149/149071.png'
+
+})
+
+cardImg.addEventListener('error', () => {
+  cardImg.src = 'https://cdn-icons-png.flaticon.com/512/149/149071.png'
+})
+</script>
+<script>
+  const deleteForms = document.querySelectorAll('.deleteProyectForm');
+
+deleteForms.forEach(form => {
+form.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    Swal.fire({
+        title: "Seguro quieres borrar el producto??",
+        text: "Chequea bien el producto que deseas eliminar",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, eliminar!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: "Eliminado!",
+                text: "El producto fue eliminado",
+                icon: "success"
+            });
+
+            form.submit();
+        }
+    });
+});
+});
+</script>
+<%- include('../../partials/scripts') %>
+</body>
+</html>
+

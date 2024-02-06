@@ -21,6 +21,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey:'idProducto',
         as:'historialProyecto'
       })
+
+      Producto.hasMany(models.Parte,{
+        foreignKey:'idProducto',
+        as:'parteProyecto'
+      })
     }
   }
   Producto.init({

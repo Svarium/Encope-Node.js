@@ -50,7 +50,6 @@ module.exports = {
     },
 
     storeProyect : async (req,res) => {    
-
    
         const errors = validationResult(req)
 
@@ -82,8 +81,29 @@ module.exports = {
                 costoTotal: cantidad * costoUnitario,
                 costoUnitario:costoUnitario,
                 idProducto: producto
+            }).then(proyecto => {
+
+            db.Parte.create({
+                nombre: proyecto.nombre,
+                expediente:proyecto.expediente,
+                idTaller: proyecto.idTaller,
+                cantidadAProducir: proyecto.cantidadAProducir,
+                detalle: proyecto.detalle,
+                procedencia: proyecto.procedencia,
+                duracion: proyecto.duracion,
+                unidadDuracion: proyecto.unidadDuracion,
+                costoTotal: proyecto.costoTotal,
+                costoUnitario: proyecto.costoUnitario,
+                idProducto: proyecto.idTaller,
+                idProyecto: proyecto.id,
+                cantidadProducida: 0,
+                restanteAProducir:0,
+                egresos:0,
+                observaciones:""
             }).then(() => {
                 return res.redirect('/stock/listProyects')
+            }).catch(error => console.log(error))                  
+               
             }).catch(error => console.log(error))         
 
         } else {
@@ -202,6 +222,24 @@ module.exports = {
             idProducto: producto
         },
         {
+            where:{
+                id:req.params.id
+            }
+        })
+
+        await db.Parte.update({ //actualizo el parte semanal con los datos actualizados del proyecto
+            nombre:nombre.trim(),
+            expediente:expediente,
+            idTaller: destino,
+            cantidadAProducir: cantidad,
+            detalle:detalle,
+            procedencia: procedencia,
+            duracion: duracion,
+            unidadDuracion: unidadDuracion,
+            costoTotal: cantidad * costoUnitario,
+            costoUnitario:costoUnitario,
+            idProducto: producto,      
+        },{
             where:{
                 id:req.params.id
             }
