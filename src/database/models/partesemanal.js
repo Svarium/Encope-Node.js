@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     idProyecto: DataTypes.INTEGER,
     cantidadProducida: DataTypes.INTEGER,
     restanteAProducir: DataTypes.INTEGER,
+    stockEnTaller: DataTypes.INTEGER,
     egresos: DataTypes.INTEGER,
     observaciones: DataTypes.STRING
   }, {

@@ -99,7 +99,7 @@ module.exports = {
                 cantidadProducida: 0,
                 restanteAProducir:0,
                 egresos:0,
-                observaciones:""
+                observaciones:"Sin Observaciones"
             }).then(() => {
                 return res.redirect('/stock/listProyects')
             }).catch(error => console.log(error))                  

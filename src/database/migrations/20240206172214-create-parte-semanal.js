@@ -71,6 +71,9 @@ module.exports = {
       restanteAProducir: {
         type: Sequelize.INTEGER
       },
+      stockEnTaller: {
+        type: Sequelize.INTEGER
+      },
       egresos: {
         allowNull:true,
         type: Sequelize.INTEGER
