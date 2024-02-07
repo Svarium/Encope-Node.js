@@ -35,7 +35,18 @@ module.exports = (sequelize, DataTypes) => {
     unidadDuracion: DataTypes.STRING,
     costoTotal: DataTypes.INTEGER,
     costoUnitario: DataTypes.INTEGER,
-    idProducto: DataTypes.INTEGER
+    idProducto: DataTypes.INTEGER,
+    insumos:DataTypes.STRING,
+    estado:{
+      type: DataTypes.STRING,
+      defaultValue:"pendiente",
+      validate:{
+        isIn:{
+          args: [["Pendiente", "Finalizado"]],
+          msg:"Los estados validos son Pendiente y Finalizado"
+        },
+      },
+    },
   }, {
     sequelize,
     modelName: 'Proyecto',

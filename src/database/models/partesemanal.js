@@ -35,7 +35,8 @@ module.exports = (sequelize, DataTypes) => {
     restanteAProducir: DataTypes.INTEGER,
     stockEnTaller: DataTypes.INTEGER,
     egresos: DataTypes.INTEGER,
-    observaciones: DataTypes.STRING
+    observaciones: DataTypes.STRING,
+    remanentes: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Parte',

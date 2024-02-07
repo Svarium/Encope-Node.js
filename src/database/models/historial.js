@@ -30,7 +30,18 @@ module.exports = (sequelize, DataTypes) => {
     costoTotal: DataTypes.INTEGER,
     costoUnitario: DataTypes.INTEGER,
     idProducto: DataTypes.INTEGER,
-    idProyecto: DataTypes.INTEGER
+    idProyecto: DataTypes.INTEGER,
+    insumos:DataTypes.STRING,
+    estado:{
+      type: DataTypes.STRING,
+      defaultValue:"pendiente",
+      validate:{
+        isIn:{
+          args: [["Pendiente", "Finalizado"]],
+          msg:"Los estados validos son Pendiente y Finalizado"
+        },
+      },
+    },
   }, {
     sequelize,
     modelName: 'Historial',

@@ -82,6 +82,9 @@ module.exports = {
         allowNull:true,
         type: Sequelize.STRING
       },
+      remanentes : {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

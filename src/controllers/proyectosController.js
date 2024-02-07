@@ -55,7 +55,7 @@ module.exports = {
 
         if(errors.isEmpty()){
 
-            const {nombre, expediente, destino, producto, cantidad, detalle, duracion, unidadDuracion, costoUnitario} = req.body
+            const {nombre, expediente, destino, producto, cantidad, insumos, detalle, duracion, unidadDuracion, costoUnitario} = req.body
 
             const usuario = await db.Usuario.findOne({
                 where: {destinoId : req.session.userLogin.destinoId},
@@ -74,13 +74,15 @@ module.exports = {
                 expediente:expediente,
                 idTaller: destino,
                 cantidadAProducir: cantidad,
-                detalle:detalle,
+                detalle:detalle.trim(),
+                insumos: insumos.trim(),
                 procedencia: procedencia,
                 duracion: duracion,
                 unidadDuracion: unidadDuracion,
                 costoTotal: cantidad * costoUnitario,
                 costoUnitario:costoUnitario,
-                idProducto: producto
+                idProducto: producto,
+                estado: 'Pendiente'
             }).then(proyecto => {
 
             db.Parte.create({
@@ -174,7 +176,7 @@ module.exports = {
 
         const id = req.params.id
 
-        const {nombre, expediente, destino, producto, cantidad, detalle, duracion, unidadDuracion, costoUnitario} = req.body
+        const {nombre, expediente, destino, producto, cantidad, insumos, detalle, duracion, unidadDuracion, costoUnitario} = req.body
 
         const usuario = await db.Usuario.findOne({ //busco el usuario para poder acceder al destino de procedencia y cargarlo despues en los registros
             where: {destinoId : req.session.userLogin.destinoId},
@@ -199,13 +201,15 @@ module.exports = {
             idTaller: proyectoAnterior.idTaller,
             cantidadAProducir: proyectoAnterior.cantidadAProducir,
             detalle: proyectoAnterior.detalle,
+            insumos: proyectoAnterior.insumos,
             procedencia: proyectoAnterior.procedencia,
             duracion: proyectoAnterior.duracion,
             unidadDuracion: proyectoAnterior.unidadDuracion,
             costoTotal: proyectoAnterior.costoTotal,
             costoUnitario: proyectoAnterior.costoUnitario,
             idProducto: proyectoAnterior.idTaller,
-            idProyecto: id
+            idProyecto: id,           
+            estado: 'Pendiente'
         })
 
         await db.Proyecto.update({ //actualizo el proyecto con los nuevos datos enviados por el usuario
@@ -213,13 +217,15 @@ module.exports = {
             expediente:expediente,
             idTaller: destino,
             cantidadAProducir: cantidad,
+            insumos:insumos,
             detalle:detalle,
             procedencia: procedencia,
             duracion: duracion,
             unidadDuracion: unidadDuracion,
             costoTotal: cantidad * costoUnitario,
             costoUnitario:costoUnitario,
-            idProducto: producto
+            idProducto: producto,
+            estado: 'Pendiente'
         },
         {
             where:{
@@ -307,7 +313,7 @@ module.exports = {
             const worksheet = workbook.addWorksheet('Sheet 1'); // Crea una hoja de Excel 
     
             // Agregar títulos de columnas
-            const titleRow = worksheet.addRow(["Nombre Proyecto", "Detalle", "Expediente", "Procedencia", 'Duración', 'Cantidad a Producir', 'Costo Unitario', 'Costo total', 'fecha de edición del proyecto']);
+            const titleRow = worksheet.addRow(["Nombre Proyecto", "Estado" , "Detalle", "Expediente", "Procedencia", 'Duración', "Insumos" ,'Cantidad a Producir', 'Costo Unitario', 'Costo total', 'fecha de edición del proyecto']);
     
             // Aplicar formato al título
             titleRow.eachCell((cell) => {
@@ -328,7 +334,7 @@ module.exports = {
             });
     
             tablaHistorial.forEach(historial => {
-                const row = worksheet.addRow([historial.nombre, historial.detalle, historial.expediente, historial.procedencia, `${historial.duracion} - ${historial.unidadDuracion}`, historial.cantidadAProducir, historial.costoUnitario, historial.costoTotal, historial.createdAt]);
+                const row = worksheet.addRow([historial.nombre, historial.estado, historial.detalle, historial.expediente, historial.procedencia, `${historial.duracion} - ${historial.unidadDuracion}`,historial.insumos, historial.cantidadAProducir, historial.costoUnitario, historial.costoTotal, historial.createdAt]);
                 
                 // Aplicar bordes a las celdas de la fila de datos
                 row.eachCell((cell) => {
@@ -368,7 +374,7 @@ module.exports = {
             const worksheet = workbook.addWorksheet('Sheet 1'); // Crea una hoja de Excel 
     
             // Agregar títulos de columnas
-            const titleRow = worksheet.addRow(["Nombre Proyecto", "Detalle", "Expediente", "Procedencia", 'Duración', 'Cantidad a Producir', 'Costo Unitario', 'Costo total', 'fecha de creación del proyecto']);
+            const titleRow = worksheet.addRow(["Nombre Proyecto", "Estado" ,"Detalle", "Expediente", "Procedencia", 'Duración',"Insumos", 'Cantidad a Producir', 'Costo Unitario', 'Costo total', 'fecha de creación del proyecto']);
     
             // Aplicar formato al título
             titleRow.eachCell((cell) => {
@@ -389,7 +395,7 @@ module.exports = {
             });
     
             tablaProyects.forEach(proyecto => {
-                const row = worksheet.addRow([proyecto.nombre, proyecto.detalle, proyecto.expediente, proyecto.procedencia, `${proyecto.duracion} - ${proyecto.unidadDuracion}`, proyecto.cantidadAProducir, proyecto.costoUnitario, proyecto.costoTotal, proyecto.createdAt]);
+                const row = worksheet.addRow([proyecto.nombre, proyecto.estado ,proyecto.detalle, proyecto.expediente, proyecto.procedencia, `${proyecto.duracion} - ${proyecto.unidadDuracion}`, proyecto.insumos, proyecto.cantidadAProducir, proyecto.costoUnitario, proyecto.costoTotal, proyecto.createdAt]);
                 
                 // Aplicar bordes a las celdas de la fila de datos
                 row.eachCell((cell) => {

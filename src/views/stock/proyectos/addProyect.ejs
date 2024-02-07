@@ -90,14 +90,20 @@
               
             <div class="form-group col-md-6">
               <label for="cantidad">Cantidad a producir</label>
-              <input type="number" class="form-control <%= (locals.errors && errors.nombre) && 'is-invalid'%>" id="cantidad" name="cantidad" placeholder="Ingrese cantidad a producir" value="<%= (locals.old && old.nombre) && old.nombre %>">
-              <small id="errorNombre" class="text-danger ms-2"><%= locals.errors && errors.nombre ? errors.nombre.msg : null %></small>
+              <input type="number" class="form-control <%= (locals.errors && errors.cantidad) && 'is-invalid'%>" id="cantidad" name="cantidad" placeholder="Ingrese cantidad a producir" value="<%= (locals.old && old.cantidad) && old.cantidad %>">
+              <small id="errorcantidad" class="text-danger ms-2"><%= locals.errors && errors.cantidad ? errors.cantidad.msg : null %></small>
             </div>
 
             <div class="form-group col-md-6">
               <label for="costoUnitario">Costo Unitario</label>
               <input type="number" class="form-control <%= (locals.errors && errors.costoUnitario) && 'is-invalid'%>" id="costoUnitario" name="costoUnitario" placeholder="Ingrese el costo unitario" value="<%= (locals.old && old.costoUnitario) && old.costoUnitario %>">
               <small id="errorcostoUnitario" class="text-danger ms-2"><%= locals.errors && errors.costoUnitario ? errors.costoUnitario.msg : null %></small>
+            </div>  
+            
+            <div class="form-group col-md-12">
+              <label for="insumos">Insumos a utilizar</label>
+              <textarea name="insumos" class="form-control <%= (locals.errors && errors.insumos) && 'is-invalid'%>" id="insumos" placeholder="Ingrese el insumos" value="<%= (locals.old && old.insumos) && old.insumos %>"></textarea>    
+              <small id="errorinsumos" class="text-danger ms-2"><%= locals.errors && errors.insumos ? errors.insumos.msg : null %></small>               
             </div>   
 
             <div class="form-group col-md-12">

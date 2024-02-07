@@ -68,7 +68,7 @@
             <thead>
                 <tr>
                     <th scope="col">proyecto</th>
-                    <th scope="col">Detalle</th>
+                    <th scope="col">Estado</th>
                     <th scope="col">Expediente</th>
                     <th scope="col">Procedencia</th>
                     <th scope="col">Duración</th>
@@ -84,9 +84,14 @@
                   <td class="text-center">
                     <%= item.nombre %>
                   </td>
-                  <td>
-                    <%= item.detalle %>
-                  </td>
+                  <td >
+                    <% if (item.estado === "Pendiente") { %>
+                    <%= item.estado %>  <i class="fa-solid fa-spinner text-danger"></i>
+                    <% } else { %>
+                    <%= item.estado %>  <i class="fa-solid fa-check text-success"></i>
+                    <% } %>
+                </td>
+                              
                   <td>
                     <%= item.expediente %>
                   </td>

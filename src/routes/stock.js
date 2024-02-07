@@ -9,6 +9,8 @@ const { addNewProyect, storeProyect, listProyects, editProyect, updateProyect, d
 const addProyectValidator = require('../validations/addProyectValidator');
 const { listPartes, editParte, updateParte, avanceDeProyecto } = require('../controllers/partesController');
 const editParteValidator = require('../validations/editParteValidator');
+const checkUserEditorIntranetUnidad = require('../middlewares/checkUserEditorIntranetUnidad');
+const checkUserAddProyect = require('../middlewares/checkUserAddProyect');
 
 
 var router = express.Router();
@@ -49,8 +51,8 @@ router.post('/searchTaller', checkUserEditorIntranetCentral, searchTaller)
 /* PROYECTOS PRODUCTIVOS */
 
 //crud proyectos
-router.get('/newProyect',checkUserEditorIntranetCentral ,addNewProyect)
-router.post('/newProyect',checkUserEditorIntranetCentral, addProyectValidator , storeProyect)
+router.get('/newProyect',checkUserAddProyect,addNewProyect) //ruta accedida por ambos roles: editores intranet central y de unidades
+router.post('/newProyect',checkUserAddProyect, addProyectValidator , storeProyect) //ruta accedida por ambos roles: editores intranet central y de unidades
 router.get('/listProyects',checkUserEditorIntranetCentral, listProyects)
 router.get('/editProyect/:id',checkUserEditorIntranetCentral, editProyect)
 router.put('/editProyect/:id',checkUserEditorIntranetCentral,addProyectValidator, updateProyect)
@@ -63,9 +65,9 @@ router.get('/searchProyect',checkUserEditorIntranetCentral, searchProyect)
 
 /* PARTE SEMANAL DE PROYECTOS */
 
-router.get('/partes', checkUserEditorIntranetCentral, listPartes)
-router.get('/partes/:id',checkUserEditorIntranetCentral, editParte)
-router.put('/partes/:id',checkUserEditorIntranetCentral, editParteValidator ,updateParte)
+router.get('/partes', checkUserEditorIntranetUnidad , listPartes)
+router.get('/partes/:id',checkUserEditorIntranetUnidad, editParte)
+router.put('/partes/:id',checkUserEditorIntranetUnidad, editParteValidator ,updateParte)
 
 
 module.exports = router;

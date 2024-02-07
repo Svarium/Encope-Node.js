@@ -64,6 +64,12 @@ module.exports = {
           key:"id"
         }
       },
+      insumos: {
+        type: Sequelize.STRING
+      },
+      estado: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

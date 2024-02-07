@@ -43,6 +43,10 @@ module.exports = [
     check('cantidad')
     .notEmpty().withMessage('Debe ingresar una cantidad'),
 
+    check('insumos')
+    .notEmpty().withMessage('Debes ingresar los insumos a utilizar').bail()
+    .isLength({min:10, max:2000}).withMessage('Los insumos deben tener entre 10 y 2000 carácteres'),
+
     check('detalle')
     .notEmpty().withMessage('Debes ingresar la descripción del proyecto').bail()
     .isLength({min:10, max:1000}).withMessage('El detalle debe tener entre 10 y 1000 carácteres'),
