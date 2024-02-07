@@ -110,11 +110,30 @@ module.exports = {
                  id:id
              }
             }).then(parte => {
+
+                const cantidad = parte.cantidadProducida
+
+                const meta = parte.cantidadAProducir
+        
+                const periodo = parte.duracion 
+        
+                const produccionIdeal = meta / periodo
+        
+                const produccionReal = cantidad / periodo
+        
+                const avance = (cantidad * 100) / meta
+
              return res.render('stock/partes/editParte',{
                  title: 'Editar parte',
                  parte,
                  old:req.body,
-                 errors:errors.mapped()
+                 errors:errors.mapped(),
+                 cantidad,
+                 meta,
+                 periodo,
+                 produccionIdeal,
+                 produccionReal,
+                 avance 
              })
             }).catch(error => console.log(error))
         }
