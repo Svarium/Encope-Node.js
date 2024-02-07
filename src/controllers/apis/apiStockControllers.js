@@ -1,8 +1,24 @@
 const createResponseError = require('../../helpers/createResponseError');
-const { getAllKits, getAllStocks, getAllProducts, getAllEditors, getGeneralStock, validarCantidad, chequearCantidadRetirada, getAllKitsOuts, obtenerUltimosRetiros } = require('../../services/stockServices');
+const { editProyectState } = require('../../services/stockServices');
 
 
 module.exports = {
+
+    editState : async (req,res) => {
+            try {
+                const id = req.params.id;
+                const state = await editProyectState(id)
+                return res.status(200).json({
+                    ok:true,
+                    data:{
+                        message:"Estado actualizado"
+                    }
+                })
+            } catch (error) {
+                console.log(error);
+                return createResponseError(res, error)
+            }
+    },
 
     allkits : async (req, res) => {
         try {

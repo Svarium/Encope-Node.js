@@ -50,7 +50,7 @@
       <!-- TITULO H1 -->
       <div class="container-fluid mt-4">
         <p class="text-black h2 text-center shadow-3">
-          <strong>Proyectos Productivos</strong>
+          <strong >Proyectos Productivos</strong>
         </p>
         <hr class="text-black" />        
       </div>
@@ -84,11 +84,21 @@
                   <td class="text-center">
                     <%= item.nombre %>
                   </td>
-                  <td >
+                  <td>
                     <% if (item.estado === "Pendiente") { %>
-                    <%= item.estado %>  <i class="fa-solid fa-spinner text-danger"></i>
+                        <%= item.estado %>  <i class="fa-solid fa-spinner text-danger"></i>
+                        <div class="form-check form-switch mt-1">
+                            <!-- Agrega un identificador único al interruptor -->
+                            <input class="form-check-input project-switch" type="checkbox" style="cursor: pointer;" role="switch" id="projectSwitch<%= item.id %>" data-project-id="<%= item.id %>">
+                            <label class="form-check-label " for="projectSwitch<%= item.id %>"></label>
+                        </div>
                     <% } else { %>
-                    <%= item.estado %>  <i class="fa-solid fa-check text-success"></i>
+                        <%= item.estado %>  <i class="fa-solid fa-check text-success"></i>
+                        <div class="form-check form-switch mt-1">
+                          <!-- Agrega un identificador único al interruptor -->
+                          <input class="form-check-input project-switch" type="checkbox" style="cursor: pointer;" role="switch" id="projectSwitch<%= item.id %>" data-project-id="<%= item.id %>" checked>
+                          <label class="form-check-label" for="projectSwitch<%= item.id %>"></label>
+                      </div>
                     <% } %>
                 </td>
                               
@@ -123,8 +133,8 @@
                       <!-- Boton descarga historial de reformulaciones en excel -->
                       <a href="/stock/reformulaciones/<%= item.id %>"><button class="btn btn-primary "><i
                             class="fa-solid fa-clock-rotate-left"></i></button></a>
-                    </div>
-                  
+                    </div>            
+                
             
                   </td>
                 </tr>
@@ -172,5 +182,58 @@ deleteForms.forEach(form => {
     });
 });
     </script>
+
+<script>
+  // Obtén todos los interruptores de proyectos
+  const projectSwitches = document.querySelectorAll('.project-switch');
+
+  // Escucha el evento de cambio en cada interruptor
+  projectSwitches.forEach(switchElement => {
+    switchElement.addEventListener('change', async (event) => {
+      const projectId = event.target.dataset.projectId; // Obtén el ID del proyecto del atributo de datos
+
+      try {
+        // Envía una solicitud PUT al servidor para actualizar el estado del proyecto
+        const response = await fetch(`http://localhost:3000/api/stock/editState/${projectId}`, {
+          method: 'PUT',
+        });
+
+        if (response.ok) {
+          // Maneja la respuesta del servidor
+          const data = await response.json();
+          let timerInterval;
+          Swal.fire({
+            title: "Actualizando estado!",
+            html: "Actualizando en <b></b>ms.",
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading();
+              const timer = Swal.getPopup().querySelector("b");
+              timerInterval = setInterval(() => {
+                timer.textContent = `${Swal.getTimerLeft()}`;
+              }, 100);
+            },
+            willClose: () => {
+              clearInterval(timerInterval);
+            }
+          }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+              console.log("I was closed by the timer");
+            }
+            location.reload()
+
+          });
+        } else {
+          throw new Error('Error al actualizar el estado del proyecto');
+        }
+      } catch (error) {
+        console.error(error);
+        alert('Error al actualizar el estado del proyecto');
+      }
+    });
+  });
+</script>
   </body>
 </html>
