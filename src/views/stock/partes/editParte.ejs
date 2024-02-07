@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   
-    <%- include('../../partials/head')  %>
-   
- 
-    
+    <%- include('../../partials/head')  %>    
     
           
     <body>
@@ -58,20 +55,26 @@
             <div class="row ms-3 me-3 justify-content-center mb-5">
             <div class="col-md-12">
                 <h4 class="text-center">Parte semanal: <%= parte.nombre %></h4>
-                <hr>              
+                <hr>  
+                
+                <div class="container d-flex justify-content-center gap-2">
+                  <button type="button" class="btn btn-primary mb-5"><strong>Producción ideal: <%= produccionIdeal %> por <%= parte.unidadDuracion %></strong></button>
+                  <button type="button" class="btn btn-success mb-5"><strong>Producción real: <%= produccionReal %> por <%= parte.unidadDuracion %></strong></button>
+                  <button type="button" class="btn btn-danger mb-5"><strong>Porcentaje de avance: Proyecto al <%= avance %>% </strong></button>
+                </div>
  
                   <table class="table">
                     <thead>
                       <tr>
                     <th scope="col">proyecto</th>
-                    <th scope="col">Detalle</th>
+                    <th scope="col">última Actualización</th>
                     <th scope="col">Expediente</th>                   
                     <th scope="col">Cantidad a producir</th>
                     <th scope="col">Cantidad producida</th>
                     <th scope="col">Restante a producir</th>
                     <th scope="col">Stock en taller</th>
                     <th scope="col">Egresos</th>
-                    <th scope="col">Detalles</th>
+                    <th scope="col">Observación</th>
                   
                    
                       </tr>
@@ -82,7 +85,15 @@
                           <%= parte.nombre %>
                         </td>
                         <td>
-                          <%= parte.detalle %>
+                          <%= new Intl.DateTimeFormat('es-AR', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                            hour: 'numeric',
+                            minute: 'numeric',
+                            second: 'numeric',
+                            timeZone: 'America/Argentina/Buenos_Aires'
+                          }).format(new Date(parte.createdAt)) %>
                         </td>
                         <td>
                           <%= parte.expediente %>
@@ -150,6 +161,22 @@
 cardImg.addEventListener('error', () => {
   cardImg.src = 'https://cdn-icons-png.flaticon.com/512/149/149071.png'
 })
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- Script para mostrar una alerta si la cantidad a producir es igual a la cantidad producida -->
+<script>
+  // Obtener valores de EJS y mostrar alerta si la condición se cumple
+  const cantidadAProducir = <%= parte.cantidadAProducir %>;
+  const cantidadProducida = <%= parte.cantidadProducida %>;
+  if (cantidadAProducir === cantidadProducida) {
+    Swal.fire({
+  position: "top-end",
+  icon: "success",
+  title: "Se alcanzó la cantidad a producir!",
+  showConfirmButton: false,
+  timer: 2000
+});
+  }
 </script>
 
 <%- include('../../partials/scripts') %>
