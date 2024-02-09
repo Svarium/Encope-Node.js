@@ -7,7 +7,7 @@ const { newTaller, storageTaller, listTaller, editTaller, updateTaller, deleteTa
 const addTallerValidator = require('../validations/addTallerValidator');
 const { addNewProyect, storeProyect, listProyects, editProyect, updateProyect, deleteProyect, downloadExcelHistorial, downloadExcelProyects, searchProyect } = require('../controllers/proyectosController');
 const addProyectValidator = require('../validations/addProyectValidator');
-const { listPartes, editParte, updateParte, avanceDeProyecto, printParte, reporteAutomaticoViaEmail } = require('../controllers/partesController');
+const { listPartes, editParte, updateParte, avanceDeProyecto, printParte, reporteViaEmail } = require('../controllers/partesController');
 const editParteValidator = require('../validations/editParteValidator');
 const checkUserEditorIntranetUnidad = require('../middlewares/checkUserEditorIntranetUnidad');
 const checkUserAddProyect = require('../middlewares/checkUserAddProyect');
@@ -70,7 +70,7 @@ router.get('/partes/:id',checkUserEditorIntranetUnidad, editParte)
 router.put('/partes/:id',checkUserEditorIntranetUnidad, editParteValidator ,updateParte)
 router.get('/parte/:id', printParte)
 
-router.get('/reporte/:id', reporteAutomaticoViaEmail)
+router.get('/reporte/:id', reporteViaEmail)
 
 
 module.exports = router;
