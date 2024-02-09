@@ -64,8 +64,11 @@
                 </div>
  
                   <table class="table">
-                    <button type="button" class="btn btn-outline-primary ms-3 btn-sm mt-1 mb-2">
+                    <button type="button" class="btn btn-outline-primary  btn-sm mt-1 mb-2">
                       <a class="btn-link" href="/stock/parte/<%= parte.id %>"><i class="fa-solid fa-download"></i> Imprimir Parte </i></a>
+                    </button>
+                    <button type="button" class="btn btn-outline-success ms-2  btn-sm mt-1 mb-2" id="enviarReporteBtn">
+                      <a class="btn-link" href="/stock/reporte/<%= parte.id %>"><i class="fa-solid fa-envelope"></i> Enviar Reporte Semanal</i></a>
                     </button>
                     <thead>
                       <tr>
@@ -219,7 +222,36 @@ cardImg.addEventListener('error', () => {
   }
 </script>
 
-
+<script>
+  document.getElementById("enviarReporteBtn").onclick = function() {
+      // Mostrar el alert
+      let timerInterval;
+      Swal.fire({
+          title: "Enviando reporte via email!",
+          html: "Enviando en <b></b>ms",
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: () => {
+              Swal.showLoading();
+              const timer = Swal.getPopup().querySelector("b");
+              timerInterval = setInterval(() => {
+                  timer.textContent = `${Swal.getTimerLeft()}`;
+              }, 100);
+          },
+          willClose: () => {
+              clearInterval(timerInterval);
+          }
+      }).then((result) => {
+          /* Read more about handling dismissals below */
+          if (result.dismiss === Swal.DismissReason.timer) {
+              console.log("I was closed by the timer");
+          }
+      });
+  
+      // Redirigir al usuario después de mostrar el alert
+      window.location.href = this.querySelector("a").href;
+  };
+  </script>
 
 
 

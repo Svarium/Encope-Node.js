@@ -3,10 +3,10 @@ const {validationResult} = require('express-validator');
 const path = require('path');
 const { Op } = require("sequelize");
 const ExcelJS = require('exceljs');
+require("dotenv").config();
 
 const db = require('../database/models');
-const { error } = require('console');
-const { title } = require('process');
+const transporter = require('../helpers/configNodemailer');
 
 module.exports = {
     listPartes : async (req,res) => {
@@ -162,9 +162,8 @@ module.exports = {
             ],
             
             });
-
-           /*  return res.send(parte) */
-    
+      
+           
             const workbook = new ExcelJS.Workbook(); // Función constructora del Excel
             const worksheet = workbook.addWorksheet('Sheet 1'); // Crea una hoja de Excel 
     
@@ -206,7 +205,7 @@ module.exports = {
             const fecha = new Date(Date.now());
     
             // Define el nombre del archivo Excel
-            res.setHeader('Content-Disposition', `attachment; filename="${fecha.toISOString().substring(0, 10)}-tablaDeProyectosProductivos.xlsx"`); // agregar al nombre la fecha con New Date()
+            res.setHeader('Content-Disposition', `attachment; filename="${fecha.toISOString().substring(0, 10)}-parteSemanal${parte[0].nombre}.xlsx"`); // agregar al nombre la fecha con New Date()
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     
             // Envia el archivo Excel como respuesta al cliente
@@ -217,5 +216,117 @@ module.exports = {
         } catch (error) {
             console.log(error);
         }
+    },
+
+    reporteAutomaticoViaEmail : async (req,res) => {
+
+        try {
+            
+            const id = 1 //reemplazar por req.params.id
+            const parte = await db.Parte.findAll({
+                where:{
+                    id:id
+                },
+                include:[{
+                    model: db.Producto,
+                    as:'parteProducto', 
+                    attributes:["nombre"]
+                },
+                {
+                    model: db.Taller,
+                    as:'parteTaller', 
+                    attributes:["nombre"]
+                }
+            ],
+            
+            });
+
+         // Generar el archivo Excel 
+        const fecha = new Date(Date.now());        
+        const fileName = `${fecha.toISOString().substring(0, 10)}-parteSemanal${parte[0].nombre}.xlsx`;
+        const filePath = __dirname + '/../../temp/' + fileName;
+           
+        const workbook = new ExcelJS.Workbook(); // Función constructora del Excel
+        const worksheet = workbook.addWorksheet('Sheet 1'); // Crea una hoja de Excel 
+
+
+
+    
+            // Agregar títulos de columnas
+            const titleRow = worksheet.addRow(["Nombre", "Taller","Producto", "Expediente", "Procedencia", "Detalle", 'Duración', 'Cantidad a Producir', "Cantidad Producida", "stockEnTaller", 'Egresos', "Remanentes", "Ultima Actualización"]);
+    
+            // Aplicar formato al título
+            titleRow.eachCell((cell) => {
+                cell.font = { bold: true }; // Establece el texto en negrita
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: 'FFFF00' } // Cambia el color de fondo a amarillo (puedes cambiar 'FFFF00' por el código del color que prefieras)
+                };
+    
+                // Agregar bordes
+                cell.border = {
+                    top: { style: 'thin' },
+                    left: { style: 'thin' },
+                    bottom: { style: 'thin' },
+                    right: { style: 'thin' }
+                };
+            });
+    
+            parte.forEach(item => {
+                const row = worksheet.addRow([item.nombre, item.parteTaller.nombre, item.parteProducto.nombre, item.expediente, item.procedencia, item.detalle, item.duracion + item.unidadDuracion, item.cantidadAProducir, item.cantidadProducida, item.stockEnTaller, item.egresos, item.remanentes, item.updatedAt]);
+                
+                // Aplicar bordes a las celdas de la fila de datos
+                row.eachCell((cell) => {
+                    cell.border = {
+                        top: { style: 'thin' },
+                        left: { style: 'thin' },
+                        bottom: { style: 'thin' },
+                        right: { style: 'thin' }
+                    };
+                });
+            });          
+    
+                 
+           // Guardar el archivo Excel en el servidor
+           await workbook.xlsx.writeFile(filePath);
+    
+        // Una vez que el archivo se haya generado y guardado en el servidor, puedes adjuntarlo al correo electrónico
+        const mailOptions = {
+            from: process.env.EMAIL_USER, // Tu dirección de correo electrónico
+            to: 'informatica@encope.gob.ar', // El destinatario del correo electrónico
+            subject: 'Informe de Parte Semanal', // El asunto del correo electrónico
+            text: 'Adjunto encontrará el informe del parte Semanal en formato Excel.', // El mensaje del correo electrónico
+            attachments: [
+                {
+                    filename: fileName, // El nombre del archivo adjunto
+                    path: filePath // La ruta del archivo adjunto
+                }
+            ]
+        };
+
+        // Enviar el correo electrónico
+        await transporter.sendMail(mailOptions);
+        console.log('Correo electrónico enviado correctamente');
+
+        fs.unlink(filePath, (err) => {
+            if (err) {
+                console.error('Error al borrar el archivo Excel:', err);
+                // Puedes manejar el error de acuerdo a tus necesidades, por ejemplo, enviando una respuesta de error al cliente
+                return res.status(500).send('Error al borrar el archivo Excel');
+            }
+            console.log('Archivo Excel borrado correctamente');
+            // Puedes enviar una respuesta exitosa al cliente si lo deseas
+            return res.redirect('/stock/partes/')
+        });
+
+        
+        } catch (error) {
+            console.log(error);
+        
+        }
+
     }
+
+
 }
