@@ -331,7 +331,7 @@ module.exports = {
     reporteAutomaticoViaEmail : async (req,res) =>{
         try {
             
-            const id = req.params.id 
+         
             const parte = await db.Parte.findAll({               
                 include:[{
                     model: db.Producto,
@@ -423,7 +423,11 @@ module.exports = {
             }
             console.log('Archivo Excel borrado correctamente');
             // Puedes enviar una respuesta exitosa al cliente si lo deseas
-            return res.redirect('/stock/partes/')
+            if (res) {
+                return res.status(200).end();
+            } else {
+                console.log('No hay objeto de respuesta definido');
+            }
         });
 
         

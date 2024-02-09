@@ -13,6 +13,8 @@ const { loginGoogleInitalize } = require('./src/services/googleService');
 const cors = require('cors')
 const localsUserCheckMiddleware = require('./src/middlewares/localsUserCheck');
 const cookieCheckMiddleware = require('./src/middlewares/cookieCheck');
+const { initializeCronJobs } = require('./src/helpers/cronJobs');
+initializeCronJobs();
 
 
 var app = express();
@@ -37,6 +39,8 @@ const apiStockRouter = require('./src/routes/apis/apiStock')
 // view engine setup
 app.set('views', path.join(__dirname, 'src', 'views'));
 app.set('view engine', 'ejs');
+
+
 
 app.use(logger('dev'));
 app.use(express.json());
