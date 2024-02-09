@@ -14,7 +14,17 @@ module.exports = (sequelize, DataTypes) => {
 
       Parte.belongsTo(models.Proyecto,{
         foreignKey:'idProyecto',
-        has:'parteProyecto'
+        as:'parteProyecto'
+      })
+
+      Parte.belongsTo(models.Producto,{
+        foreignKey:'idProducto',
+        as:'parteProducto'
+      })
+
+      Parte.belongsTo(models.Taller,{
+        foreignKey:'idTaller',
+        as:'parteTaller'
       })
     }
   }

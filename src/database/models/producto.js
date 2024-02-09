@@ -14,17 +14,17 @@ module.exports = (sequelize, DataTypes) => {
 
       Producto.hasMany(models.Proyecto,{
         foreignKey:'idProducto',
-        as:'productoProyecto'
+        as:'proyectoProducto'
       })
 
       Producto.hasMany(models.Historial,{
         foreignKey:'idProducto',
-        as:'historialProyecto'
+        as:'historialProducto'
       })
 
       Producto.hasMany(models.Parte,{
         foreignKey:'idProducto',
-        as:'parteProyecto'
+        as:'parteProducto'
       })
     }
   }

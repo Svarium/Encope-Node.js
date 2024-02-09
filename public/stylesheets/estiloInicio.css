@@ -78,6 +78,18 @@
     display: none;
 }
 
+.btn-link {
+    text-decoration: none !important; /* Eliminar subrayado */
+    color: inherit!important; /* Usar el color de texto predeterminado */
+    background-color: transparent!important; /* Fondo transparente */
+    border: none!important; /* Sin borde */
+    padding: 0!important; /* Sin relleno */
+    font: inherit!important; /* Usar la fuente predeterminada */
+    cursor: pointer!important; /* Cambiar el cursor a pointer */
+    outline: none!important; /* Eliminar el contorno al hacer clic */
+    display: inline!important; /* Mostrar como en línea */
+}
+
 
 
                 /* COMIENZA SECCION REDES SOCIALES */
