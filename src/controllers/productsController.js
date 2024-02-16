@@ -212,26 +212,7 @@ module.exports = {
         }).catch(errors => console.log(errors))
     },
 
-    estadisticas: (req,res) => {
-
-        const productos = db.Producto.findAll({
-            attributes: ['id', 'nombre']
-        })
-
-        const destinos = db.destinoUsuario.findAll({
-            attributes:['id', 'nombreDestino' ]
-        })
-
-        Promise.all(([productos, destinos]))
-        .then(([productos, destinos]) => {
-            return res.render('stock/estadistica',{
-                title:'Estadisticas',
-                productos,
-                destinos
-            })
-        })
-      
-    }, 
+    
 
     productsTableExcel : async (req,res) => {      
 

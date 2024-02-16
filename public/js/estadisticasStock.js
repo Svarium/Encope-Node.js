@@ -3,12 +3,15 @@ const $ = (el) => document.querySelector(el);
 const sectionKits = document.getElementById("kits");
 const sectionStocks = document.getElementById("stocksPorDestino");
 const productsInDb = document.getElementById("productos");
-const editoresIndb = document.getElementById("editores");
+const talleresInDB = document.getElementById("talleres")
+const proyectosDone = document.getElementById("proyectosDone");
 const stockGeneral = document.getElementById("tablaStockGeneral")
 
 /* const URL_API_SERVER= "https://encope.gob.ar" */
 
-const endpointURL = "https://encope.gob.ar/api/cunas/";
+/* const endpointURL = "https://encope.gob.ar/api/cunas/"; */
+
+const endpointURL = "http://localhost:3000/api/stock/";
 
 const paintKitsDone = fetch(`${endpointURL}kits`)
   .then((response) => response.json())
@@ -81,27 +84,41 @@ const paintKitsDone = fetch(`${endpointURL}kits`)
     }
   });
 
-  const paintProductosInDb = fetch(`${endpointURL}/productos`)
+  const paintProductosInDb = fetch(`${endpointURL}/getProducts`)
   .then((response) => response.json())
   .then((data) => {
-    if(data.ok){
-
+        if(data.ok){
+       
       productsInDb.innerHTML +=  `
       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Productos en Base de Datos</div>
-                          <div class="h5 mb-0 font-weight-bold text-gray-800">${data.total}</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">${data.data.productsInDB}</div>
       `
      
     }
   });
 
-  const paintEditores = fetch(`${endpointURL}/kitsOuts`)
+
+  const paintTallersInDb = fetch(`${endpointURL}/getTalleres`)
+  .then((response) => response.json())
+  .then((data) => {
+        if(data.ok){
+
+      talleresInDB.innerHTML +=  `
+      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Talleres en Base de Datos</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">${data.data.tallersInDB}</div>
+      `
+     
+    }
+  });
+
+  const paintProyectsDone = fetch(`${endpointURL}/getProyectsDone`)
   .then((response) => response.json())
   .then((data) => {
     if(data.ok){
-      editoresIndb.innerHTML += `
+      proyectosDone.innerHTML += `
       <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total de Kits Entregados
 											</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">${data.total}</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">${data.data.proyectsDone}</div>
       `
     }
   })

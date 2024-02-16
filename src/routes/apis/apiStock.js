@@ -1,5 +1,6 @@
 const express = require('express');
-const { editState, addRemanentes } = require('../../controllers/apis/apiStockControllers');
+const { editState, addRemanentes, allProducts, allTallers, allProyectsDone } = require('../../controllers/apis/apiStockControllers');
+
 const router = express.Router();
 
 //llego con api/stock
@@ -8,7 +9,11 @@ router.put('/editState/:id', editState) //edita el estado del proyecto
 
 router.put('/remanentes/:id', addRemanentes) //edita el remanente de un parte semanal
 
+router.get('/getProducts', allProducts) //me trae una consulta contando la cantidad de productos en la base de datos
 
+router.get('/getTalleres', allTallers) //me trae una consulta que me cuenta la cantidad de tallers en la base de datos
+
+router.get('/getProyectsDone', allProyectsDone) // Me trae una consulta que cuenta la cantidad de proyectos terminados
 
 
 

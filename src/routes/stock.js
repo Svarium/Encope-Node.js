@@ -1,5 +1,5 @@
 var express = require('express');
-const { list, estadisticas, newProduct, storageProduct, listProducts, editProduct, updateProduct, deleteProduct, searchProduct, productsTableExcel } = require('../controllers/productsController');
+const { list, newProduct, storageProduct, listProducts, editProduct, updateProduct, deleteProduct, searchProduct, productsTableExcel } = require('../controllers/productsController');
 const { uploadProductosFiles } = require('../middlewares/subirProductos');
 const addProductValidator = require('../validations/addProductValidator');
 const checkUserEditorIntranetCentral = require('../middlewares/checkUserEditorIntranetCentral');
@@ -11,11 +11,15 @@ const { listPartes, editParte, updateParte, avanceDeProyecto, printParte, report
 const editParteValidator = require('../validations/editParteValidator');
 const checkUserEditorIntranetUnidad = require('../middlewares/checkUserEditorIntranetUnidad');
 const checkUserAddProyect = require('../middlewares/checkUserAddProyect');
+const { estadisticas } = require('../controllers/mainController');
 
 
 var router = express.Router();
 
 // llego con /stock
+
+//accedo a la vista para ver estadisticas de los módulos
+router.get('/estadistica', estadisticas)
 
 //accedo a la vista para la carga de productos, talleres y proyectos
 router.get('/', checkUserEditorIntranetCentral, list);

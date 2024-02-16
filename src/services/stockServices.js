@@ -52,6 +52,54 @@ module.exports = {
     }
 
   },
-   
+
+  getAllProducts : async () => {
+    try {
+
+      const countProducts = await db.Producto.count()
+
+      return countProducts
+      
+    } catch (error) {
+      console.log(error);
+        throw{
+            status:500,
+            message:error.message,
+        }        
+    }
+  },
+
+  getAllTallers : async () => {
+    try {
+
+      const countTallers = await db.Taller.count()
+      return countTallers
+      
+    } catch (error) {
+      console.log(error);
+      throw{
+          status:500,
+          message:error.message,
+      }        
+    }
+  },
+
+  getProyectsDone : async () => {
+      try {
+
+        const proyectsDone = await db.Proyecto.count({where:{estado:"Finalizado"}})
+
+        return proyectsDone
+        
+      } catch (error) {
+        console.log(error);
+        throw{
+            status:500,
+            message:error.message,
+        }     
+      }
+  },
+  
+  
 
 }

@@ -26,50 +26,45 @@
 			<li class="nav-item active">
 				<a class="nav-link" href="#">
 					<i class="fas fa-fw fa-tachometer-alt"></i>
-					<span>Dashboard - Cunitas</span></a>
+					<span>Panel de Control</span></a>
 			</li>
 
 			<!-- Divider -->
 			<hr class="sidebar-divider">
 
 			<!-- Heading -->
-			<div class="sidebar-heading mb-1">Menú kits</div>
+			<div class="sidebar-heading mb-1">Menú</div>
 
 			<!-- Nav Item - Charts -->
 			<li class="nav-item">			
 				<button type="button" class="btn btn-success nav-link mb-1" data-bs-toggle="modal" data-bs-target="#tablaDeStock">
-					<span><i class="fa-solid fa-table"></i></span>Tabla de stock
+					<span><i class="fa-solid fa-table"></i></span>Tabla Proyectos
 					  </button>
 		</li>
 
 			<!-- Nav Item - Charts -->
 			<li class="nav-item">
 					<button type="button" class="btn btn-primary nav-link" data-bs-toggle="modal" data-bs-target="#kitsTerminados">
-					<span><i class="fa-solid fa-gears"></i></span>	Kits Terminados
+					<span><i class="fa-solid fa-gears"></i></span>	Tabla de Productos
 					  </button>
 			</li>
-				<!-- Nav Item - Charts -->
-				<li class="nav-item mt-1">
-					<a href="/cunas/entregarKit" class="btn btn-danger nav-link">
-					<span><i class="fa-solid fa-truck-fast"></i></span>	Entregar Kits
-					  </a>
-				</li>
+				
 				<!-- Nav Item - Pages -->
 			<li class="nav-item mt-1">
-				<button type="button" class="btn btn-dark nav-link collapsed" data-bs-toggle="modal" data-bs-target="#internosTrabajadores">
+				<button type="button" class="btn btn-danger nav-link collapsed" data-bs-toggle="modal" data-bs-target="#internosTrabajadores">
 					<i class="fa-solid fa-people-group"></i> Internos trabajadores
 				  </button>
 			</li>
 
 
 			<!-- Nav Item - Pages -->
-			<li class="nav-item">
+			<!-- <li class="nav-item">
 				<a class="nav-link collapsed" href="/cunas/retiros">
 					<i class="fa-solid fa-book"></i>
 					<span>Registro de Retiros</span>
 				</a>
 			</li>
-			
+			 -->
 
 
 			
@@ -126,9 +121,7 @@
 
 				
         <!-- Content Row Top -->
-				<div class="container-fluid mt-3">
-
-				
+				<div class="container-fluid mt-3">			
 					
 				
 					<!-- Content Row Movies-->
@@ -143,7 +136,7 @@
 											
 										</div>
 										<div class="col-auto">
-											<i class="fa-solid fa-person-breastfeeding fa-2x text-gray-300"></i>
+											<i class="fa-solid fa-paperclip fa-2x text-gray-300"></i>
 										</div>
 									</div>
 								</div>
@@ -155,9 +148,8 @@
 							<div class="card border-left-success shadow h-100 py-2">
 								<div class="card-body">
 									<div class="row no-gutters align-items-center">
-										<div class="col mr-2">
-											<div class="text-xs font-weight-bold text-success text-uppercase mb-1">Unidades y Complejos participantes</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">8</div>
+										<div class="col mr-2" id="talleres">
+											
 										</div>
 										<div class="col-auto">
 											<i class="fa-solid fa-gear fa-2x text-gray-300"></i>
@@ -172,55 +164,28 @@
 							<div class="card border-left-warning shadow h-100 py-2">
 								<div class="card-body">
 									<div class="row no-gutters align-items-center">
-										<div class="col mr-2" id="editores">
+										<div class="col mr-2" id="proyectosDone">
 											
 										</div>
 										<div class="col-auto">
-											<i class="fas fa-truck fa-2x text-gray-300"></i>
+											<i class="fa-solid fa-check-to-slot fa-2x text-gray-300"></i>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<!-- End movies in Data Base -->
-
-					<div class="container-fluid">
-						<div class="row justify-content-center">
-							<div class="col-md-12">
-								<h4 class="mb-3">Retirar Stock por Destino</h4>
-								<hr>
-								<form action="/cunas/StockPorDestino" method="POST">
-									<div class="row mb-3 align-items-center"> <!-- Agregamos 'align-items-center' para centrar verticalmente -->
-										<div class="col-md-6">
-											<select class="form-control <%= (locals.errors && errors.destino) && 'is-invalid'%>" id="destino" name="destino">
-												<option value="" selected hidden>Seleccione el destino</option>
-												<% destinos.forEach(({id, nombreDestino}) => { %>
-													<% if ([2,31,27,7,3,9,4].includes(id)) { %>
-														<option value="<%= id %>"><%= nombreDestino.toUpperCase() %></option>
-													<% } %>													
-												<% }) %>
-											</select>
-											<small id="errorCantidadInicial" class="text-danger ms-2"><%= locals.errors && errors.destino ? errors.destino.msg : null %></small>
-										</div>
-										<div class="col-md-2"> <!-- Eliminamos 'align-self-center' y 'justify-content-center' -->
-											<button type="submit" class="btn btn-primary w-100 d-flex justify-content-center align-items-center mb-4">Buscar</button>
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
+					
 
 						<!-- Genres in DB -->
 						<div class="col-lg-12 mb-4">						
 							<div class="card shadow mb-4">
 								<div class="card-header py-3">
 									<div class="d-flex justify-content-between">
-										<h5 class="m-0 font-weight-bold text-gray-800">Stock de productos en CPFII</h5>
-										<button type="button" class="btn btn-outline-primary ms-3 btn-sm mt-1" onclick="window.location.href='/cunas/stockCPFII'">
+										<h5 class="m-0 font-weight-bold text-gray-800">Últimos Proyectos Agregados</h5>
+										<!-- <button type="button" class="btn btn-outline-primary ms-3 btn-sm mt-1" onclick="window.location.href='/cunas/stockCPFII'">
 											<i class="fa-solid fa-download"></i> Exportar Excel <i class="fa-solid fa-file-excel"></i>
-										</button>
+										</button> -->
 									</div>									
 								</div>
 								<div class="card-body">
@@ -235,7 +200,7 @@
 					<div class="container-fluid">
 						<div class="row justify-content-center">
 							<div class="col-md-12">
-								<h4 class="mb-3">Buscar Stock</h4>
+								<h4 class="mb-3">Buscar Proyecto</h4>
 								<hr>
 								<form action="/cunas/buscarStock" method="POST">
 									<div class="row mb-3">
@@ -369,6 +334,6 @@
     
     <%- include('../partials/scripts')  %>
     
-    <script src="/js/estadisticasCunas.js"></script>
+    <script src="/js/estadisticasStock.js"></script>
     </body>
     </html>
