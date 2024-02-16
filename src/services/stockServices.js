@@ -100,6 +100,23 @@ module.exports = {
       }
   },
   
-  
+  getLastproyects : async () => {
+    try {
+
+      const lastProyects = await db.Proyecto.findAll({
+        order:[["createdAt", "DESC"]],
+        limit:9
+      })
+
+      return lastProyects
+      
+    } catch (error) {
+      console.log(error);
+        throw{
+            status:500,
+            message:error.message,
+        }     
+    }
+  }
 
 }

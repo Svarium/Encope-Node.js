@@ -1,5 +1,5 @@
 const createResponseError = require('../../helpers/createResponseError');
-const { editProyectState, editParteSemanal, getAllProducts, getAllTallers, getProyectsDone } = require('../../services/stockServices');
+const { editProyectState, editParteSemanal, getAllProducts, getAllTallers, getProyectsDone, getLastproyects } = require('../../services/stockServices');
 
 
 module.exports = {
@@ -89,6 +89,25 @@ module.exports = {
                 data:{
                     message:"Proyectos Finalizados",
                     proyectsDone
+                }
+            })
+            
+        } catch (error) {
+            console.log(error);
+            return createResponseError(res, error)
+        }
+    },
+
+    lastProyects : async (req,res) => {
+        try {
+
+            const proyects = await getLastproyects()
+
+            return res.status(200).json({
+                ok:true,
+                data:{
+                    message: "Últimos Proyectos agregados",
+                    proyects
                 }
             })
             
