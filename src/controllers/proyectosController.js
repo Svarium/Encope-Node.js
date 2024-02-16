@@ -293,14 +293,24 @@ module.exports = {
         
     },
 
-    deleteProyect: (req,res) => {
+    deleteProyect: async (req,res) => {
+        
+
+      try {
         const id = req.params.id
 
-        db.Proyecto.destroy({
-            where:{id:id}
-        }).then(() => {
-            return res.redirect('/stock/listProyects')
-        }).catch(error => console.log(error))
+        const destroyhistorial = await db.Historial.destroy({where:{idProyecto:id}})
+
+        const destroyParte = await db.Parte.destroy({where:{idProyecto:id}})
+        
+        const destroyProyecto = await db.Proyecto.destroy({where:{id:id}})
+      
+
+        return res.redirect('/stock/listProyects')
+        
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     downloadExcelHistorial: async (req,res) => {
@@ -436,11 +446,36 @@ module.exports = {
                     }
                 },              
             }).then( proyecto => {
-            
-                return res.render('stock/proyectos/searchProyect',{
-                    title: 'Resultado de la busqueda',
-                    proyecto
-                })
+
+                db.Parte.findOne({
+                    where:{
+                        idProyecto:proyecto.id
+                    }
+                }) .then( parte => {
+                    const cantidad = parte.cantidadProducida
+
+                    const meta = parte.cantidadAProducir
+    
+                    const periodo = parte.duracion 
+    
+                    const produccionIdeal = meta / periodo
+    
+                    const produccionReal = cantidad / periodo
+    
+                    const avance = (cantidad * 100) / meta
+                
+                    return res.render('stock/proyectos/searchProyect',{
+                        title: 'Resultado de la busqueda',
+                        proyecto,
+                        cantidad,
+                        meta,
+                        periodo,
+                        produccionIdeal,
+                        produccionReal,
+                        avance,
+                        parte
+                    })
+                })               
 
             }).catch (error => console.log(error))
 

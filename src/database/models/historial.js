@@ -14,7 +14,8 @@ module.exports = (sequelize, DataTypes) => {
 
       Historial.belongsTo(models.Proyecto,{
         foreignKey:'idProyecto',
-        has:'historialProyecto'
+        has:'historialProyecto',
+        onDelete:'CASCADE'
       })
     }
   }
