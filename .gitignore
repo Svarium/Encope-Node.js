@@ -1,2 +1,6 @@
 /node_modules
 .env
+/public/images/productos
+/public/images/imagesNoticias
+/public/images/licitaciones
+/public/images/iconsProfile
