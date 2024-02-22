@@ -37,7 +37,18 @@ module.exports = (sequelize, DataTypes) => {
     nombre: DataTypes.STRING,
     expediente: DataTypes.STRING,
     idDestino: DataTypes.INTEGER,
-    detalle: DataTypes.STRING
+    detalle: DataTypes.STRING,
+    estado:{
+      type: DataTypes.STRING,
+      defaultValue:"En Proceso de Aprobación",
+      validate:{
+        isIn:{
+          args: [["Aprobado", "De Baja", "En Proceso de Aprobación"]],
+          msg:"Los estados validos son Pendiente y Finalizado"
+        },
+      },
+    },
+    observaciones:DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Taller',

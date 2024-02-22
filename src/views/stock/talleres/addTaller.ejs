@@ -49,8 +49,8 @@
         <!-- FORMULARIO AGREGAR TALLER -->
 
 
-        <div class="container shadow">
-          <form action="/stock/newTaller" method="POST">
+        <div class="container shadow ">
+          <form action="/stock/newTaller" method="POST" class="mb-5">
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="nombre">Nombre</label>
@@ -73,6 +73,7 @@
                 <small id="errorDetalle" class="text-danger ms-2"><%= locals.errors && errors.detalle ? errors.detalle.msg : null %></small>               
               </div>                                       
             </div>
+          
             <div class="form-row">
                 <div class="form-group col-md-12">
                     <label for="expediente">Expediente</label>
@@ -80,17 +81,27 @@
                     <small id="errorNombre" class="text-danger ms-2"><%= locals.errors && errors.expediente ? errors.expediente.msg : null %></small>
                   </div>                   
             </div>
-            <button type="submit" class="btn btn-primary mb-3">Enviar</button>
+
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="observaciones">Observaciones</label>
+                <textarea name="observaciones" class="form-control <%= (locals.errors && errors.observaciones) && 'is-invalid'%>" id="observaciones" placeholder="Ingrese las observaciones" value="<%= (locals.old && old.observaciones) && old.observaciones %>"></textarea>    
+                <small id="errorobservaciones" class="text-danger ms-2"><%= locals.errors && errors.observaciones ? errors.observaciones.msg : null %></small>   
+                </div>                   
+          </div>
+            
+            <button type="submit" class="btn btn-primary mb-3 me-2">Agregar</button>
+            <a href="/stock"><button type="button" class="btn btn-danger mb-3">Cancelar</button></a>
           </form>
         </div>
 
     </main>
 
-    <%- include('../../partials/scripts') %>
+   
 
-    <script
+    <!-- <script
       src="//code.tidio.co/hlix5kfat3m92rb4tfebsyogegqfbmo3.js"
       async
-    ></script>
+    ></script> -->
   </body>
 </html>

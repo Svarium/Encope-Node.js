@@ -28,6 +28,13 @@ module.exports = {
       detalle: {
         type: Sequelize.STRING
       },
+      estado:{
+        type: Sequelize.STRING,
+        allowNull:false
+      },
+      observaciones:{
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -69,6 +69,7 @@
                     <th scope="col">Taller</th>
                     <th scope="col">Detalle</th>
                     <th scope="col">Expediente</th>
+                    <th scope="col">Estado</th>
                     <th scope="col">Creado</th>
                     <th scope="col">Destino</th>
                     <th scope="col">Acciones</th>
@@ -80,6 +81,7 @@
                         <td class="text-center"><%= item.nombre %></td>
                         <td><%= item.detalle %></td>
                         <td><%= item.expediente %></td>
+                        <td><%= item.estado %></td>
                         <td><%= new Intl.DateTimeFormat('es-AR', {
                           year: 'numeric',
                           month: 'long',
@@ -124,8 +126,8 @@ deleteForms.forEach(form => {
         event.preventDefault();
 
         Swal.fire({
-            title: "¿Seguro quieres borrar el producto?",
-            text: "Chequea bien el producto que deseas eliminar",
+            title: "¿Seguro quieres borrar el taller?",
+            text: "Chequea bien el taller que deseas eliminar",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",

@@ -44,13 +44,15 @@ module.exports = {
 
         if (errors.isEmpty()) {
             
-            const {nombre, destino, detalle, expediente} = req.body
+            const {nombre, destino, detalle, expediente, observaciones} = req.body
 
             db.Taller.create({
                 nombre:nombre.trim(),
                 idDestino:destino,
                 detalle:detalle.trim(),
                 expediente:expediente,
+                estado:"En Proceso de Aprobación",
+                observaciones: observaciones.trim()
             })
             .then(() => {
                return res.redirect('/stock/talleresTable')
@@ -95,7 +97,7 @@ module.exports = {
 
         const errors = validationResult(req);
         const id = req.params.id;
-        const {nombre, destino, detalle, expediente } = req.body
+        const {nombre, destino, detalle, expediente, estado, observaciones } = req.body
         
         if(errors.isEmpty()) {
 
@@ -103,7 +105,9 @@ module.exports = {
                 nombre: nombre.trim(),
                 idDestino: destino,
                 detalle:detalle.trim(),
-                expediente:expediente
+                expediente:expediente,
+                estado: estado,
+                observaciones: observaciones.trim()
             },{
                 where:{id:id}
             }).then(() => {

@@ -38,5 +38,19 @@ module.exports = [
             })
         }      
        
+    }),
+
+    check('estado')
+    .custom((value, {req}) => {
+        if(!req.params.id){
+            return true
+        } else {
+            if(!value){
+                throw new Error('Debes actualizar el estado')
+            }
+            return true            
+        }
     })
+
+    
 ]

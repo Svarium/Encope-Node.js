@@ -74,23 +74,39 @@
               </div>                                       
             </div>
             <div class="form-row">
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-6">
                     <label for="expediente">Expediente</label>
                     <input type="text" class="form-control <%= (locals.errors && errors.expediente) && 'is-invalid'%>" id="expediente" name="expediente" placeholder="Ingrese n° de expediente" value="<%= taller.expediente %>">
                     <small id="errorNombre" class="text-danger ms-2"><%= locals.errors && errors.expediente ? errors.expediente.msg : null %></small>
-                  </div>                   
+                  </div>        
+                  <div class="form-group col-md-6">
+                    <label for="expediente">Estado del Taller</label>
+                    <select id="estado" class="form-control rounded <%= (locals.errors && errors.estado) && 'is-invalid'%>" name="estado">
+                                       
+                      <option value="En Proceso de Aprobación" selected>En Proceso de Aprobación</option>   
+                      <option value="Aprobado">Aprobado</option>   
+                      <option value="De Baja">De Baja</option>                     
+                  </select>
+                    <small id="errorEstado" class="text-danger ms-2"><%= locals.errors && errors.estado ? errors.estado.msg : null %></small>
+                  </div>              
             </div>
-            <button type="submit" class="btn btn-primary mb-3">Enviar</button>
+            
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="observaciones">Observaciones</label>
+                <textarea name="observaciones" class="form-control <%= (locals.errors && errors.observaciones) && 'is-invalid'%>" id="observaciones" placeholder="Ingrese las observaciones" value="<%= (locals.old && old.observaciones) && old.observaciones %>"></textarea>    
+                <small id="errorobservaciones" class="text-danger ms-2"><%= locals.errors && errors.observaciones ? errors.observaciones.msg : null %></small>   
+                </div>                   
+          </div>
+          <button type="submit" class="btn btn-primary mb-3 me-2">Editar</button>
+          <a href="/stock/talleresTable"><button type="button" class="btn btn-danger mb-3">Cancelar</button></a>
           </form>
         </div>
 
     </main>
 
-    <%- include('../../partials/scripts') %>
+  
 
-    <script
-      src="//code.tidio.co/hlix5kfat3m92rb4tfebsyogegqfbmo3.js"
-      async
-    ></script>
+   
   </body>
 </html>
