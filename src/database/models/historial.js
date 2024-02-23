@@ -36,7 +36,14 @@ module.exports = (sequelize, DataTypes) => {
         as:'historialFicha',
         onDelete:'CASCADE'
       })
+
+
+      Historial.hasMany(models.proyectoProducto,{
+        foreignKey:'historialId',
+        has:'historial'
+      }) 
     }
+    
 
   }
   Historial.init({
@@ -44,12 +51,11 @@ module.exports = (sequelize, DataTypes) => {
     expediente: DataTypes.STRING,
     idTaller: DataTypes.INTEGER,
     detalle: DataTypes.STRING,
-    cantidadAProducir: DataTypes.INTEGER,
+    cantidadTotal: DataTypes.INTEGER,
     procedencia: DataTypes.STRING,
     duracion: DataTypes.INTEGER,
-    unidadDuracion: DataTypes.STRING,
-    costoTotal: DataTypes.INTEGER,
-    costoUnitario: DataTypes.INTEGER,
+    unidadDuracion: DataTypes.STRING, 
+    costoTotalProyecto: DataTypes.INTEGER,   
     idProducto: DataTypes.INTEGER,
     idProyecto: DataTypes.INTEGER,
     idFicha: DataTypes.INTEGER,

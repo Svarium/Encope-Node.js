@@ -20,7 +20,12 @@ module.exports = (sequelize, DataTypes) => {
       Proyecto.hasMany(models.Parte,{
         foreignKey:'idProyecto',
         has:'parteProyecto'
-      })     
+      })  
+      
+      Proyecto.hasMany(models.proyectoProducto,{
+        foreignKey:'proyectoId',
+        has:'parteProyecto'
+      }) 
 
       Proyecto.belongsTo(models.Producto,{
         foreignKey:'idProducto',
@@ -47,13 +52,12 @@ module.exports = (sequelize, DataTypes) => {
     nombre: DataTypes.STRING,
     expediente: DataTypes.STRING,
     idTaller: DataTypes.INTEGER,
-    cantidadAProducir: DataTypes.INTEGER,
+    cantidadTotal: DataTypes.INTEGER,
     detalle: DataTypes.STRING,
     procedencia: DataTypes.STRING,
     duracion: DataTypes.INTEGER,
     unidadDuracion: DataTypes.STRING,
-    costoTotal: DataTypes.INTEGER,
-    costoUnitario: DataTypes.INTEGER,
+    costoTotalProyecto: DataTypes.INTEGER,
     idProducto: DataTypes.INTEGER,
     idFicha: DataTypes.INTEGER,
     insumos:DataTypes.STRING,

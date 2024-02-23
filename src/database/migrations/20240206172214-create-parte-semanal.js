@@ -27,10 +27,7 @@ module.exports = {
       },
       detalle: {
         type: Sequelize.STRING
-      },
-      cantidadAProducir: {
-        type: Sequelize.INTEGER
-      },
+      },     
       procedencia: {
         type: Sequelize.STRING
       },
@@ -39,12 +36,6 @@ module.exports = {
       },
       unidadDuracion: {
         type: Sequelize.STRING
-      },
-      costoTotal: {
-        type: Sequelize.INTEGER
-      },
-      costoUnitario: {
-        type: Sequelize.INTEGER
       },
       idProducto: {
         type: Sequelize.INTEGER,
@@ -72,21 +63,7 @@ module.exports = {
           },
           key:"id"
         }
-      },
-      cantidadProducida: {
-        allowNull:true,
-        type: Sequelize.INTEGER
-      },
-      restanteAProducir: {
-        type: Sequelize.INTEGER
-      },
-      stockEnTaller: {
-        type: Sequelize.INTEGER
-      },
-      egresos: {
-        allowNull:true,
-        type: Sequelize.INTEGER
-      },
+      },      
       observaciones: {
         allowNull:true,
         type: Sequelize.STRING

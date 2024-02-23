@@ -36,26 +36,25 @@ module.exports = (sequelize, DataTypes) => {
         as:'parteFicha',
         onDelete:'CASCADE'
       })
+
+
+      Parte.hasMany(models.proyectoProducto,{
+        foreignKey:'parteId',
+        has:'parte'
+      }) 
     }
   }
   Parte.init({
     nombre: DataTypes.STRING,
     expediente: DataTypes.STRING,
     idTaller: DataTypes.INTEGER,
-    detalle: DataTypes.STRING,
-    cantidadAProducir: DataTypes.INTEGER,
+    detalle: DataTypes.STRING,    
     procedencia: DataTypes.STRING,
     duracion: DataTypes.INTEGER,
-    unidadDuracion: DataTypes.STRING,
-    costoTotal: DataTypes.INTEGER,
-    costoUnitario: DataTypes.INTEGER,
+    unidadDuracion: DataTypes.STRING,   
     idProducto: DataTypes.INTEGER,
     idProyecto: DataTypes.INTEGER,
-    idFicha: DataTypes.INTEGER,
-    cantidadProducida: DataTypes.INTEGER,
-    restanteAProducir: DataTypes.INTEGER,
-    stockEnTaller: DataTypes.INTEGER,
-    egresos: DataTypes.INTEGER,
+    idFicha: DataTypes.INTEGER,   
     observaciones: DataTypes.STRING,
     remanentes: DataTypes.STRING
   }, {
