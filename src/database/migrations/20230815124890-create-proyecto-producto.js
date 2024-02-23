@@ -12,7 +12,7 @@ module.exports = {
       proyectoId: {
         type: Sequelize.INTEGER,
         references:{
-          model:'Proyecto',
+          model:'Proyectos',
           key:'id'
         },
         allowNull:false,
@@ -20,24 +20,24 @@ module.exports = {
       productoId: {
         type: Sequelize.INTEGER,
         references:{
-          model:'Producto',
-          key:id
+          model:'Productos',
+          key:'id'
         },
         allowNull:false,
       },
       historialId:{
         type: Sequelize.INTEGER,
         references:{
-          model:'Historial',
-          as:'historial'
+          model:'Historials',
+          key:'id'
         },
         allowNull:false
       },
-      partelId:{
+      parteId:{
         type: Sequelize.INTEGER,
         references:{
-          model:'Parte',
-          as:'parte'
+          model:'Partes',
+          key:'id'
         },
         allowNull:false
       },
