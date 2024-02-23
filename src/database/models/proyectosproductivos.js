@@ -20,6 +20,25 @@ module.exports = (sequelize, DataTypes) => {
       Proyecto.hasMany(models.Parte,{
         foreignKey:'idProyecto',
         has:'parteProyecto'
+      })     
+
+      Proyecto.belongsTo(models.Producto,{
+        foreignKey:'idProducto',
+        as:'proyectoProducto',
+        onDelete:'CASCADE'
+        
+      })
+
+      Proyecto.belongsTo(models.Taller,{
+        foreignKey:'idTaller',
+        as:'proyectoTaller',
+        onDelete:'CASCADE'
+      })
+
+      Proyecto.belongsTo(models.Ficha,{
+        foreignKey:'idFicha',
+        as:'proyectoFicha',
+        onDelete:'CASCADE'
       })
 
     }
@@ -36,6 +55,7 @@ module.exports = (sequelize, DataTypes) => {
     costoTotal: DataTypes.INTEGER,
     costoUnitario: DataTypes.INTEGER,
     idProducto: DataTypes.INTEGER,
+    idFicha: DataTypes.INTEGER,
     insumos:DataTypes.STRING,
     estado:{
       type: DataTypes.STRING,

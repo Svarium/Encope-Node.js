@@ -12,6 +12,9 @@ const editParteValidator = require('../validations/editParteValidator');
 const checkUserEditorIntranetUnidad = require('../middlewares/checkUserEditorIntranetUnidad');
 const checkUserAddProyect = require('../middlewares/checkUserAddProyect');
 const { estadisticas } = require('../controllers/mainController');
+const { addFicha, storeFicha, listFichas } = require('../controllers/fichasController');
+const { uploadFichasFiles } = require('../middlewares/subirFicha');
+const addFichaValidator = require('../validations/addFichaValidator');
 
 
 var router = express.Router();
@@ -72,9 +75,17 @@ router.get('/searchProyect',checkUserEditorIntranetCentral, searchProyect)
 router.get('/partes', checkUserEditorIntranetUnidad , listPartes)
 router.get('/partes/:id',checkUserEditorIntranetUnidad, editParte)
 router.put('/partes/:id',checkUserEditorIntranetUnidad, editParteValidator ,updateParte)
-router.get('/parte/:id', printParte)
+router.get('/parte/:id',checkUserEditorIntranetUnidad, printParte)
+router.get('/reporte/:id',checkUserEditorIntranetUnidad, reporteViaEmail)
 
-router.get('/reporte/:id', reporteViaEmail)
+
+/* FICHA TECNICA CRUD */
+
+router.get('/listFichas', listFichas)
+router.get('/fichas', addFicha )
+router.post('/fichas', uploadFichasFiles.single('ficha'),addFichaValidator, storeFicha)
+router.put('/fichas/:id',)
+router.delete('/fichas/:id',)
 
 
 module.exports = router;

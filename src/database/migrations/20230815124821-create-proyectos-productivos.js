@@ -55,6 +55,15 @@ module.exports = {
           key:"id"
         }
       },
+      idFicha:{
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: "Fichas"
+          },
+          key:"id"
+        }
+      },
       insumos: {
         type: Sequelize.STRING
       },

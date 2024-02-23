@@ -20,12 +20,21 @@ module.exports = (sequelize, DataTypes) => {
 
       Parte.belongsTo(models.Producto,{
         foreignKey:'idProducto',
-        as:'parteProducto'
+        as:'parteProducto',
+        onDelete:'CASCADE'
+        
       })
 
       Parte.belongsTo(models.Taller,{
         foreignKey:'idTaller',
-        as:'parteTaller'
+        as:'parteTaller',
+        onDelete:'CASCADE'
+      })
+
+      Parte.belongsTo(models.Ficha,{
+        foreignKey:'idFicha',
+        as:'parteFicha',
+        onDelete:'CASCADE'
       })
     }
   }
@@ -42,6 +51,7 @@ module.exports = (sequelize, DataTypes) => {
     costoUnitario: DataTypes.INTEGER,
     idProducto: DataTypes.INTEGER,
     idProyecto: DataTypes.INTEGER,
+    idFicha: DataTypes.INTEGER,
     cantidadProducida: DataTypes.INTEGER,
     restanteAProducir: DataTypes.INTEGER,
     stockEnTaller: DataTypes.INTEGER,

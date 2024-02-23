@@ -17,7 +17,27 @@ module.exports = (sequelize, DataTypes) => {
         has:'historialProyecto',
         onDelete:'CASCADE'
       })
+
+
+      Historial.belongsTo(models.Producto,{ //editar relacion 
+        foreignKey:'idProducto',
+        as:'historialProducto',
+        onDelete:'CASCADE'
+      })
+
+      Historial.belongsTo(models.Taller,{
+        foreignKey:'idTaller',
+        as:'historialTaller',
+        onDelete:'CASCADE'
+      })
+
+      Historial.belongsTo(models.Ficha,{
+        foreignKey:'idFicha',
+        as:'historialFicha',
+        onDelete:'CASCADE'
+      })
     }
+
   }
   Historial.init({
     nombre: DataTypes.STRING,
@@ -32,6 +52,7 @@ module.exports = (sequelize, DataTypes) => {
     costoUnitario: DataTypes.INTEGER,
     idProducto: DataTypes.INTEGER,
     idProyecto: DataTypes.INTEGER,
+    idFicha: DataTypes.INTEGER,
     insumos:DataTypes.STRING,
     estado:{
       type: DataTypes.STRING,

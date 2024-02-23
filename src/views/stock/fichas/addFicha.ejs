@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../../partials/head') %>
+
+  <body style="background-color: rgb(243, 241, 238)">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-3">
+      <div class="container">
+        <button
+          class="navbar-toggler d-lg-none"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapsibleNavId"
+          aria-controls="collapsibleNavId"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <button
+          class="btn btn-transparent"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasRight"
+          aria-controls="offcanvasRight"
+        >
+          <img
+            id="userIconProfile"
+            src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>"
+            class="iconProfile me-2"
+            alt=""
+          />
+          <%= userLogin.name %> <i class="fa-solid fa-caret-down fa-lg"></i>
+        </button>       
+    </nav>
+
+    <main>
+      <%- include('../../partials/modals') %> <%- include('../../partials/canvasMenu')
+      %>
+
+
+      <!-- TITULO H1 -->
+      <div class="container-fluid mt-4">
+        <p class="text-black h2 text-center shadow-3">
+          <strong>Agregar una nueva Ficha Técnica +</strong>
+        </p>
+        <hr class="text-black" />        
+    
+
+        <!-- FORMULARIO AGREGAR FICHA -->
+
+
+        <div class="container shadow">
+          <form action="/stock/fichas" method="POST" enctype="multipart/form-data">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control <%= (locals.errors && errors.nombre) && 'is-invalid'%>" id="nombre" name="nombre" placeholder="Ingrese su nombre" value="<%= (locals.old && old.nombre) && old.nombre %>">
+                <small id="errorNombre" class="text-danger ms-2"><%= locals.errors && errors.nombre ? errors.nombre.msg : null %></small>
+              </div>
+              <div class="form-group col-md-6">                
+                <label for="expediente">Expediente</label>
+                  <input type="text" class="form-control <%= (locals.errors && errors.expediente) && 'is-invalid'%>" id="expediente" name="expediente" placeholder="Ingrese n° de expediente" value="<%= (locals.old && old.expediente) && old.expediente %>">
+                  <small id="errorNombre" class="text-danger ms-2"><%= locals.errors && errors.expediente ? errors.expediente.msg : null %></small>
+              </div>
+              <div class="form-group col-md-12">
+                <label for="ficha">Subir ficha</label>
+                <input type="file" name="ficha" class="form-control rounded <%= (locals.errors && errors._undefined) && 'is-invalid'%>" id="ficha">
+                <small id="errorficha" class="text-danger ms-2"><%= locals.errors && errors._undefined ? errors._undefined.msg : null %></small>  
+              </div>
+              <small id="errorficha" class="text-danger ms-2"><%= locals.errors && errors.ficha ? errors.ficha.msg : null %></small>
+            </div>
+           
+            <button type="submit" class="btn btn-primary mb-3">Enviar</button>
+          </form>
+        </div>
+
+    </main>
+
+    <%- include('../../partials/scripts') %>
+
+    <script
+      src="//code.tidio.co/hlix5kfat3m92rb4tfebsyogegqfbmo3.js"
+      async
+    ></script>
+  </body>
+</html>
