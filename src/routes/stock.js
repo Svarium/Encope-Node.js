@@ -81,12 +81,12 @@ router.get('/reporte/:id',checkUserEditorIntranetUnidad, reporteViaEmail)
 
 /* FICHA TECNICA CRUD */
 
-router.get('/listFichas', listFichas)
-router.get('/fichas', addFicha )
-router.post('/fichas', uploadFichasFiles.single('ficha'),addFichaValidator, storeFicha)
-router.get('/fichas/:id', editFicha)
-router.put('/fichas/:id',uploadFichasFiles.single('ficha'),addFichaValidator, updateFicha)
-router.delete('/fichas/:id', deleteFicha)
+router.get('/listFichas',checkUserEditorIntranetUnidad, listFichas)
+router.get('/fichas',checkUserEditorIntranetUnidad, addFicha )
+router.post('/fichas', uploadFichasFiles.single('ficha'),addFichaValidator,checkUserEditorIntranetUnidad ,storeFicha)
+router.get('/fichas/:id',checkUserEditorIntranetUnidad, editFicha)
+router.put('/fichas/:id',uploadFichasFiles.single('ficha'),addFichaValidator, checkUserEditorIntranetUnidad,updateFicha)
+router.delete('/fichas/:id',checkUserEditorIntranetUnidad, deleteFicha)
 
 
 module.exports = router;
