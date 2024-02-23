@@ -35,8 +35,9 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto"> <!-- 'ms-auto' para alinear a la derecha -->
             <li class="nav-item">
-              <a class="nav-link" href="/stock">Regresar</a>
+              <a class="nav-link" href="/stock/partes">Regresar</a>
             </li>
+         
           </ul>
         </div>
       </div>    
@@ -57,12 +58,10 @@
       
 
      
-      <!-- TABLA DE PRODUCTOS -->
+      <!-- TABLA DE FICHAS -->
   
       <div class="container-fluid">
-        <button type="button" class="btn btn-outline-primary ms-3 btn-sm mt-1 mb-2" onclick="window.location.href='/stock/ProductsTable'">
-          <i class="fa-solid fa-download"></i>Exportar Excel</i>
-        </button><br> 
+         
         <table class="table">
             <thead>
                 <tr>
@@ -77,13 +76,14 @@
                     <tr>
                         <td class="text-center"><%= item.nombre %></td>
                         <td><%= item.expediente %></td>                    
-                        <td></td>
+                        <td><a class="btn btn-primary" href="/images/fichasTecnicas/<%= item.archivo %>" target="_blank"><i class="fa-brands fa-readme"></i>
+                        </td>
                         <td>
                             <!-- Enlace para editar -->
-                            <a href="/stock/editProduct/<%= item.id %>"><button class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></button></a>
+                            <a href="/stock/fichas/<%= item.id %>"><button class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></button></a>
                             
                             <!-- Formulario para eliminar -->
-                            <form action="/stock/delete/<%= item.id %>?_method=DELETE" method="POST" class="deleteProductForm">
+                            <form action="/stock/fichas/<%= item.id %>?_method=DELETE" method="POST" class="deleteFichasForm">
                               <button type="submit" class="btn btn-danger mt-2"><i class="fa-solid fa-trash"></i></button>
                           </form>
                         </td>
@@ -105,15 +105,15 @@
     ></script>
 
     <script>
-      const deleteForms = document.querySelectorAll('.deleteProductForm');
+      const deleteForms = document.querySelectorAll('.deleteFichasForm');
 
 deleteForms.forEach(form => {
     form.addEventListener('submit', function (event) {
         event.preventDefault();
 
         Swal.fire({
-            title: "Seguro quieres borrar el producto??",
-            text: "Chequea bien el producto que deseas eliminar",
+            title: "Seguro quieres borrar la Ficha Técnica??",
+            text: "Chequea bien la ficha que deseas eliminar",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",

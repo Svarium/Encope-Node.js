@@ -12,7 +12,7 @@ const editParteValidator = require('../validations/editParteValidator');
 const checkUserEditorIntranetUnidad = require('../middlewares/checkUserEditorIntranetUnidad');
 const checkUserAddProyect = require('../middlewares/checkUserAddProyect');
 const { estadisticas } = require('../controllers/mainController');
-const { addFicha, storeFicha, listFichas } = require('../controllers/fichasController');
+const { addFicha, storeFicha, listFichas, editFicha, updateFicha, deleteFicha } = require('../controllers/fichasController');
 const { uploadFichasFiles } = require('../middlewares/subirFicha');
 const addFichaValidator = require('../validations/addFichaValidator');
 
@@ -84,8 +84,9 @@ router.get('/reporte/:id',checkUserEditorIntranetUnidad, reporteViaEmail)
 router.get('/listFichas', listFichas)
 router.get('/fichas', addFicha )
 router.post('/fichas', uploadFichasFiles.single('ficha'),addFichaValidator, storeFicha)
-router.put('/fichas/:id',)
-router.delete('/fichas/:id',)
+router.get('/fichas/:id', editFicha)
+router.put('/fichas/:id',uploadFichasFiles.single('ficha'),addFichaValidator, updateFicha)
+router.delete('/fichas/:id', deleteFicha)
 
 
 module.exports = router;
