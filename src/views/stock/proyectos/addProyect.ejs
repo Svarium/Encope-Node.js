@@ -2,6 +2,7 @@
 <html lang="en">
   <%- include('../../partials/head') %>
 
+
   <body style="background-color: rgb(243, 241, 238)">
     <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-3">
       <div class="container">
@@ -46,11 +47,10 @@
         <hr class="text-black" />        
     
 
-        <!-- FORMULARIO AGREGAR TALLER -->
-
+        <!-- FORMULARIO AGREGAR PROYECTO -->
 
         <div class="container shadow">
-          <form action="/stock/newProyect" method="POST">
+          <form action="/stock/newProyect" method="POST" enctype="multipart/form-data" >
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="nombre">Nombre</label>
@@ -76,35 +76,44 @@
                 <small id="errorNombre" class="text-danger "><%= locals.errors && errors.destino ? errors.destino.msg : null %></small>
               </div>  
 
-              <div class="form-group col-md-6">
-                <label for="destino">Producto</label>
-                <select id="destino" class="form-control rounded <%= (locals.errors && errors.producto) && 'is-invalid'%>" name="producto">
-                  <option value="" selected hidden>Seleccione el producto...</option>
-                    <% productos.forEach(({nombre, id}) => { %>
-                    <option value="<%= id %>"> <%= nombre %> </option>
-                    <% }) %>
-              </select>
-                <small id="errorDetalle" class="text-danger ms-2"><%= locals.errors && errors.producto ? errors.producto.msg : null %></small>               
-              </div>     
-
               
-            <div class="form-group col-md-6">
-              <label for="cantidad">Cantidad a producir</label>
-              <input type="number" class="form-control <%= (locals.errors && errors.cantidad) && 'is-invalid'%>" id="cantidad" name="cantidad" placeholder="Ingrese cantidad a producir" value="<%= (locals.old && old.cantidad) && old.cantidad %>">
-              <small id="errorcantidad" class="text-danger ms-2"><%= locals.errors && errors.cantidad ? errors.cantidad.msg : null %></small>
+              <div class="form-group col-md-6">
+                <label for="destino">Elija el/los Productos</label>
+                <select id="producto" class="form-control rounded <%= (locals.errors && errors.producto) && 'is-invalid'%>" >
+                    <option value="" selected hidden>Seleccione el producto...</option>
+                    <% productos.forEach(({nombre, id}) => { %>
+                        <option value="<%= id %>"> <%= nombre %> </option>
+                    <% }) %>
+                </select>
+                <small id="errorDetalle" class="text-danger ms-2"><%= locals.errors && errors.producto ? errors.producto.msg : null %></small>
             </div>
 
-            <div class="form-group col-md-6">
-              <label for="costoUnitario">Costo Unitario</label>
-              <input type="number" class="form-control <%= (locals.errors && errors.costoUnitario) && 'is-invalid'%>" id="costoUnitario" name="costoUnitario" placeholder="Ingrese el costo unitario" value="<%= (locals.old && old.costoUnitario) && old.costoUnitario %>">
-              <small id="errorcostoUnitario" class="text-danger ms-2"><%= locals.errors && errors.costoUnitario ? errors.costoUnitario.msg : null %></small>
-            </div>  
+           <!-- Contenedor para los campos adicionales -->
+<div class="form-group col-md-12">
+  <div class="row" id="camposExtras"></div>
+</div>
+
+<!-- Agregar campo oculto para enviar productos -->
+<input type="hidden" name="productos" id="productos" value="">
+         
             
             <div class="form-group col-md-12">
               <label for="insumos">Insumos a utilizar</label>
-              <textarea name="insumos" class="form-control <%= (locals.errors && errors.insumos) && 'is-invalid'%>" id="insumos" placeholder="Ingrese el insumos" value="<%= (locals.old && old.insumos) && old.insumos %>"></textarea>    
-              <small id="errorinsumos" class="text-danger ms-2"><%= locals.errors && errors.insumos ? errors.insumos.msg : null %></small>               
+              <input type="file" name="insumos" class="form-control rounded <%= (locals.errors && errors._undefined) && 'is-invalid'%>" id="insumos">
+              <small id="errorinsumos" class="text-danger ms-2"><%= locals.errors && errors._undefined ? errors._undefined.msg : null %></small>        
             </div>   
+
+            <div class="form-group col-md-12">
+              <label for="ficha">Ficha Técnica</label>
+              <select id="ficha" class="form-control rounded <%= (locals.errors && errors.producto) && 'is-invalid'%>" name="ficha">
+                <option value="" selected hidden>Seleccione la ficha Técnica...</option>
+                  <% fichas.forEach(({nombre, id}) => { %>
+                  <option value="<%= id %>"> <%= nombre %> </option>
+                  <% }) %>
+            </select>
+              <small id="errorDetalle" class="text-danger ms-2"><%= locals.errors && errors.producto ? errors.producto.msg : null %></small>               
+            </div>     
+
 
             <div class="form-group col-md-12">
               <label for="detalle">Detalle</label>
@@ -138,6 +147,58 @@
     </main>
 
    
-
+   
+    <script>
+      let index = 0; // Variable para llevar el seguimiento del índice de los productos seleccionados
+  
+      document.getElementById('producto').addEventListener('change', function() {
+          var productoId = this.value;
+          var productoNombre = this.options[this.selectedIndex].text; // Obtiene el nombre del producto seleccionado
+          var camposExtrasDiv = document.getElementById('camposExtras');
+  
+          // Verifica si el producto ya ha sido seleccionado
+          if (document.getElementById('campos_' + productoId)) {
+              alert('Este producto ya ha sido seleccionado');
+              return;
+          }
+  
+          // Genera los campos de cantidad y costo unitario para el producto seleccionado
+          var template = `
+              <div class="form-group col-md-6" id="campos_${productoId}">
+                  <input type="hidden" name="productos[${index}][id]" value="${productoId}">
+                  <input type="hidden" name="productos[${index}][nombre]" value="${productoNombre}">
+                  <div class="d-flex justify-content-between align-items-center">
+                      <h6>${productoNombre}</h6>
+                      <button type="button" class="btn btn-sm btn-danger" onclick="eliminarTemplate(${productoId})"><i class="fa-solid fa-delete-left"></i></button>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-6">
+                          <input type="number" class="form-control" name="productos[${index}][cantidad]" placeholder="Ingrese cantidad a producir">
+                      </div>
+                      <div class="col-md-6">
+                          <input type="number" class="form-control" name="productos[${index}][costoUnitario]" placeholder="Ingrese el costo unitario">
+                      </div>
+                  </div>
+              </div>
+          `;
+  
+          // Agrega el template al contenedor
+          camposExtrasDiv.insertAdjacentHTML('beforeend', template);
+          
+          index++; // Incrementa el índice para el próximo producto
+      });
+  
+      function eliminarTemplate(productoId) {
+          var camposExtrasDiv = document.getElementById('camposExtras');
+          var templateAEliminar = document.getElementById('campos_' + productoId);
+          camposExtrasDiv.removeChild(templateAEliminar);
+      }
+  </script>
+  
+  
+  
+  
+  
+   <%- include('../../partials/scripts') %>
   </body>
 </html>

@@ -18,8 +18,6 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey:'noticiaId',
         onDelete:'cascade'
       })
-
-
     }
   }
   Noticias.init({

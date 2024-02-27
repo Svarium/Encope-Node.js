@@ -15,6 +15,7 @@ const { estadisticas } = require('../controllers/mainController');
 const { addFicha, storeFicha, listFichas, editFicha, updateFicha, deleteFicha } = require('../controllers/fichasController');
 const { uploadFichasFiles } = require('../middlewares/subirFicha');
 const addFichaValidator = require('../validations/addFichaValidator');
+const { uploadInsumosFiles } = require('../middlewares/subirInsumos');
 
 
 var router = express.Router();
@@ -59,7 +60,7 @@ router.post('/searchTaller', checkUserEditorIntranetCentral, searchTaller)
 
 //crud proyectos
 router.get('/newProyect',checkUserAddProyect,addNewProyect) //ruta accedida por ambos roles: editores intranet central y de unidades
-router.post('/newProyect',checkUserAddProyect, addProyectValidator , storeProyect) //ruta accedida por ambos roles: editores intranet central y de unidades
+router.post('/newProyect',uploadInsumosFiles.single('insumos'),checkUserAddProyect, addProyectValidator , storeProyect) //ruta accedida por ambos roles: editores intranet central y de unidades
 router.get('/listProyects',checkUserEditorIntranetCentral, listProyects)
 router.get('/editProyect/:id',checkUserEditorIntranetCentral, editProyect)
 router.put('/editProyect/:id',checkUserEditorIntranetCentral,addProyectValidator, updateProyect)

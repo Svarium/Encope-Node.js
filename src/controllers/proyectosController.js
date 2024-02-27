@@ -37,21 +37,30 @@ module.exports = {
         const productos = db.Producto.findAll({
             attributes : ['id', 'nombre'],
         })
+        
+        const fichas = db.Ficha.findAll({
+            attributes : ['id', 'nombre']
+        })
 
-        Promise.all(([talleres,productos]))
-        .then(([talleres,productos]) =>{        
+        Promise.all(([talleres,productos, fichas]))
+        .then(([talleres,productos, fichas]) =>{        
       
             return res.render('stock/proyectos/addproyect',{
                 title:'Nuevo Proyecto',
                 talleres,
-                productos
+                productos,
+                fichas
             })
         }).catch(error => console.log(error));     
     },
 
     storeProyect : async (req,res) => {    
+
+      
    
         const errors = validationResult(req)
+      /*   return res.send(req.body) */
+        return res.send(errors.mapped())
 
         if(errors.isEmpty()){
 

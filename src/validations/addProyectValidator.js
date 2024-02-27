@@ -2,6 +2,8 @@ const {check, body} = require('express-validator');
 const db = require("../database/models")
 
 
+
+
 module.exports = [
 
     body('nombre')
@@ -40,12 +42,12 @@ module.exports = [
     check('producto')
     .notEmpty().withMessage('Debe elegir un producto'),
 
-    check('cantidad')
-    .notEmpty().withMessage('Debe ingresar una cantidad'),
-
     check('insumos')
-    .notEmpty().withMessage('Debes ingresar los insumos a utilizar').bail()
-    .isLength({min:10, max:2000}).withMessage('Los insumos deben tener entre 10 y 2000 carácteres'),
+    .notEmpty().withMessage('Debes ingresar los insumos a utilizar'),
+
+    check('ficha')
+    .notEmpty().withMessage('Debe elegir una ficha técnica'),
+  
 
     check('detalle')
     .notEmpty().withMessage('Debes ingresar la descripción del proyecto').bail()
@@ -57,6 +59,28 @@ module.exports = [
     check('unidadDuracion')
     .notEmpty().withMessage('Debes seleccionar la unidad de duración del proyecto'),
 
-    check('costoUnitario')
-    .notEmpty().withMessage('Debes ingresar el costo unitario del proyecto'),
+  
+
+    // Validaciones para campos dinámicos (cantidad y costo unitario)
+    body('productos')
+        .custom((productos, { req }) => {
+            // Verificar si se han proporcionado productos
+            if (!productos || !Array.isArray(productos) || productos.length === 0) {
+                throw new Error('Debe elegir al menos un producto');
+            }
+
+            // Verificar si algún producto tiene campos vacíos
+            const productoConCamposVacios = productos.find(producto => {
+                return !producto.cantidad || !producto.costoUnitario;
+            });
+
+            // Si encontramos algún producto con campos vacíos, lanzar un error general
+            if (productoConCamposVacios) {
+                throw new Error('Debe completar todos los campos de los productos');
+            }
+
+            // Indicar que las validaciones han pasado correctamente
+            return true;
+        })
+
 ]
