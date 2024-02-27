@@ -60,7 +60,7 @@ router.post('/searchTaller', checkUserEditorIntranetCentral, searchTaller)
 
 //crud proyectos
 router.get('/newProyect',checkUserAddProyect,addNewProyect) //ruta accedida por ambos roles: editores intranet central y de unidades
-router.post('/newProyect',uploadInsumosFiles.single('insumos'),checkUserAddProyect, addProyectValidator , storeProyect) //ruta accedida por ambos roles: editores intranet central y de unidades
+router.post('/newProyect', uploadInsumosFiles.single('insumos'), addProyectValidator , storeProyect) //ruta accedida por ambos roles: editores intranet central y de unidades
 router.get('/listProyects',checkUserEditorIntranetCentral, listProyects)
 router.get('/editProyect/:id',checkUserEditorIntranetCentral, editProyect)
 router.put('/editProyect/:id',checkUserEditorIntranetCentral,addProyectValidator, updateProyect)

@@ -19,9 +19,7 @@ module.exports = [
     .withMessage('El formato del expediente no es correcto. Ejemplo: EX-2023-114492446-APN-DS#ENCOPE').bail()
     .custom((value, {req}) => {
 
-        if(req.params.id){
-            return true
-        } else {
+       
             return db.Proyecto.findOne({
                 where:{expediente:req.body.expediente}
             }).then(expediente => {
@@ -32,18 +30,15 @@ module.exports = [
                 console.log(error);
                 return Promise.reject('El expediente ya existe en la base de datos')
             })
-        }      
+         
        
     }),
 
     check('destino')
     .notEmpty().withMessage('Debe elegir un taller'),
 
-    check('producto')
-    .notEmpty().withMessage('Debe elegir un producto'),
-
-    check('insumos')
-    .notEmpty().withMessage('Debes ingresar los insumos a utilizar'),
+  /*   check('insumos')
+    .notEmpty().withMessage('Debes ingresar los insumos a utilizar'), */
 
     check('ficha')
     .notEmpty().withMessage('Debe elegir una ficha técnica'),

@@ -27,12 +27,7 @@ module.exports = (sequelize, DataTypes) => {
         has:'parteProyecto'
       }) 
 
-      Proyecto.belongsTo(models.Producto,{
-        foreignKey:'idProducto',
-        as:'proyectoProducto',
-        onDelete:'CASCADE'
-        
-      })
+  
 
       Proyecto.belongsTo(models.Taller,{
         foreignKey:'idTaller',
@@ -57,8 +52,7 @@ module.exports = (sequelize, DataTypes) => {
     procedencia: DataTypes.STRING,
     duracion: DataTypes.INTEGER,
     unidadDuracion: DataTypes.STRING,
-    costoTotalProyecto: DataTypes.INTEGER,
-    idProducto: DataTypes.INTEGER,
+    costoTotalProyecto: DataTypes.INTEGER, 
     idFicha: DataTypes.INTEGER,
     insumos:DataTypes.STRING,
     estado:{

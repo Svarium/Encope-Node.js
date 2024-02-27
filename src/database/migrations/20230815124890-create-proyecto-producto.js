@@ -24,23 +24,7 @@ module.exports = {
           key:'id'
         },
         allowNull:false,
-      },
-      historialId:{
-        type: Sequelize.INTEGER,
-        references:{
-          model:'Historials',
-          key:'id'
-        },
-        allowNull:false
-      },
-      parteId:{
-        type: Sequelize.INTEGER,
-        references:{
-          model:'Partes',
-          key:'id'
-        },
-        allowNull:false
-      },
+      },      
       cantidadAProducir: {
         type: Sequelize.INTEGER
       },

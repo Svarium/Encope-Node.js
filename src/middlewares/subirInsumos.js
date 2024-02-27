@@ -6,7 +6,7 @@ const storageInsumosFiles = multer.diskStorage({
         callback(null, 'public/images/insumos')
     },
     filename: function (req, file, callback) {
-        callback(null, `${Date.now()}_fichas_${path.extname(file.originalname)}`)
+        callback(null, `${Date.now()}_insumos_${path.extname(file.originalname)}`)
     }
 })
 

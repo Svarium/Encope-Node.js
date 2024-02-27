@@ -54,94 +54,35 @@ module.exports = {
         }).catch(error => console.log(error));     
     },
 
-    storeProyect : async (req,res) => {    
+    storeProyect : (req,res) => {                  
+       const errors = validationResult(req);
 
+       if(req.fileValidationError){ //este if valida que solo se puedan subir extensiones (pdf)
+        errors.errors.push({
+            value : "",
+            msg : req.fileValidationError,
+            param : "pdf",
+            location : "file"
+        })
+    }
+
+          if(!req.file){  //este if valida que se suba un pdf
+        errors.errors.push({
+            value : "",
+            msg : "Debe subir el archivo",
+            param : "pdf",
+            location : "file"
+        })
+        
+    } 
+
+
+       if(errors.isEmpty()){
+        res.send(req.body)
+       }else{
+        res.send(errors.mapped())
+       }
       
-   
-        const errors = validationResult(req)
-      /*   return res.send(req.body) */
-        return res.send(errors.mapped())
-
-        if(errors.isEmpty()){
-
-            const {nombre, expediente, destino, producto, cantidad, insumos, detalle, duracion, unidadDuracion, costoUnitario} = req.body
-
-            const usuario = await db.Usuario.findOne({
-                where: {destinoId : req.session.userLogin.destinoId},
-                attributes:[],
-                include:[{
-                    model: db.destinoUsuario,
-                    as:"destino",
-                    attributes: ["nombreDestino"]
-                }]
-            })
-
-            const procedencia = usuario.destino.nombreDestino
-
-            db.Proyecto.create({
-                nombre:nombre.trim(),
-                expediente:expediente,
-                idTaller: destino,
-                cantidadAProducir: cantidad,
-                detalle:detalle.trim(),
-                insumos: insumos.trim(),
-                procedencia: procedencia,
-                duracion: duracion,
-                unidadDuracion: unidadDuracion,
-                costoTotal: cantidad * costoUnitario,
-                costoUnitario:costoUnitario,
-                idProducto: producto,
-                estado: 'Pendiente'
-            }).then(proyecto => {
-
-            db.Parte.create({
-                nombre: proyecto.nombre,
-                expediente:proyecto.expediente,
-                idTaller: proyecto.idTaller,
-                cantidadAProducir: proyecto.cantidadAProducir,
-                detalle: proyecto.detalle,
-                procedencia: proyecto.procedencia,
-                duracion: proyecto.duracion,
-                unidadDuracion: proyecto.unidadDuracion,
-                costoTotal: proyecto.costoTotal,
-                costoUnitario: proyecto.costoUnitario,
-                idProducto: proyecto.idTaller,
-                idProyecto: proyecto.id,
-                cantidadProducida: 0,
-                restanteAProducir:0,
-                egresos:0,
-                observaciones:"Sin Observaciones"
-            }).then(() => {
-                return res.redirect('/stock/listProyects')
-            }).catch(error => console.log(error))                  
-               
-            }).catch(error => console.log(error))         
-
-        } else {
-            const talleres = db.Taller.findAll({
-                attributes : ['id', 'nombre'],
-                include:[{
-                    model: db.destinoUsuario,
-                    as:'destinoTaller',
-                    attributes:['id', 'nombreDestino']
-                }],
-            })
-            const productos = db.Producto.findAll({
-                attributes : ['id', 'nombre'],
-            })
-    
-            Promise.all(([talleres,productos]))
-            .then(([talleres,productos]) =>{        
-          
-                return res.render('stock/proyectos/addproyect',{
-                    title:'Nuevo Proyecto',
-                    talleres,
-                    productos,
-                    old:req.body,
-                    errors: errors.mapped()
-                })
-            }).catch(error => console.log(error));    
-        }      
     },
 
     editProyect: (req,res) => {     
@@ -164,6 +105,7 @@ module.exports = {
             where:{id:id}
         })
 
+        
         Promise.all(([talleres,productos, proyecto]))
         .then(([talleres,productos, proyecto]) =>{        
       

@@ -12,20 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
 
-      Producto.hasMany(models.Proyecto,{
-        foreignKey:'idProducto',
-        as:'proyectoProducto'
-      })
-
-      Producto.hasMany(models.Historial,{
-        foreignKey:'idProducto',
-        as:'historialProducto'
-      })
-
-      Producto.hasMany(models.Parte,{
-        foreignKey:'idProducto',
-        as:'parteProducto'
-      })
+    
     }
   }
   Producto.init({

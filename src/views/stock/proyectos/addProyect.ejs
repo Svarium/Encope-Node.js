@@ -79,13 +79,13 @@
               
               <div class="form-group col-md-6">
                 <label for="destino">Elija el/los Productos</label>
-                <select id="producto" class="form-control rounded <%= (locals.errors && errors.producto) && 'is-invalid'%>" >
+                <select id="producto" class="form-control rounded <%= (locals.errors && errors.productos) && 'is-invalid'%>" >
                     <option value="" selected hidden>Seleccione el producto...</option>
                     <% productos.forEach(({nombre, id}) => { %>
                         <option value="<%= id %>"> <%= nombre %> </option>
                     <% }) %>
                 </select>
-                <small id="errorDetalle" class="text-danger ms-2"><%= locals.errors && errors.producto ? errors.producto.msg : null %></small>
+                <small id="errorDetalle" class="text-danger ms-2"><%= locals.errors && errors.productos ? errors.productos.msg : null %></small>
             </div>
 
            <!-- Contenedor para los campos adicionales -->
@@ -105,13 +105,13 @@
 
             <div class="form-group col-md-12">
               <label for="ficha">Ficha Técnica</label>
-              <select id="ficha" class="form-control rounded <%= (locals.errors && errors.producto) && 'is-invalid'%>" name="ficha">
+              <select id="ficha" class="form-control rounded <%= (locals.errors && errors.ficha) && 'is-invalid'%>" name="ficha">
                 <option value="" selected hidden>Seleccione la ficha Técnica...</option>
                   <% fichas.forEach(({nombre, id}) => { %>
                   <option value="<%= id %>"> <%= nombre %> </option>
                   <% }) %>
             </select>
-              <small id="errorDetalle" class="text-danger ms-2"><%= locals.errors && errors.producto ? errors.producto.msg : null %></small>               
+              <small id="errorDetalle" class="text-danger ms-2"><%= locals.errors && errors.ficha ? errors.ficha.msg : null %></small>               
             </div>     
 
 
@@ -169,7 +169,7 @@
                   <input type="hidden" name="productos[${index}][nombre]" value="${productoNombre}">
                   <div class="d-flex justify-content-between align-items-center">
                       <h6>${productoNombre}</h6>
-                      <button type="button" class="btn btn-sm btn-danger" onclick="eliminarTemplate(${productoId})"><i class="fa-solid fa-delete-left"></i></button>
+                      <button type="button" class="btn btn-sm btn-danger" onclick="eliminarTemplate(${productoId})">Quitar</button>
                   </div>
                   <div class="row">
                       <div class="col-md-6">
@@ -193,12 +193,6 @@
           var templateAEliminar = document.getElementById('campos_' + productoId);
           camposExtrasDiv.removeChild(templateAEliminar);
       }
-  </script>
-  
-  
-  
-  
-  
-   <%- include('../../partials/scripts') %>
+  </script> 
   </body>
 </html>
