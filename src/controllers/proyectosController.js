@@ -1,20 +1,33 @@
 const fs = require('fs');
 const {validationResult} = require('express-validator');
-const {hashSync} = require('bcryptjs');
-const bcrypt = require('bcrypt')
-const path = require('path');
 const { Op } = require("sequelize");
 const ExcelJS = require('exceljs');
-
 const db = require('../database/models');
-const { error } = require('console');
+
 
 module.exports = {
 
     listProyects : (req, res) => {
-
-        db.Proyecto.findAll()
+        
+        db.Proyecto.findAll({
+            include: [{
+                model: db.proyectoProducto,
+                as: "productoProyecto", 
+                include:[
+                    {
+                        model: db.Producto,
+                        as:"producto"
+                    }
+                ]             
+            },
+            {
+                model: db.Ficha,
+                as: "proyectoFicha"
+            }
+        ]
+        })
         .then(proyectos => {
+           /*  return res.send(proyectos) */
             return res.render('stock/proyectos/proyectos',{
                 title:'Proyectos Productivos',
                 proyectos
@@ -54,35 +67,133 @@ module.exports = {
         }).catch(error => console.log(error));     
     },
 
-    storeProyect : (req,res) => {                  
-       const errors = validationResult(req);
+    storeProyect: async (req, res) => {
 
-       if(req.fileValidationError){ //este if valida que solo se puedan subir extensiones (pdf)
-        errors.errors.push({
-            value : "",
-            msg : req.fileValidationError,
-            param : "pdf",
-            location : "file"
-        })
-    }
+        try {
 
-          if(!req.file){  //este if valida que se suba un pdf
-        errors.errors.push({
-            value : "",
-            msg : "Debe subir el archivo",
-            param : "pdf",
-            location : "file"
-        })
-        
-    } 
+            const errors = validationResult(req);
 
+            if (req.fileValidationError) { //este if valida que solo se puedan subir extensiones (pdf)
+                errors.errors.push({
+                    value: "",
+                    msg: req.fileValidationError,
+                    param: "pdf",
+                    location: "file"
+                })
+            }
 
-       if(errors.isEmpty()){
-        res.send(req.body)
-       }else{
-        res.send(errors.mapped())
-       }
-      
+            if (!req.file) {  //este if valida que se suba un pdf
+                errors.errors.push({
+                    value: "",
+                    msg: "Debe subir el archivo",
+                    param: "pdf",
+                    location: "file"
+                })
+            }
+
+            if (errors.isEmpty()) {
+
+                const { nombre, expediente, destino, productos, detalle, duracion, unidadDuracion, ficha } = req.body
+
+                const usuario = await db.Usuario.findOne({
+                    where: { destinoId: req.session.userLogin.destinoId },
+                    include: [{
+                        model: db.destinoUsuario,
+                        as: "destino",
+                        attributes: ["nombreDestino"]
+                    }]
+                });
+
+                const procedencia = usuario.destino.nombreDestino //obtengo la procedencia del proyecto a través del destino del usuario
+
+                const cantidadTotal = productos.reduce((total, producto) => { //obtengo la cantidad total de productos
+                    const cantidad = parseFloat(producto.cantidad) || 0;
+                    return total + cantidad
+                }, 0);
+
+                const costoTotal = productos.reduce((total, producto) => { //obtengo el costo total del proyecto
+                    const parcial = parseFloat(producto.costoUnitario) || 0;
+                    const cantidad = parseFloat(producto.cantidad) || 0;
+
+                    return total + parcial * cantidad
+                }, 0);
+
+                const proyecto = await db.Proyecto.create({
+                    nombre: nombre.trim(),
+                    expediente: expediente,
+                    idTaller: destino,
+                    cantidadTotal: cantidadTotal,
+                    detalle: detalle.trim(),
+                    insumos: req.file ? req.file.filename : null,
+                    procedencia: procedencia,
+                    duracion: duracion,
+                    unidadDuracion: unidadDuracion,
+                    costoTotalProyecto: costoTotal,
+                    estado: 'Pendiente',
+                    idFicha: ficha,
+                })
+
+                const productosFiltrados = req.body.productos.filter(producto => producto.id); // filtro el array productos para eliminar cualquier posición vacía
+
+                const proyectoProductos = await productosFiltrados.forEach(producto => {
+                    db.proyectoProducto.create({
+                        proyectoId: proyecto.id,
+                        productoId: producto.id,
+                        cantidadAProducir: producto.cantidad,
+                        costoUnitario: producto.costoUnitario,
+                        costoTotal: producto.cantidad * producto.costoUnitario,
+                    })
+                })
+
+                const parte = await db.Parte.create({
+                    nombre: nombre.trim(),
+                    expediente: expediente,
+                    idTaller: destino,
+                    detalle: detalle.trim(),
+                    procedencia: procedencia,
+                    duracion: duracion,
+                    unidadDuracion: unidadDuracion,
+                    idFicha: ficha,
+                    idProyecto: proyecto.id,
+                })
+
+                return res.redirect('/stock')
+
+            } else {
+                const talleres = db.Taller.findAll({
+                    attributes: ['id', 'nombre'],
+                    include: [{
+                        model: db.destinoUsuario,
+                        as: 'destinoTaller',
+                        attributes: ['id', 'nombreDestino']
+                    }],
+                })
+                const productos = db.Producto.findAll({
+                    attributes: ['id', 'nombre'],
+                })
+
+                const fichas = db.Ficha.findAll({
+                    attributes: ['id', 'nombre']
+                })
+
+                Promise.all(([talleres, productos, fichas]))
+                    .then(([talleres, productos, fichas]) => {
+
+                        return res.render('stock/proyectos/addproyect', {
+                            title: 'Nuevo Proyecto',
+                            talleres,
+                            productos,
+                            fichas,
+                            old: req.body,
+                            errors: errors.mapped()
+                        })
+                    }).catch(error => console.log(error));
+
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
     },
 
     editProyect: (req,res) => {     

@@ -12,21 +12,16 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
 
-      Proyecto.hasMany(models.Historial,{
-        foreignKey:'idProyecto',
-        has:'historialProyecto'
-      })
-
+ 
       Proyecto.hasMany(models.Parte,{
         foreignKey:'idProyecto',
-        has:'parteProyecto'
+        as:'parteProyecto'
       })  
       
       Proyecto.hasMany(models.proyectoProducto,{
         foreignKey:'proyectoId',
-        has:'parteProyecto'
+        as:'productoProyecto'
       }) 
-
   
 
       Proyecto.belongsTo(models.Taller,{

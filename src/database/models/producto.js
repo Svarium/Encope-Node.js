@@ -12,6 +12,12 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
 
+
+      Producto.hasMany(models.proyectoProducto, {
+        foreignKey: 'productoId',
+        as: 'producto',
+        onDelete: 'CASCADE'
+      });
     
     }
   }

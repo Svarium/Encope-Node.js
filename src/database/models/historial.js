@@ -12,36 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
 
-      Historial.belongsTo(models.Proyecto,{
-        foreignKey:'idProyecto',
-        has:'historialProyecto',
-        onDelete:'CASCADE'
-      })
-
-
-      Historial.belongsTo(models.Producto,{ //editar relacion 
-        foreignKey:'idProducto',
-        as:'historialProducto',
-        onDelete:'CASCADE'
-      })
-
-      Historial.belongsTo(models.Taller,{
-        foreignKey:'idTaller',
-        as:'historialTaller',
-        onDelete:'CASCADE'
-      })
-
-      Historial.belongsTo(models.Ficha,{
-        foreignKey:'idFicha',
-        as:'historialFicha',
-        onDelete:'CASCADE'
-      })
-
-
-      Historial.hasMany(models.proyectoProducto,{
-        foreignKey:'historialId',
-        has:'historial'
-      }) 
+         
+     
     }
     
 
@@ -55,8 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     procedencia: DataTypes.STRING,
     duracion: DataTypes.INTEGER,
     unidadDuracion: DataTypes.STRING, 
-    costoTotalProyecto: DataTypes.INTEGER,   
-    idProducto: DataTypes.INTEGER,
+    costoTotalProyecto: DataTypes.INTEGER, 
     idProyecto: DataTypes.INTEGER,
     idFicha: DataTypes.INTEGER,
     insumos:DataTypes.STRING,

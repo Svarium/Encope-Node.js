@@ -17,13 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         as:'parteProyecto',
         onDelete:'CASCADE'
       })
-
-      Parte.belongsTo(models.Producto,{
-        foreignKey:'idProducto',
-        as:'parteProducto',
-        onDelete:'CASCADE'
-        
-      })
+  
 
       Parte.belongsTo(models.Taller,{
         foreignKey:'idTaller',
@@ -37,11 +31,7 @@ module.exports = (sequelize, DataTypes) => {
         onDelete:'CASCADE'
       })
 
-
-      Parte.hasMany(models.proyectoProducto,{
-        foreignKey:'parteId',
-        has:'parte'
-      }) 
+     
     }
   }
   Parte.init({
@@ -51,8 +41,7 @@ module.exports = (sequelize, DataTypes) => {
     detalle: DataTypes.STRING,    
     procedencia: DataTypes.STRING,
     duracion: DataTypes.INTEGER,
-    unidadDuracion: DataTypes.STRING,   
-    idProducto: DataTypes.INTEGER,
+    unidadDuracion: DataTypes.STRING,       
     idProyecto: DataTypes.INTEGER,
     idFicha: DataTypes.INTEGER,   
     observaciones: DataTypes.STRING,

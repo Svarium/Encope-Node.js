@@ -45,16 +45,7 @@ module.exports = {
       },
       costoUnitario: {
         type: Sequelize.INTEGER
-      },
-      idProducto: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: {
-            tableName: "Productos"
-          },
-          key:"id"
-        }
-      },
+      },     
       idFicha:{
         type: Sequelize.INTEGER,
         references: {

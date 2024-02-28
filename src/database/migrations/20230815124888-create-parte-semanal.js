@@ -36,16 +36,7 @@ module.exports = {
       },
       unidadDuracion: {
         type: Sequelize.STRING
-      },
-      idProducto: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: {
-            tableName: "Productos"
-          },
-          key:"id"
-        }
-      },
+      },     
       idFicha:{
         type: Sequelize.INTEGER,
         references: {

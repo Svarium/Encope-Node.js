@@ -72,8 +72,7 @@
                     <th scope="col">Expediente</th>
                     <th scope="col">Procedencia</th>
                     <th scope="col">Duración</th>
-                    <th scope="col">Cantidad a producir</th>
-                    <th scope="col">Costo unitario</th>
+                    <th scope="col">Producto/s</th>               
                     <th scope="col">Costo total</th>
                     <th scope="col">Acciones</th>
                 </tr>
@@ -113,30 +112,49 @@
                       <%= item.unidadDuracion %>
                   </td>
                   <td>
-                    <%= item.cantidadAProducir %>
-                  </td>
-                  <td>$ <%= item.costoUnitario %>
-                  </td>
-                  <td>$ <%= item.costoTotal %>
+                  <% item.productoProyecto.forEach(item => { %>
+                  <strong> <%= item.cantidadAProducir  %> - <%= item.producto.nombre  %> - $ <%= item.costoUnitario  %> c/u</strong><hr>
+                  <% }) %>
+                  </td>                 
+                  <td>$ <%= item.costoTotalProyecto %>
                   </td>
                   <td>
-                    <div class="d-flex align-content-center justify-content-center gap-1">
-                      <!-- Enlace para editar -->
-                      <a href="/stock/editProyect/<%= item.id %>"><button class="btn btn-success"><i
-                            class="fa-solid fa-pen-to-square"></i></button></a>
-            
-                      <!-- Formulario para eliminar -->
-                      <form action="/stock/deleteProyect/<%= item.id %>?_method=DELETE" method="POST" class="deleteProductForm">
-                        <button type="submit" class="btn btn-danger "><i class="fa-solid fa-trash"></i></button>
-                      </form>
-            
-                      <!-- Boton descarga historial de reformulaciones en excel -->
-                      <a href="/stock/reformulaciones/<%= item.id %>"><button class="btn btn-primary "><i
-                            class="fa-solid fa-clock-rotate-left"></i></button></a>
-                    </div>            
+                    <div class="d-flex flex-column">
+                        <!-- Primera fila de botones -->
+                        <div class="d-flex justify-content-center gap-2 mb-2">
+                            <!-- Enlace para editar -->
+                            <a href="/stock/editProyect/<%= item.id %>">
+                                <button class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></button>
+                            </a>
                 
-            
-                  </td>
+                            <!-- Formulario para eliminar -->
+                            <form action="/stock/deleteProyect/<%= item.id %>?_method=DELETE" method="POST" class="deleteProductForm">
+                                <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                            </form>
+                        </div>
+                
+                        <!-- Segunda fila de botones -->
+                        <div class="d-flex justify-content-center gap-2">
+                            <!-- Boton descarga historial de reformulaciones en excel -->
+                            <a href="/stock/reformulaciones/<%= item.id %>">
+                                <button class="btn btn-primary"><i class="fa-solid fa-clock-rotate-left"></i></button>
+                            </a>
+                
+                            <!-- Boton descarga ficha tecnica -->                           
+                              <a  href="/images/fichasTecnicas/<%= item.proyectoFicha.archivo %>" target="_blank">
+                                <button class="btn btn-info"><i class="fa-solid fa-file-pdf fa-lg"></i></button>
+                            </a>                          
+                        </div>
+
+                        <div class="mt-2">
+                               <!-- Boton descarga ficha tecnica -->                           
+                               <a  href="/images/insumos/<%= item.insumos %>" target="_blank">
+                                <button class="btn btn-outline-success">Insumos <i class="fa-solid fa-file-lines"></i></button>
+                            </a>
+                        </div>
+
+                    </div>
+                </td>                
                 </tr>
                 <% }) %>
             </tbody>
