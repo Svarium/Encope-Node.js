@@ -147,15 +147,24 @@
     </main>
 
    
-   
     <script>
       let index = 0; // Variable para llevar el seguimiento del índice de los productos seleccionados
-    
+      let productosSeleccionados = []; // Lista para almacenar los productos ya seleccionados
+      
       document.getElementById('producto').addEventListener('change', function() {
           var productoId = this.value;
           var productoNombre = this.options[this.selectedIndex].text; // Obtiene el nombre del producto seleccionado
           var camposExtrasDiv = document.getElementById('camposExtras');
-    
+  
+          // Verificar si el producto ya ha sido seleccionado previamente
+          if (productosSeleccionados.includes(productoId)) {
+              alert('El producto ya ha sido seleccionado anteriormente.');
+              return;
+          }
+  
+          // Agregar el producto a la lista de productos seleccionados
+          productosSeleccionados.push(productoId);
+  
           // Genera los campos de cantidad y costo unitario para el producto seleccionado
           var template = `
               <div class="form-group col-md-6" id="campos_${productoId}">
@@ -175,20 +184,27 @@
                   </div>
               </div>
           `;
-    
+  
           // Agrega el template al contenedor
           camposExtrasDiv.insertAdjacentHTML('beforeend', template);
           
           index++; // Incrementa el índice solo cuando se agrega un nuevo producto
       });
-    
+  
       function eliminarTemplate(productoId) {
           var camposExtrasDiv = document.getElementById('camposExtras');
           var templateAEliminar = document.getElementById('campos_' + productoId);
           camposExtrasDiv.removeChild(templateAEliminar);
+  
+          // Eliminar el producto de la lista de productos seleccionados
+          productosSeleccionados = productosSeleccionados.filter(id => id !== productoId);
+  
+          // Actualizar el índice después de eliminar un producto
+          index--;
       }
-    </script>
-    
+  </script>
+  
+  
     
 
   </body>
