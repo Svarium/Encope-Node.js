@@ -71,33 +71,30 @@
                                                     <input type="number" class="form-control cantidad-input"
                                                         data-producto-id="<%= item.productoId %>" placeholder="Ingrese cantidad"
                                                         value="<%= item.cantidadAProducir %>">
-                                                </div>
-                                                <button type="button" class="btn btn-primary actualizar-btn"><i
-                                                        class="fa-solid fa-pen-to-square"></i></button>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <!-- ACTUALIZAR COSTO -->
-                                            <div class="d-flex justify-content-center align-items-center mt-3">
-                                                <div class="col-md-8">
-                                                    <input type="number" class="form-control costo-input"
-                                                        data-cantidad-id="<%= item.costoUnitario %>" placeholder="Ingrese costo"
-                                                        value="<%= item.costoUnitario %>">
-                                                </div>
-                                                <button type="button" class="btn btn-success actualizar-costo-btn"><i
-                                                        class="fa-solid fa-pen-to-square"></i></button>
-                                            </div>
-                    
-                                        </td>
-                                        <td>$<%= item.costoTotal %>
-                                        </td>
-                                        <td><button type="button" class="btn btn-danger mt-1 delete-btn"><i
-                                                    class="fa-solid fa-trash"></i></button></td>
-                                    </tr>
-                                    <% }) %>
-                            </tbody>
-                        </table>
-                    </div>
+                                                            </div>
+                                                            <button type="button" class="btn btn-primary actualizar-btn"><i class="fa-solid fa-pen-to-square"></i></button>
+                                                            </div>
+                                                            </td>
+                                                            <td>
+                                                                <!-- ACTUALIZAR COSTO -->
+                                                                <div class="d-flex justify-content-center align-items-center mt-3">
+                                                                    <div class="col-md-8">
+                                                                        <input type="number" class="form-control costo-input" data-producto-id="<%= item.productoId %>"
+                                                                            data-proyecto-id="<%= proyecto.id %>" placeholder="Ingrese costo" value="<%= item.costoUnitario %>">
+                                                                    </div>
+                                                                    <button type="button" class="btn btn-success actualizar-costo-btn"><i
+                                                                            class="fa-solid fa-pen-to-square"></i></button>
+                                                                </div>
+                                                        
+                                                            </td>
+                                                            <td><strong class="text-lg">$<%= item.costoTotal %></strong>
+                                                            </td>
+                                                            <td><button type="button" class="btn btn-danger mt-1 delete-btn"><i class="fa-solid fa-trash"></i></button></td>
+                                                            </tr>
+                                                            <% }) %>
+                                                                </tbody>
+                                                                </table>
+                                                                </div>
 
         </main>
 
@@ -146,11 +143,51 @@
                         console.error('Error:', error);
                     }
                 });
-            });
-
-            //finaliza edición de cantidad
-
+            });       
         </script>
+     <script>
+        document.querySelectorAll('.actualizar-costo-btn').forEach(btn => {
+            btn.addEventListener('click', async function () {
+                const proyectoId = this.parentElement.querySelector('.costo-input').getAttribute('data-proyecto-id');
+                const productoId = this.parentElement.querySelector('.costo-input').getAttribute('data-producto-id');
+                const costo = this.parentElement.querySelector('.costo-input').value;
+
+                console.log(proyectoId);
+                console.log(productoId);
+                console.log(costo);
+    
+                try {
+                    const response = await fetch(`http://localhost:3000/api/stock/editCosto/${proyectoId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            productoId: productoId,
+                            costoUnitario: costo
+                        })
+                    });
+    
+                    if (response.ok) {
+                        const data = await response.json();
+                        console.log(data); // Aquí puedes manejar la respuesta, mostrar un mensaje de éxito, etc.
+                        Swal.fire("¡Costo unitario actualizado!");
+                    } else {
+                        throw new Error('Error al actualizar el costo')
+                            Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: "Algo salió mal",
+                                footer: '<a href="/">Volver al inicio</a>'
+                            });
+                    }
+                } catch (error) {
+                    console.error(error);
+                    // Aquí puedes manejar el error, mostrar un mensaje al usuario, etc.
+                }
+            });
+        });
+    </script>
 
         <script>
             const deleteForms = document.querySelectorAll('.deleteProductForm');
