@@ -1,5 +1,5 @@
 const createResponseError = require('../../helpers/createResponseError');
-const { editProyectState, editParteSemanal, getAllProducts, getAllTallers, getProyectsDone, getLastproyects, editarCantidadAProducir, editarCostoUnitario } = require('../../services/stockServices');
+const { editProyectState, editParteSemanal, getAllProducts, getAllTallers, getProyectsDone, getLastproyects, editarCantidadAProducir, editarCostoUnitario, eliminarProductoDelProyecto } = require('../../services/stockServices');
 
 
 module.exports = {
@@ -160,7 +160,29 @@ module.exports = {
             console.log(error);
             return createResponseError(res, error)
         }
+    },
+
+    eliminarProducto: async (req,res) => {
+        try {
+
+            const proyectoId = req.params.id;
+            const productoId = req.body.productoId;
+
+            const deleteProduct = await eliminarProductoDelProyecto(proyectoId, productoId);
+            return res.status(200).json({
+                ok:true,
+                data:{
+                    message:"Producto Eliminado correctamente"
+                }
+            })  
+
+            
+        } catch (error) {
+            console.log(error);
+            return createResponseError(res, error)
+        }
     }
+
 
 
 
