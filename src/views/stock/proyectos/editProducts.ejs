@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../partials/head') %>
+
+    <body style="background-color: rgb(243, 241, 238)">
+        <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-3">
+            <div class="container">
+                <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <button class="btn btn-transparent" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                    <img id="userIconProfile"
+                        src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>"
+                        class="iconProfile me-2" alt="" />
+                    <%= userLogin.name %> <i class="fa-solid fa-caret-down fa-lg"></i>
+                </button>
+                <!-- Menú de navegación -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto"> <!-- 'ms-auto' para alinear a la derecha -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="/stock">Regresar</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <main>
+            <%- include('../../partials/modals') %> <%- include('../../partials/canvasMenu') %>
+
+
+                    <!-- TITULO H1 -->
+                    <div class="container-fluid mt-4">
+                        <p class="text-black h2 text-center shadow-3">
+                            <strong>Editar Productos de: <%= proyecto.nombre %>
+                                    </strong>
+                        </p>
+                        <hr class="text-black" />
+                    </div>
+
+                    <!-- TABLA DE PRODUCTOS -->
+                    <div class="container-fluid">
+                        <button type="button" class="btn btn-outline-primary ms-3 btn-sm mt-1 mb-2"
+                            onclick="window.location.href='/stock/proyectsTable'">
+                            <i class="fa-solid fa-download"></i> Exportar Excel
+                        </button>
+                        <br>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Producto</th>
+                                    <th scope="col">Cantidad a Producir</th>
+                                    <th scope="col">Costo Unitario</th>
+                                    <th scope="col">Costo Total</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="<%= proyecto.id %>">
+                                <% productos.forEach(item=> { %>
+                                    <tr>
+                                        <td class="text-center">
+                                            <strong><%= item.producto.nombre %></strong>
+                                        </td>
+                                        <td>
+                                            <!-- ACTUALIZAR CANTIDAD -->
+                                            <div class="d-flex justify-content-center align-items-center mt-3">
+                                                <div class="col-md-8">
+                                                    <input type="number" class="form-control cantidad-input"
+                                                        data-producto-id="<%= item.productoId %>" placeholder="Ingrese cantidad"
+                                                        value="<%= item.cantidadAProducir %>">
+                                                </div>
+                                                <button type="button" class="btn btn-primary actualizar-btn"><i
+                                                        class="fa-solid fa-pen-to-square"></i></button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <!-- ACTUALIZAR COSTO -->
+                                            <div class="d-flex justify-content-center align-items-center mt-3">
+                                                <div class="col-md-8">
+                                                    <input type="number" class="form-control costo-input"
+                                                        data-cantidad-id="<%= item.costoUnitario %>" placeholder="Ingrese costo"
+                                                        value="<%= item.costoUnitario %>">
+                                                </div>
+                                                <button type="button" class="btn btn-success actualizar-costo-btn"><i
+                                                        class="fa-solid fa-pen-to-square"></i></button>
+                                            </div>
+                    
+                                        </td>
+                                        <td>$<%= item.costoTotal %>
+                                        </td>
+                                        <td><button type="button" class="btn btn-danger mt-1 delete-btn"><i
+                                                    class="fa-solid fa-trash"></i></button></td>
+                                    </tr>
+                                    <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+
+        </main>
+
+
+
+        <script>
+            //realizo el fecth a mi api para actualizar la cantidad del producto
+            document.querySelectorAll('.actualizar-btn').forEach(btn => {
+                btn.addEventListener('click', async function () {
+
+                    const tbody = document.getElementById('<%= proyecto.id %>');
+                    if (!tbody) return;
+
+                    const proyectoId = tbody.getAttribute('id');
+                    const productoId = this.parentElement.querySelector('.cantidad-input').getAttribute('data-producto-id');
+                    const cantidad = this.parentElement.querySelector('.cantidad-input').value;
+
+                    const data = {
+                        productoId: productoId,
+                        cantidad: cantidad
+                    }
+
+                    try {
+
+                        const response = await fetch(`http://localhost:3000/api/stock/editCantidad/${proyectoId}`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(data)
+                        });
+
+                        if (!response.ok) {
+                            throw new Error('Error al actualizar la cantidad')
+                            Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: "Algo salió mal",
+                                footer: '<a href="/">Volver al inicio</a>'
+                            });
+                        } else {
+                            Swal.fire("¡Cantidad actualizada!");
+                        }
+
+                    } catch (error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+
+            //finaliza edición de cantidad
+
+        </script>
+
+        <script>
+            const deleteForms = document.querySelectorAll('.deleteProductForm');
+
+            deleteForms.forEach(form => {
+                form.addEventListener('submit', function (event) {
+                    event.preventDefault();
+
+                    Swal.fire({
+                        title: "Seguro quieres borrar el producto??",
+                        text: "Chequea bien el producto que deseas eliminar",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Si, eliminar!"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            Swal.fire({
+                                title: "Eliminado!",
+                                text: "El producto fue eliminado",
+                                icon: "success"
+                            });
+
+                            form.submit();
+                        }
+                    });
+                });
+            });
+        </script>
+
+
+        <%- include('../../partials/scripts') %>
+    </body>
+
+</html>

@@ -117,6 +117,57 @@ module.exports = {
             message:error.message,
         }     
     }
+  },
+
+  editarCantidadAProducir: async (proyectoId, productoId, cantidad) => {
+    try {     
+
+      const producto = await db.proyectoProducto.findOne({where:{productoId: productoId, //busco el producto para obtener sus datos previos
+        proyectoId: proyectoId,}});
+
+      const updateProduct = await db.proyectoProducto.update({ //hago el update de las nuevas cantidades para el producto
+        cantidadAProducir: cantidad,
+        costoTotal: producto.costoUnitario * cantidad
+      },
+        {
+          where: {            
+            proyectoId: proyectoId,  
+            productoId: productoId,                    
+          }
+        });
+
+      const productos = await db.proyectoProducto.findAll( //busco todos los productos para calcular el costo total
+        { where: { proyectoId: proyectoId },
+          attributes:["costoUnitario", "cantidadAProducir"]
+      });
+      
+
+      const costoTotal = productos.reduce((total, producto) => { //calculo el costo total del proyecto que es la suma de todos los costos totales de los producto
+        // Accede a las propiedades correctamente dentro de producto.dataValues
+        const costoUnitario = parseFloat(producto.dataValues.costoUnitario) || 0;
+        const cantidad = parseFloat(producto.dataValues.cantidadAProducir) || 0; // Nota el cambio aquí
+    
+        const costoProducto = costoUnitario * cantidad;
+        return total + costoProducto;
+    }, 0);
+
+  
+
+      const updateCostoTotalProyecto = await db.Proyecto.update({ // actualizo el costo total en la tabla proyectos
+        costoTotalProyecto: costoTotal
+      }, {
+        where: { id: proyectoId }
+      })
+
+      return true;
+
+    } catch (error) {
+      console.log(error);
+      throw {
+        status: 500,
+        message: error.message,
+      }
+    }
   }
 
 }

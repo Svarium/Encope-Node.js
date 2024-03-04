@@ -1,5 +1,5 @@
 const express = require('express');
-const { editState, addRemanentes, allProducts, allTallers, allProyectsDone, lastProyects } = require('../../controllers/apis/apiStockControllers');
+const { editState, addRemanentes, allProducts, allTallers, allProyectsDone, lastProyects, updateCantidadAProducir } = require('../../controllers/apis/apiStockControllers');
 
 const router = express.Router();
 
@@ -16,6 +16,8 @@ router.get('/getTalleres', allTallers) //me trae una consulta que me cuenta la c
 router.get('/getProyectsDone', allProyectsDone) // Me trae una consulta que cuenta la cantidad de proyectos terminados
 
 router.get('/getLastProyects', lastProyects) //me trae una consulta con los ultimos 9 proyectos agregados
+
+router.put('/editCantidad/:id', updateCantidadAProducir)
 
 
 

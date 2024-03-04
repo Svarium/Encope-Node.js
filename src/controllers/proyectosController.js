@@ -3,6 +3,8 @@ const { validationResult } = require('express-validator');
 const { Op } = require("sequelize");
 const ExcelJS = require('exceljs');
 const db = require('../database/models');
+const { title } = require('process');
+const path = require('path');
 
 
 module.exports = {
@@ -221,19 +223,26 @@ module.exports = {
             where: { id: id }
         })
 
+        const fichas = db.Ficha.findAll({
+            attributes: ['id', 'nombre']
+        })
 
-        Promise.all(([talleres, productos, proyecto]))
-            .then(([talleres, productos, proyecto]) => {
+
+        Promise.all(([talleres, productos, proyecto, fichas]))
+            .then(([talleres, productos, proyecto, fichas]) => {
 
                 return res.render('stock/proyectos/editProyect', {
                     title: 'Nuevo Proyecto',
                     talleres,
                     productos,
-                    proyecto
+                    proyecto,
+                    fichas
                 })
             }).catch(error => console.log(error));
 
     },
+
+  
 
     updateProyect: async (req, res) => {
 
@@ -243,7 +252,7 @@ module.exports = {
 
             const id = req.params.id
 
-            const { nombre, expediente, destino, producto, cantidad, insumos, detalle, duracion, unidadDuracion, costoUnitario } = req.body
+            const { nombre, expediente, destino, detalle, duracion, unidadDuracion, ficha } = req.body
 
             const usuario = await db.Usuario.findOne({ //busco el usuario para poder acceder al destino de procedencia y cargarlo despues en los registros
                 where: { destinoId: req.session.userLogin.destinoId },
@@ -282,16 +291,12 @@ module.exports = {
                 await db.Proyecto.update({ //actualizo el proyecto con los nuevos datos enviados por el usuario
                     nombre: nombre.trim(),
                     expediente: expediente,
-                    idTaller: destino,
-                    cantidadAProducir: cantidad,
+                    idTaller: destino,                    
                     insumos: insumos,
                     detalle: detalle,
                     procedencia: procedencia,
                     duracion: duracion,
-                    unidadDuracion: unidadDuracion,
-                    costoTotal: cantidad * costoUnitario,
-                    costoUnitario: costoUnitario,
-                    idProducto: producto,
+                    unidadDuracion: unidadDuracion,                                
                     estado: 'Pendiente'
                 },
                     {
@@ -358,6 +363,33 @@ module.exports = {
         }
 
 
+    },
+
+    editProducts: async (req,res) => {
+        try {
+           const id = req.params.id;
+
+           const productos = await db.proyectoProducto.findAll(
+            {
+                where:{proyectoId:id},
+                include: [{
+                    model: db.Producto,
+                    as: 'producto',
+                    attributes: ['nombre']
+                }],
+            })
+           const proyecto = await db.Proyecto.findByPk(id)
+
+           return res.render('stock/proyectos/editProducts',{
+            title:'Editar Productos',
+            productos,
+            proyecto
+           })
+
+
+        } catch (error) {
+            console.log(error);
+        }
     },
 
     deleteProyect: async (req, res) => {
