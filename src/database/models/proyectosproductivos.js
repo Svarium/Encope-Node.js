@@ -41,8 +41,7 @@ module.exports = (sequelize, DataTypes) => {
   Proyecto.init({
     nombre: DataTypes.STRING,
     expediente: DataTypes.STRING,
-    idTaller: DataTypes.INTEGER,
-    cantidadTotal: DataTypes.INTEGER,
+    idTaller: DataTypes.INTEGER, 
     detalle: DataTypes.STRING,
     procedencia: DataTypes.STRING,
     duracion: DataTypes.INTEGER,

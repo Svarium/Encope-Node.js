@@ -107,10 +107,7 @@ module.exports = {
 
                 const procedencia = usuario.destino.nombreDestino //obtengo la procedencia del proyecto a través del destino del usuario
 
-                const cantidadTotal = productos.reduce((total, producto) => { //obtengo la cantidad total de productos
-                    const cantidad = parseFloat(producto.cantidad) || 0;
-                    return total + cantidad
-                }, 0);
+             
 
                 const costoTotal = productos.reduce((total, producto) => {
                     const costoUnitario = parseFloat(producto.costoUnitario) || 0;
@@ -123,8 +120,7 @@ module.exports = {
                 const proyecto = await db.Proyecto.create({
                     nombre: nombre.trim(),
                     expediente: expediente,
-                    idTaller: destino,
-                    cantidadTotal: cantidadTotal,
+                    idTaller: destino,                   
                     detalle: detalle.trim(),
                     insumos: req.file ? req.file.filename : null,
                     procedencia: procedencia,
@@ -159,7 +155,7 @@ module.exports = {
                     idProyecto: proyecto.id,
                 })
 
-                return res.redirect('/stock')
+                return res.redirect('/stock/listProyects')
 
             } else {
 
@@ -250,6 +246,15 @@ module.exports = {
 
             const errors = validationResult(req);
 
+            if(req.fileValidationError){ //este if valida que solo se puedan subir extensiones (pdf)
+                errors.errors.push({
+                    value : "",
+                    msg : req.fileValidationError,
+                    param : "pdf",
+                    location : "file"
+                })
+            }
+
             const id = req.params.id
 
             const { nombre, expediente, destino, detalle, duracion, unidadDuracion, ficha } = req.body
@@ -266,16 +271,24 @@ module.exports = {
 
             const procedencia = usuario.destino.nombreDestino
 
+            const productos = await db.proyectoProducto.findAll({where:{proyectoId:id}})
+            
+            const costoTotal = productos.reduce((total, producto) => {
+                const costoUnitario = parseFloat(producto.costoUnitario) || 0;
+                const cantidad = parseFloat(producto.cantidad) || 0;
+                const costoProducto = costoUnitario * cantidad; // Calcular el costo del producto actual
+                return total + costoProducto; // Sumar al total el costo del producto actual
+            }, 0);
+
 
             if (errors.isEmpty()) {
 
                 const proyectoAnterior = await db.Proyecto.findOne({ where: { id: id } }) //busco el proyecto en su version vigente antes de ser editado
 
-                await db.Historial.create({  //creo el registro donde guardo la version del proyecto vigente
+           /*      await db.Historial.create({  
                     nombre: proyectoAnterior.nombre,
                     expediente: proyectoAnterior.expediente,
-                    idTaller: proyectoAnterior.idTaller,
-                    cantidadAProducir: proyectoAnterior.cantidadAProducir,
+                    idTaller: proyectoAnterior.idTaller,                  
                     detalle: proyectoAnterior.detalle,
                     insumos: proyectoAnterior.insumos,
                     procedencia: proyectoAnterior.procedencia,
@@ -286,18 +299,19 @@ module.exports = {
                     idProducto: proyectoAnterior.idTaller,
                     idProyecto: id,
                     estado: 'Pendiente'
-                })
+                }) */
 
-                await db.Proyecto.update({ //actualizo el proyecto con los nuevos datos enviados por el usuario
+             const proyectoUpdate = await db.Proyecto.update({ //actualizo el proyecto con los nuevos datos enviados por el usuario
                     nombre: nombre.trim(),
                     expediente: expediente,
                     idTaller: destino,                    
-                    insumos: insumos,
+                    insumos: req.file ? req.file.filename : proyectoAnterior.insumos,
                     detalle: detalle,
                     procedencia: procedencia,
                     duracion: duracion,
-                    unidadDuracion: unidadDuracion,                                
-                    estado: 'Pendiente'
+                    unidadDuracion: unidadDuracion,
+                    costoTotalProyecto: costoTotal,                                
+                    estado: proyectoAnterior.estado
                 },
                     {
                         where: {
@@ -305,27 +319,35 @@ module.exports = {
                         }
                     })
 
+                    if(req.file){
+                        fs.existsSync(path.join(__dirname, `../../public/images/insumos/${proyectoAnterior.insumos}`)) && fs.unlinkSync(path.join(__dirname, `../../public/images/insumos/${proyectoAnterior.insumos}`))
+                     }    
+
+
                 await db.Parte.update({ //actualizo el parte semanal con los datos actualizados del proyecto
                     nombre: nombre.trim(),
                     expediente: expediente,
                     idTaller: destino,
-                    cantidadAProducir: cantidad,
-                    detalle: detalle,
+                    detalle: detalle.trim(),
                     procedencia: procedencia,
                     duracion: duracion,
                     unidadDuracion: unidadDuracion,
-                    costoTotal: cantidad * costoUnitario,
-                    costoUnitario: costoUnitario,
-                    idProducto: producto,
+                    idFicha: ficha,
+                    idProyecto: proyectoUpdate.id ,
                 }, {
                     where: {
-                        id: req.params.id
+                        idProyecto: req.params.id
                     }
                 })
 
                 return res.redirect('/stock/listProyects')
 
-            } else {
+            } else {           
+             
+                if (req.file) {
+                    fs.existsSync(path.join(__dirname, `../../public/images/insumos/${req.file.filename}`)) && fs.unlinkSync(path.join(__dirname, `../../public/images/insumos/${req.file.filename}`))
+                }
+
                 const id = req.params.id
 
                 const talleres = db.Taller.findAll({
@@ -344,13 +366,18 @@ module.exports = {
                     where: { id: id }
                 })
 
-                Promise.all(([talleres, productos, proyecto]))
-                    .then(([talleres, productos, proyecto]) => {
+                const fichas = db.Ficha.findAll({
+                    attributes: ['id', 'nombre']
+                })
+
+                Promise.all(([talleres, productos, proyecto, fichas]))
+                    .then(([talleres, productos, proyecto, fichas]) => {
 
                         return res.render('stock/proyectos/editProyect', {
-                            title: 'Nuevo Proyecto',
+                            title: 'Editar Proyecto',
                             talleres,
                             productos,
+                            fichas,
                             proyecto,
                             old: req.body,
                             errors: errors.mapped()

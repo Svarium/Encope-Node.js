@@ -24,10 +24,7 @@ module.exports = {
           },
           key:"id"
         }
-      },      
-      cantidadTotal: {
-        type: Sequelize.INTEGER
-      },
+      },   
       detalle: {
         type: Sequelize.STRING
       },

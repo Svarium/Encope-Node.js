@@ -16,6 +16,7 @@ const { addFicha, storeFicha, listFichas, editFicha, updateFicha, deleteFicha } 
 const { uploadFichasFiles } = require('../middlewares/subirFicha');
 const addFichaValidator = require('../validations/addFichaValidator');
 const { uploadInsumosFiles } = require('../middlewares/subirInsumos');
+const editProyectValidator = require('../validations/editProyectValidator');
 
 
 var router = express.Router();
@@ -64,7 +65,7 @@ router.post('/newProyect', uploadInsumosFiles.single('insumos'), addProyectValid
 router.get('/listProyects',checkUserEditorIntranetCentral, listProyects)
 router.get('/editProducts/:id', editProducts)
 router.get('/editProyect/:id',checkUserEditorIntranetCentral, editProyect)
-router.put('/editProyect/:id',checkUserEditorIntranetCentral,addProyectValidator, updateProyect)
+router.put('/editProyect/:id',uploadInsumosFiles.single('insumos'),checkUserEditorIntranetCentral,editProyectValidator, updateProyect)
 router.delete('/deleteProyect/:id',checkUserEditorIntranetCentral, deleteProyect)
 router.get('/reformulaciones/:id',checkUserEditorIntranetCentral, downloadExcelHistorial)
 router.get('/proyectsTable',checkUserEditorIntranetCentral, downloadExcelProyects)
