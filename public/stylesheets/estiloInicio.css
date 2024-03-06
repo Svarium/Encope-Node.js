@@ -90,6 +90,9 @@
     display: inline!important; /* Mostrar como en línea */
 }
 
+.switchProducts {
+    cursor: pointer !important;
+}
 
 
                 /* COMIENZA SECCION REDES SOCIALES */

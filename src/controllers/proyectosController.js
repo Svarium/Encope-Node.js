@@ -380,10 +380,16 @@ module.exports = {
             })
            const proyecto = await db.Proyecto.findByPk(id)
 
+           const productosNuevos = await db.Producto.findAll({
+            attributes:["id", "nombre"]
+           })           
+          
+           
            return res.render('stock/proyectos/editProducts',{
             title:'Editar Productos',
             productos,
-            proyecto
+            proyecto,
+            productosNuevos
            })
 
 

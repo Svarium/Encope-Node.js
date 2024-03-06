@@ -257,6 +257,26 @@ module.exports = {
         message: error.message,
       }
     }
+  },
+
+  agregarProductoAlProyecto : async (proyectoId, productoId) => {
+    try {
+
+      const nuevoProducto = await db.proyectoProducto.create({
+        proyectoId:proyectoId,
+        productoId:productoId,        
+      })
+
+      return nuevoProducto
+
+      
+    } catch (error) {
+      console.log(error);
+      throw {
+        status: 500,
+        message: error.message,
+      }
+    }
   }
 
 }

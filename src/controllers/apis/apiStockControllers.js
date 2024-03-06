@@ -1,5 +1,5 @@
 const createResponseError = require('../../helpers/createResponseError');
-const { editProyectState, editParteSemanal, getAllProducts, getAllTallers, getProyectsDone, getLastproyects, editarCantidadAProducir, editarCostoUnitario, eliminarProductoDelProyecto } = require('../../services/stockServices');
+const { editProyectState, editParteSemanal, getAllProducts, getAllTallers, getProyectsDone, getLastproyects, editarCantidadAProducir, editarCostoUnitario, eliminarProductoDelProyecto, agregarProductoAlProyecto } = require('../../services/stockServices');
 
 
 module.exports = {
@@ -181,7 +181,30 @@ module.exports = {
             console.log(error);
             return createResponseError(res, error)
         }
+    },
+
+    agregarProducto: async(req,res) => {
+        try {
+
+            const proyectoId = req.body.proyectoId;
+            const productoId = req.body.productoId;
+
+            const productos = await agregarProductoAlProyecto(proyectoId, productoId)
+
+            return res.status(200).json({
+                ok:true,
+                data:{
+                    message:"Producto agregados correctamente",                 
+                }
+            })
+            
+        } catch (error) {
+            console.log(error);
+            return createResponseError(res, error)
+        }
     }
+
+
 
 
 
