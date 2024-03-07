@@ -373,7 +373,9 @@ module.exports = {
         message: error.message || "Error al actualizar los egresos"
       };
     }
-  }
+  },
+
+ 
   
 
 }

@@ -45,11 +45,11 @@
             <div class="card-header">
               Parte semanal: <%= parte.nombre %> / <small><%= parte.expediente %></small> 
                 <div class="container d-flex justify-content-center gap-2">
-                  <button type="button" class="btn btn-primary btn-sm "><strong>Producción ideal: - por -
+                  <button type="button" class="btn btn-primary btn-sm "><strong>Producción ideal: <%= ideal %>  por <%= parte.unidadDuracion %>
                     </strong></button>
-                  <button type="button" class="btn btn-success btn-sm"><strong>Producción real: - por
-                      -</strong></button>
-                  <button type="button" class="btn btn-danger btn-sm"><strong>% de avance: Proyecto al -
+                  <button type="button" class="btn btn-success btn-sm"><strong>Producción real: <%= real %>  por <%= parte.unidadDuracion %>
+                      </strong></button>
+                  <button type="button" class="btn btn-danger btn-sm"><strong>% de avance: Proyecto al <%= porcentajeAvance %> %
                     </strong></button>
                 </div>
             </div>

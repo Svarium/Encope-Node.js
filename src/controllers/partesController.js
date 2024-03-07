@@ -62,28 +62,31 @@ module.exports = {
             })
      
 
-           /*  return res.send(parte) */
-             const cantidad = parte.cantidadProducida
-     
-             const meta = parte.cantidadAProducir
-     
-             const periodo = parte.duracion 
-     
-             const produccionIdeal = meta / periodo
-     
-             const produccionReal = cantidad / periodo
-     
-             const avance = (cantidad * 100) / meta
+            const productos = await db.proyectoProducto.findAll({where:{proyectoId:id}});//busco todos los productos de un proyecto
+
+            const cantidadTotalAProducir = productos.reduce((total, producto) => { // Sumo el total a producir de todos los productos
+                return total + producto.cantidadAProducir;
+            }, 0); // Se inicializa con 0 para evitar problemas si la lista está vacía
+      
+            const cantidadTotalProducida = productos.reduce((total, producto) => { // Sumo el total producido de todos los productos
+                return total + producto.cantidadProducida;
+            }, 0); // Se inicializa con 0 para evitar problemas si la lista está vacía
+
+         
+            const porcentajeAvance = (cantidadTotalProducida / cantidadTotalAProducir) * 100;
+
+            const ideal = cantidadTotalAProducir / parte.duracion;
+
+            const real = cantidadTotalProducida / parte.duracion
+
+            console.log("Porcentaje de avance:", porcentajeAvance.toFixed(2) + "%");
      
              return res.render('stock/partes/editParte',{
                  title: 'Editar parte',
-                 parte,
-                 cantidad,
-                 meta,
-                 periodo,
-                 produccionIdeal,
-                 produccionReal,
-                 avance 
+                 parte,             
+                 porcentajeAvance: porcentajeAvance.toFixed(2),
+                 ideal,
+                 real,                
              })
            
             
