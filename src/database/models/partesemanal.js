@@ -17,6 +17,11 @@ module.exports = (sequelize, DataTypes) => {
         as:'parteProyecto',
         onDelete:'CASCADE'
       })
+
+      Parte.hasMany(models.proyectoProducto,{
+        foreignKey:'parteId',
+        as:'productoParte'
+      }) 
   
 
       Parte.belongsTo(models.Taller,{

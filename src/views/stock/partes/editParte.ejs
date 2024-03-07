@@ -53,76 +53,99 @@
 
     <main>
             <div class="row ms-3 me-3 justify-content-center mb-5">
-            <div class="col-md-12">
-                <h4 class="text-center">Parte semanal: <%= parte.nombre %></h4>
-                <hr>  
-                
-                <div class="container d-flex justify-content-center gap-2">
-                  <button type="button" class="btn btn-primary mb-5"><strong>Producción ideal: <%= produccionIdeal %> por <%= parte.unidadDuracion %></strong></button>
-                  <button type="button" class="btn btn-success mb-5"><strong>Producción real: <%= produccionReal %> por <%= parte.unidadDuracion %></strong></button>
-                  <button type="button" class="btn btn-danger mb-5"><strong>Porcentaje de avance: Proyecto al <%= avance %>% </strong></button>
-                </div>
- 
-                  <table class="table">
+            <div class="col-md-12">             
+
+                <div class="card text-center mb-5">
+                  <div class="card-header">
+                    Parte semanal: <%= parte.nombre %>
+                    <div class="container d-flex justify-content-center gap-2">
+                      <button type="button" class="btn btn-primary btn-sm "><strong>Producción ideal: - por - </strong></button>
+                      <button type="button" class="btn btn-success btn-sm"><strong>Producción real: -  por  -</strong></button>
+                      <button type="button" class="btn btn-danger btn-sm"><strong>% de avance: Proyecto al - </strong></button>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title"><%= parte.expediente %></h5>
+                    <p class="card-text"><%= parte.observaciones %></p>
                     <button type="button" class="btn btn-outline-primary  btn-sm mt-1 mb-2">
                       <a class="btn-link" href="/stock/parte/<%= parte.id %>"><i class="fa-solid fa-download"></i> Imprimir Parte </i></a>
                     </button>
                     <button type="button" class="btn btn-outline-success ms-2  btn-sm mt-1 mb-2" id="enviarReporteBtn">
                       <a class="btn-link" href="/stock/reporte/<%= parte.id %>"><i class="fa-solid fa-envelope"></i> Enviar Reporte Semanal</i></a>
                     </button>
-                    <thead>
+                  </div>
+                  <div class="card-footer text-muted"> Última Actualización
+                    <%= new Intl.DateTimeFormat('es-AR', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      second: 'numeric',
+                      timeZone: 'America/Argentina/Buenos_Aires'
+                    }).format(new Date(parte.createdAt)) %>
+                  </div>
+                </div>
+               
+                <!-- TABLA PARA EDICIÓN DE INFO -->
+
+                <table class="table">
+                  <thead>
                       <tr>
-                    <th scope="col">proyecto</th>
-                    <th scope="col">última Actualización</th>
-                    <th scope="col">Expediente</th>                   
-                    <th scope="col">Cantidad a producir</th>
-                    <th scope="col">Cantidad producida</th>
-                    <th scope="col">Restante a producir</th>
-                    <th scope="col">Stock en taller</th>
-                    <th scope="col">Egresos</th>
-                    <th scope="col">Observación</th>
-                  
-                   
+                          <th scope="col">Producto</th>
+                          <th scope="col">Cantidad a Producir</th>
+                          <th scope="col">Cantidad Producida</th>
+                          <th scope="col">Stock en Taller</th>
+                          <th scope="col">Egresos</th>                        
                       </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td class="text-center">
-                          <%= parte.nombre %>
-                        </td>
-                        <td>
-                          <%= new Intl.DateTimeFormat('es-AR', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                            hour: 'numeric',
-                            minute: 'numeric',
-                            second: 'numeric',
-                            timeZone: 'America/Argentina/Buenos_Aires'
-                          }).format(new Date(parte.createdAt)) %>
-                        </td>
-                        <td>
-                          <%= parte.expediente %>
-                        </td>
-                        <td>
-                          <%= parte.cantidadAProducir %>
-                        </td>
-                        <td>
-                          <%= parte.cantidadProducida %>
-                        </td>
-                        <td>
-                          <%= parte.restanteAProducir %>
-                        </td>
-                        <td> <%= parte.stockEnTaller %>
-                        </td>
-                        <td> <%= parte.egresos %>
-                        </td>
-                        <td> <%= parte.observaciones %>
-                        </td>
-                        
-                      </tr>                  
-                    </tbody>
-                  </table>                       
+                  </thead>
+                  <tbody id="<%= parte.id %>">
+                      <% parte.productoParte.forEach(item=> { %>
+                          <tr>
+                              <td class="text-center">
+                                  <strong>
+                                      <%= item.producto.nombre %>
+                                  </strong>
+                              </td>
+                              <td>
+                                <%= item.cantidadAProducir %>
+                              </td>
+                              <td>
+                                  <!-- ACTUALIZAR CANTIDAD PRODUCIDA -->
+                                  <div class="d-flex justify-content-center align-items-center ">
+                                      <div class="col-md-8">
+                                          <input type="number" class="form-control cantidadProducida-input"
+                                              data-producto-id="<%= item.productoId %>"
+                                              data-parte-id="<%= parte.id %>"
+                                              placeholder="Ingrese cantidad" value="<%= item.cantidadProducida %>">
+                                      </div>
+                                      <button type="button" class="btn btn-success actualizar-cantidadProducida-btn"><i
+                                              class="fa-solid fa-pen-to-square"></i></button>
+                                  </div>
+
+                              </td>
+                              <td>
+                                <%= item.stockEnTaller %>
+                              </td>
+                              <td>
+                                <!-- ACTUALIZAR EGRESOS -->
+                                <div class="d-flex justify-content-center align-items-center ">
+                                  <div class="col-md-8">
+                                      <input type="number" class="form-control egresos-input"
+                                          data-producto-id="<%= item.productoId %>"
+                                          placeholder="Ingrese cantidad"
+                                          value="<%= item.egresos %>">
+                                  </div>
+                                  <button type="button" class="btn btn-primary actualizar-egresos-btn"><i
+                                          class="fa-solid fa-pen-to-square"></i></button>
+                              </div>
+                              </td>
+                              
+                          </tr>
+                          <% }) %>
+                  </tbody>
+              </table>
+                                       
             </div>          
     </main>
 
@@ -130,31 +153,7 @@
 
      
         
-        <div class="container shadow mb-5">
-          <h5 class="text-center">Editar parte</h5>
-          <hr>
-          <form action="/stock/partes/<%= parte.id %>?_method=PUT" method="POST"  class="mb-5">
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="cantidad">Cantidad Producida</label>
-                <input type="number" class="form-control <%= (locals.errors && errors.cantidad) && 'is-invalid'%>" id="cantidad" name="cantidad" placeholder="ingrese cantidad producida" value="<%= (locals.old && old.cantidad) && old.cantidad %>">
-                <small id="errorCantidad" class="text-danger ms-2"><%= locals.errors && errors.cantidad ? errors.cantidad.msg : null %></small>
-              </div>
-              <div class="form-group col-md-6">
-                <label for="egresos">Egresos</label>
-                <input type="number" class="form-control <%= (locals.errors && errors.egresos) && 'is-invalid'%>" id="egresos" name="egresos" placeholder="Ingrese egresos" value="<%= (locals.old && old.egresos) && old.egresos %>">
-                <small id="erroregresos" class="text-danger ms-2"><%= locals.errors && errors.egresos ? errors.egresos.msg : null %></small>
-              </div>
-              <div class="form-group col-md-12">
-                <label for="observaciones">Observaciones</label>
-                <textarea name="observaciones" class="form-control <%= (locals.errors && errors.observaciones) && 'is-invalid'%>" id="observaciones" placeholder="Ingrese las observaciones" value="<%= (locals.old && old.observaciones) && old.observaciones %>"></textarea>
-              </div>
-              <small id="errorobservaciones" class="text-danger ms-2"><%= locals.errors && errors.observaciones ? errors.observaciones.msg : null %></small>
-            </div>
-            
-            <button type="submit" class="btn btn-primary mb-5">Enviar</button>
-          </form>
-        </div>
+       
 
      
    
@@ -251,9 +250,126 @@ cardImg.addEventListener('error', () => {
       // Redirigir al usuario después de mostrar el alert
       window.location.href = this.querySelector("a").href;
   };
-  </script>
+</script>
+
+<script>
+
+  document.addEventListener('DOMContentLoaded', () => {
+    //fetch para actualziar la cantidad producida
+
+    document.querySelectorAll('.actualizar-cantidadProducida-btn').forEach(btn => {
+      btn.addEventListener('click', async function(){
+        const tbody = document.getElementById('<%= parte.id %>');
+        const proyectoId = tbody.id
+        const productoId = this.parentElement.querySelector('.cantidadProducida-input').getAttribute('data-producto-id');
+        const cantidad = this.parentElement.querySelector('.cantidadProducida-input').value
 
 
+        //Validad que cantidad no sea negativo o cero
+
+        if(cantidad <= 0) {
+          Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: "La cantidad no puede ser cero o menor",
+                                footer: '<a href="/">Volver al inicio</a>'
+                            });
+                            return;
+        };
+
+        try {
+          const response = await fetch(`http://localhost:3000/api/stock/cantidadProducida/${proyectoId}`,{
+            method: 'PUT',
+            headers:{
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+              {productoId:productoId,
+              cantidad:cantidad}
+            )
+          });
+
+          if(response.ok){
+            Swal.fire("¡Costo unitario actualizado!");
+                            setTimeout(() => {
+                                location.reload();
+                            }, 2000);
+          } else {
+            console.error(error);
+                            Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: "Algo salió mal",
+                                footer: '<a href="/">Volver al inicio</a>'
+                            });
+          }
+          
+        } catch (error) {
+          throw new Error('Error al actualizar el costo');
+        }
+        
+      })
+    })
+  });
+
+  //fetch para actualizar los egresos
+  document.querySelectorAll('.actualizar-egresos-btn').forEach(btn => {
+        btn.addEventListener('click', async function () {
+          const tbody = document.getElementById('<%= parte.id %>');
+          const proyectoId = tbody.id
+          const productoId = this.parentElement.querySelector('.egresos-input').getAttribute('data-producto-id');
+          const egresos = this.parentElement.querySelector('.egresos-input').value;      
+
+    
+        
+          // Validar que el costo no sea negativo
+          if (egresos < 0) {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "El egreso no puede ser negativo",
+              footer: '<a href="/">Volver al inicio</a>'
+            });
+            return;
+          }
+
+          try {
+
+            const response = await fetch(`http://localhost:3000/api/stock/egresos/${proyectoId}`, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                productoId: productoId,
+                egresos: egresos
+              })
+            })
+
+            if (response.ok) {
+              Swal.fire("¡Egresos actualizados!");
+              setTimeout(() => {
+                location.reload();
+              }, 2000);
+            } else {
+              console.error(error);
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Algo salió mal",
+                footer: '<a href="/">Volver al inicio</a>'
+              });
+            }
+
+          } catch (error) {
+            throw new Error('Error al actualizar el costo');
+            console.log(error);
+          }     
+      })
+    })
+
+
+</script>
 
 <%- include('../../partials/scripts') %>
 </body>

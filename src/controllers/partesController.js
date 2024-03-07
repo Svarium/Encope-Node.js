@@ -39,38 +39,58 @@ module.exports = {
 
     },
 
-    editParte : (req,res) => {
-       const id = req.params.id;
+    editParte :  async (req,res) => {
 
-       db.Parte.findOne({
-        where:{
-            id:id
+        try {
+
+            const id = req.params.id;
+
+         const parte = await db.Parte.findOne({
+             where:{
+                 id:id
+             },
+             include: [{
+                model: db.proyectoProducto,
+                as:"productoParte",
+                include:[
+                    {
+                        model: db.Producto,
+                        as:"producto"
+                    }
+                ]
+             }]
+            })
+     
+
+           /*  return res.send(parte) */
+             const cantidad = parte.cantidadProducida
+     
+             const meta = parte.cantidadAProducir
+     
+             const periodo = parte.duracion 
+     
+             const produccionIdeal = meta / periodo
+     
+             const produccionReal = cantidad / periodo
+     
+             const avance = (cantidad * 100) / meta
+     
+             return res.render('stock/partes/editParte',{
+                 title: 'Editar parte',
+                 parte,
+                 cantidad,
+                 meta,
+                 periodo,
+                 produccionIdeal,
+                 produccionReal,
+                 avance 
+             })
+           
+            
+        } catch (error) {
+            console.log(error);
         }
-       }).then(parte => {
-
-        const cantidad = parte.cantidadProducida
-
-        const meta = parte.cantidadAProducir
-
-        const periodo = parte.duracion 
-
-        const produccionIdeal = meta / periodo
-
-        const produccionReal = cantidad / periodo
-
-        const avance = (cantidad * 100) / meta
-
-        return res.render('stock/partes/editParte',{
-            title: 'Editar parte',
-            parte,
-            cantidad,
-            meta,
-            periodo,
-            produccionIdeal,
-            produccionReal,
-            avance 
-        })
-       }).catch(error => console.log(error))
+      
     },
 
     updateParte : (req,res) => {

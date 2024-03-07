@@ -18,6 +18,12 @@ module.exports = (sequelize, DataTypes) => {
         onDelete:'CASCADE'
       })
 
+      proyectoProducto.belongsTo(models.Parte,{
+        foreignKey:'parteId',
+        as:'productoParte',
+        onDelete:'CASCADE'
+      })
+
       proyectoProducto.belongsTo(models.Producto,{
         foreignKey:'productoId',
         as:'producto',
@@ -29,6 +35,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   proyectoProducto.init({
     proyectoId: DataTypes.INTEGER,
+    parteId: DataTypes.INTEGER,
     productoId: DataTypes.INTEGER,   
     cantidadAProducir: DataTypes.INTEGER,
     costoUnitario: DataTypes.INTEGER,

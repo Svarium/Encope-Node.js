@@ -5,6 +5,7 @@ const ExcelJS = require('exceljs');
 const db = require('../database/models');
 const { title } = require('process');
 const path = require('path');
+const { cantidadProducida } = require('./apis/apiStockControllers');
 
 
 module.exports = {
@@ -131,18 +132,6 @@ module.exports = {
                     idFicha: ficha,
                 })
 
-                const productosFiltrados = req.body.productos.filter(producto => producto.id); // filtro el array productos para eliminar cualquier posición vacía
-
-                const proyectoProductos = await productosFiltrados.forEach(producto => {
-                    db.proyectoProducto.create({
-                        proyectoId: proyecto.id,
-                        productoId: producto.id,
-                        cantidadAProducir: producto.cantidad,
-                        costoUnitario: producto.costoUnitario,
-                        costoTotal: producto.cantidad * producto.costoUnitario,
-                    })
-                })
-
                 const parte = await db.Parte.create({
                     nombre: nombre.trim(),
                     expediente: expediente,
@@ -154,6 +143,19 @@ module.exports = {
                     idFicha: ficha,
                     idProyecto: proyecto.id,
                 })
+
+                const productosFiltrados = req.body.productos.filter(producto => producto.id); // filtro el array productos para eliminar cualquier posición vacía
+
+                const proyectoProductos = await productosFiltrados.forEach(producto => {
+                    db.proyectoProducto.create({
+                        proyectoId: proyecto.id,
+                        parteId: parte.id,
+                        productoId: producto.id,
+                        cantidadAProducir: producto.cantidad,
+                        costoUnitario: producto.costoUnitario,
+                        costoTotal: producto.cantidad * producto.costoUnitario,                    
+                    })
+                })         
 
                 return res.redirect('/stock/listProyects')
 
@@ -269,16 +271,7 @@ module.exports = {
                 }]
             })
 
-            const procedencia = usuario.destino.nombreDestino
-
-            const productos = await db.proyectoProducto.findAll({where:{proyectoId:id}})
-            
-            const costoTotal = productos.reduce((total, producto) => {
-                const costoUnitario = parseFloat(producto.costoUnitario) || 0;
-                const cantidad = parseFloat(producto.cantidad) || 0;
-                const costoProducto = costoUnitario * cantidad; // Calcular el costo del producto actual
-                return total + costoProducto; // Sumar al total el costo del producto actual
-            }, 0);
+            const procedencia = usuario.destino.nombreDestino         
 
 
             if (errors.isEmpty()) {
@@ -309,8 +302,7 @@ module.exports = {
                     detalle: detalle,
                     procedencia: procedencia,
                     duracion: duracion,
-                    unidadDuracion: unidadDuracion,
-                    costoTotalProyecto: costoTotal,                                
+                    unidadDuracion: unidadDuracion,                                         
                     estado: proyectoAnterior.estado
                 },
                     {
@@ -431,7 +423,9 @@ module.exports = {
         try {
             const id = req.params.id
 
-            const destroyhistorial = await db.Historial.destroy({ where: { idProyecto: id } })
+            const destroyProducts = await db.proyectoProducto.destroy({where:{proyectoId:id}})
+
+            /* const destroyhistorial = await db.Historial.destroy({ where: { idProyecto: id } }) */
 
             const destroyParte = await db.Parte.destroy({ where: { idProyecto: id } })
 

@@ -1,5 +1,6 @@
 const { where } = require('sequelize');
 const db = require('../database/models');
+const { cantidadProducida } = require('../controllers/apis/apiStockControllers');
 
 module.exports = {
 
@@ -264,11 +265,70 @@ module.exports = {
 
       const nuevoProducto = await db.proyectoProducto.create({
         proyectoId:proyectoId,
-        productoId:productoId,        
+        productoId:productoId, 
+        parteId:proyectoId,       
       })
 
       return nuevoProducto
 
+      
+    } catch (error) {
+      console.log(error);
+      throw {
+        status: 500,
+        message: error.message,
+      }
+    }
+  },
+
+  editarCantidadProducida : async (proyectoId, productoId, cantidad) => {
+    try {
+
+      const cantidadPrevia = await db.proyectoProducto.findOne({
+        where:{
+          proyectoId:proyectoId,
+          productoId:productoId 
+        }
+      })
+
+      const nuevaCantidad = await db.proyectoProducto.update({
+      cantidadProducida: cantidad,
+      stockEnTaller: cantidad
+      },{
+        where:{
+          proyectoId:proyectoId,
+          productoId:productoId 
+        }
+      });
+
+      return true;
+      
+    } catch (error) {
+      console.log(error);
+      throw {
+        status: 500,
+        message: error.message,
+      }
+    }
+  },
+
+  actualizarEgresos: async (proyectoId, productoId, egresos) => {
+    try {
+
+      const cantidadPrevia = await db.proyectoProducto.findOne({where:{ proyectoId:proyectoId,
+        productoId:productoId}});
+
+      const update = await db.proyectoProducto.update({
+        egresos:egresos,
+        stockEnTaller: cantidadPrevia.cantidadProducida - egresos
+      },{
+        where:{
+          proyectoId:proyectoId,
+          productoId:productoId 
+        }
+      })
+
+      return true;
       
     } catch (error) {
       console.log(error);

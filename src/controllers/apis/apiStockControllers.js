@@ -1,5 +1,5 @@
 const createResponseError = require('../../helpers/createResponseError');
-const { editProyectState, editParteSemanal, getAllProducts, getAllTallers, getProyectsDone, getLastproyects, editarCantidadAProducir, editarCostoUnitario, eliminarProductoDelProyecto, agregarProductoAlProyecto } = require('../../services/stockServices');
+const { editProyectState, editParteSemanal, getAllProducts, getAllTallers, getProyectsDone, getLastproyects, editarCantidadAProducir, editarCostoUnitario, eliminarProductoDelProyecto, agregarProductoAlProyecto, editarCantidadProducida, actualizarEgresos } = require('../../services/stockServices');
 
 
 module.exports = {
@@ -202,12 +202,50 @@ module.exports = {
             console.log(error);
             return createResponseError(res, error)
         }
+    },
+
+    cantidadProducida : async(req,res) => {
+        try {
+
+            const proyectoId = req.params.id;
+            const productoId = req.body.productoId;
+            const cantidad = req.body.cantidad;
+
+            const nuevaCantidad = await editarCantidadProducida(proyectoId, productoId, cantidad);
+
+            return res.status(200).json({
+                ok:true,
+                data:{
+                    message:"Cantidad actualizada correctamente",                 
+                }
+            })
+            
+        } catch (error) {
+            console.log(error);
+            return createResponseError(res, error)
+        }
+    },
+
+    egresos: async(req,res) => {
+        try {
+
+            const proyectoId = req.params.id;
+            const productoId = req.body.productoId;
+            const egresos = req.body.egresos;
+
+            const nuevaCantidad = await actualizarEgresos(proyectoId, productoId, egresos);
+
+            return res.status(200).json({
+                ok:true,
+                data:{
+                    message:"Egresos actualizados correctamente",                 
+                }
+            })            
+            
+        } catch (error) {
+            console.log(error);
+            return createResponseError(res, error) 
+        }
     }
-
-
-
-
-
-
     
 }

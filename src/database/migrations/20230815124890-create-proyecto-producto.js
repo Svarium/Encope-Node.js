@@ -17,6 +17,14 @@ module.exports = {
         },
         allowNull:false,
       },
+      parteId: {
+        type: Sequelize.INTEGER,
+        references:{
+          model:'Partes',
+          key:'id'
+        },
+        allowNull:false,
+      },
       productoId: {
         type: Sequelize.INTEGER,
         references:{
