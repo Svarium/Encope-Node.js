@@ -1,5 +1,5 @@
 const express = require('express');
-const { editState, addRemanentes, allProducts, allTallers, allProyectsDone, lastProyects, updateCantidadAProducir, updateCostoUnitario, eliminarProducto, agregarProducto, cantidadProducida, egresos } = require('../../controllers/apis/apiStockControllers');
+const { editState, addRemanentes, allProducts, allTallers, allProyectsDone, lastProyects, updateCantidadAProducir, updateCostoUnitario, eliminarProducto, agregarProducto, cantidadProducida, egresos, observaciones } = require('../../controllers/apis/apiStockControllers');
 
 const router = express.Router();
 
@@ -28,6 +28,10 @@ router.post('/newProduct', agregarProducto) //agrego nuevo producto al proyecto
 router.put('/cantidadProducida/:id', cantidadProducida) //edito la cantidad producida
 
 router.put('/egresos/:id', egresos) //actualizo los egresos
+
+router.put('/observaciones/:id', observaciones) //actualizo las observaciones
+
+
 
 
 

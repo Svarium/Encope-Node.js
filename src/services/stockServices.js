@@ -314,29 +314,66 @@ module.exports = {
 
   actualizarEgresos: async (proyectoId, productoId, egresos) => {
     try {
-
-      const cantidadPrevia = await db.proyectoProducto.findOne({where:{ proyectoId:proyectoId,
-        productoId:productoId}});
-
-      const update = await db.proyectoProducto.update({
-        egresos:egresos,
-        stockEnTaller: cantidadPrevia.cantidadProducida - egresos
-      },{
-        where:{
-          proyectoId:proyectoId,
-          productoId:productoId 
+      // Obtener la cantidad producida previa
+      const cantidadPrevia = await db.proyectoProducto.findOne({
+        where: {
+          proyectoId: proyectoId,
+          productoId: productoId
         }
-      })
-
+      });
+  
+      // Validar que los egresos no sean mayores que la cantidad producida
+      if (egresos > cantidadPrevia.cantidadProducida) {
+        throw {
+          status: 400,
+          message: "Los egresos no pueden ser mayores que la cantidad producida"
+        };
+      }
+  
+      // Actualizar los egresos y el stock en taller
+      const update = await db.proyectoProducto.update({
+        egresos: egresos,
+        stockEnTaller: cantidadPrevia.cantidadProducida - egresos
+      }, {
+        where: {
+          proyectoId: proyectoId,
+          productoId: productoId
+        }
+      });
+  
       return true;
       
     } catch (error) {
       console.log(error);
       throw {
-        status: 500,
-        message: error.message,
-      }
+        status: error.status || 500,
+        message: error.message || "Error al actualizar los egresos"
+      };
+    }
+  },
+
+
+  actualizarObservaciones : async (proyectoId, observaciones) => {
+    try {
+
+      const observacionesNuevas = await db.Parte.update({
+        observaciones:observaciones.trim()
+      },{
+        where:{
+        id:proyectoId
+        }
+      })
+
+      return true
+      
+    } catch (error) {
+      console.log(error);
+      throw {
+        status: error.status || 500,
+        message: error.message || "Error al actualizar los egresos"
+      };
     }
   }
+  
 
 }

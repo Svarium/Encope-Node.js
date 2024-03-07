@@ -1,5 +1,5 @@
 const createResponseError = require('../../helpers/createResponseError');
-const { editProyectState, editParteSemanal, getAllProducts, getAllTallers, getProyectsDone, getLastproyects, editarCantidadAProducir, editarCostoUnitario, eliminarProductoDelProyecto, agregarProductoAlProyecto, editarCantidadProducida, actualizarEgresos } = require('../../services/stockServices');
+const { editProyectState, editParteSemanal, getAllProducts, getAllTallers, getProyectsDone, getLastproyects, editarCantidadAProducir, editarCostoUnitario, eliminarProductoDelProyecto, agregarProductoAlProyecto, editarCantidadProducida, actualizarEgresos, actualizarObservaciones } = require('../../services/stockServices');
 
 
 module.exports = {
@@ -226,26 +226,65 @@ module.exports = {
         }
     },
 
-    egresos: async(req,res) => {
+    egresos: async (req, res) => {
+        try {
+          const proyectoId = req.params.id;
+          const productoId = req.body.productoId;
+          const egresos = req.body.egresos;
+      
+          const nuevaCantidad = await actualizarEgresos(proyectoId, productoId, egresos);
+      
+          return res.status(200).json({
+            ok: true,
+            data: {
+              message: "Egresos actualizados correctamente",
+            }
+          });
+      
+        } catch (error) {
+          console.log(error);
+      
+          // Verifica si el error es debido a egresos mayores que la cantidad producida
+          if (error.status && error.status === 400) {
+            // Envía el mensaje de error al frontend
+            return res.status(error.status).json({
+              ok: false,
+              error: {
+                message: error.message,
+              },
+            });
+          } else {
+            // Maneja otros errores
+            return res.status(error.status || 500).json({
+              ok: false,
+              error: {
+                message: error.message || "Error al actualizar los egresos",
+              },
+            });
+          }
+        }
+      },
+
+      observaciones: async(req,res) => {
         try {
 
-            const proyectoId = req.params.id;
-            const productoId = req.body.productoId;
-            const egresos = req.body.egresos;
+            const proyectoId = req.params.id;           
+            const observaciones = req.body.observaciones;
 
-            const nuevaCantidad = await actualizarEgresos(proyectoId, productoId, egresos);
+            const nuevasObservaciones = await actualizarObservaciones(proyectoId, observaciones)
 
             return res.status(200).json({
                 ok:true,
                 data:{
-                    message:"Egresos actualizados correctamente",                 
+                    message:"Observaciones actualizadas correctamente",                 
                 }
-            })            
+            })    
             
         } catch (error) {
             console.log(error);
-            return createResponseError(res, error) 
+            return createResponseError(res, error)
         }
-    }
+      }
+      
     
 }
