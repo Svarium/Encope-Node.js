@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
     unidadDuracion: DataTypes.STRING,       
     idProyecto: DataTypes.INTEGER,
     idFicha: DataTypes.INTEGER,   
-    observaciones: DataTypes.STRING,
+    observaciones: DataTypes.TEXT,
     remanentes: DataTypes.STRING
   }, {
     sequelize,

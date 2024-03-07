@@ -57,7 +57,7 @@ module.exports = {
       },      
       observaciones: {
         allowNull:true,
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       remanentes : {
         type: Sequelize.STRING

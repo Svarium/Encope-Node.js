@@ -94,6 +94,12 @@
     cursor: pointer !important;
 }
 
+.custom-btn {
+    padding: 0.25rem 0.4rem !important; /* Ajusta el relleno para hacer el botón más pequeño */
+    font-size: 0.75rem !important; /* Ajusta el tamaño de la fuente para hacer el botón más pequeño */
+}
+
+
 
                 /* COMIENZA SECCION REDES SOCIALES */
 
