@@ -43,12 +43,14 @@ module.exports = {
 
         const talleres = db.Taller.findAll({
             attributes: ['id', 'nombre'],
+            where: {estado:"Aprobado"},
             include: [{
                 model: db.destinoUsuario,
                 as: 'destinoTaller',
                 attributes: ['id', 'nombreDestino']
             }],
-        })
+        },    
+        )
         const productos = db.Producto.findAll({
             attributes: ['id', 'nombre'],
         })
@@ -510,7 +512,7 @@ module.exports = {
             const worksheet = workbook.addWorksheet('Sheet 1'); // Crea una hoja de Excel 
 
             // Agregar títulos de columnas
-            const titleRow = worksheet.addRow(["Nombre Proyecto", "Estado", "Detalle", "Expediente", "Procedencia", 'Duración', "Insumos", 'Cantidad a Producir', 'Costo Unitario', 'Costo total', 'fecha de creación del proyecto']);
+            const titleRow = worksheet.addRow(["Nombre Proyecto", "Estado", "Detalle", "Expediente", "Procedencia", 'Duración', 'Costo total Proyecto', 'fecha de creación del proyecto']);
 
             // Aplicar formato al título
             titleRow.eachCell((cell) => {
@@ -531,7 +533,7 @@ module.exports = {
             });
 
             tablaProyects.forEach(proyecto => {
-                const row = worksheet.addRow([proyecto.nombre, proyecto.estado, proyecto.detalle, proyecto.expediente, proyecto.procedencia, `${proyecto.duracion} - ${proyecto.unidadDuracion}`, proyecto.insumos, proyecto.cantidadAProducir, proyecto.costoUnitario, proyecto.costoTotal, proyecto.createdAt]);
+                const row = worksheet.addRow([proyecto.nombre, proyecto.estado, proyecto.detalle, proyecto.expediente, proyecto.procedencia, `${proyecto.duracion} - ${proyecto.unidadDuracion}`, proyecto.costoTotalProyecto, proyecto.createdAt]);
 
                 // Aplicar bordes a las celdas de la fila de datos
                 row.eachCell((cell) => {

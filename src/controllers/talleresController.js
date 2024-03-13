@@ -155,7 +155,7 @@ module.exports = {
             const worksheet = workbook.addWorksheet('Sheet 1'); // Crea una hoja de Excel 
     
             // Agregar títulos de columnas
-            const titleRow = worksheet.addRow(["Nombre Taller", "Detalle", "Expediente", "Creado", "Destino"]);
+            const titleRow = worksheet.addRow(["Nombre Taller", "Detalle", "Expediente", "Creado", "Destino", "estado"]);
     
             // Aplicar formato al título
             titleRow.eachCell((cell) => {
@@ -176,7 +176,7 @@ module.exports = {
             });
     
             tablaTalleres.forEach(taller => {
-                const row = worksheet.addRow([taller.nombre, taller.detalle, taller.expediente, taller.createdAt, taller.destinoTaller.nombreDestino]);
+                const row = worksheet.addRow([taller.nombre, taller.detalle, taller.expediente, taller.createdAt, taller.destinoTaller.nombreDestino, taller.estado]);
                 
                 // Aplicar bordes a las celdas de la fila de datos
                 row.eachCell((cell) => {

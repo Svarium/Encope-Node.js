@@ -62,7 +62,7 @@
                 <select id="destino" class="form-control rounded <%= (locals.errors && errors.destino) && 'is-invalid'%>" name="destino">
                     <option value="" selected hidden>Seleccione el destino del taller...</option>
                     <% destinos.forEach(({nombreDestino, id}) => { %>
-                    <option value="<%= id %>"> <%= nombreDestino %> </option>
+                    <option value="<%= id %>" <%= id === taller.idDestino && 'selected' %>> <%= nombreDestino %> </option>
                     <% }) %>
                 </select>
                 <small id="errorNombre" class="text-danger "><%= locals.errors && errors.destino ? errors.destino.msg : null %></small>

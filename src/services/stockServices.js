@@ -293,8 +293,8 @@ module.exports = {
 
       const nuevaCantidad = await db.proyectoProducto.update({
       cantidadProducida: cantidad,
-      stockEnTaller: cantidad
-      },{
+      stockEnTaller: cantidad - cantidadPrevia.egresos
+       },{
         where:{
           proyectoId:proyectoId,
           productoId:productoId 

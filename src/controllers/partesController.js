@@ -77,9 +77,8 @@ module.exports = {
 
             const ideal = cantidadTotalAProducir / parte.duracion;
 
-            const real = cantidadTotalProducida / parte.duracion
-
-            console.log("Porcentaje de avance:", porcentajeAvance.toFixed(2) + "%");
+            const real = cantidadTotalProducida / parte.duracion              
+            
      
              return res.render('stock/partes/editParte',{
                  title: 'Editar parte',
