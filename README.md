@@ -11,7 +11,7 @@ Si no están instalados, descárgalos e instálalos desde el sitio web oficial d
 ## a) Pasos para la instalación:
 
 1. Ejecutar `npm install`.
-2. Seguir con `npm start`.
+2. Seguir con `npm start` o para desarrollo `npx nodemon`.
 
 ### b) Instalacion de Dependencias:
 
@@ -49,6 +49,8 @@ Asegúrate de que las siguientes dependencias estén incluidas en tu archivo `pa
 #### d.1) Requisitos previos:
 
 1. Tener instalado `npm install -g sequelize-cli` de manera global
+
+    1. Nota: Es posible que en entornos windows no tenga permisos de ejecucion. En cuyo caso, debera entrar al PowerShell y ejecutar el siguiente comando `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned`, con esto ya podra ejecutar el comando `sequelize db:seed:all`.   
 
 #### d.2) Migracion de la base de datos:
 
