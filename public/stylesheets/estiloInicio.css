@@ -97,6 +97,32 @@
     padding-bottom: 60px;
 }
 
+.download-link {
+    position: relative;
+}
+  
+.download-link::after {
+  content: url('/images/iconos/icono_descarga.svg');
+  display: block;
+  position: absolute;
+  top: 15px;
+  left: 150px; 
+  width: 50px; 
+  height: auto; 
+  margin-left: 5px;
+  transition: content 1s ease;
+}
+  
+.download-link:hover::after {
+    content: url('/images/iconos/icono_descarga_negro.svg');
+    width: 55px;
+}
+
+.contenedorUbiMapa iframe {
+    width: 90%;
+    height: 90vh;
+}
+
 .seguinosRedes{
     width: 320px;
     color: #0c0c0c;

@@ -5840,6 +5840,7 @@ button.bg-dark:hover {
 }
 .d-table-cell {
   display: table-cell !important;
+  align-items: center;
 }
 .d-flex {
   display: flex !important;
@@ -6785,6 +6786,7 @@ button.bg-dark:hover {
 .mb-2,
 .my-2 {
   margin-bottom: 0.5rem !important;
+  margin-left: 8px;
 }
 .ml-2,
 .mx-2 {
