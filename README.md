@@ -1,9 +1,20 @@
+### Requisitos Previos
+
+Primero, asegúrate de tener Node.js y npm instalados en tu sistema. Puedes verificar si están instalados ejecutando los siguientes comandos en tu terminal:
+
+```bash
+node -v
+npm -v
+```
+Si no están instalados, descárgalos e instálalos desde el sitio web oficial de Node.js: [Link al entorno de Ejecucion](https://nodejs.org.)
+
 ## a) Pasos para la instalación:
 
 1. Ejecutar `npm install`.
 2. Seguir con `npm start`.
 
 ### b) Instalacion de Dependencias:
+
 Asegúrate de que las siguientes dependencias estén incluidas en tu archivo `package.json`:
 
 - bcrypt: ^5.1.0
@@ -27,21 +38,30 @@ Asegúrate de que las siguientes dependencias estén incluidas en tu archivo `pa
 - sequelize: ^6.37.3
 - sequelize-paginate: ^1.1.6
 
-### c) Migración de la base de datos
+### c) Migración de la base de datos y Poblado
 
-Para migrar la base de datos, sigue estos pasos:
+1. Existe un archivo `.env.example`, el cual tiene los campos necesarios a ser llenados para la base de datos y otras variables de uso general. Pasos:
+    1. Copiar `.env.example` y crear cambiarle el nombre a `.env`
+    2. Completar `.env` con los valores correspondientes
 
-1. Ejecuta el comando de migración del siguiente ORM. 
+### d) Migración de la base de datos y Poblado
 
-   ```bash
-   sequelize db:migrate
+#### d.1) Requisitos previos:
 
+1. Tener instalado `npm install -g sequelize-cli` de manera global
+
+#### d.2) Migracion de la base de datos:
+
+```bash
+npm run db:create
+npm run db:reset
+```
 ### d) Inicialización de la base de datos con datos de prueba (Seed)
 
 Para inicializar la base de datos con datos de prueba, sigue estos pasos:
 
 1. Ejecuta el comando de seed proporcionado por tu ORM o herramienta de administración de bases de datos. Por ejemplo, con Sequelize, podrías ejecutar:
 
-   ```bash
-   sequelize db:seed:all
-
+```bash
+sequelize db:seed:all
+```
