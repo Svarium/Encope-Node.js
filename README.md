@@ -48,22 +48,11 @@ Asegúrate de que las siguientes dependencias estén incluidas en tu archivo `pa
 
 #### d.1) Requisitos previos:
 
-1. Tener instalado `npm install -g sequelize-cli` de manera global
+1. Tener instalado `npm install -g sequelize-cli` de manera global 
 
-    1. Nota: Es posible que en entornos windows no tenga permisos de ejecucion. En cuyo caso, debera entrar al PowerShell y ejecutar el siguiente comando `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned`, con esto ya podra ejecutar el comando `sequelize db:seed:all`.   
-
-#### d.2) Migracion de la base de datos:
+#### d.2) Migracion de la base de datos y Seeding:
 
 ```bash
 npm run db:create
 npm run db:reset
-```
-### d) Inicialización de la base de datos con datos de prueba (Seed)
-
-Para inicializar la base de datos con datos de prueba, sigue estos pasos:
-
-1. Ejecuta el comando de seed proporcionado por tu ORM o herramienta de administración de bases de datos. Por ejemplo, con Sequelize, podrías ejecutar:
-
-```bash
-sequelize db:seed:all
 ```
