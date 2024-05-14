@@ -29,13 +29,7 @@ module.exports = (sequelize, DataTypes) => {
         as:'parteTaller',
         onDelete:'CASCADE'
       })
-
-      Parte.belongsTo(models.Ficha,{
-        foreignKey:'idFicha',
-        as:'parteFicha',
-        onDelete:'CASCADE'
-      })
-
+    
      
     }
   }
@@ -47,8 +41,7 @@ module.exports = (sequelize, DataTypes) => {
     procedencia: DataTypes.STRING,
     duracion: DataTypes.INTEGER,
     unidadDuracion: DataTypes.STRING,       
-    idProyecto: DataTypes.INTEGER,
-    idFicha: DataTypes.INTEGER,   
+    idProyecto: DataTypes.INTEGER,       
     observaciones: DataTypes.TEXT,
     remanentes: DataTypes.TEXT
   }, {

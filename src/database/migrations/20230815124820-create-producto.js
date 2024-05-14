@@ -22,6 +22,14 @@ module.exports = {
         type: Sequelize.STRING
       }
       ,
+      ficha: {
+        type: Sequelize.STRING
+      }
+      ,
+      expedienteFicha: {
+        type: Sequelize.STRING
+      }
+      ,
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

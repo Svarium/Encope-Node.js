@@ -81,14 +81,67 @@
                         <td><%= item.unidadDeMedida %></td>
                         <td><img src="/images/productos/<%= item.imagen %>" alt="" width="70px" height="70px" class="rounded"></td>
                         <td>
-                            <!-- Enlace para editar -->
-                            <a href="/stock/editProduct/<%= item.id %>"><button class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></button></a>
-                            
-                            <!-- Formulario para eliminar -->
-                            <form action="/stock/delete/<%= item.id %>?_method=DELETE" method="POST" class="deleteProductForm">
-                              <button type="submit" class="btn btn-danger mt-2"><i class="fa-solid fa-trash"></i></button>
-                          </form>
-                        </td>
+
+                          <% if (!item.ficha) { %>
+                           <!-- Botón de agregar ficha -->
+                          <div class="row">
+                            <div class="col-12">
+                              <button type="button" class="btn btn-facebook w-100" data-bs-toggle="modal" data-bs-target="#fichaTecnica<%= item.id %>">
+                                Agregar Ficha Técnica
+                            </button>
+                            </div>
+                        </div>
+                          <% } %>
+                          
+                          
+                          <!-- MODAL -->
+                          <div class="modal fade" id="fichaTecnica<%= item.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                          <h5 class="modal-title" id="exampleModalLabel">Agregar Ficha: " <%= item.nombre %>"</h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body">
+                                          <div class="container">
+                                              <form action="/stock/addFicha/<%= item.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+                                                  <div class="mb-3">
+                                                      <label for="expedienteFicha_<%= item.id %>" class="form-label text-left">Expediente de la Ficha Técnica</label>
+                                                      <input type="text" class="form-control <%= (locals.errors && errors.expedienteFicha) && 'is-invalid'%>" name="expedienteFicha" id="expedienteFicha_<%= item.id %>" placeholder="Ingrese número de expediente">
+                                                      <small id="errorExpediente_<%= item.id %>" class="text-danger ms-2"><%= locals.errors && errors.expedienteFicha ? errors.expedienteFicha.msg : null %></small>
+                                                  </div>
+                                                  <div class="mb-3">
+                                                      <label for="ficha_<%= item.id %>" class="form-label">Ficha Técnica</label>
+                                                      <input type="file" class="form-control <%= (locals.errors && errors._undefined) && 'is-invalid'%>" name="ficha" id="ficha_<%= item.id %>" placeholder="Ingrese número de expediente">
+                                                      <small id="errorProducto_<%= item.id %>" class="text-danger ms-2"><%= locals.errors && errors._undefined ? errors._undefined.msg : null %></small>   
+                                                  </div>
+                                                  <button type="submit" class="btn btn-primary">Enviar</button>
+                                              </form>
+                                          </div>
+                                      </div>
+                                      <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>                                         
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          
+                          <!-- Enlace para editar y formulario para eliminar -->
+                          <div class="row mt-2">
+                              <div class="col-6">
+                                  <a href="/stock/editProduct/<%= item.id %>">
+                                      <button class="btn btn-success w-100">Editar <i class="fa-solid fa-pen-to-square"></i></button>
+                                  </a>
+                              </div>
+                              <div class="col-6">
+                                  <form action="/stock/delete/<%= item.id %>?_method=DELETE" method="POST" class="deleteProductForm">
+                                      <button type="submit" class="btn btn-danger w-100">Eliminar <i class="fa-solid fa-trash"></i></button>
+                                  </form>
+                              </div>
+                          </div>                                                
+                      </td>
+                      
+                      
                     </tr>
                 <% }) %>
             </tbody>
@@ -135,5 +188,60 @@ deleteForms.forEach(form => {
     });
 });
     </script>
+   <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const forms = document.querySelectorAll('form');
+  
+      forms.forEach(form => {
+        form.addEventListener('submit', function(event) {
+          event.preventDefault(); // Detener el envío del formulario para validar primero
+          
+          const inputs = form.querySelectorAll('input[type="text"], input[type="file"]');
+          const expediente = form.querySelector('input[name="expedienteFicha"]');
+          const ficha = form.querySelector('input[name="ficha"]');
+          const regex = /^EX-\d{4}-\d{9}-APN-DS#[A-Z0-9]+$/;         
+  
+          let errors = [];
+          
+          // Validación del formato del expediente
+          if (!regex.test(expediente.value.trim())) {
+            errors.push('El formato del expediente no es correcto. Ejemplo: EX-2023-114492446-APN-DS#ENCOPE');
+          }
+          
+          // Validación del campo de ficha para recibir solo archivos PDF
+          if (ficha.value.trim() && !ficha.value.trim().toLowerCase().endsWith('.pdf')) {
+            errors.push('El archivo seleccionado en el campo de ficha debe ser un PDF.');
+          }
+  
+          // Verificación de campos vacíos
+          inputs.forEach(input => {
+            if (!input.value.trim()) { // Verificar que el campo no esté vacío
+              errors.push(`El campo ${input.getAttribute('name')} es requerido.`);
+            }
+          });
+  
+          if (errors.length > 0) {
+            let errorMessage = '<ul>';
+            errors.forEach(error => {
+              errorMessage += `<li>${error}</li>`;
+            });
+            errorMessage += '</ul>';
+  
+            // Mostrar alerta de SweetAlert con los errores
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              html: errorMessage
+            });
+          } else {
+            // Si no hay errores, enviar el formulario
+            form.submit();
+          }
+        });
+      });
+    });
+  </script>
+  
+    
   </body>
 </html>

@@ -25,7 +25,9 @@ module.exports = (sequelize, DataTypes) => {
     nombre: DataTypes.STRING,
     detalle: DataTypes.STRING,
     imagen: DataTypes.STRING,   
-    unidadDeMedida:DataTypes.STRING
+    unidadDeMedida:DataTypes.STRING,
+    ficha:DataTypes.STRING,
+    expedienteFicha:DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Producto',

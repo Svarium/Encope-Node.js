@@ -28,8 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     duracion: DataTypes.INTEGER,
     unidadDuracion: DataTypes.STRING, 
     costoTotalProyecto: DataTypes.INTEGER, 
-    idProyecto: DataTypes.INTEGER,
-    idFicha: DataTypes.INTEGER,
+    idProyecto: DataTypes.INTEGER,   
     insumos:DataTypes.STRING,
     estado:{
       type: DataTypes.STRING,

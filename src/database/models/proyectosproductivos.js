@@ -30,12 +30,7 @@ module.exports = (sequelize, DataTypes) => {
         onDelete:'CASCADE'
       })
 
-      Proyecto.belongsTo(models.Ficha,{
-        foreignKey:'idFicha',
-        as:'proyectoFicha',
-        onDelete:'CASCADE'
-      })
-
+      
     }
   }
   Proyecto.init({
@@ -46,8 +41,7 @@ module.exports = (sequelize, DataTypes) => {
     procedencia: DataTypes.STRING,
     duracion: DataTypes.INTEGER,
     unidadDuracion: DataTypes.STRING,
-    costoTotalProyecto: DataTypes.INTEGER, 
-    idFicha: DataTypes.INTEGER,
+    costoTotalProyecto: DataTypes.INTEGER,    
     insumos:DataTypes.STRING,
     estado:{
       type: DataTypes.STRING,

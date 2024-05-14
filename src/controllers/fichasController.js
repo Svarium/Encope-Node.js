@@ -1,12 +1,10 @@
 const fs = require('fs');
 const {validationResult} = require('express-validator');
 const path = require('path');
-const { Op } = require("sequelize");
-const ExcelJS = require('exceljs');
 require("dotenv").config();
 
 const db = require('../database/models');
-const { error } = require('console');
+
 
 module.exports = {
 
@@ -36,7 +34,7 @@ module.exports = {
             errors.errors.push({
                 value : "",
                 msg : req.fileValidationError,
-                param : "pdf",
+                param : "ficha",
                 location : "file"
             })
         }
@@ -45,7 +43,7 @@ module.exports = {
             errors.errors.push({
                 value : "",
                 msg : "Debe subir el archivo",
-                param : "pdf",
+                param : "ficha",
                 location : "file"
             })
             

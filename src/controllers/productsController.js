@@ -4,6 +4,7 @@ const { Op } = require('sequelize');
 const ExcelJS = require('exceljs');
 const fs = require('fs');
 const path = require('path');
+const { error } = require("console");
 
 
 
@@ -174,6 +175,73 @@ module.exports = {
 
         }
 
+    },
+
+    addFicha: (req,res) => {
+
+        const errors = validationResult(req);
+
+        /* return res.send(errors.mapped()) */
+
+        if(req.fileValidationError){ //este if valida que solo se puedan subir extensiones (pdf)
+            errors.errors.push({
+                value : "",
+                msg : req.fileValidationError,
+                param : "ficha",
+                location : "file"
+            })
+        }
+
+        if(!req.file){  //este if valida que se suba un pdf
+            errors.errors.push({
+                value : "",
+                msg : "Debe subir el archivo",
+                param : "ficha",
+                location : "file"
+            })
+            
+        } 
+
+           // Manejar el error si el archivo excede el tamaño máximo (nuevo)
+    if (req.fileSizeError) {
+        errors.errors.push({
+            value: "",
+            msg: req.fileSizeError,
+            param: "ficha",
+            location: "file"
+        });
+    } 
+
+    if(errors.isEmpty()){
+        const id = req.params.id;
+        const {expedienteFicha} = req.body
+
+        db.Producto.update({
+            expedienteFicha:expedienteFicha,
+            ficha: req.file? req.file.filename : null
+        },{
+            where:{id:id}
+        })
+        .then(() => {
+            return res.redirect('/stock/products')
+        })
+        .catch(error => console.log(error));
+    } else {
+
+        if(req.file){
+            fs.existsSync(path.join(__dirname,`../../public/images/fichasTecnicas/${req.file.filename}`)) && fs.unlinkSync(path.join(__dirname,`../../public/images/fichasTecnicas/${req.file.filename}`)) //SI HAY ERROR Y CARGÓ IMAGEN ESTE METODO LA BORRA
+        }
+
+        db.Producto.findAll()
+        .then(productos => {
+            return res.render('stock/products/productos',{
+                title:'Productos',
+                productos,
+                old:req.body,
+                errors:errors.mapped()            })
+        })
+        .catch(error => console.log(error))
+    }
     },
 
     deleteProduct : (req,res) => {

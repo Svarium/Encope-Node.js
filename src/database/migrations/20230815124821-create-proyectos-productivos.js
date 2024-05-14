@@ -39,16 +39,7 @@ module.exports = {
       },
       costoTotalProyecto: {
         type: Sequelize.INTEGER
-      },
-      idFicha:{
-        type: Sequelize.INTEGER,
-        references: {
-          model: {
-            tableName: "Fichas"
-          },
-          key:"id"
-        }
-      },
+      },      
       insumos: {
         type: Sequelize.STRING
       },
