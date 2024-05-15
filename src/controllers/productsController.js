@@ -28,20 +28,13 @@ module.exports = {
     listProducts : (req,res) => {
         db.Producto.findAll({
             include:[{
-                model:db.productoInsumo,
+                model:db.Insumo,
                 as:"productos",
-                attributes:["idProducto", "idInsumo"],
-                include:[
-                    {
-                        model:db.Insumo,
-                        as:"insumos",
-                        attributes: ['nombre', 'cantidad']
-                    }
-                ]      
-
+                attributes:["nombre", "cantidad"],                
             }]
         })
-        .then(productos => {              
+        .then(productos => {    
+            /* return res.send(productos) */          
             return res.render('stock/products/productos',{
                 title:'Productos',
                 productos
@@ -302,20 +295,11 @@ module.exports = {
         try {
             const tablaProductos = await db.Producto.findAll({
                 include:[{
-                    model:db.productoInsumo,
+                    model:db.Insumo,
                     as:"productos",
-                    attributes:["idProducto", "idInsumo"],
-                    include:[
-                        {
-                            model:db.Insumo,
-                            as:"insumos",
-                            attributes: ['nombre', 'cantidad']
-                        }
-                    ]      
-    
+                    attributes:["nombre", "cantidad"],                
                 }]
             }); // Traigo mi consulta de stock
-
             
     
             const workbook = new ExcelJS.Workbook(); // Función constructora del Excel
@@ -343,8 +327,8 @@ module.exports = {
             });
     
             tablaProductos.forEach(producto => {   
-                const insumos = producto.productos.map(item => item.insumos.nombre);
-                const cantidad = producto.productos.map(item => item.insumos.cantidad);
+                const insumos = producto.productos.map(item => item.nombre);
+                const cantidad = producto.productos.map(item => item.cantidad);
                 const insumosConCantidad = insumos.map((insumo, index) => `${cantidad[index]} ${insumo}`); 
             
                 // Construir la URL completa del archivo PDF

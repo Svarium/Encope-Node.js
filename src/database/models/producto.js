@@ -19,11 +19,11 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE'
       });
 
-      Producto.hasMany(models.productoInsumo,{
-        foreignKey:'idProducto',
+      Producto.hasMany(models.Insumo,{
+        foreignKey:"idProducto",
         as:'productos'
       })
-    
+
     }
   }
   Producto.init({

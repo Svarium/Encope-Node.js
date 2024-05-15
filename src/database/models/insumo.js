@@ -12,17 +12,18 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
 
-      Insumo.hasMany(models.productoInsumo,{
-        foreignKey:'idInsumo',
-        as:'insumos'
-      })
+     Insumo.belongsTo(models.Producto,{
+      foreignKey:"idProducto",
+      as:"productos"
+     })
 
     }
   }
   Insumo.init({
     nombre: DataTypes.STRING,
-    cantidad: DataTypes.STRING,
-    detalle: DataTypes.STRING
+    cantidad: DataTypes.INTEGER,
+    detalle: DataTypes.STRING,
+    idProducto: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Insumo',

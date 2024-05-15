@@ -34,20 +34,14 @@ module.exports = {
 
         db.Insumo.create({
             nombre:nombre.trim(),
-            cantidad:+cantidad,
-            detalle: detalle ? detalle : "Sin detalle asociado"
-        })
-        .then(insumo => {
-             db.productoInsumo.create({
-                idProducto:idProducto,
-                idInsumo:insumo.id
-             })
+            cantidad:cantidad,
+            detalle: detalle ? detalle : "Sin detalle asociado",
+            idProducto:idProducto
+        })        
              .then(() => {
                 return res.redirect('/stock/products')
              })
-             .catch(error => console.log(error))
-        })
-        .catch(error => console.log(error))   
+             .catch(error => console.log(error))      
         
         } else {
 
