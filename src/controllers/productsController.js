@@ -5,6 +5,7 @@ const ExcelJS = require('exceljs');
 const fs = require('fs');
 const path = require('path');
 const { includes, forEach } = require("../validations/addProductValidator");
+const { error } = require("console");
 
 
 
@@ -253,18 +254,23 @@ module.exports = {
     },
 
     deleteProduct : (req,res) => {
-
       
             const id = req.params.id
 
             db.Producto.findByPk(id)
             .then(producto => {
                 fs.existsSync(path.join(__dirname, `../../public/images/productos/${producto.imagen}`)) && fs.unlinkSync(path.join(__dirname, `../../public/images/productos/${producto.imagen}`));
+                fs.existsSync(path.join(__dirname, `../../public/images/fichasTecnicas/${producto.ficha}`)) && fs.unlinkSync(path.join(__dirname, `../../public/images/fichasTecnicas/${producto.ficha}`));
 
-            db.Producto.destroy({
-                where:{id:producto.id},
+            db.Insumo.destroy({
+                where:{idProducto:producto.id},
             }).then(() => {
-                return res.redirect('/stock/products')
+                db.Producto.destroy({
+                    where:{id:id}
+                })
+                .then(() => {
+                    return res.redirect('/stock/products')
+                })                               
             }).catch(errors => console.log(errors))
             })
     },
