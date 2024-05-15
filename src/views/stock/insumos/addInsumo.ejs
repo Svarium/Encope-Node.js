@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../../partials/head') %>
+
+  <body style="background-color: rgb(243, 241, 238)">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-3">
+      <div class="container">
+        <button
+          class="navbar-toggler d-lg-none"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapsibleNavId"
+          aria-controls="collapsibleNavId"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <button
+          class="btn btn-transparent"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasRight"
+          aria-controls="offcanvasRight"
+        >
+          <img
+            id="userIconProfile"
+            src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>"
+            class="iconProfile me-2"
+            alt=""
+          />
+          <%= userLogin.name %> <i class="fa-solid fa-caret-down fa-lg"></i>
+        </button>   
+        <!-- Menú de navegación -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto"> <!-- 'ms-auto' para alinear a la derecha -->
+            <li class="nav-item">
+              <a class="nav-link" href="/stock">Regresar</a>
+            </li>
+          </ul>
+        </div>
+      </div>    
+    </nav>
+
+    <main>
+      <%- include('../../partials/modals') %> <%- include('../../partials/canvasMenu')
+      %>
+
+
+      <!-- TITULO H1 -->
+      <div class="container-fluid mt-4">
+        <p class="text-black h2 text-center shadow-3">
+          <strong>Agregar insumos a: <%= producto.nombre %></strong>
+        </p>
+        <hr class="text-black" />        
+      </div>
+
+
+      <div class="container">
+
+        <div class="row justify-content-center">
+               <form action="/stock/addInsumo/<%= producto.id %>" method="POST" class="col-12 col-md-6 col-lg-8 col-xl-8 shadow rounded p-3">
+                <div class="mb-3 mt-1">
+                    <label for="nombre" class="form-label">Nombre</label>                   
+                    <input type="text" name="nombre" class="form-control <%= (locals.errors && errors.nombre) && 'is-invalid'%>" id="nombre"   placeholder="Ingrese el nombre del insumo">
+                    <small id="nombre" class="text-danger ms-2"><%= locals.errors && errors.nombre ? errors.nombre.msg : null %></small>
+                  </div>
+                  <div class="mb-3">
+                    <label for="cantidad" class="form-label">Cantidad</label>
+                    <input type="number" class="form-control <%= (locals.errors && errors.cantidad) && 'is-invalid'%>" name="cantidad" id="cantidad"  placeholder="Ingrese una cantidad">
+                    <small id="cantidad" class="text-danger ms-2"><%= locals.errors && errors.cantidad ? errors.cantidad.msg : null %></small>
+                  </div>
+                  <div class="mb-3">
+                    <label for="detalle" class="form-label">Detalle</label>
+                   <textarea class="form-control" name="detalle" id="detalle" placeholder="El detalle es opcional"></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary mb-1">Enviar</button>
+               </form> 
+        </div>
+      </div>
+
+    </main>
+
+    <%- include('../../partials/scripts') %>
+
+    <script
+      src="//code.tidio.co/hlix5kfat3m92rb4tfebsyogegqfbmo3.js"
+      async
+    ></script>
+
+</body>
+</html>

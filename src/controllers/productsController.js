@@ -4,7 +4,8 @@ const { Op } = require('sequelize');
 const ExcelJS = require('exceljs');
 const fs = require('fs');
 const path = require('path');
-const { error } = require("console");
+const { includes } = require("../validations/addProductValidator");
+
 
 
 
@@ -25,8 +26,22 @@ module.exports = {
         })
     },
     listProducts : (req,res) => {
-        db.Producto.findAll()
-        .then(productos => {
+        db.Producto.findAll({
+            include:[{
+                model:db.productoInsumo,
+                as:"productos",
+                attributes:["idProducto", "idInsumo"],
+                include:[
+                    {
+                        model:db.Insumo,
+                        as:"insumos",
+                        attributes: ['nombre', 'cantidad']
+                    }
+                ]      
+
+            }]
+        })
+        .then(productos => {              
             return res.render('stock/products/productos',{
                 title:'Productos',
                 productos

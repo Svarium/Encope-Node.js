@@ -68,7 +68,8 @@
                 <tr>
                     <th scope="col">Producto</th>
                     <th scope="col">Detalle</th>
-                    <th scope="col">Unidad de Medida</th>
+                  
+                    <th scope="col">Insumos</th>
                     <th scope="col">Imagen</th>
                     <th scope="col">Acciones</th>
                 </tr>
@@ -78,20 +79,30 @@
                     <tr>
                         <td class="text-center"><%= item.nombre %></td>
                         <td><%= item.detalle %></td>
-                        <td><%= item.unidadDeMedida %></td>
+                       
+                        <td class="text-justify"><% item.productos.forEach(producto => { %>
+                          - <%= producto.insumos.cantidad %>  <%= producto.insumos.nombre %> <br> 
+                      <% }) %></td>
                         <td><img src="/images/productos/<%= item.imagen %>" alt="" width="70px" height="70px" class="rounded"></td>
                         <td>
 
-                          <% if (!item.ficha) { %>
+                         
                            <!-- Botón de agregar ficha -->
                           <div class="row">
-                            <div class="col-12">
+                            
+                            <div class="col-6">
+                              <% if (!item.ficha) { %>
                               <button type="button" class="btn btn-facebook w-100" data-bs-toggle="modal" data-bs-target="#fichaTecnica<%= item.id %>">
-                                Agregar Ficha Técnica
+                                Ficha Técnica 
                             </button>
-                            </div>
+                            <% } %>
+                            </div> 
+                            <div class="<% !item.ficha ? "col-12" : "col-6"  %>">
+                              <a href="/stock/addInsumo/<%= item.id %>"> <button class="btn btn-dark w-100">Insumos <i class="fa-regular fa-square-plus"></i></button></a>                             
+                            </div>                           
                         </div>
-                          <% } %>
+                       
+                          
                           
                           
                           <!-- MODAL -->

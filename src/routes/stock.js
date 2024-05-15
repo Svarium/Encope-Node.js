@@ -16,6 +16,8 @@ const { uploadInsumosFiles } = require('../middlewares/subirInsumos');
 const editProyectValidator = require('../validations/editProyectValidator');
 const { uploadFichasFiles } = require('../middlewares/subirFicha');
 const addFichaValidator = require('../validations/addFichaValidator');
+const { addInsumo, storeInsumo } = require('../controllers/insumosController');
+const addInsumoValidator = require('../validations/addInsumoValidator');
 
 
 var router = express.Router();
@@ -41,6 +43,14 @@ router.put('/addFicha/:id', uploadFichasFiles.single('ficha'),addFichaValidator,
 router.delete('/delete/:id', checkUserEditorIntranetCentral, deleteProduct)
 router.get('/searchProduct', checkUserEditorIntranetCentral, searchProduct)
 router.get('/ProductsTable', checkUserEditorIntranetCentral, productsTableExcel)
+
+/* INSUMOS */
+
+//crud insumos
+
+router.get('/addInsumo/:id', addInsumo);
+router.post('/addInsumo/:id', addInsumoValidator, storeInsumo);
+
 
 
 
@@ -70,6 +80,8 @@ router.delete('/deleteProyect/:id', checkUserEditorIntranetCentral, deleteProyec
 router.get('/reformulaciones/:id', checkUserEditorIntranetCentral, downloadExcelHistorial)
 router.get('/proyectsTable', checkUserEditorIntranetCentral, downloadExcelProyects)
 router.get('/searchProyect', checkUserEditorIntranetCentral, searchProyect)
+
+
 
 
 
