@@ -80,9 +80,15 @@
                         <td class="text-center"><%= item.nombre %></td>
                         <td><%= item.detalle %></td>
                        
-                        <td class="text-justify"><% item.productos.forEach(producto => { %>
-                          - <%= producto.insumos.cantidad %>  <%= producto.insumos.nombre %> <br> 
-                      <% }) %></td>
+                        <td class="text-justify">
+                          <% if (item.productos) { %>
+                            <% item.productos.forEach(producto => { %>
+                              - <%= producto.insumos.cantidad %>  <%= producto.insumos.nombre %> <br> 
+                          <% }) %>
+                          <% } %>
+                     
+                    
+                    </td>
                         <td><img src="/images/productos/<%= item.imagen %>" alt="" width="70px" height="70px" class="rounded"></td>
                         <td>
 
@@ -97,7 +103,7 @@
                             </button>
                             <% } %>
                             </div> 
-                            <div class="<% !item.ficha ? "col-12" : "col-6"  %>">
+                            <div class="<%= !item.ficha ? "col-6" : "col-12" %>">
                               <a href="/stock/addInsumo/<%= item.id %>"> <button class="btn btn-dark w-100">Insumos <i class="fa-regular fa-square-plus"></i></button></a>                             
                             </div>                           
                         </div>

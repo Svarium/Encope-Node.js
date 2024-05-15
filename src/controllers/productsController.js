@@ -4,7 +4,7 @@ const { Op } = require('sequelize');
 const ExcelJS = require('exceljs');
 const fs = require('fs');
 const path = require('path');
-const { includes } = require("../validations/addProductValidator");
+const { includes, forEach } = require("../validations/addProductValidator");
 
 
 
@@ -300,13 +300,29 @@ module.exports = {
     productsTableExcel : async (req,res) => {      
 
         try {
-            const tablaProductos = await db.Producto.findAll(); // Traigo mi consulta de stock
+            const tablaProductos = await db.Producto.findAll({
+                include:[{
+                    model:db.productoInsumo,
+                    as:"productos",
+                    attributes:["idProducto", "idInsumo"],
+                    include:[
+                        {
+                            model:db.Insumo,
+                            as:"insumos",
+                            attributes: ['nombre', 'cantidad']
+                        }
+                    ]      
+    
+                }]
+            }); // Traigo mi consulta de stock
+
+            
     
             const workbook = new ExcelJS.Workbook(); // Función constructora del Excel
             const worksheet = workbook.addWorksheet('Sheet 1'); // Crea una hoja de Excel (CREO)
     
             // Agregar títulos de columnas
-            const titleRow = worksheet.addRow(["Nombre Producto", "Detalle", "Unidad de Medida", "Creado"]);
+            const titleRow = worksheet.addRow(["Nombre Producto", "Detalle", "Insumos" , "Unidad de Medida", "ficha" ,"Creado"]);
     
             // Aplicar formato al título
             titleRow.eachCell((cell) => {
@@ -326,9 +342,26 @@ module.exports = {
                 };
             });
     
-            tablaProductos.forEach(producto => {
-                const row = worksheet.addRow([producto.nombre, producto.detalle, producto.unidadDeMedida, producto.createdAt]);
-                
+            tablaProductos.forEach(producto => {   
+                const insumos = producto.productos.map(item => item.insumos.nombre);
+                const cantidad = producto.productos.map(item => item.insumos.cantidad);
+                const insumosConCantidad = insumos.map((insumo, index) => `${cantidad[index]} ${insumo}`); 
+            
+                // Construir la URL completa del archivo PDF
+                const urlPDF = `http://localhost:3000/images/fichasTecnicas/${producto.ficha}`;
+                const linkText = `Descargar ficha`;
+            
+                const row = worksheet.addRow([producto.nombre, producto.detalle, `- ${insumosConCantidad.join(', ')}`, producto.unidadDeMedida, linkText, producto.createdAt]);
+            
+                // Obtener la celda del enlace
+                const linkCell = row.getCell(5); // Cambiar el índice según la posición de la columna del enlace
+            
+                // Aplicar el estilo de color azul y subrayado al enlace
+                linkCell.font = { color: { argb: 'FF0000FF' }, underline: true };
+            
+                // Agregar la URL como hipervínculo
+                worksheet.getCell(linkCell.address).value = { text: linkText, hyperlink: urlPDF };
+            
                 // Aplicar bordes a las celdas de la fila de datos
                 row.eachCell((cell) => {
                     cell.border = {
