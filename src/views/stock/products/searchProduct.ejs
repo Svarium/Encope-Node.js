@@ -59,23 +59,48 @@
                 <% if (producto.length != 0) { %>
                   <% producto.forEach(item => { %>
                     <div class="card">
-                        <div class="card-header">
-                            <%= item.nombre %>
-                        </div>
-                        <div class="card-body d-flex align-items-center">
-                            <img src="/images/productos/<%= item.imagen %>" alt="" width="100px" height="100px" class="rounded shadow me-2">
-                            <p><%= item.detalle %></p>
-                           
-                            
-                            <!-- Enlace para editar -->
-                            <a href="/stock/editProduct/<%= item.id %>" class="btn btn-success ms-3">Editar <i class="fa-solid fa-pen-to-square"></i></a>
-                            
-                            <!-- Formulario para eliminar -->
-                            <form action="/stock/delete/<%= item.id %>?_method=DELETE" method="POST" class="ms-2 deleteProduct">
-                                <button type="submit" class="btn btn-danger">Eliminar <i class="fa-solid fa-trash"></i></button>
-                            </form>
-                        </div>
-                    </div>
+                      <div class="card-header">
+                          <%= item.nombre %>
+                      </div>
+                      <div class="card-body">
+                          <div class="row">
+                              <div class="col-md-12">
+                                  <div class="row align-items-center">
+                                      <div class="col-3">
+                                          <img src="/images/productos/<%= item.imagen %>" alt="" width="100px" height="100px" class="rounded shadow me-2">
+                                      </div>
+                                      <div class="col-8">
+                                          <p><%= item.detalle %></p>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-md-12">
+                                  <div class="row align-items-center justify-content-center">
+                                      <!-- Enlace para editar -->
+                                      <div class="col-auto">
+                                          <a href="/stock/editProduct/<%= item.id %>" class="btn btn-success me-2">Editar <i class="fa-solid fa-pen-to-square"></i></a>
+                                      </div>
+                  
+                                      <!-- Formulario para eliminar -->
+                                      <div class="col-auto">
+                                          <form action="/stock/delete/<%= item.id %>?_method=DELETE" method="POST" class="deleteProduct">
+                                              <button type="submit" class="btn btn-danger">Eliminar <i class="fa-solid fa-trash"></i></button>
+                                          </form>
+                                      </div>
+                  
+                                      <!-- Botón para Insumos -->
+                                      <div class="col-auto">
+                                          <a href="/stock/addInsumo/<%= item.id %>">
+                                              <button class="btn btn-dark">Insumos <i class="fa-regular fa-square-plus"></i></button>
+                                          </a>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  
+                  
                     
                     
                  <% }) %>

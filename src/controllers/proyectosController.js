@@ -588,49 +588,76 @@ module.exports = {
     },
 
     searchProyect: (req, res) => {
-
         const query = req.query.search;
-
+    
         db.Proyecto.findOne({
             where: {
                 expediente: {
                     [Op.like]: `%${query}%`
                 }
             },
+            include: [{
+                model: db.proyectoProducto,
+                as: "productoProyecto",
+                include: [
+                    {
+                        model: db.Producto,
+                        as: "producto"
+                    }
+                ]
+            },           
+            ]
         }).then(proyecto => {
+            if (proyecto) {
+                db.Parte.findOne({
+                    where: {
+                        idProyecto: proyecto.id
+                    },
+                    include: [{
+                        model: db.proyectoProducto,
+                        as:"productoParte",
+                        include:[
+                            {
+                                model: db.Producto,
+                                as:"producto"
+                            }
+                        ]
+                     }]
+                }).then(parte => {
 
-            db.Parte.findOne({
-                where: {
-                    idProyecto: proyecto.id
-                }
-            }).then(parte => {
-                const cantidad = parte.cantidadProducida
-
-                const meta = parte.cantidadAProducir
-
-                const periodo = parte.duracion
-
-                const produccionIdeal = meta / periodo
-
-                const produccionReal = cantidad / periodo
-
-                const avance = (cantidad * 100) / meta
-
+                  /*   return res.send(parte) */
+                    const cantidadTotalAProducir = parte.productoParte.reduce((total, producto) => { // Sumo el total a producir de todos los productos
+                        return total + producto.cantidadAProducir;
+                    }, 0); // Se inicializa con 0 para evitar problemas si la lista está vacía
+              
+                    const cantidadTotalProducida = parte.productoParte.reduce((total, producto) => { // Sumo el total producido de todos los productos
+                        return total + producto.cantidadProducida;
+                    }, 0); // Se inicializa con 0 para evitar problemas si la lista está vacía
+        
+                 
+                    const porcentajeAvance = (cantidadTotalProducida / cantidadTotalAProducir) * 100;
+        
+                    const ideal = cantidadTotalAProducir / parte.duracion;
+        
+                    const real = cantidadTotalProducida / parte.duracion 
+    
+                    return res.render('stock/proyectos/searchProyect', {
+                        title: 'Resultado de la búsqueda',
+                        proyecto,                        
+                        parte,
+                        porcentajeAvance: porcentajeAvance.toFixed(2),
+                        ideal,
+                        real,  
+                    });
+                }).catch(error => console.log(error));
+            } else {
+                // Renderizar una vista con un mensaje indicando que no se encontraron resultados
                 return res.render('stock/proyectos/searchProyect', {
-                    title: 'Resultado de la busqueda',
-                    proyecto,
-                    cantidad,
-                    meta,
-                    periodo,
-                    produccionIdeal,
-                    produccionReal,
-                    avance,
-                    parte
-                })
-            })
-
-        }).catch(error => console.log(error))
-
+                    title: 'Sin resultados',
+                    query: query
+                });
+            }
+        }).catch(error => console.log(error));
     }
-
+    
 }

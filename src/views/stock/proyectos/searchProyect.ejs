@@ -52,96 +52,123 @@
 
     <main>
 
-      <div class="container d-flex justify-content-center gap-2">
-        <button type="button" class="btn btn-primary mb-5"><strong>Producción ideal: <%= produccionIdeal %> por <%= parte.unidadDuracion %></strong></button>
-        <button type="button" class="btn btn-success mb-5"><strong>Producción real: <%= produccionReal %> por <%= parte.unidadDuracion %></strong></button>
-        <button type="button" class="btn btn-danger mb-5"><strong>Porcentaje de avance: Proyecto al <%= avance %>% </strong></button>
-      </div>
-            <!-- TABLA DE PROYECTOS -->
-  
-      <div class="container-fluid">
-        <button type="button" class="btn btn-outline-primary ms-3 btn-sm mt-1 mb-2" onclick="window.location.href='/stock/proyectsTable'">
-          <i class="fa-solid fa-download"></i> Exportar Excel</i>
-        </button>
-              <br> 
-        <table class="table">
-            <thead>
-                <tr>
+      <% if (title === 'Resultado de la búsqueda') { %>
+        <div class="container d-flex justify-content-center gap-2">
+          <button type="button" class="btn btn-primary btn-sm "><strong><i
+                class="fa-solid fa-screwdriver-wrench"></i> ideal: <%= ideal %> por <%= parte.unidadDuracion %>
+            </strong></button>
+          <button type="button" class="btn btn-success btn-sm"><strong><i
+                class="fa-solid fa-screwdriver-wrench"></i> real: <%= real %> por <%= parte.unidadDuracion %>
+            </strong></button>
+          <button type="button" class="btn btn-danger btn-sm"><strong><i class="fa-solid fa-percent"></i> de
+              avance: Proyecto al <%= porcentajeAvance %> %
+            </strong></button>
+        </div>
+
+
+              <!-- TABLA DE PROYECTOS -->
+    
+        <div class="container-fluid">
+          <button type="button" class="btn btn-outline-primary ms-3 btn-sm mt-1 mb-2" onclick="window.location.href='/stock/proyectsTable'">
+            <i class="fa-solid fa-download"></i> Exportar Excel</i>
+          </button>
+                <br> 
+          <table class="table">
+              <thead>
+                  <tr>
                     <th scope="col">proyecto</th>
                     <th scope="col">Estado</th>
                     <th scope="col">Expediente</th>
                     <th scope="col">Procedencia</th>
                     <th scope="col">Duración</th>
-                    <th scope="col">Cantidad a producir</th>
-                    <th scope="col">Costo unitario</th>
+                    <th scope="col">Producto/s</th>               
                     <th scope="col">Costo total</th>
                     <th scope="col">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-      
-                <tr>
-                  <td class="text-center">
-                    <%= proyecto.nombre %>
-                  </td>
-                  <td>
-                    <% if (proyecto.estado === "Pendiente") { %>
-                        <%= proyecto.estado %>  <i class="fa-solid fa-spinner text-danger"></i>
-                        <div class="form-check form-switch mt-1">
+                  </tr>
+              </thead>
+              <tbody>
+        
+                  <tr>
+                    <td class="text-center">
+                      <%= proyecto.nombre %>
+                    </td>
+                    <td>
+                      <% if (proyecto.estado === "Pendiente") { %>
+                          <%= proyecto.estado %>  <i class="fa-solid fa-spinner text-danger"></i>
+                          <div class="form-check form-switch mt-1">
+                              <!-- Agrega un identificador único al interruptor -->
+                              <input class="form-check-input project-switch" type="checkbox" style="cursor: pointer;" role="switch" id="projectSwitch<%= proyecto.id %>" data-project-id="<%= proyecto.id %>">
+                              <label class="form-check-label " for="projectSwitch<%= proyecto.id %>"></label>
+                          </div>
+                      <% } else { %>
+                          <%= proyecto.estado %>  <i class="fa-solid fa-check text-success"></i>
+                          <div class="form-check form-switch mt-1">
                             <!-- Agrega un identificador único al interruptor -->
-                            <input class="form-check-input project-switch" type="checkbox" style="cursor: pointer;" role="switch" id="projectSwitch<%= proyecto.id %>" data-project-id="<%= proyecto.id %>">
-                            <label class="form-check-label " for="projectSwitch<%= proyecto.id %>"></label>
+                            <input class="form-check-input project-switch" type="checkbox" style="cursor: pointer;" role="switch" id="projectSwitch<%= proyecto.id %>" data-project-id="<%= proyecto.id %>" checked>
+                            <label class="form-check-label" for="projectSwitch<%= proyecto.id %>"></label>
                         </div>
-                    <% } else { %>
-                        <%= proyecto.estado %>  <i class="fa-solid fa-check text-success"></i>
-                        <div class="form-check form-switch mt-1">
-                          <!-- Agrega un identificador único al interruptor -->
-                          <input class="form-check-input project-switch" type="checkbox" style="cursor: pointer;" role="switch" id="projectSwitch<%= proyecto.id %>" data-project-id="<%= proyecto.id %>" checked>
-                          <label class="form-check-label" for="projectSwitch<%= proyecto.id %>"></label>
-                      </div>
-                    <% } %>
-                </td>
-                              
-                  <td>
-                    <%= proyecto.expediente %>
+                      <% } %>
                   </td>
-                  <td>
-                    <%= proyecto.procedencia %>
-                  </td>
-                  <td>
-                    <%= proyecto.duracion %>
-                      <%= proyecto.unidadDuracion %>
-                  </td>
-                  <td>
-                    <%= proyecto.cantidadAProducir %>
-                  </td>
-                  <td>$ <%= proyecto.costoUnitario %>
-                  </td>
-                  <td>$ <%= proyecto.costoTotal %>
-                  </td>
-                  <td>
-                    <div class="d-flex align-content-center justify-content-center gap-1">
-                      <!-- Enlace para editar -->
-                      <a href="/stock/editProyect/<%= proyecto.id %>"><button class="btn btn-success"><i
-                            class="fa-solid fa-pen-to-square"></i></button></a>
-            
-                      <!-- Formulario para eliminar -->
-                      <form action="/stock/deleteProyect/<%= proyecto.id %>?_method=DELETE" method="POST" class="deleteSearchProyectForm">
-                        <button type="submit" class="btn btn-danger "><i class="fa-solid fa-trash"></i></button>
-                      </form>
-            
-                      <!-- Boton descarga historial de reformulaciones en excel -->
-                      <a href="/stock/reformulaciones/<%= proyecto.id %>"><button class="btn btn-primary "><i
-                            class="fa-solid fa-clock-rotate-left"></i></button></a>
-                    </div>            
-                
-            
-                  </td>
-                </tr>
-            
-            </tbody>
-            </table>
-            </div>         
+                                
+                    <td>
+                      <%= proyecto.expediente %>
+                    </td>
+                    <td>
+                      <%= proyecto.procedencia %>
+                    </td>
+                    <td>
+                      <%= proyecto.duracion %>
+                        <%= proyecto.unidadDuracion %>
+                    </td>
+                    <td>
+                      <% proyecto.productoProyecto.forEach(item => { %>
+                        <strong> <%= item.cantidadAProducir  %> - <%= item.producto.nombre  %> - $ <%= item.costoUnitario  %> c/u</strong><hr>
+                        <% }) %>
+                    </td>
+                    <td>$ <%= proyecto.costoTotalProyecto %>
+                    </td>
+                                        <td>
+                                          <div class="d-flex flex-column">
+                                            <!-- Primera fila de botones -->
+                                            <div class="d-flex justify-content-center gap-2 mb-2">
+                                                <!-- Enlace para editar -->
+                                                <a href="/stock/editProducts/<%= proyecto.id %>">
+                                                    <button class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></button>
+                                                </a>
+                                    
+                                                <!-- Formulario para eliminar -->
+                                                <form action="/stock/deleteProyect/<%= proyecto.id %>?_method=DELETE" method="POST" class="deleteProductForm">
+                                                    <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                                                </form>
+                                            </div>
+                                    
+                                            <!-- Segunda fila de botones -->
+                                            <div class="d-flex justify-content-center gap-2">
+                                                <!-- Boton descarga historial de reformulaciones en excel -->
+                                                <a href="/stock/reformulaciones/<%= proyecto.id %>">
+                                                    <button class="btn btn-primary"><i class="fa-solid fa-clock-rotate-left"></i></button>
+                                                </a>
+                                    
+                                                <!-- Boton descarga ficha tecnica -->                           
+                                                  <a  href="/images/insumos/<%= proyecto.insumosAdquirir %>" target="_blank">
+                                                    <button class="btn btn-info"><i class="fa-solid fa-file-pdf fa-lg"></i></button>
+                                                </a>                          
+                                            </div>                      
+                                        </div>         
+                    </td>
+                  </tr>              
+              </tbody>
+              </table>
+              </div>         
+       
+      <% } else { %>
+        <div class="container">
+          <p class="text-center h3">No hay resultados para la busqueda del <%= query %> </p>
+        </div>
+              
+      <% } %>
+
+     
     </main>
 
    

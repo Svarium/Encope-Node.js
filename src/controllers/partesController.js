@@ -43,7 +43,7 @@ module.exports = {
 
         try {
 
-            const id = req.params.id;
+         const id = req.params.id;
 
          const parte = await db.Parte.findOne({
              where:{
