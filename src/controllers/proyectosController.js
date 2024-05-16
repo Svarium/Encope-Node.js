@@ -493,13 +493,25 @@ module.exports = {
 
         try {
 
-            const tablaProyects = await db.Proyecto.findAll(); // Traigo mi consulta
+            const tablaProyects = await db.Proyecto.findAll({
+                include: [{
+                    model: db.proyectoProducto,
+                    as: "productoProyecto",
+                    include: [
+                        {
+                            model: db.Producto,
+                            as: "producto"
+                        }
+                    ]
+                },           
+                ]
+            }); // Traigo mi consulta
 
             const workbook = new ExcelJS.Workbook(); // Función constructora del Excel
             const worksheet = workbook.addWorksheet('Sheet 1'); // Crea una hoja de Excel 
 
             // Agregar títulos de columnas
-            const titleRow = worksheet.addRow(["Nombre Proyecto", "Estado", "Detalle", "Expediente", "Procedencia", 'Duración', 'Costo total Proyecto', 'fecha de creación del proyecto']);
+            const titleRow = worksheet.addRow(["Nombre Proyecto", "Estado", "Detalle", "Expediente", "Procedencia", 'Duración', 'Productos', 'Costo total Proyecto', 'Insumos a adquirir' ,'fecha de creación del proyecto']);
 
             // Aplicar formato al título
             titleRow.eachCell((cell) => {
@@ -520,7 +532,32 @@ module.exports = {
             });
 
             tablaProyects.forEach(proyecto => {
-                const row = worksheet.addRow([proyecto.nombre, proyecto.estado, proyecto.detalle, proyecto.expediente, proyecto.procedencia, `${proyecto.duracion} - ${proyecto.unidadDuracion}`, proyecto.costoTotalProyecto, proyecto.createdAt]);
+
+                const cantidades = proyecto.productoProyecto.map(item => item.cantidadAProducir);
+                const productos = proyecto.productoProyecto.map(item => item.producto.nombre);
+                const costos = proyecto.productoProyecto.map(item => item.costoUnitario)
+
+                const resultado = cantidades.map((cantidad, index) => {
+                    const producto = productos[index];
+                    const costo = costos[index];
+                    return `${cantidad} - ${producto} - $ ${costo} c/u`;
+                });
+                            
+                  // Construir la URL completa del archivo PDF
+                  const urlPDF = `http://localhost:3000/images/insumos/${proyecto.insumosAdquirir}`;
+                  const linkText = `Descargar anexo 3`;
+
+
+                const row = worksheet.addRow([proyecto.nombre, proyecto.estado, proyecto.detalle, proyecto.expediente, proyecto.procedencia, `${proyecto.duracion} - ${proyecto.unidadDuracion}`, `${resultado.join(", ")}` , proyecto.costoTotalProyecto,linkText , proyecto.createdAt]);
+
+                // Obtener la celda del enlace
+                const linkCell = row.getCell(9); // Cambiar el índice según la posición de la columna del enlace
+            
+                // Aplicar el estilo de color azul y subrayado al enlace
+                linkCell.font = { color: { argb: 'FF0000FF' }, underline: true };
+            
+                // Agregar la URL como hipervínculo
+                worksheet.getCell(linkCell.address).value = { text: linkText, hyperlink: urlPDF };
 
                 // Aplicar bordes a las celdas de la fila de datos
                 row.eachCell((cell) => {
