@@ -375,6 +375,28 @@ module.exports = {
     }
   },
 
+
+  removeInsumo : async (idProducto, idInsumo) => {
+    try {
+
+      const remove = await db.Insumo.destroy({
+        where:{
+          id:idInsumo,
+          idProducto:idProducto
+        }
+      })
+
+      return true
+      
+    } catch (error) {
+      console.log(error);
+      throw {
+        status: error.status || 500,
+        message: error.message || "Error al actualizar los egresos"
+      };
+    }
+  }
+
  
   
 

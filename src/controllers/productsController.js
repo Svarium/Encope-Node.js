@@ -31,7 +31,7 @@ module.exports = {
             include:[{
                 model:db.Insumo,
                 as:"productos",
-                attributes:["nombre", "cantidad"],                
+                attributes:["nombre", "cantidad", "id"],                
             }]
         })
         .then(productos => {    
@@ -77,10 +77,7 @@ module.exports = {
             .then(producto => {
                 db.Producto.findAll()
         .then(productos => {
-            return res.render('stock/products/productos',{
-                title:'Productos',
-                productos
-            })
+            return res.redirect('/stock/products')
         })
             })
             .catch(error => console.log(error))
