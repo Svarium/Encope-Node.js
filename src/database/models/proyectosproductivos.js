@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
     duracion: DataTypes.INTEGER,
     unidadDuracion: DataTypes.STRING,
     costoTotalProyecto: DataTypes.INTEGER,    
-    insumos:DataTypes.STRING,
+    insumosAdquirir:DataTypes.STRING,
     estado:{
       type: DataTypes.STRING,
       defaultValue:"pendiente",

@@ -263,6 +263,8 @@ module.exports = {
   agregarProductoAlProyecto : async (proyectoId, productoId) => {
     try {
 
+      console.log(proyectoId);
+
       const nuevoProducto = await db.proyectoProducto.create({
         proyectoId:proyectoId,
         productoId:productoId, 

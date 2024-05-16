@@ -40,7 +40,7 @@ module.exports = {
       costoTotalProyecto: {
         type: Sequelize.INTEGER
       },      
-      insumos: {
+      insumosAdquirir: {
         type: Sequelize.STRING
       },
       estado: {

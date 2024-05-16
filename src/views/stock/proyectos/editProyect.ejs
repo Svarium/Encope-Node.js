@@ -78,22 +78,12 @@
              
          
             
-            <div class="form-group col-md-6">
-              <label for="insumos">Insumos a utilizar</label>
-              <input type="file" name="insumos" class="form-control rounded <%= (locals.errors && errors._undefined) && 'is-invalid'%>" id="insumos">
-              <small id="errorinsumos" class="text-danger ms-2"><%= locals.errors && errors._undefined ? errors._undefined.msg : null %></small>        
-            </div>   
-
-            <div class="form-group col-md-12">
-              <label for="ficha">Ficha Técnica</label>
-              <select id="ficha" class="form-control rounded <%= (locals.errors && errors.ficha) && 'is-invalid'%>" name="ficha">
-                <option value="" selected hidden>Seleccione la ficha Técnica...</option>
-                  <% fichas.forEach(({nombre, id}) => { %>
-                  <option value="<%= id %>" <%= id === proyecto.idFicha && 'selected' %>> <%= nombre %> </option>
-                  <% }) %>
-            </select>
-              <small id="errorDetalle" class="text-danger ms-2"><%= locals.errors && errors.ficha ? errors.ficha.msg : null %></small>               
-            </div>     
+              <div class="form-group col-md-6">
+                <label for="insumos">Insumos a adquirir (anexo 3)</label>
+                <input type="file" name="insumos" class="form-control rounded <%= (locals.errors && errors._undefined) && 'is-invalid'%>" id="insumos">
+                <small id="errorinsumos" class="text-danger ms-2"><%= locals.errors && errors._undefined ? errors._undefined.msg : null %></small>        
+              </div>             
+  
 
 
             <div class="form-group col-md-12">

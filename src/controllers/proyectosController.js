@@ -22,11 +22,7 @@ module.exports = {
                         as: "producto"
                     }
                 ]
-            },
-            {
-                model: db.Ficha,
-                as: "proyectoFicha"
-            }
+            },           
             ]
         })
             .then(proyectos => {              
@@ -55,23 +51,21 @@ module.exports = {
             attributes: ['id', 'nombre'],
         })
 
-        const fichas = db.Ficha.findAll({
-            attributes: ['id', 'nombre']
-        })
+       
 
-        Promise.all(([talleres, productos, fichas]))
-            .then(([talleres, productos, fichas]) => {
+        Promise.all(([talleres, productos, ]))
+            .then(([talleres, productos,]) => {
 
                 return res.render('stock/proyectos/addproyect', {
                     title: 'Nuevo Proyecto',
                     talleres,
                     productos,
-                    fichas
+                   
                 })
             }).catch(error => console.log(error));
     },
 
-    storeProyect: async (req, res) => {
+    storeProyect: async (req, res) => {       
 
         try {
 
@@ -95,9 +89,9 @@ module.exports = {
                 })
             }
 
-            if (errors.isEmpty()) {
+            if (errors.isEmpty()) {               
 
-                const { nombre, expediente, destino, productos, detalle, duracion, unidadDuracion, ficha } = req.body
+                const { nombre, expediente, destino, productos, detalle, duracion, unidadDuracion } = req.body
 
                 const usuario = await db.Usuario.findOne({
                     where: { destinoId: req.session.userLogin.destinoId },
@@ -108,11 +102,11 @@ module.exports = {
                     }]
                 });
 
-                const procedencia = usuario.destino.nombreDestino //obtengo la procedencia del proyecto a través del destino del usuario
+                 const procedencia = usuario.destino.nombreDestino //obtengo la procedencia del proyecto a través del destino del usuario
 
              
 
-                const costoTotal = productos.reduce((total, producto) => {
+                    const costoTotal = productos.reduce((total, producto) => {
                     const costoUnitario = parseFloat(producto.costoUnitario) || 0;
                     const cantidad = parseFloat(producto.cantidad) || 0;
 
@@ -120,19 +114,21 @@ module.exports = {
                     return total + costoProducto; // Sumar al total el costo del producto actual
                 }, 0);
 
+               
                 const proyecto = await db.Proyecto.create({
                     nombre: nombre.trim(),
                     expediente: expediente,
                     idTaller: destino,                   
                     detalle: detalle.trim(),
-                    insumos: req.file ? req.file.filename : null,
+                    insumosAdquirir: req.file ? req.file.filename : null,
                     procedencia: procedencia,
                     duracion: duracion,
                     unidadDuracion: unidadDuracion,
                     costoTotalProyecto: costoTotal,
-                    estado: 'Pendiente',
-                    idFicha: ficha,
+                    estado: 'Pendiente',                   
                 })
+
+         
 
                 const parte = await db.Parte.create({
                     nombre: nombre.trim(),
@@ -141,8 +137,7 @@ module.exports = {
                     detalle: detalle.trim(),
                     procedencia: procedencia,
                     duracion: duracion,
-                    unidadDuracion: unidadDuracion,
-                    idFicha: ficha,
+                    unidadDuracion: unidadDuracion,                    
                     idProyecto: proyecto.id,
                 })
 
@@ -179,18 +174,15 @@ module.exports = {
                     attributes: ['id', 'nombre'],
                 })
 
-                const fichas = db.Ficha.findAll({
-                    attributes: ['id', 'nombre']
-                })
+             
 
-                Promise.all(([talleres, productos, fichas]))
-                    .then(([talleres, productos, fichas]) => {
+                Promise.all(([talleres, productos, ]))
+                    .then(([talleres, productos, ]) => {
 
                         return res.render('stock/proyectos/addproyect', {
                             title: 'Nuevo Proyecto',
                             talleres,
-                            productos,
-                            fichas,
+                            productos,                            
                             old: req.body,
                             errors: errors.mapped()
                         })
@@ -223,20 +215,17 @@ module.exports = {
             where: { id: id }
         })
 
-        const fichas = db.Ficha.findAll({
-            attributes: ['id', 'nombre']
-        })
+     
 
 
-        Promise.all(([talleres, productos, proyecto, fichas]))
-            .then(([talleres, productos, proyecto, fichas]) => {
+        Promise.all(([talleres, productos, proyecto, ]))
+            .then(([talleres, productos, proyecto, ]) => {
 
                 return res.render('stock/proyectos/editProyect', {
                     title: 'Nuevo Proyecto',
                     talleres,
                     productos,
-                    proyecto,
-                    fichas
+                    proyecto,                   
                 })
             }).catch(error => console.log(error));
 
@@ -300,7 +289,7 @@ module.exports = {
                     nombre: nombre.trim(),
                     expediente: expediente,
                     idTaller: destino,                    
-                    insumos: req.file ? req.file.filename : proyectoAnterior.insumos,
+                    insumosAdquirir: req.file ? req.file.filename : proyectoAnterior.insumosAdquirir,
                     detalle: detalle,
                     procedencia: procedencia,
                     duracion: duracion,
@@ -314,7 +303,7 @@ module.exports = {
                     })
 
                     if(req.file){
-                        fs.existsSync(path.join(__dirname, `../../public/images/insumos/${proyectoAnterior.insumos}`)) && fs.unlinkSync(path.join(__dirname, `../../public/images/insumos/${proyectoAnterior.insumos}`))
+                        fs.existsSync(path.join(__dirname, `../../public/images/insumos/${proyectoAnterior.insumosAdquirir}`)) && fs.unlinkSync(path.join(__dirname, `../../public/images/insumos/${proyectoAnterior.insumosAdquirir}`))
                      }    
 
 
@@ -360,18 +349,16 @@ module.exports = {
                     where: { id: id }
                 })
 
-                const fichas = db.Ficha.findAll({
-                    attributes: ['id', 'nombre']
-                })
+                
+              
 
-                Promise.all(([talleres, productos, proyecto, fichas]))
-                    .then(([talleres, productos, proyecto, fichas]) => {
+                Promise.all(([talleres, productos, proyecto, ]))
+                    .then(([talleres, productos, proyecto,]) => {
 
                         return res.render('stock/proyectos/editProyect', {
                             title: 'Editar Proyecto',
                             talleres,
-                            productos,
-                            fichas,
+                            productos,                           
                             proyecto,
                             old: req.body,
                             errors: errors.mapped()

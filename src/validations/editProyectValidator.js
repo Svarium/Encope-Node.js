@@ -36,10 +36,6 @@ module.exports = [
 
     check('destino')
     .notEmpty().withMessage('Debe elegir un taller'),
-
-
-    check('ficha')
-    .notEmpty().withMessage('Debe elegir una ficha técnica'),
   
 
     check('detalle')
