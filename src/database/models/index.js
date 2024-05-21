@@ -43,7 +43,6 @@ sequelize.authenticate()
     .then(()=> console.log('conexion exitosa a la base de datos'))
     .catch(error => console.log('Ups, algo salio mal en la conexion',error))
 
-
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
