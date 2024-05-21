@@ -95,113 +95,43 @@ module.exports = {
       
     },
 
-    updateParte : (req,res) => {
-
-        const errors = validationResult(req);
-        const id = req.params.id;
-
-        if (errors.isEmpty()){
-
-         const  {cantidad, egresos, observaciones} = req.body   
-
-         db.Parte.findOne({
-            where:{
-                id:id
-            }
-         }).then(parte => {
-            db.Parte.update({
-                cantidadProducida: parseInt(parte.cantidadProducida) + parseInt(cantidad),
-                egresos: parseInt(parte.egresos) + parseInt(egresos),
-                observaciones: observaciones ?  observaciones.trim() : parte.observaciones,
-                restanteAProducir: parseInt(parte.cantidadAProducir) - parseInt(cantidad) - parseInt(parte.cantidadProducida),
-                stockEnTaller: egresos?  (parseInt(cantidad) + parseInt(parte.cantidadProducida)) - (parseInt(parte.egresos) + parseInt(egresos)) :parseInt(cantidad) + parseInt(parte.cantidadProducida),
-             },{
-                where:{
-                    id:id
-                }
-         })        
-         }).then( parte => {
-            return res.redirect('/stock/partes/'+id)
-         }).catch(error => console.log(error))
-
-
-        } else {          
-
-            db.Parte.findOne({
-             where:{
-                 id:id
-             }
-            }).then(parte => {
-
-                const cantidad = parte.cantidadProducida
-
-                const meta = parte.cantidadAProducir
-        
-                const periodo = parte.duracion 
-        
-                const produccionIdeal = meta / periodo
-        
-                const produccionReal = cantidad / periodo
-        
-                const avance = (cantidad * 100) / meta
-
-             return res.render('stock/partes/editParte',{
-                 title: 'Editar parte',
-                 parte,
-                 old:req.body,
-                 errors:errors.mapped(),
-                 cantidad,
-                 meta,
-                 periodo,
-                 produccionIdeal,
-                 produccionReal,
-                 avance 
-             })
-            }).catch(error => console.log(error))
-        }
-        
-    },
 
 
     printParte : async (req,res) => {
         try {
-            
-            const id = req.params.id
+            const id = req.params.id;
             const parte = await db.Parte.findAll({
-                where:{
-                    id:id
-                },
-                include:[{
-                    model: db.Producto,
-                    as:'parteProducto', 
-                    attributes:["nombre"]
-                },
-                {
+                where: { id: id },
+                include: [{
+                    model: db.proyectoProducto,
+                    as: 'productoParte',
+                    attributes: ["cantidadAProducir", "cantidadProducida", "stockEnTaller", "egresos"],
+                    include: [{
+                        model: db.Producto,
+                        as: 'producto',
+                        attributes: ["nombre"]
+                    }]
+                }, {
                     model: db.Taller,
-                    as:'parteTaller', 
-                    attributes:["nombre"]
-                }
-            ],
-            
+                    as: 'parteTaller',
+                    attributes: ["nombre"]
+                }],
             });
-      
-           
-            const workbook = new ExcelJS.Workbook(); // Función constructora del Excel
-            const worksheet = workbook.addWorksheet('Sheet 1'); // Crea una hoja de Excel 
+    
+            const workbook = new ExcelJS.Workbook();
+            const worksheet = workbook.addWorksheet('Sheet 1');
     
             // Agregar títulos de columnas
-            const titleRow = worksheet.addRow(["Nombre", "Taller","Producto", "Expediente", "Procedencia", "Detalle", 'Duración', 'Cantidad a Producir', "Cantidad Producida", "stockEnTaller", 'Egresos', "Remanentes", "Ultima Actualización"]);
+            const titleRow = worksheet.addRow(["Nombre", "Taller", "Expediente", "Procedencia", "Detalle", "Duración", "Productos", "Remanentes", "Última Actualización"]);
     
             // Aplicar formato al título
             titleRow.eachCell((cell) => {
-                cell.font = { bold: true }; // Establece el texto en negrita
+                cell.font = { bold: true };
                 cell.fill = {
                     type: 'pattern',
                     pattern: 'solid',
-                    fgColor: { argb: 'FFFF00' } // Cambia el color de fondo a amarillo (puedes cambiar 'FFFF00' por el código del color que prefieras)
+                    fgColor: { argb: 'FFFF00' }
                 };
-    
-                // Agregar bordes
                 cell.border = {
                     top: { style: 'thin' },
                     left: { style: 'thin' },
@@ -211,8 +141,24 @@ module.exports = {
             });
     
             parte.forEach(item => {
-                const row = worksheet.addRow([item.nombre, item.parteTaller.nombre, item.parteProducto.nombre, item.expediente, item.procedencia, item.detalle, item.duracion + item.unidadDuracion, item.cantidadAProducir, item.cantidadProducida, item.stockEnTaller, item.egresos, item.remanentes, item.updatedAt]);
-                
+                // Combinar información de productos
+                const productosInfo = item.productoParte.map(productoItem => {
+                    return `${productoItem.producto.nombre} - A producir: ${productoItem.cantidadAProducir} - Producido: ${productoItem.cantidadProducida} - En Stock: ${productoItem.stockEnTaller} - Egresos ${productoItem.egresos}`;
+                }).join(" // ");
+    
+                // Agregar fila con los datos combinados
+                const row = worksheet.addRow([
+                    item.nombre,
+                    item.parteTaller.nombre,
+                    item.expediente,
+                    item.procedencia,
+                    item.detalle,
+                    `${item.duracion} ${item.unidadDuracion}`,
+                    productosInfo,
+                    item.remanentes,
+                    item.updatedAt
+                ]);
+    
                 // Aplicar bordes a las celdas de la fila de datos
                 row.eachCell((cell) => {
                     cell.border = {
@@ -225,15 +171,12 @@ module.exports = {
             });
     
             const fecha = new Date(Date.now());
+            const fileName = `${fecha.toISOString().substring(0, 10)}-parteSemanal${parte[0].nombre}.xlsx`;
     
-            // Define el nombre del archivo Excel
-            res.setHeader('Content-Disposition', `attachment; filename="${fecha.toISOString().substring(0, 10)}-parteSemanal${parte[0].nombre}.xlsx"`); // agregar al nombre la fecha con New Date()
+            res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     
-            // Envia el archivo Excel como respuesta al cliente
             await workbook.xlsx.write(res);
-    
-            // Finaliza la respuesta
             res.end();
         } catch (error) {
             console.log(error);

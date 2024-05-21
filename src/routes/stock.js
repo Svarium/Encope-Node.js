@@ -89,7 +89,6 @@ router.get('/searchProyect', checkUserEditorIntranetCentral, searchProyect)
 
 router.get('/partes', checkUserEditorIntranetUnidad, listPartes)
 router.get('/partes/:id', checkUserEditorIntranetUnidad, editParte)
-router.put('/partes/:id', checkUserEditorIntranetUnidad, editParteValidator, updateParte)
 router.get('/parte/:id', checkUserEditorIntranetUnidad, printParte)
 router.get('/reporte/:id', checkUserEditorIntranetUnidad, reporteViaEmail)
 

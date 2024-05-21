@@ -78,7 +78,7 @@
                     </div>
                     <div class="modal-body">
 
-                      <div class="mb-3">
+                      <div class="mb-3 text-center">
                         <textarea class="form-control observaciones-input"
                           id="message-text"><%= parte.observaciones %></textarea>
                       </div>
@@ -92,12 +92,16 @@
                 </div>
               </div>
               <button type="button" class="btn btn-outline-primary  btn-sm mt-1 mb-2">
-                <a class="btn-link" href="/stock/parte/<%= parte.id %>"><i class="fa-solid fa-download"></i> Imprimir
-                  Parte </i></a>
+                <a class="btn-link" href="/stock/parte/<%= parte.id %>"><i class="fa-solid fa-download"></i>
+                  Parte de stock</i></a>
+              </button>
+              <button type="button" class="btn btn-outline-danger  btn-sm mt-1 mb-2">
+                <a class="btn-link" href="/stock/parte/<%= parte.id %>"><i class="fa-solid fa-download"></i>
+                  Parte de insumos</i></a>
               </button>
               <button type="button" class="btn btn-outline-success ms-2  btn-sm mt-1 mb-2" id="enviarReporteBtn">
                 <a class="btn-link" href="/stock/reporte/<%= parte.id %>"><i class="fa-solid fa-paper-plane"></i> Enviar
-                  Reporte</i></a>
+                  Reportes</i></a>
               </button>
             </div>
             <div class="card-footer text-muted"><i class="fa-solid fa-clock"></i> Última Actualización
