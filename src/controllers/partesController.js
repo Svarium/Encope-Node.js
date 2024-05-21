@@ -477,111 +477,218 @@ module.exports = {
 
     reporteAutomaticoViaEmail : async (req,res) =>{
         try {
-            
-         
-            const parte = await db.Parte.findAll({               
-                include:[{
-                    model: db.Producto,
-                    as:'parteProducto', 
-                    attributes:["nombre"]
-                },
-                {
-                    model: db.Taller,
-                    as:'parteTaller', 
-                    attributes:["nombre"]
-                }
-            ],
-            
+            const parte = await db.Parte.findAll({
+              include: [{
+                model: db.proyectoProducto,
+                as: 'productoParte',
+                attributes: ["cantidadAProducir", "cantidadProducida", "stockEnTaller", "egresos"],
+                include: [{
+                  model: db.Producto,
+                  as: 'producto',
+                  attributes: ["nombre"]
+                }]
+              }, {
+                model: db.Taller,
+                as: 'parteTaller',
+                attributes: ["nombre"]
+              }],
             });
-
-         // Generar el archivo Excel 
-        const fecha = new Date(Date.now());        
-        const fileName = `${fecha.toISOString().substring(0, 10)}-parteSemanal${parte[0].nombre}.xlsx`;
-        const filePath = __dirname + '/../../temp/' + fileName;
-           
-        const workbook = new ExcelJS.Workbook(); // Función constructora del Excel
-        const worksheet = workbook.addWorksheet('Sheet 1'); // Crea una hoja de Excel 
-
-
-
-    
-            // Agregar títulos de columnas
-            const titleRow = worksheet.addRow(["Nombre", "Taller","Producto", "Expediente", "Procedencia", "Detalle", 'Duración', 'Cantidad a Producir', "Cantidad Producida", "stockEnTaller", 'Egresos', "Remanentes", "Ultima Actualización"]);
-    
-            // Aplicar formato al título
-            titleRow.eachCell((cell) => {
-                cell.font = { bold: true }; // Establece el texto en negrita
-                cell.fill = {
-                    type: 'pattern',
-                    pattern: 'solid',
-                    fgColor: { argb: 'FFFF00' } // Cambia el color de fondo a amarillo (puedes cambiar 'FFFF00' por el código del color que prefieras)
-                };
-    
-                // Agregar bordes
-                cell.border = {
+        
+            const parteInsumos = await db.Parte.findAll({
+              attributes: ["nombre", "procedencia", "updatedAt"],
+              include: [{
+                model: db.proyectoProducto,
+                as: 'productoParte',
+                attributes: ["cantidadAProducir", "cantidadProducida"],
+                include: [{
+                  model: db.Producto,
+                  as: 'producto',
+                  attributes: ["nombre", "id"],
+                  include: [{
+                    model: db.Insumo,
+                    as: "productos",
+                    attributes: ["nombre", "cantidad"]
+                  }]
+                }]
+              }, {
+                model: db.Taller,
+                as: 'parteTaller',
+                attributes: ["nombre"]
+              }],
+            });
+        
+            if (!parte.length) {
+              console.error('No se encontraron partes');
+              return res.status(404).send('No se encontraron partes');
+            }
+        
+            if (!parteInsumos.length) {
+              console.error('No se encontraron insumos de partes');
+              return res.status(404).send('No se encontraron insumos de partes');
+            }
+        
+            // Generar el primer archivo Excel
+            const fecha = new Date(Date.now());
+            const fileName1 = `${fecha.toISOString().substring(0, 10)}-parteSemanal${parte[0].nombre}.xlsx`;
+            const filePath1 = path.join(__dirname, '../../temp/', fileName1);
+        
+            const workbook1 = new ExcelJS.Workbook();
+            const worksheet1 = workbook1.addWorksheet('Sheet 1');
+        
+            const titleRow1 = worksheet1.addRow([
+              "Nombre", "Taller", "Expediente", "Procedencia", "Detalle", "Duración", 
+              "Producto", "Cantidad a producir", "Cantidad Producida", "Stock en Taller", "Egresos", 
+              "Remanentes", "Última Actualización"
+            ]);
+            titleRow1.eachCell((cell) => {
+              cell.font = { bold: true };
+              cell.fill = {
+                type: 'pattern',
+                pattern: 'solid',
+                fgColor: { argb: 'FFFF00' }
+              };
+              cell.border = {
+                top: { style: 'thin' },
+                left: { style: 'thin' },
+                bottom: { style: 'thin' },
+                right: { style: 'thin' }
+              };
+            });
+        
+            parte.forEach(item => {
+              item.productoParte.forEach(productoItem => {
+                const row = worksheet1.addRow([
+                  item.nombre,
+                  item.parteTaller ? item.parteTaller.nombre : 'N/A',
+                  item.expediente,
+                  item.procedencia,
+                  item.detalle,
+                  `${item.duracion} ${item.unidadDuracion}`,
+                  productoItem.producto ? productoItem.producto.nombre : 'N/A',
+                  productoItem.cantidadAProducir,
+                  productoItem.cantidadProducida,
+                  productoItem.stockEnTaller,
+                  productoItem.egresos,
+                  item.remanentes,
+                  item.updatedAt
+                ]);
+        
+                row.eachCell((cell) => {
+                  cell.border = {
                     top: { style: 'thin' },
                     left: { style: 'thin' },
                     bottom: { style: 'thin' },
                     right: { style: 'thin' }
-                };
-            });
-    
-            parte.forEach(item => {
-                const row = worksheet.addRow([item.nombre, item.parteTaller.nombre, item.parteProducto.nombre, item.expediente, item.procedencia, item.detalle, item.duracion + item.unidadDuracion, item.cantidadAProducir, item.cantidadProducida, item.stockEnTaller, item.egresos, item.remanentes, item.updatedAt]);
-                
-                // Aplicar bordes a las celdas de la fila de datos
-                row.eachCell((cell) => {
-                    cell.border = {
-                        top: { style: 'thin' },
-                        left: { style: 'thin' },
-                        bottom: { style: 'thin' },
-                        right: { style: 'thin' }
-                    };
+                  };
                 });
-            });          
-    
-                 
-           // Guardar el archivo Excel en el servidor
-           await workbook.xlsx.writeFile(filePath);
-    
-        // Una vez que el archivo se haya generado y guardado en el servidor, puedes adjuntarlo al correo electrónico
-        const mailOptions = {
-            from: process.env.EMAIL_USER, // Tu dirección de correo electrónico
-            to: 'informatica@encope.gob.ar', // El destinatario del correo electrónico
-            subject: 'Informe de Partes Semanales', // El asunto del correo electrónico
-            text: 'Adjunto encontrará un excel con un reporte de todos los partes semanales vigentes', // El mensaje del correo electrónico
-            attachments: [
+              });
+            });
+        
+            await workbook1.xlsx.writeFile(filePath1);
+        
+            // Generar el segundo archivo Excel
+            const fileName2 = `${fecha.toISOString().substring(0, 10)}-parteInsumos${parteInsumos[0].nombre}.xlsx`;
+            const filePath2 = path.join(__dirname, '../../temp/', fileName2);
+        
+            const workbook2 = new ExcelJS.Workbook();
+            const worksheet2 = workbook2.addWorksheet('Sheet 1');
+        
+            const titleRow2 = worksheet2.addRow([
+              "Nombre del Proyecto", "Procedencia", "Taller", "Producto/s", 
+              "Cantidad de Insumos al Inicio", "Cantidad de Insumos Actual", "Última actualización"
+            ]);
+            titleRow2.eachCell((cell) => {
+              cell.font = { bold: true };
+              cell.fill = {
+                type: 'pattern',
+                pattern: 'solid',
+                fgColor: { argb: 'FFFF00' }
+              };
+              cell.border = {
+                top: { style: 'thin' },
+                left: { style: 'thin' },
+                bottom: { style: 'thin' },
+                right: { style: 'thin' }
+              };
+            });
+        
+            parteInsumos.forEach(parte => {
+              parte.productoParte.forEach(productoItem => {
+                productoItem.producto.productos.forEach(insumoItem => {
+                  const cantidadInicial = productoItem.cantidadAProducir * insumoItem.cantidad;
+                  const cantidadActual = productoItem.cantidadProducida * insumoItem.cantidad;
+        
+                  const row = worksheet2.addRow([
+                    parte.nombre,
+                    parte.procedencia,
+                    parte.parteTaller ? parte.parteTaller.nombre : 'N/A',
+                    productoItem.producto ? productoItem.producto.nombre : 'N/A',
+                    `${insumoItem.nombre}: ${cantidadInicial}`,
+                    `${insumoItem.nombre}: ${cantidadActual}`,
+                    parte.updatedAt
+                  ]);
+        
+                  row.eachCell((cell) => {
+                    cell.border = {
+                      top: { style: 'thin' },
+                      left: { style: 'thin' },
+                      bottom: { style: 'thin' },
+                      right: { style: 'thin' }
+                    };
+                  });
+                });
+              });
+            });
+        
+            await workbook2.xlsx.writeFile(filePath2);
+        
+            // Enviar correo electrónico con los archivos adjuntos
+            const mailOptions = {
+              from: process.env.EMAIL_USER,
+              to: 'informatica@encope.gob.ar',
+              subject: 'Informe de Parte Semanal',
+              text: 'Adjunto encontrará el informe del parte Semanal de stock y de insumos ambos en formato Excel.',
+              attachments: [
                 {
-                    filename: fileName, // El nombre del archivo adjunto
-                    path: filePath // La ruta del archivo adjunto
+                  filename: fileName1,
+                  path: filePath1
+                },
+                {
+                  filename: fileName2,
+                  path: filePath2
                 }
-            ]
-        };
-
-        // Enviar el correo electrónico
-        await transporter.sendMail(mailOptions);
-        console.log('Correo electrónico enviado correctamente');
-
-        fs.unlink(filePath, (err) => {
-            if (err) {
-                console.error('Error al borrar el archivo Excel:', err);
-                // Puedes manejar el error de acuerdo a tus necesidades, por ejemplo, enviando una respuesta de error al cliente
-                return res.status(500).send('Error al borrar el archivo Excel');
-            }
-            console.log('Archivo Excel borrado correctamente');
-            // Puedes enviar una respuesta exitosa al cliente si lo deseas
-            if (res) {
+              ]
+            };
+        
+            await transporter.sendMail(mailOptions);
+            console.log('Correo electrónico enviado correctamente');
+        
+            fs.unlink(filePath1, (err) => {
+              if (err) {
+                console.error('Error al borrar el archivo Excel 1:', err);
+                return res.status(500).send('Error al borrar el archivo Excel 1');
+              }
+              console.log('Archivo Excel 1 borrado correctamente');
+            });
+        
+            fs.unlink(filePath2, (err) => {
+              if (err) {
+                console.error('Error al borrar el archivo Excel 2:', err);
+                return res.status(500).send('Error al borrar el archivo Excel 2');
+              }
+              
+              if (res) {
                 return res.status(200).end();
             } else {
                 console.log('No hay objeto de respuesta definido');
             }
-        });
-
+            });
         
-        } catch (error) {
+          } catch (error) {
             console.log(error);
+            res.status(500).send('Error al generar el reporte');
+          }
         
-        }
     }
 
 
