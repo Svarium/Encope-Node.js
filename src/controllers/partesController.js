@@ -122,7 +122,7 @@ module.exports = {
             const worksheet = workbook.addWorksheet('Sheet 1');
     
             // Agregar títulos de columnas
-            const titleRow = worksheet.addRow(["Nombre", "Taller", "Expediente", "Procedencia", "Detalle", "Duración", "Productos", "Remanentes", "Última Actualización"]);
+            const titleRow = worksheet.addRow(["Nombre", "Taller", "Expediente", "Procedencia", "Detalle", "Duración", "Productos","Cantidad a producir", "Cantidad Producida", "Stock en Taller", "egresos" ,"Remanentes", "Última Actualización"]);
     
             // Aplicar formato al título
             titleRow.eachCell((cell) => {
@@ -141,34 +141,34 @@ module.exports = {
             });
     
             parte.forEach(item => {
-                // Combinar información de productos
-                const productosInfo = item.productoParte.map(productoItem => {
-                    return `${productoItem.producto.nombre} - A producir: ${productoItem.cantidadAProducir} - Producido: ${productoItem.cantidadProducida} - En Stock: ${productoItem.stockEnTaller} - Egresos ${productoItem.egresos}`;
-                }).join(" // ");
-    
-                // Agregar fila con los datos combinados
-                const row = worksheet.addRow([
-                    item.nombre,
-                    item.parteTaller.nombre,
-                    item.expediente,
-                    item.procedencia,
-                    item.detalle,
-                    `${item.duracion} ${item.unidadDuracion}`,
-                    productosInfo,
-                    item.remanentes,
-                    item.updatedAt
-                ]);
-    
-                // Aplicar bordes a las celdas de la fila de datos
-                row.eachCell((cell) => {
-                    cell.border = {
-                        top: { style: 'thin' },
-                        left: { style: 'thin' },
-                        bottom: { style: 'thin' },
-                        right: { style: 'thin' }
-                    };
+                item.productoParte.forEach(productoItem => {
+                    const row = worksheet.addRow([
+                        item.nombre,
+                        item.parteTaller.nombre,
+                        item.expediente,
+                        item.procedencia,
+                        item.detalle,
+                        `${item.duracion} ${item.unidadDuracion}`,
+                        productoItem.producto.nombre,
+                        productoItem.cantidadAProducir,
+                        productoItem.cantidadProducida,
+                        productoItem.stockEnTaller,
+                        productoItem.egresos,
+                        item.remanentes,
+                        item.updatedAt
+                    ]);
+            
+                    row.eachCell((cell) => {
+                        cell.border = {
+                            top: { style: 'thin' },
+                            left: { style: 'thin' },
+                            bottom: { style: 'thin' },
+                            right: { style: 'thin' }
+                        };
+                    });
                 });
             });
+            
     
             const fecha = new Date(Date.now());
             const fileName = `${fecha.toISOString().substring(0, 10)}-parteSemanal${parte[0].nombre}.xlsx`;
@@ -331,7 +331,7 @@ module.exports = {
             const workbook1 = new ExcelJS.Workbook();
             const worksheet1 = workbook1.addWorksheet('Sheet 1');
       
-            const titleRow1 = worksheet1.addRow(["Nombre", "Taller", "Expediente", "Procedencia", "Detalle", "Duración", "Productos", "Remanentes", "Última Actualización"]);
+            const titleRow1 = worksheet1.addRow(["Nombre", "Taller", "Expediente", "Procedencia", "Detalle", "Duración", "Productos","Cantidad a producir", "Cantidad Producida", "Stock en Taller", "egresos" ,"Remanentes", "Última Actualización"]);
             titleRow1.eachCell((cell) => {
               cell.font = { bold: true };
               cell.fill = {
@@ -348,32 +348,34 @@ module.exports = {
             });
       
             parte.forEach(item => {
-              const productosInfo = item.productoParte.map(productoItem => {
-                return `${productoItem.producto.nombre} - A producir: ${productoItem.cantidadAProducir} - Producido: ${productoItem.cantidadProducida} - En Stock: ${productoItem.stockEnTaller} - Egresos ${productoItem.egresos}`;
-              }).join(" // ");
-      
-              const row = worksheet1.addRow([
-                item.nombre,
-                item.parteTaller.nombre,
-                item.expediente,
-                item.procedencia,
-                item.detalle,
-                `${item.duracion} ${item.unidadDuracion}`,
-                productosInfo,
-                item.remanentes,
-                item.updatedAt
-              ]);
-      
-              row.eachCell((cell) => {
-                cell.border = {
-                  top: { style: 'thin' },
-                  left: { style: 'thin' },
-                  bottom: { style: 'thin' },
-                  right: { style: 'thin' }
-                };
-              });
+                item.productoParte.forEach(productoItem => {
+                    const row = worksheet1.addRow([
+                        item.nombre,
+                        item.parteTaller.nombre,
+                        item.expediente,
+                        item.procedencia,
+                        item.detalle,
+                        `${item.duracion} ${item.unidadDuracion}`,
+                        productoItem.producto.nombre,
+                        productoItem.cantidadAProducir,
+                        productoItem.cantidadProducida,
+                        productoItem.stockEnTaller,
+                        productoItem.egresos,
+                        item.remanentes,
+                        item.updatedAt
+                    ]);
+            
+                    row.eachCell((cell) => {
+                        cell.border = {
+                            top: { style: 'thin' },
+                            left: { style: 'thin' },
+                            bottom: { style: 'thin' },
+                            right: { style: 'thin' }
+                        };
+                    });
+                });
             });
-      
+            
             await workbook1.xlsx.writeFile(filePath1);
       
             // Generar el segundo archivo Excel
