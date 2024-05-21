@@ -7,7 +7,7 @@ const { newTaller, storageTaller, listTaller, editTaller, updateTaller, deleteTa
 const addTallerValidator = require('../validations/addTallerValidator');
 const { addNewProyect, storeProyect, listProyects, editProyect, updateProyect, deleteProyect, downloadExcelHistorial, downloadExcelProyects, searchProyect, editProducts } = require('../controllers/proyectosController');
 const addProyectValidator = require('../validations/addProyectValidator');
-const { listPartes, editParte, updateParte, avanceDeProyecto, printParte, reporteViaEmail } = require('../controllers/partesController');
+const { listPartes, editParte, updateParte, avanceDeProyecto, printParte, reporteViaEmail, printParteInsumos } = require('../controllers/partesController');
 const editParteValidator = require('../validations/editParteValidator');
 const checkUserEditorIntranetUnidad = require('../middlewares/checkUserEditorIntranetUnidad');
 const checkUserAddProyect = require('../middlewares/checkUserAddProyect');
@@ -87,9 +87,10 @@ router.get('/searchProyect', checkUserEditorIntranetCentral, searchProyect)
 
 /* PARTE SEMANAL DE PROYECTOS */
 
-router.get('/partes', checkUserEditorIntranetUnidad, listPartes)
-router.get('/partes/:id', checkUserEditorIntranetUnidad, editParte)
-router.get('/parte/:id', checkUserEditorIntranetUnidad, printParte)
+router.get('/partes', checkUserEditorIntranetUnidad, listPartes) // lista los proyectos para poder acceder a editar los partes semanales de los mismos
+router.get('/partes/:id', checkUserEditorIntranetUnidad, editParte) // edita el parte seleccionado
+router.get('/parte/:id', checkUserEditorIntranetUnidad, printParte) // reporte en excel del parte de stock
+router.get('/parteInsumos/:id',checkUserEditorIntranetUnidad ,printParteInsumos) // reporte en excel del parte de insumos
 router.get('/reporte/:id', checkUserEditorIntranetUnidad, reporteViaEmail)
 
 

@@ -183,6 +183,99 @@ module.exports = {
         }
     },
 
+    printParteInsumos : async (req,res) => {
+
+        try {
+            const id = req.params.id;
+    
+            const parteInsumos = await db.Parte.findOne({
+                where: { id: id },
+                attributes: ["nombre", "procedencia", "updatedAt"],
+                include: [{
+                    model: db.proyectoProducto,
+                    as: 'productoParte',
+                    attributes: ["cantidadAProducir", "cantidadProducida"],
+                    include: [{
+                        model: db.Producto,
+                        as: 'producto',
+                        attributes: ["nombre", "id"],
+                        include: [{
+                            model: db.Insumo,
+                            as: "productos",
+                            attributes: ["nombre", "cantidad"]
+                        }]
+                    }]
+                }, {
+                    model: db.Taller,
+                    as: 'parteTaller',
+                    attributes: ["nombre"]
+                }],
+            });
+    
+            const workbook = new ExcelJS.Workbook();
+            const worksheet = workbook.addWorksheet('Sheet 1');
+    
+            // Agregar títulos de columnas
+            const titleRow = worksheet.addRow(["Nombre del Proyecto", "Procedencia" ,"Taller", "Producto/s", "Cantidad de Insumos al Inicio", "Cantidad de Insumos Actual", "Última actualización"]);
+    
+            // Aplicar formato al título
+            titleRow.eachCell((cell) => {
+                cell.font = { bold: true };
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: 'FFFF00' }
+                };
+                cell.border = {
+                    top: { style: 'thin' },
+                    left: { style: 'thin' },
+                    bottom: { style: 'thin' },
+                    right: { style: 'thin' }
+                };
+            });
+
+           
+    
+            if (parteInsumos) {
+                parteInsumos.productoParte.forEach(productoItem => {
+                    productoItem.producto.productos.forEach(insumoItem => {
+                        const cantidadInicial = productoItem.cantidadAProducir * insumoItem.cantidad;
+                        const cantidadActual = productoItem.cantidadProducida * insumoItem.cantidad;
+    
+                        worksheet.addRow([
+                            parteInsumos.nombre,
+                            parteInsumos.procedencia,
+                            parteInsumos.parteTaller.nombre,
+                            productoItem.producto.nombre,
+                            `${insumoItem.nombre}: ${cantidadInicial}`,
+                            `${insumoItem.nombre}: ${cantidadActual}`,
+                            parteInsumos.updatedAt
+                        ]).eachCell((cell) => {
+                            cell.border = {
+                                top: { style: 'thin' },
+                                left: { style: 'thin' },
+                                bottom: { style: 'thin' },
+                                right: { style: 'thin' }
+                            };
+                        });
+                    });
+                });
+            }
+    
+            const fecha = new Date(Date.now());
+            const fileName = `${fecha.toISOString().substring(0, 10)}-parteInsumos${parteInsumos.nombre}.xlsx`;
+    
+            res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
+            res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    
+            await workbook.xlsx.write(res);
+            res.end();
+        } catch (error) {
+            console.log(error);
+        }
+
+    },
+
     reporteViaEmail : async (req,res) => {
 
         try {

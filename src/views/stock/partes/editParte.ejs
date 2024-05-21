@@ -60,11 +60,12 @@
             </div>
             <div class="card-body">
               <p class="card-text h6 text-justify">
-                <%= parte.observaciones %> <button type="button" class="btn btn-danger custom-btn"
+                <%= parte.observaciones %> <% if (parte.remanentes === null) { %>
+                  <button type="button" class="btn btn-danger custom-btn"
                     data-bs-toggle="modal" data-bs-target="#observaciones<%= parte.id %>" data-bs-whatever="@mdo">
                     <i class="fa-solid fa-pen-to-square"></i>
                   </button>
-
+                <% } %> 
 
               </p>
 
@@ -96,7 +97,7 @@
                   Parte de stock</i></a>
               </button>
               <button type="button" class="btn btn-outline-danger  btn-sm mt-1 mb-2">
-                <a class="btn-link" href="/stock/parte/<%= parte.id %>"><i class="fa-solid fa-download"></i>
+                <a class="btn-link" href="/stock/parteInsumos/<%= parte.id %>"><i class="fa-solid fa-download"></i>
                   Parte de insumos</i></a>
               </button>
               <button type="button" class="btn btn-outline-success ms-2  btn-sm mt-1 mb-2" id="enviarReporteBtn">
@@ -142,8 +143,11 @@
                           data-producto-id="<%= item.productoId %>" data-parte-id="<%= parte.id %>"
                           placeholder="Ingrese cantidad" value="<%= item.cantidadProducida %>">
                       </div>
-                      <button type="button" class="btn btn-success actualizar-cantidadProducida-btn"><i
+                      <% if (parte.remanentes === null) { %>
+                        <button type="button" class="btn btn-success actualizar-cantidadProducida-btn"><i
                           class="fa-solid fa-pen-to-square"></i></button>
+                      <% } %>
+                     
                     </div>
 
                   </td>
@@ -158,8 +162,11 @@
                           data-producto-id="<%= item.productoId %>" placeholder="Ingrese cantidad"
                           value="<%= item.egresos %>">
                       </div>
-                      <button type="button" class="btn btn-primary actualizar-egresos-btn"><i
+                      <% if (parte.remanentes === null) { %>
+                        <button type="button" class="btn btn-primary actualizar-egresos-btn"><i
                           class="fa-solid fa-pen-to-square"></i></button>
+                      <% } %>
+                      
                     </div>
                   </td>
                 </tr>
