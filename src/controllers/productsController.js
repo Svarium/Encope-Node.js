@@ -281,7 +281,13 @@ module.exports = {
                 nombre: {
                     [Op.like] : `%${querySearch}%`
                 }
-            }
+            },
+            attributes:["nombre", "detalle", "imagen", "ficha", "expedienteFicha", "id"],
+            include:[{
+                model: db.Insumo,
+                as:"productos",
+                attributes:["nombre", "cantidad"]
+            }]
         }) .then(producto => {
            /*  return res.send(producto) */
             return res.render('stock/products/searchProduct',{

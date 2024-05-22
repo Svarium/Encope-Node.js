@@ -69,9 +69,14 @@
                                       <div class="col-3">
                                           <img src="/images/productos/<%= item.imagen %>" alt="" width="100px" height="100px" class="rounded shadow me-2">
                                       </div>
-                                      <div class="col-8">
+                                      <div class="col-8 mb-2">
                                           <p><%= item.detalle %></p>
+                                          <small class="h6 font-weight-bolder">Insumos:</small>
+                                          <% item.productos.forEach(insumo => { %>
+                                           <small class="text-danger font-weight-bold"><%= insumo.cantidad %> - <%= insumo.nombre %> //</small>
+                                          <% }) %>
                                       </div>
+                                      
                                   </div>
                               </div>
                               <div class="col-md-12">
