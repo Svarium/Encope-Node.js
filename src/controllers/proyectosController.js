@@ -269,25 +269,23 @@ module.exports = {
 
                 const proyectoAnterior = await db.Proyecto.findOne({ where: { id: id } }) //busco el proyecto en su version vigente antes de ser editado
 
-           /*      await db.Historial.create({  
+                await db.Historial.create({  
                     nombre: proyectoAnterior.nombre,
-                    expediente: proyectoAnterior.expediente,
+                    expediente:expediente,
                     idTaller: proyectoAnterior.idTaller,                  
                     detalle: proyectoAnterior.detalle,
-                    insumos: proyectoAnterior.insumos,
+                    insumos: proyectoAnterior.insumosAdquirir,
                     procedencia: proyectoAnterior.procedencia,
                     duracion: proyectoAnterior.duracion,
-                    unidadDuracion: proyectoAnterior.unidadDuracion,
-                    costoTotal: proyectoAnterior.costoTotal,
-                    costoUnitario: proyectoAnterior.costoUnitario,
-                    idProducto: proyectoAnterior.idTaller,
+                    unidadDuracion: proyectoAnterior.unidadDuracion,   
+                    costoTotalProyecto:proyectoAnterior.costoTotalProyecto,              
                     idProyecto: id,
-                    estado: 'Pendiente'
-                }) */
+                    estado: proyectoAnterior.estado
+                })
 
              const proyectoUpdate = await db.Proyecto.update({ //actualizo el proyecto con los nuevos datos enviados por el usuario
                     nombre: nombre.trim(),
-                    expediente: expediente,
+                    expediente: proyectoAnterior.expediente,
                     idTaller: destino,                    
                     insumosAdquirir: req.file ? req.file.filename : proyectoAnterior.insumosAdquirir,
                     detalle: detalle,
@@ -431,15 +429,34 @@ module.exports = {
     downloadExcelHistorial: async (req, res) => {
 
         try {
-            const id = req.params.id
-            const tablaHistorial = await db.Historial.findAll({ where: { idProyecto: id } }); // Traigo mi consulta de stock
-
+            const id = req.params.id;
+            const tablaHistorial = await db.Historial.findAll({
+                where: { idProyecto: id },
+                include: [{
+                    model: db.Proyecto,
+                    as: 'historialProyecto',
+                    attributes: ["nombre", "estado", "detalle", "expediente", "procedencia", "duracion", "unidadDuracion", "costoTotalProyecto", "insumosAdquirir", "createdAt"],
+                    include: [{
+                        model: db.proyectoProducto,
+                        as: "productoProyecto",
+                        attributes: ["cantidadAProducir", "costoUnitario", "costoTotal"],
+                        include: [
+                            {
+                                model: db.Producto,
+                                as: "producto",
+                                attributes: ["nombre"]
+                            }
+                        ]
+                    }]
+                }]
+            });
+    
             const workbook = new ExcelJS.Workbook(); // Función constructora del Excel
             const worksheet = workbook.addWorksheet('Sheet 1'); // Crea una hoja de Excel 
-
+    
             // Agregar títulos de columnas
-            const titleRow = worksheet.addRow(["Nombre Proyecto", "Estado", "Detalle", "Expediente", "Procedencia", 'Duración', "Insumos", 'Cantidad a Producir', 'Costo Unitario', 'Costo total', 'fecha de edición del proyecto']);
-
+            const titleRow = worksheet.addRow(["Nombre Proyecto", "Estado", "Detalle", "Expediente Reformulación", "Procedencia", 'Duración', 'Productos', 'Costo total Proyecto', 'Insumos a adquirir', 'Fecha de creación del proyecto']);
+    
             // Aplicar formato al título
             titleRow.eachCell((cell) => {
                 cell.font = { bold: true }; // Establece el texto en negrita
@@ -448,7 +465,7 @@ module.exports = {
                     pattern: 'solid',
                     fgColor: { argb: 'FFFF00' } // Cambia el color de fondo a amarillo (puedes cambiar 'FFFF00' por el código del color que prefieras)
                 };
-
+    
                 // Agregar bordes
                 cell.border = {
                     top: { style: 'thin' },
@@ -457,10 +474,35 @@ module.exports = {
                     right: { style: 'thin' }
                 };
             });
-
+    
             tablaHistorial.forEach(historial => {
-                const row = worksheet.addRow([historial.nombre, historial.estado, historial.detalle, historial.expediente, historial.procedencia, `${historial.duracion} - ${historial.unidadDuracion}`, historial.insumos, historial.cantidadAProducir, historial.costoUnitario, historial.costoTotal, historial.createdAt]);
-
+                const proyecto = historial.historialProyecto;
+    
+                const cantidades = proyecto.productoProyecto.map(item => item.cantidadAProducir);
+                const productos = proyecto.productoProyecto.map(item => item.producto.nombre);
+                const costos = proyecto.productoProyecto.map(item => item.costoUnitario);
+    
+                const resultado = cantidades.map((cantidad, index) => {
+                    const producto = productos[index];
+                    const costo = costos[index];
+                    return `${cantidad} - ${producto} - $ ${costo} c/u`;
+                });
+    
+                // Construir la URL completa del archivo PDF
+                const urlPDF = `http://localhost:3000/images/insumos/${proyecto.insumosAdquirir}`;
+                const linkText = `Descargar anexo 3`;
+    
+                const row = worksheet.addRow([proyecto.nombre, proyecto.estado, proyecto.detalle, historial.expediente, proyecto.procedencia, `${proyecto.duracion} - ${proyecto.unidadDuracion}`, `${resultado.join(", ")}`, proyecto.costoTotalProyecto, linkText, proyecto.createdAt]);
+    
+                // Obtener la celda del enlace
+                const linkCell = row.getCell(9); // Cambiar el índice según la posición de la columna del enlace
+    
+                // Aplicar el estilo de color azul y subrayado al enlace
+                linkCell.font = { color: { argb: 'FF0000FF' }, underline: true };
+    
+                // Agregar la URL como hipervínculo
+                worksheet.getCell(linkCell.address).value = { text: linkText, hyperlink: urlPDF };
+    
                 // Aplicar bordes a las celdas de la fila de datos
                 row.eachCell((cell) => {
                     cell.border = {
@@ -471,16 +513,16 @@ module.exports = {
                     };
                 });
             });
-
+    
             const fecha = new Date(Date.now());
-
+    
             // Define el nombre del archivo Excel
-            res.setHeader('Content-Disposition', `attachment; filename="${fecha.toISOString().substring(0, 10)}-historialReformulaciónes.xlsx"`); // agregar al nombre la fecha con New Date()
+            res.setHeader('Content-Disposition', `attachment; filename="${fecha.toISOString().substring(0, 10)}-tablaHistorialProyectos.xlsx"`); // agregar al nombre la fecha con New Date()
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-
+    
             // Envia el archivo Excel como respuesta al cliente
             await workbook.xlsx.write(res);
-
+    
             // Finaliza la respuesta
             res.end();
         } catch (error) {

@@ -27,10 +27,7 @@ module.exports = {
       },
       detalle: {
         type: Sequelize.STRING
-      },
-      cantidadAProducir: {
-        type: Sequelize.INTEGER
-      },
+      },      
       procedencia: {
         type: Sequelize.STRING
       },
@@ -39,13 +36,10 @@ module.exports = {
       },
       unidadDuracion: {
         type: Sequelize.STRING
-      },
-      costoTotal: {
+      },        
+      costoTotalProyecto: {
         type: Sequelize.INTEGER
-      },
-      costoUnitario: {
-        type: Sequelize.INTEGER
-      },          
+      },    
       idProyecto: {
         type: Sequelize.INTEGER,
         references: {

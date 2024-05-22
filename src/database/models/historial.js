@@ -12,8 +12,19 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
 
-         
-     
+    Historial.belongsTo(models.Taller,{
+      foreignKey:'idTaller',
+      as:"historialTaller",
+      onDelete:'CASCADE'
+    })  
+
+    Historial.belongsTo(models.Proyecto,{
+      foreignKey:'idProyecto',
+      as:'historialProyecto',
+      onDelete:'CASCADE'
+    }) 
+
+    
     }
     
 
@@ -22,8 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     nombre: DataTypes.STRING,
     expediente: DataTypes.STRING,
     idTaller: DataTypes.INTEGER,
-    detalle: DataTypes.STRING,
-    cantidadTotal: DataTypes.INTEGER,
+    detalle: DataTypes.STRING,  
     procedencia: DataTypes.STRING,
     duracion: DataTypes.INTEGER,
     unidadDuracion: DataTypes.STRING, 

@@ -30,7 +30,13 @@ module.exports = (sequelize, DataTypes) => {
         onDelete:'CASCADE'
       })
 
-      
+      Proyecto.hasMany(models.Historial,{
+        foreignKey:'idProyecto',
+        as:'historialProyecto',
+        onDelete:'CASCADE'
+      })
+
+
     }
   }
   Proyecto.init({
