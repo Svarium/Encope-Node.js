@@ -111,5 +111,14 @@ module.exports = {
       
     }, 
 
+    intranet: (req,res) => {
+        const userLogin = req.session.userLogin
+        return res.render('intranet/intranet',{
+            title:"Sistema de Gestión Web - ENCOPE",
+            userLogin
+        })
+
+    }
+
   
 }

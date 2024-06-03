@@ -41,7 +41,7 @@ module.exports = {
                res.cookie('userEncopeWeb', req.session.userLogin, {maxAge: 1000*60*7})
 
                
-                return res.redirect('/users/perfil')
+                return res.redirect('/gestionweb')
               
 
             

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/images/favicom_encope.png" type="image/x-icon">
+    <link rel="stylesheet" href="/stylesheets/intranet.css">
+    <title>Sistema de Gestión</title>    
+    <script src="/js/carrouselIntranet.js" defer></script>
+</head>
+
+<body>
+    <header class="header-home">
+        <nav>
+            
+            <ul class="ul-header-home">
+                <div class="user">
+                    <img id="userIconProfile" src="<%= /http/.test(locals.userLogin.icon) ? locals.userLogin.icon : `/images/iconsProfile/${locals.userLogin.icon}` %>" class="iconProfileIntranet me-2" alt="">
+                </div>
+                <li class="li-item-nav">
+                    <a href="/users/perfil" class="links-ul-header">Perfil</a>
+                </li>
+                <li class="li-item-nav">
+                    <a href="/inicio" class="links-ul-header">Inicio</a>
+                </li>
+                <li class="li-item-nav">
+                    <a href="/contacto" class="links-ul-header">Contacto</a>
+                </li>
+                <li class="li-item-nav">
+                    <form id="logoutUser" action="/users/logout" method="GET">
+                        <button onclick="showAlertAndLogout(event)" type="submit" class="salir">
+                            <i class="fa-solid fa-power-off"></i>
+                        </button>
+                      </form>                    
+                </li>
+            </ul>
+        </nav>
+        <div>
+            <div class="cont-titulo">
+                <div class="texto-intranet">
+                    <h2 class="h2-titulo-main-intranet">Bienvenido <br>al Sistema de <br>Gestión.</h2>
+                    <p class="descripcion-main">Nuevo acceso al sistema de gestión web del ENCOPE. En el mismo encontraran los botones a las distintas secciones para la carga de información según el área y modulos, consulta de estadísticas, lectura de información, administración de licitaciones, noticias y más. 
+                    </p>
+                </div>
+                <div class="ilustracion">
+                    <img src="/images/img/ilustracion-02.png" alt="">
+                </div>
+                <div class="ilustracion2">
+                    <img src="/images/img/ilustracion_B-02.png" alt="">
+                </div>
+            </div>
+        </div>
+        </header>
+    <section class="cont-carousel">
+        <h3 class="h3-titulo">Elije una opción para empezar a trabajar</h3>
+        
+        <hr>
+        
+        <div class="contenedorIntranet">
+            <div class="wrapper">
+                <i id="left" class="fa-solid fa-angle-left"></i>
+                <div class="carousel">
+                    <a href="/stock"><img src="/images/img/proyectos_productivos.svg" alt="img" draggable="false"></a>
+                    <a href="/stock/partes"><img src="/images/img/parte_semanal.svg" alt="img" draggable="false"></a>
+                    <a href="/stock/estadistica"><img src="/images/img/dashboard.svg" alt="img" draggable="false"></a>
+                    <a href="#"><img src="/images/img/fondo_rotatorio.svg" alt="img" draggable="false"></a>
+                    <a href="/licitacion/publicaciones"><img src="/images/img/licitaciones.svg" alt="img" draggable="false"></a>
+                    <a href="/stock/estadistica"><img src="/images/img/metricas.svg" alt="img" draggable="false"></a>
+                    <a href="/noticias/add"><img src="/images/img/noticias.svg" alt="img" draggable="false"></a>
+                    <a href="#"><img src="/images/img/stock.svg" alt="img" draggable="false"></a>
+                    <a href="/users/dashboard"><img src="/images/img/usuarios.svg" alt="img" draggable="false"></a>
+                </div>
+                <i id="right" class="fa-solid fa-angle-right"></i>
+            </div>
+        </div>
+    </section>
+    <div class="separador"></div>
+    <footer class="footer-dashboard">    
+        
+        <div class="cont-logo">
+        <!--     <p>Necesitas ayuda? Contactate con nosotros.</p> -->
+            <img src="/images/img/logo_svg.svg" alt="">
+        </div>
+    </footer>
+    <script src="https://kit.fontawesome.com/88a2ce2ad4.js" crossorigin="anonymous"></script>
+
+    <%- include('../partials/scripts') %> 
+</body>
+</html>
