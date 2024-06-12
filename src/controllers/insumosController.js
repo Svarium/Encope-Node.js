@@ -60,7 +60,7 @@ module.exports = {
     
             const parte = await db.Parte.findOne({
                 where: { id: idproyecto },
-                attributes: ["nombre"],
+                attributes: ["nombre", "id"],
                 include: [{
                     model: db.proyectoProducto,
                     as: 'productoParte',
@@ -100,13 +100,15 @@ module.exports = {
             });
     
             const nombreProyecto = parte.nombre;
+            const proyectId = parte.id
             
     
             return res.render('stock/partes/informeInsumos', {
                 title: "Informar insumos",
                 idproyecto,
                 data,
-                nombreProyecto
+                nombreProyecto,
+                proyectId
             });
         } catch (error) {
             console.error(error);

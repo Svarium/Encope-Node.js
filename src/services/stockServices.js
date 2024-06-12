@@ -1,6 +1,5 @@
-const { where } = require('sequelize');
 const db = require('../database/models');
-const { cantidadProducida } = require('../controllers/apis/apiStockControllers');
+
 
 module.exports = {
 

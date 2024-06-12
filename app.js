@@ -30,9 +30,10 @@ const stockRouter = require('./src/routes/stock');
 
 //APIS
 const apiUsersRouter = require('./src/routes/apis/apiUsers');
-const apiLicitacionRouter = require('./src/routes/apis/apiLicitaciones')
-const apiNoticiasRouter = require('./src/routes/apis/apiNoticias')
-const apiStockRouter = require('./src/routes/apis/apiStock')
+const apiLicitacionRouter = require('./src/routes/apis/apiLicitaciones');
+const apiNoticiasRouter = require('./src/routes/apis/apiNoticias');
+const apiStockRouter = require('./src/routes/apis/apiStock');
+const apiInsumosRouter = require('./src/routes/apis/apiInsumos');
 
 
 
@@ -75,6 +76,7 @@ app.use('/api/users', apiUsersRouter)
 app.use('/api/licitacion', apiLicitacionRouter)
 app.use('/api/noticias', apiNoticiasRouter)
 app.use('/api/stock', apiStockRouter)
+app.use('/api/insumos', apiInsumosRouter)
 
 
 // catch 404 and forward to error handler
