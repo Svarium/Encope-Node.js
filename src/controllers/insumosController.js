@@ -101,6 +101,14 @@ module.exports = {
     
             const nombreProyecto = parte.nombre;
             const proyectId = parte.id
+
+            const registros = await db.insumoProyecto.findAll({
+                where: {
+                     proyectoId : idproyecto
+                },
+                attributes:['id']
+            })
+            
             
     
             return res.render('stock/partes/informeInsumos', {
@@ -108,7 +116,8 @@ module.exports = {
                 idproyecto,
                 data,
                 nombreProyecto,
-                proyectId
+                proyectId,
+                registros
             });
         } catch (error) {
             console.error(error);
