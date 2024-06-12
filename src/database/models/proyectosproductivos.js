@@ -22,6 +22,12 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey:'proyectoId',
         as:'productoProyecto'
       }) 
+
+      Proyecto.hasMany(models.insumoProyecto,{
+        foreignKey:'proyectoId',
+        as:'insumosProyecto',
+        onDelete:'CASCADE'
+      })
   
 
       Proyecto.belongsTo(models.Taller,{

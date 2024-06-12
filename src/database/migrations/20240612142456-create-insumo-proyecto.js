@@ -2,39 +2,54 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Stocks', {
+    await queryInterface.createTable('insumoProyectos', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      idUsuario: {
+      cantidadRequerida: {
+        type: Sequelize.INTEGER
+      },
+      cantidadAdquirida: {
+        type: Sequelize.INTEGER
+      },
+      detalle: {
+        type: Sequelize.STRING
+      },
+      proyectoId: {
         type: Sequelize.INTEGER,
         references:{
-          model:'Usuarios',
+          model:'Proyectos',
           key:'id'
         },
-        allowNull:false,
+        allowNull:false
       },
-      idProducto: {
+      productoId: {
         type: Sequelize.INTEGER,
-        references:{
+        references: {
           model:'Productos',
-          key:'id',
+          key:'id'
         },
-        allowNull:false,
+        allowNull:false
       },
-      idDestino: {
+      insumoId: {
         type: Sequelize.INTEGER,
         references:{
-          model:'destinoUsuarios',
-          key:'id',
+          model:'Insumos',
+          key:'id'
         },
-        allowNull:false,
+        allowNull:false
       },
-      cantidad: {
+      factura: {
+        type: Sequelize.STRING
+      },
+      decomiso: {
         type: Sequelize.INTEGER
+      },
+      expedienteDecomiso: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -47,6 +62,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Stocks');
+    await queryInterface.dropTable('insumoProyectos');
   }
 };

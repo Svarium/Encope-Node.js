@@ -65,6 +65,11 @@
                     <input type="text" name="nombre" class="form-control <%= (locals.errors && errors.nombre) && 'is-invalid'%>" id="nombre"   placeholder="Ingrese el nombre del insumo">
                     <small id="nombre" class="text-danger ms-2"><%= locals.errors && errors.nombre ? errors.nombre.msg : null %></small>
                   </div>
+                  <div class="mb-3 mt-1">
+                    <label for="unidad" class="form-label">Unidad de Medida</label>                   
+                    <input type="text" name="unidad" class="form-control <%= (locals.errors && errors.unidad) && 'is-invalid'%>" id="unidad"   placeholder="Ingrese la unidad de medida">
+                    <small id="unidad" class="text-danger ms-2"><%= locals.errors && errors.unidad ? errors.unidad.msg : null %></small>
+                  </div>
                   <div class="mb-3">
                     <label for="cantidad" class="form-label">Cantidad</label>
                     <input type="number" class="form-control <%= (locals.errors && errors.cantidad) && 'is-invalid'%>" name="cantidad" id="cantidad"  placeholder="Ingrese una cantidad">

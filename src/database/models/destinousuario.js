@@ -17,10 +17,6 @@ module.exports = (sequelize, DataTypes) => {
         onDelete:"CASCADE"
       })
 
-      destinoUsuario.hasMany(models.Stock,{
-        foreignKey:'idDestino',
-        as:'destinoStock'
-      })
 
      destinoUsuario.hasMany(models.Taller,{
       foreignKey:'idDestino',

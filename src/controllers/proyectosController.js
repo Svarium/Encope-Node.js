@@ -102,8 +102,7 @@ module.exports = {
                     }]
                 });
 
-                 const procedencia = usuario.destino.nombreDestino //obtengo la procedencia del proyecto a través del destino del usuario
-
+                    const procedencia = usuario.destino.nombreDestino //obtengo la procedencia del proyecto a través del destino del usuario
              
 
                     const costoTotal = productos.reduce((total, producto) => {
@@ -115,7 +114,7 @@ module.exports = {
                 }, 0);
 
                
-                const proyecto = await db.Proyecto.create({
+                const proyecto = await db.Proyecto.create({  //CREO EL PROYECTO
                     nombre: nombre.trim(),
                     expediente: expediente,
                     idTaller: destino,                   
@@ -126,11 +125,9 @@ module.exports = {
                     unidadDuracion: unidadDuracion,
                     costoTotalProyecto: costoTotal,
                     estado: 'Pendiente',                   
-                })
+                })         
 
-         
-
-                const parte = await db.Parte.create({
+                const parte = await db.Parte.create({  //CREO EL PARTE ASOCIADO AL PROYECTO
                     nombre: nombre.trim(),
                     expediente: expediente,
                     idTaller: destino,
@@ -143,7 +140,9 @@ module.exports = {
 
                 const productosFiltrados = req.body.productos.filter(producto => producto.id); // filtro el array productos para eliminar cualquier posición vacía
 
-                const proyectoProductos = await productosFiltrados.forEach(producto => {
+               
+
+                const proyectoProductos = await productosFiltrados.forEach(producto => {  //GUARDO LOS REGISTROS DE PRODUCTOS DEL PROYECTO
                     db.proyectoProducto.create({
                         proyectoId: proyecto.id,
                         parteId: parte.id,
@@ -152,8 +151,8 @@ module.exports = {
                         costoUnitario: producto.costoUnitario,
                         costoTotal: producto.cantidad * producto.costoUnitario,                    
                     })
-                })         
-
+                })       
+                            
                 return res.redirect('/stock/listProyects')
 
             } else {

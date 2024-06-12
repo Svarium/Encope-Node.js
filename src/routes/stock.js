@@ -16,7 +16,7 @@ const { uploadInsumosFiles } = require('../middlewares/subirInsumos');
 const editProyectValidator = require('../validations/editProyectValidator');
 const { uploadFichasFiles } = require('../middlewares/subirFicha');
 const addFichaValidator = require('../validations/addFichaValidator');
-const { addInsumo, storeInsumo } = require('../controllers/insumosController');
+const { addInsumo, storeInsumo, reportInsumos } = require('../controllers/insumosController');
 const addInsumoValidator = require('../validations/addInsumoValidator');
 
 
@@ -92,6 +92,7 @@ router.get('/partes/:id', checkUserEditorIntranetUnidad, editParte) // edita el 
 router.get('/parte/:id', checkUserEditorIntranetUnidad, printParte) // reporte en excel del parte de stock
 router.get('/parteInsumos/:id',checkUserEditorIntranetUnidad ,printParteInsumos) // reporte en excel del parte de insumos
 router.get('/reporte/:id', checkUserEditorIntranetUnidad, reporteViaEmail)
+router.get('/informeInsumos/:id', reportInsumos)
 
 
 

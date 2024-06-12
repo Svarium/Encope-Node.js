@@ -10,6 +10,9 @@ module.exports = [
         ignore:" "
     }).withMessage("Solo carácteres alfabéticos"),
 
+    check('unidad')
+    .notEmpty().withMessage('Debes ingresar la unidad de medida'),
+
     check('cantidad')
     .notEmpty().withMessage('La cantidad es requerida')
     .isInt({min:1}).withMessage('La cantidad debe ser un numero entero mayor que cero'),

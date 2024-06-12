@@ -74,6 +74,7 @@
                       <% if (item.productos) { %>
                         <% item.productos.forEach(producto=> { %>
                           - <%= producto.cantidad %>
+                            <%= producto.unidadDeMedida %>
                             <%= producto.nombre %> <i class="fa-solid fa-delete-left text-danger deleteInsumo"
                                 data-producto-id="<%= item.id %>" data-insumo-id="<%= producto.id %>"></i><br>
                               <% }) %>

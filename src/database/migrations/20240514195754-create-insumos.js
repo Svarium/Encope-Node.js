@@ -13,6 +13,9 @@ module.exports = {
       nombre: {
         type: Sequelize.STRING
       },
+      unidadDeMedida: {
+        type: Sequelize.STRING
+      },
       cantidad: {
         type: Sequelize.INTEGER
       },

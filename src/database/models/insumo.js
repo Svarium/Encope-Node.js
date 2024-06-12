@@ -17,10 +17,17 @@ module.exports = (sequelize, DataTypes) => {
       as:"productos"
      })
 
+     Insumo.hasMany(models.insumoProyecto,{
+      foreignKey:'insumoId',
+      as:'insumos',
+      onDelete:'CASCADE'
+     })
+
     }
   }
   Insumo.init({
     nombre: DataTypes.STRING,
+    unidadDeMedida: DataTypes.STRING,
     cantidad: DataTypes.INTEGER,
     detalle: DataTypes.STRING,
     idProducto: DataTypes.INTEGER

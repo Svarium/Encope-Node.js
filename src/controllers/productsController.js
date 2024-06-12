@@ -31,7 +31,7 @@ module.exports = {
             include:[{
                 model:db.Insumo,
                 as:"productos",
-                attributes:["nombre", "cantidad", "id"],                
+                attributes:["nombre","unidadDeMedida" ,"cantidad", "id"],                
             }]
         })
         .then(productos => {    
