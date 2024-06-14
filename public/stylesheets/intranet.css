@@ -166,6 +166,47 @@
     line-height: 30px;
 }
 
+/* --------------inicio menu hamburguesa---------------------*/
+
+.menu-toggle {
+    position: relative;
+    z-index: 1000; /* Asegura que esté sobre otros elementos */
+}
+
+.btn-hamburger {
+    background: transparent;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.hamburger-bar {
+    display: block;
+    width: 3rem;
+    height: .3rem;
+    background-color: white;
+    margin: 6px 0;
+    transition: background-color 0.3s ease;
+}
+
+.ul-header-home {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: none; /* Inicialmente oculto */
+}
+
+.ul-header-home.show {
+    display: block; /* Mostrar cuando tiene la clase .show */
+}
+
+.header-home.newHeight{
+    height: 85vh;
+}
+    
+
+/* --------------fin menu hamburguesa---------------------*/
+
 /* ----------------------------------------------------------------------- FIN NAV ------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------ DIV TEXTO /IMAGEN ------------------------------------------------------------------------- */
 
@@ -266,22 +307,35 @@ hr{
         height: 750px;
     }
     
+    .li-item-nav {
+        padding: .3rem;
+        text-align: center;
+
+    }
+
     .carousel img{
         width: calc(100% / 2);
     }
     .texto{
         width: 100%;
     }
+
     .cont-carousel h3{
         font-size: 22px;
     }
+
+    .h2-titulo-main-intranet {
+        font-size: 3rem;
+    }
+
     .cont-titulo{
-        flex-direction: column;
+        /* flex-direction: column; */
         flex-wrap: nowrap;
         justify-content: center;
         align-content: center;
         align-items: center;
         margin: 0 auto;
+        padding: 2rem;
     }
     .ilustracion{
         display: none;
@@ -305,11 +359,16 @@ hr{
 }
 
 @media screen and (max-width: 550px) {
+    
+
     .header-home{
-        height: 750px;
+        height: 65vh;
     }
     .ul-header-home{
-        display: block;
+        display: none;
+        height: auto;
+        padding: 2% 10%;
+        position: relative;
     }
     .carousel img{
         width: calc(90% / 1);
@@ -317,6 +376,12 @@ hr{
     .cont-carousel{
         top: -100px;
     }
+
+    .texto-intranet {
+        width: 100%;
+        /* padding: 1rem; */
+    }
+
     .cont-carousel h3{
         font-size: 16px;
         margin-top: 2%;
@@ -342,12 +407,10 @@ hr{
     .texto{
         width: 100%;
     }
-    .cont-titulo{
-        flex-direction: column;
-    }
+
     .ilustracion{
         width: 100%;
-        display: block;
+        display: none;
     }
     .ilustracion img{
         margin-top: 10px;

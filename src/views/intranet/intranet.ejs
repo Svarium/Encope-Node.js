@@ -14,7 +14,17 @@
     <header class="header-home">
         <nav>
             
+            <div class="menu-toggle">
+                <button class="btn-hamburger" aria-label="Toggle Menu">
+                    <!-- Icono de hamburguesa (puedes usar Font Awesome u otro icono) -->
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                </button>
+            </div>
+
             <ul class="ul-header-home">
+
                 <div class="user">
                     <img id="userIconProfile" src="<%= /http/.test(locals.userLogin.icon) ? locals.userLogin.icon : `/images/iconsProfile/${locals.userLogin.icon}` %>" class="iconProfileIntranet me-2" alt="">
                 </div>
@@ -34,12 +44,13 @@
                         </button>
                       </form>                    
                 </li>
+
             </ul>
         </nav>
         <div>
             <div class="cont-titulo">
                 <div class="texto-intranet">
-                    <h2 class="h2-titulo-main-intranet">Bienvenido <br>al Sistema de <br>Gestión.</h2>
+                    <h2 class="h2-titulo-main-intranet">Bienvenido al Sistema de Gestión.</h2>
                     <p class="descripcion-main">Nuevo acceso al sistema de gestión web del ENCOPE. En el mismo encontraran los botones a las distintas secciones para la carga de información según el área y modulos, consulta de estadísticas, lectura de información, administración de licitaciones, noticias y más. 
                     </p>
                 </div>

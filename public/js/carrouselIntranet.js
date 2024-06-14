@@ -68,3 +68,20 @@ carousel.addEventListener ("touchmove", dragging);
 carousel.addEventListener ("mouseup", dragStop);
 carousel.addEventListener ("mouseleave", dragStop);
 carousel.addEventListener ("touchend", dragStop);
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const btnHamburger = document.querySelector('.btn-hamburger');
+    const ulHeaderHome = document.querySelector('.ul-header-home');
+    const headerHome = document.querySelector('.header-home')
+
+
+    btnHamburger.addEventListener('click', function() {
+        ulHeaderHome.classList.toggle('show'); // Alternar la clase .show
+        headerHome.classList.toggle('newHeight');
+    });
+
+
+
+
+});
