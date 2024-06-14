@@ -1,0 +1,17 @@
+{
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#120229",
+    "titleBar.activeBackground": "#140826",
+    "titleBar.activeForeground": "#ECFFED"
+  },
+  "editor.experimental.asyncTokenization": true,
+  "editor.fontLigatures": true,
+  "editor.cursorBlinking": "expand",
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.guides.bracketPairs": true,
+  "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+  "editor.guides.highlightActiveBracketPair": true,
+  "files.autoSave": "afterDelay",
+  "editor.stickyScroll.enabled": true,
+  "javascript.updateImportsOnFileMove.enabled": "always"
+}

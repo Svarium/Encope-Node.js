@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../../partials/head') %>
+
+
+  <body style="background-color: rgb(243, 241, 238)">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-3">
+      <div class="container">
+        <button
+          class="navbar-toggler d-lg-none"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapsibleNavId"
+          aria-controls="collapsibleNavId"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <button
+          class="btn btn-transparent"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasRight"
+          aria-controls="offcanvasRight"
+        >
+          <img
+            id="userIconProfile"
+            src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>"
+            class="iconProfile me-2"
+            alt=""
+          />
+          <%= userLogin.name %> <i class="fa-solid fa-caret-down fa-lg"></i>
+        </button>       
+    </nav>
+
+    <main>
+      <%- include('../../partials/modals') %> <%- include('../../partials/canvasMenu')
+      %>
+
+
+      <!-- TITULO H1 -->
+      <div class="container-fluid mt-4">
+        <p class="text-black h2 text-center shadow-3">
+          <strong>Nuevo Proyecto Productivo +</strong>
+        </p>
+        <hr class="text-black" />        
+    
+
+        <!-- FORMULARIO AGREGAR PROYECTO -->
+
+        <div class="container shadow">
+          <form action="/stock/newProyect" method="POST" enctype="multipart/form-data" >
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control <%= (locals.errors && errors.nombre) && 'is-invalid'%>" id="nombre" name="nombre" placeholder="Ingrese el nombre del proyecto productivo" value="<%= (locals.old && old.nombre) && old.nombre %>">
+                <small id="errorNombre" class="text-danger ms-2"><%= locals.errors && errors.nombre ? errors.nombre.msg : null %></small>
+              </div>
+         
+                <div class="form-group col-md-6">
+                  <label for="expediente">Expediente</label>
+                  <input type="text" class="form-control <%= (locals.errors && errors.expediente) && 'is-invalid'%>" id="expediente" name="expediente" placeholder="Ingrese n° de expediente" value="<%= (locals.old && old.expediente) && old.expediente %>">
+                  <small id="errorNombre" class="text-danger ms-2"><%= locals.errors && errors.expediente ? errors.expediente.msg : null %></small>
+                </div>    
+                       
+
+              <div class="form-group col-md-6">
+                <label for="destino" class="form-label">Taller</label>
+                <select id="destino" class="form-control rounded <%= (locals.errors && errors.destino) && 'is-invalid'%>" name="destino">
+                  <option value="" selected hidden>Seleccione el taller...</option>
+                    <% talleres.forEach(({nombre, id, destinoTaller}) => { %>
+                    <option value="<%= id %>"> <%= nombre %> - <%= destinoTaller.nombreDestino %> </option>
+                    <% }) %>
+                </select>
+                <small id="errorNombre" class="text-danger "><%= locals.errors && errors.destino ? errors.destino.msg : null %></small>
+              </div>  
+
+              
+              <div class="form-group col-md-6">
+                <label for="destino">Elija el/los Productos</label>
+                <select id="producto" class="form-control rounded <%= (locals.errors && errors.productos) && 'is-invalid'%>" >
+                    <option value="" selected hidden>Seleccione el producto...</option>
+                    <% productos.forEach(({nombre, id}) => { %>
+                        <option value="<%= id %>"> <%= nombre %> </option>
+                    <% }) %>
+                </select>
+                <small id="errorDetalle" class="text-danger ms-2"><%= locals.errors && errors.productos ? errors.productos.msg : null %></small>
+            </div>
+
+           <!-- Contenedor para los campos adicionales -->
+<div class="form-group col-md-12">
+  <div class="row" id="camposExtras"></div>
+</div>
+
+<!-- Agregar campo oculto para enviar productos -->
+<input type="hidden" name="productos" id="productos" value="">
+         
+            
+            <div class="form-group col-md-12">
+              <label for="insumos">Insumos a adquirir (anexo 3)</label>
+              <input type="file" name="insumos" class="form-control rounded <%= (locals.errors && errors._undefined) && 'is-invalid'%>" id="insumos">
+              <small id="errorinsumos" class="text-danger ms-2"><%= locals.errors && errors._undefined ? errors._undefined.msg : null %></small>        
+            </div>             
+
+
+            <div class="form-group col-md-12">
+              <label for="detalle">Detalle</label>
+              <textarea name="detalle" class="form-control <%= (locals.errors && errors.detalle) && 'is-invalid'%>" id="detalle" placeholder="Ingrese el detalle" value="<%= (locals.old && old.detalle) && old.detalle %>"></textarea>    
+              <small id="errorDetalle" class="text-danger ms-2"><%= locals.errors && errors.detalle ? errors.detalle.msg : null %></small>               
+            </div>       
+             
+
+            <div class="form-group col-md-6">
+              <label for="nombre">Duración</label>
+              <input type="number" class="form-control <%= (locals.errors && errors.nombre) && 'is-invalid'%>" id="duracion" name="duracion"  value="<%= (locals.old && old.nombre) && old.nombre %>">
+              <small id="errorNombre" class="text-danger ms-2"><%= locals.errors && errors.duracion ? errors.duracion.msg : null %></small>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="unidadDuracion">Unidad de Duración</label>
+              <select class="form-control <%= (locals.errors && errors.unidadDuracion) && 'is-invalid'%>" id="unidadDuracion" name="unidadDuracion">
+                <option value="">Seleccione</option>
+                <option value="día">Días</option>
+                <option value="semana">Semanas</option>
+                <option value="mes">Meses</option>
+                <!-- Agrega más opciones según tus necesidades -->
+              </select>
+              <small id="unidadDuracion" class="text-danger ms-2"><%= locals.errors && errors.unidadDuracion ? errors.unidadDuracion.msg : null %></small>
+            </div>     
+          </div>
+            <button type="submit" class="btn col-md-12 btn-primary mb-3 text-center">Enviar</button>
+          </form>
+        </div>
+
+    </main>
+
+   
+    <script>
+      let index = 0; // Variable para llevar el seguimiento del índice de los productos seleccionados
+      let productosSeleccionados = []; // Lista para almacenar los productos ya seleccionados
+      
+      document.getElementById('producto').addEventListener('change', function() {
+          var productoId = this.value;
+          var productoNombre = this.options[this.selectedIndex].text; // Obtiene el nombre del producto seleccionado
+          var camposExtrasDiv = document.getElementById('camposExtras');
+  
+          // Verificar si el producto ya ha sido seleccionado previamente
+          if (productosSeleccionados.includes(productoId)) {
+              alert('El producto ya ha sido seleccionado anteriormente.');
+              return;
+          }
+  
+          // Agregar el producto a la lista de productos seleccionados
+          productosSeleccionados.push(productoId);
+  
+          // Genera los campos de cantidad y costo unitario para el producto seleccionado
+          var template = `
+              <div class="form-group col-md-6" id="campos_${productoId}">
+                  <input type="hidden" name="productos[${index}][id]" value="${productoId}">
+                  <input type="hidden" name="productos[${index}][nombre]" value="${productoNombre}">
+                  <div class="d-flex justify-content-between align-items-center">
+                      <h6>${productoNombre}</h6>
+                      <button type="button" class="btn btn-sm btn-danger" onclick="eliminarTemplate(${productoId})">Quitar</button>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-6">
+                          <input type="number" class="form-control" name="productos[${index}][cantidad]" placeholder="Ingrese cantidad a producir">
+                      </div>
+                      <div class="col-md-6">
+                          <input type="number" class="form-control" name="productos[${index}][costoUnitario]" placeholder="Ingrese el costo unitario">
+                      </div>
+                  </div>
+              </div>
+          `;
+  
+          // Agrega el template al contenedor
+          camposExtrasDiv.insertAdjacentHTML('beforeend', template);
+          
+          index++; // Incrementa el índice solo cuando se agrega un nuevo producto
+      });
+  
+      function eliminarTemplate(productoId) {
+          var camposExtrasDiv = document.getElementById('camposExtras');
+          var templateAEliminar = document.getElementById('campos_' + productoId);
+          camposExtrasDiv.removeChild(templateAEliminar);
+  
+          // Eliminar el producto de la lista de productos seleccionados
+          productosSeleccionados = productosSeleccionados.filter(id => id !== productoId);
+  
+          // Actualizar el índice después de eliminar un producto
+          index--;
+      }
+  </script>
+  
+  
+    
+
+  </body>
+</html>

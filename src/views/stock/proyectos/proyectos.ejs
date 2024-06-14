@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../../partials/head') %>
+
+  <body style="background-color: rgb(243, 241, 238)">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-3">
+      <div class="container">
+        <button
+          class="navbar-toggler d-lg-none"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapsibleNavId"
+          aria-controls="collapsibleNavId"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <button
+          class="btn btn-transparent"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasRight"
+          aria-controls="offcanvasRight"
+        >
+          <img
+            id="userIconProfile"
+            src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>"
+            class="iconProfile me-2"
+            alt=""
+          />
+          <%= userLogin.name %> <i class="fa-solid fa-caret-down fa-lg"></i>
+        </button>   
+        <!-- Menú de navegación -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto"> <!-- 'ms-auto' para alinear a la derecha -->
+            <li class="nav-item">
+              <a class="nav-link" href="/stock">Regresar</a>
+            </li>
+          </ul>
+        </div>
+      </div>    
+    </nav>
+
+    <main>
+      <%- include('../../partials/modals') %> <%- include('../../partials/canvasMenu')
+      %>
+
+
+      <!-- TITULO H1 -->
+      <div class="container-fluid mt-4">
+        <p class="text-black h2 text-center shadow-3">
+          <strong >Proyectos Productivos</strong>
+        </p>
+        <hr class="text-black" />        
+      </div>
+      
+
+     
+      <!-- TABLA DE PROYECTOS -->
+  
+      <div class="container-fluid">
+        <button type="button" class="btn btn-outline-primary ms-3 btn-sm mt-1 mb-2" onclick="window.location.href='/stock/proyectsTable'">
+          <i class="fa-solid fa-download"></i> Exportar Excel</i>
+        </button>
+              <br> 
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">proyecto</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Expediente</th>
+                    <th scope="col">Procedencia</th>
+                    <th scope="col">Duración</th>
+                    <th scope="col">Producto/s</th>               
+                    <th scope="col">Costo total</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+              <% proyectos.forEach(item=> { %>
+                <tr>
+                  <td class="text-center">
+                    <%= item.nombre %>
+                  </td>
+                  <td>
+                    <% if (item.estado === "Pendiente") { %>
+                        <%= item.estado %>  <i class="fa-solid fa-spinner text-danger"></i>
+                        <div class="form-check form-switch mt-1">
+                            <!-- Agrega un identificador único al interruptor -->
+                            <input class="form-check-input project-switch" type="checkbox" style="cursor: pointer;" role="switch" id="projectSwitch<%= item.id %>" data-project-id="<%= item.id %>">
+                            <label class="form-check-label " for="projectSwitch<%= item.id %>"></label>
+                        </div>
+                    <% } else { %>
+                        <%= item.estado %>  <i class="fa-solid fa-check text-success"></i>
+                        <div class="form-check form-switch mt-1">
+                          <!-- Agrega un identificador único al interruptor -->
+                          <input class="form-check-input project-switch" type="checkbox" style="cursor: pointer;" role="switch" id="projectSwitch<%= item.id %>" data-project-id="<%= item.id %>" checked>
+                          <label class="form-check-label" for="projectSwitch<%= item.id %>"></label>
+                      </div>
+                    <% } %>
+                </td>
+                              
+                  <td>
+                    <%= item.expediente %>
+                  </td>
+                  <td>
+                    <%= item.procedencia %>
+                  </td>
+                  <td>
+                    <%= item.duracion %>
+                      <%= item.unidadDuracion %>
+                  </td>
+                  <td>
+                  <% item.productoProyecto.forEach(item => { %>
+                  <strong> <%= item.cantidadAProducir  %> - <%= item.producto.nombre  %> - $ <%= item.costoUnitario  %> c/u</strong><hr>
+                  <% }) %>
+                  </td>                 
+                  <td>$ <%= item.costoTotalProyecto %>
+                  </td>
+                  <td>
+                    <div class="d-flex flex-column">
+                        <!-- Primera fila de botones -->
+                        <div class="d-flex justify-content-center gap-2 mb-2">
+                            <!-- Enlace para editar -->
+                            <a href="/stock/editProducts/<%= item.id %>">
+                                <button class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></button>
+                            </a>
+                
+                            <!-- Formulario para eliminar -->
+                            <form action="/stock/deleteProyect/<%= item.id %>?_method=DELETE" method="POST" class="deleteProductForm">
+                                <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                            </form>
+                        </div>
+                
+                        <!-- Segunda fila de botones -->
+                        <div class="d-flex justify-content-center gap-2">
+                            <!-- Boton descarga historial de reformulaciones en excel -->
+                            <a href="/stock/reformulaciones/<%= item.id %>">
+                                <button class="btn btn-primary"><i class="fa-solid fa-clock-rotate-left"></i></button>
+                            </a>
+                
+                            <!-- Boton descarga ficha tecnica -->                           
+                              <a  href="/images/insumos/<%= item.insumosAdquirir %>" target="_blank">
+                                <button class="btn btn-info"><i class="fa-solid fa-file-pdf fa-lg"></i></button>
+                            </a>                          
+                        </div>                      
+                    </div>
+                </td>                
+                </tr>
+                <% }) %>
+            </tbody>
+            </table>
+            </div>
+
+   
+    </main>
+
+    <%- include('../../partials/scripts') %>
+
+    <script
+      src="//code.tidio.co/hlix5kfat3m92rb4tfebsyogegqfbmo3.js"
+      async
+    ></script>
+
+    <script>
+      const deleteForms = document.querySelectorAll('.deleteProductForm');
+
+deleteForms.forEach(form => {
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        Swal.fire({
+            title: "Seguro quieres borrar el proyecto??",
+            text: "Chequea bien el proyecto que deseas eliminar",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, eliminar!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Eliminado!",
+                    text: "El producto fue eliminado",
+                    icon: "success"
+                });
+
+                form.submit();
+            }
+        });
+    });
+});
+    </script>
+
+<script>
+  // Obtén todos los interruptores de proyectos
+  const projectSwitches = document.querySelectorAll('.project-switch');
+
+  // Escucha el evento de cambio en cada interruptor
+  projectSwitches.forEach(switchElement => {
+    switchElement.addEventListener('change', async (event) => {
+      const projectId = event.target.dataset.projectId; // Obtén el ID del proyecto del atributo de datos
+
+      try {
+        // Envía una solicitud PUT al servidor para actualizar el estado del proyecto
+        const response = await fetch(`http://localhost:3000/api/stock/editState/${projectId}`, {
+          method: 'PUT',
+        });
+
+        if (response.ok) {
+          // Maneja la respuesta del servidor
+          const data = await response.json();
+          let timerInterval;
+          Swal.fire({
+            title: "Actualizando estado!",
+            html: "Actualizando en <b></b>ms.",
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading();
+              const timer = Swal.getPopup().querySelector("b");
+              timerInterval = setInterval(() => {
+                timer.textContent = `${Swal.getTimerLeft()}`;
+              }, 100);
+            },
+            willClose: () => {
+              clearInterval(timerInterval);
+            }
+          }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+              console.log("I was closed by the timer");
+            }
+            location.reload()
+
+          });
+        } else {
+          throw new Error('Error al actualizar el estado del proyecto');
+        }
+      } catch (error) {
+        console.error(error);
+        alert('Error al actualizar el estado del proyecto');
+      }
+    });
+  });
+</script>
+  </body>
+</html>

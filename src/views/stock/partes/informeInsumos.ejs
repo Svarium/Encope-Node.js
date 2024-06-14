@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../partials/head') %>
+
+    <body style="background-color: rgb(243, 241, 238)">
+        <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-3">
+            <div class="container">
+                <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <button class="btn btn-transparent" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                    <img id="userIconProfile"
+                        src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>"
+                        class="iconProfile me-2" alt="" />
+                    <%= userLogin.name %> <i class="fa-solid fa-caret-down fa-lg"></i>
+                </button>
+                <!-- Menú de navegación -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto"> <!-- 'ms-auto' para alinear a la derecha -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="/inicio">Regresar</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <main>
+            <%- include('../../partials/modals') %> <%- include('../../partials/canvasMenu') %>
+
+
+                    <!-- TITULO H1 -->
+                    <div class="container-fluid mt-4">
+                        <p class="text-black h2 text-center shadow-3">
+                            <strong>Informar Insumos para el proyecto: "<%= nombreProyecto %>"</strong>
+                        </p>
+                        <hr class="text-black" />
+                    </div>
+
+                    <% if (registros.length === 0) { %>
+                        <div class="row justify-content-center">
+                            <div class="col-6 d-flex justify-content-center">
+                                <button class="btn btn-outline-primary" data-bs-target="<%= proyectId %>" id="iniciarInforme">
+                                    Iniciar Informe
+                                </button>
+                            </div>                         
+                        </div>
+                    <% } %>
+                    
+
+                    <% if (registros.length !== 0) { %>
+                        <section class="container">
+                            <div class="row d-flex justify-content-center">
+                                <% data.forEach(item => { %>
+                                    <div class="col-12 col-md-6 col-lg-3 ms-3">
+                                        <div class="card" style="width: 18rem;">
+                                            <img src="/images/productos/<%= item.producto.imagen %>" class="card-img-top card-img-custom" alt="<%= item.producto.nombre %>">
+                                            <div class="card-body">
+                                                <h5 class="card-title"><%= item.producto.nombre %></h5>
+                                                <p class="card-text">Cantidad a Producir: <%= item.producto.cantidadAProducir %></p>
+                                                <h5>Insumos:</h5>
+                                                <ul>
+                                                    <% item.insumos.forEach(insumo => { %>
+                                                        <li class="card-text">
+                                                            <%= insumo.nombre %> - Cantidad: <%= insumo.cantidad %> <%= insumo.unidadDeMedida %>
+                                                        </li>
+                                                    <% }) %>
+                                                </ul>
+                                               <!-- Button trigger modal -->
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insumos<%= item.producto.id %>">
+                                                    informar Insumos
+                                                </button>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="insumos<%= item.producto.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-xl">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel"><%= item.producto.nombre %></h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form>
+                                                                <% item.insumos.forEach(insumo => { %>
+                                                                    <div class="form-group row">
+                                                                        <div class="mb-3 col-6">
+                                                                            <label for="exampleInputEmail1" class="form-label"><%= insumo.nombre %> - <span class="text-danger">cantidad requerida: <%= insumo.cantidad %> <%= insumo.unidadDeMedida %></span> </label>
+                                                                            <input type="number" class="form-control" id="exampleInputEmail1"aria-describedby="emailHelp" placeholder="Ingrese la cantidad adquirida">                                                            
+                                                                          </div>
+                                                                          <div class="mb-3 col-6">
+                                                                            <label for="">Unidad de medida</label>
+                                                                            <select class="form-select" name="unidad" id="" disabled>
+                                                                                <option value="<%= insumo.unidadDeMedida %>" selected><%= insumo.unidadDeMedida %></option>
+                                                                              </select>
+                                                                          </div> 
+                                                                    </div>
+                                                                                                                                    
+                                                                <% }) %>
+                                                                
+                                                                            
+                                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                                              </form>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% }) %>
+                            </div>
+                        </section>
+                    <% } %>    
+                   
+                    
+
+
+        </main>
+
+        <%- include('../../partials/scripts') %>
+            <script src="//code.tidio.co/hlix5kfat3m92rb4tfebsyogegqfbmo3.js" async></script>     
+            
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+
+                    const button = document.getElementById('iniciarInforme');                  
+                    const proyectId = button.getAttribute('data-bs-target');                    
+
+                    button.addEventListener('click', () => {
+                       
+                        fetch('http://localhost:3000/api/insumos/addproyectoInsumo',{
+                            method:'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({proyectoId:proyectId})
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+
+                        .then(data => {
+                            console.log(data.message);
+                            let timerInterval;
+                            Swal.fire({
+                            title: "Iniciando Informe!",
+                            html: "cargando en <b></b> milliseconds.",
+                            timer: 1500,
+                            timerProgressBar: true,
+                            didOpen: () => {
+                                Swal.showLoading();
+                                const timer = Swal.getPopup().querySelector("b");
+                                timerInterval = setInterval(() => {
+                                timer.textContent = `${Swal.getTimerLeft()}`;
+                                }, 100);
+                            },
+                            willClose: () => {
+                                clearInterval(timerInterval);
+                            }
+                            }).then((result) => {
+                            /* Read more about handling dismissals below */
+                            if (result.dismiss === Swal.DismissReason.timer) {
+                                console.log("I was closed by the timer");
+                                window.location.reload();
+                            }
+                            });
+                        }).catch(error =>                       
+                        console.log(error))
+                                            
+                    })
+                })              
+            </script>
+    </body>
+
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../../partials/head') %>
+
+  <body style="background-color: rgb(243, 241, 238)">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-3">
+      <div class="container">
+        <button
+          class="navbar-toggler d-lg-none"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapsibleNavId"
+          aria-controls="collapsibleNavId"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <button
+          class="btn btn-transparent"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasRight"
+          aria-controls="offcanvasRight"
+        >
+          <img
+            id="userIconProfile"
+            src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>"
+            class="iconProfile me-2"
+            alt=""
+          />
+          <%= userLogin.name %> <i class="fa-solid fa-caret-down fa-lg"></i>
+        </button>       
+    </nav>
+
+    <main>
+      <%- include('../../partials/modals') %> <%- include('../../partials/canvasMenu')
+      %>
+
+
+      <!-- TITULO H1 -->
+      <div class="container-fluid mt-4">
+        <p class="text-black h2 text-center shadow-3">
+          <strong>Agregar un nuevo Taller +</strong>
+        </p>
+        <hr class="text-black" />        
+    
+
+        <!-- FORMULARIO AGREGAR TALLER -->
+
+
+        <div class="container shadow ">
+          <form action="/stock/newTaller" method="POST" class="mb-5">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control <%= (locals.errors && errors.nombre) && 'is-invalid'%>" id="nombre" name="nombre" placeholder="Ingrese el nombre del taller" value="<%= (locals.old && old.nombre) && old.nombre %>">
+                <small id="errorNombre" class="text-danger ms-2"><%= locals.errors && errors.nombre ? errors.nombre.msg : null %></small>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="destino" class="form-label">Unidad de destino del taller</label>
+                <select id="destino" class="form-control rounded <%= (locals.errors && errors.destino) && 'is-invalid'%>" name="destino">
+                    <option value="" selected hidden>Seleccione el destino del taller...</option>
+                    <% destinos.forEach(({nombreDestino, id}) => { %>
+                    <option value="<%= id %>"> <%= nombreDestino %> </option>
+                    <% }) %>
+                </select>
+                <small id="errorNombre" class="text-danger "><%= locals.errors && errors.destino ? errors.destino.msg : null %></small>
+              </div>
+              <div class="form-group col-md-12">
+                <label for="detalle">Detalle</label>
+                <textarea name="detalle" class="form-control <%= (locals.errors && errors.detalle) && 'is-invalid'%>" id="detalle" placeholder="Ingrese el detalle" value="<%= (locals.old && old.detalle) && old.detalle %>"></textarea>    
+                <small id="errorDetalle" class="text-danger ms-2"><%= locals.errors && errors.detalle ? errors.detalle.msg : null %></small>               
+              </div>                                       
+            </div>
+          
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="expediente">Expediente</label>
+                    <input type="text" class="form-control <%= (locals.errors && errors.expediente) && 'is-invalid'%>" id="expediente" name="expediente" placeholder="Ingrese n° de expediente" value="<%= (locals.old && old.expediente) && old.expediente %>">
+                    <small id="errorNombre" class="text-danger ms-2"><%= locals.errors && errors.expediente ? errors.expediente.msg : null %></small>
+                  </div>                   
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="observaciones">Observaciones</label>
+                <textarea name="observaciones" class="form-control <%= (locals.errors && errors.observaciones) && 'is-invalid'%>" id="observaciones" placeholder="Ingrese las observaciones" value="<%= (locals.old && old.observaciones) && old.observaciones %>"></textarea>    
+                <small id="errorobservaciones" class="text-danger ms-2"><%= locals.errors && errors.observaciones ? errors.observaciones.msg : null %></small>   
+                </div>                   
+          </div>
+            
+            <button type="submit" class="btn btn-primary mb-3 me-2">Agregar</button>
+            <a href="/stock"><button type="button" class="btn btn-danger mb-3">Cancelar</button></a>
+          </form>
+        </div>
+
+    </main>
+
+   
+
+    <!-- <script
+      src="//code.tidio.co/hlix5kfat3m92rb4tfebsyogegqfbmo3.js"
+      async
+    ></script> -->
+  </body>
+</html>

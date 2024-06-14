@@ -13,6 +13,8 @@ const { loginGoogleInitalize } = require('./src/services/googleService');
 const cors = require('cors')
 const localsUserCheckMiddleware = require('./src/middlewares/localsUserCheck');
 const cookieCheckMiddleware = require('./src/middlewares/cookieCheck');
+const { initializeCronJobs } = require('./src/helpers/cronJobs');
+initializeCronJobs();
 
 
 var app = express();
@@ -24,19 +26,22 @@ const usersRouter = require('./src/routes/users');
 const authRouter = require('./src/routes/auth')
 const licitacionRouter = require('./src/routes/licitacion');
 const noticiasRouter = require('./src/routes/noticias');
-const cunasRouter = require('./src/routes/cunas');
+const stockRouter = require('./src/routes/stock');
 
 //APIS
 const apiUsersRouter = require('./src/routes/apis/apiUsers');
-const apiLicitacionRouter = require('./src/routes/apis/apiLicitaciones')
-const apiNoticiasRouter = require('./src/routes/apis/apiNoticias')
-const apiCunasRouter = require('./src/routes/apis/apiCunas')
+const apiLicitacionRouter = require('./src/routes/apis/apiLicitaciones');
+const apiNoticiasRouter = require('./src/routes/apis/apiNoticias');
+const apiStockRouter = require('./src/routes/apis/apiStock');
+const apiInsumosRouter = require('./src/routes/apis/apiInsumos');
 
 
 
 // view engine setup
 app.set('views', path.join(__dirname, 'src', 'views'));
 app.set('view engine', 'ejs');
+
+
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -64,13 +69,14 @@ app.use('/licitacion', licitacionRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter)
 app.use('/noticias', noticiasRouter)
-app.use('/cunas', cunasRouter)
+app.use('/stock', stockRouter)
 
 //APIS
 app.use('/api/users', apiUsersRouter)
 app.use('/api/licitacion', apiLicitacionRouter)
 app.use('/api/noticias', apiNoticiasRouter)
-app.use('/api/cunas', apiCunasRouter)
+app.use('/api/stock', apiStockRouter)
+app.use('/api/insumos', apiInsumosRouter)
 
 
 // catch 404 and forward to error handler

@@ -78,6 +78,27 @@
     display: none;
 }
 
+.btn-link {
+    text-decoration: none !important; /* Eliminar subrayado */
+    color: inherit!important; /* Usar el color de texto predeterminado */
+    background-color: transparent!important; /* Fondo transparente */
+    border: none!important; /* Sin borde */
+    padding: 0!important; /* Sin relleno */
+    font: inherit!important; /* Usar la fuente predeterminada */
+    cursor: pointer!important; /* Cambiar el cursor a pointer */
+    outline: none!important; /* Eliminar el contorno al hacer clic */
+    display: inline!important; /* Mostrar como en línea */
+}
+
+.switchProducts {
+    cursor: pointer !important;
+}
+
+.custom-btn {
+    padding: 0.25rem 0.4rem !important; /* Ajusta el relleno para hacer el botón más pequeño */
+    font-size: 0.75rem !important; /* Ajusta el tamaño de la fuente para hacer el botón más pequeño */
+}
+
 
 
                 /* COMIENZA SECCION REDES SOCIALES */

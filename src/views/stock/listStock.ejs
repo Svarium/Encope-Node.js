@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+
+  <body style="background-color: rgb(243, 241, 238)">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-3">
+      <div class="container">
+        <div class="d-flex">
+          <!-- Botón para abrir el menú a la izquierda -->
+          <button
+            class="navbar-toggler d-lg-none order-0 me-2"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapsibleNavId"
+            aria-controls="collapsibleNavId"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+    
+          <!-- Botón para abrir el menú canvas a la derecha -->
+          <button
+            class="btn btn-transparent order-1"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasRight"
+            aria-controls="offcanvasRight"
+          >
+            <img
+              id="userIconProfile"
+              src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>"
+              class="iconProfile me-2"
+              alt=""
+            />
+            <%= userLogin.name %><i class="fa-solid fa-caret-down fa-lg"></i>
+          </button>
+        </div>
+    
+        <!-- Menú de navegación -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto"> <!-- 'ms-auto' para alinear a la derecha -->
+            <li class="nav-item">
+              <a class="nav-link" href="/stock/products">Productos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/stock/talleresTable">Talleres</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/stock/listProyects">Proyectos</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <main>
+
+      <%- include('../partials/modals') %> <%- include('../partials/canvasMenu')%>
+
+
+      <!-- TITULO H1 -->
+      <div class="container-fluid mt-4">
+        <p class="text-black h2 text-center shadow-3">
+          <strong> Módulo de Stock</strong>
+        </p>
+        <hr class="text-black" />        
+      </div>
+
+      <!-- BOTONES DE ACCIÓN PARA PRODUCCIÓN -->
+
+      <section>
+        <div class="container text-center d-flex justify-content-center align-content-center">
+          <!-- BOTON PARA AGREGAR NUEVO PRODUCTO -->
+          <a href="/stock/newProduct" class="btnAction me-1  shadow"><button type="button" class="btn btn-primary btn-sm font-weight-bold slide">
+            Nuevo producto  <br><i class="fa-solid fa-tag fa-lg"></i>
+         </button></a>
+         <!-- BOTON PARA AGREGAR NUEVO TALLER -->
+         <a href="/stock/newTaller" class="btnAction shadow me-1"><button type="button" class="btn btn-sm btn-success font-weight-bold">
+           Nuevo taller <br> <i class="fa-solid fa-screwdriver-wrench fa-lg"></i>
+         </button></a>     
+          <!-- BOTON PARA AGREGAR NUEVO PROYECTO PRODUCTIVO -->
+          <a href="/stock/newProyect" class="btnAction  shadow"> <button type="button" class="btn btn-sm btn-danger font-weight-bold">
+           Nuevo proyecto <br><i class="fa-solid fa-receipt fa-lg"></i>
+        </button></a>       
+      </div>      
+       </div>    
+      </section>
+
+    <section>
+      <!-- BUSCADOR DE PRODUCTO -->
+    <div class="container mt-5 shadow">
+      <h5 class="text-center mb-3">Buscar Producto <i class="fa-solid fa-tag fa-sm"></i></h5>
+      <form action="/stock/searchProduct" class="row g-3" id="searchProduct" onsubmit="return validarFormulario()">
+        <div class="col-md-11">
+            <input type="search" class="form-control" id="inputProducto" name="search" placeholder="Escribe el nombre del producto">
+        </div>
+        <div class="col-md-1 mb-4">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+    </form>
+  </div>
+    </section>
+
+    <!-- BUSCADOR DE TALLERES -->
+
+    <section>
+      <div class="container mt-3 shadow">
+        <h5 class="text-center mb-3">Buscar Taller <i class="fa-solid fa-screwdriver-wrench fa-sm"></i></h5>
+        
+          <form action="/stock/searchTaller" method="POST" class="row g-3"  onsubmit="return validarFormBuscarTaller()">
+            <div class="col-md-6">
+                <input type="search" class="form-control" id="inputTaller" name="nombre" placeholder="Escribe el nombre del taller">
+            </div>
+            <div class="col-md-6">
+              <select id="inputDestino" class="form-control rounded <%= (locals.errors && errors.destino) && 'is-invalid'%>" name="destino">
+                <option value="" selected hidden>Seleccione el destino del taller...</option>
+                <% destinos.forEach(({nombreDestino, id}) => { %>
+                <option value="<%= id %>"> <%= nombreDestino %> </option>
+                <% }) %>
+            </select>
+          </div> 
+          <div class="col-md-6 mb-4">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>         
+           
+          
+      </form>
+    </div>
+    </section>
+
+    <section class="mb-5">
+      <!-- BUSCADOR DE PROYECTOS -->
+    <div class="container mt-3 shadow">
+      <h5 class="text-center mb-3">Buscar Proyecto <i class="fa-solid fa-receipt fa-sm"></i></h5>
+      <form action="/stock/searchProyect" class="row g-3" id="searchProyect" onsubmit="return validarFormSearchProyect()">
+        <div class="col-md-11">
+            <input type="search" class="form-control" id="inputProyecto" name="search" placeholder="Ingresa numero de expediente (ej: EX-2023-114492446-APN-DS#ENCOPE)">
+        </div>
+        <div class="col-md-1 mb-4">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+    </form>
+  </div>
+    </section><br><br><br>
+
+     
+
+
+    </main>
+
+    <%- include('../partials/scripts') %>
+
+   
+    <script>
+
+      function validarFormulario() {
+        const inputSearch = document.getElementById('inputProducto');
+
+        if (inputSearch.value.trim() === '') {
+
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Debes ingresar el nombre del producto"
+          });
+
+          return false;
+        }
+        return true;
+      }
+
+      function validarFormBuscarTaller() {
+
+        const inputTaller = document.getElementById('inputTaller');
+        const inputDestino = document.getElementById('inputDestino');
+
+        if (inputDestino.value.trim() === '' && inputTaller.value.trim() === '') {
+
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Debes ingresar el nombre y el destino del taller"
+          });
+
+          return false
+        }
+        return true
+      }
+
+      function validarFormSearchProyect() {
+        const inputSearch = document.getElementById('inputProyecto');
+
+        if (inputSearch.value.trim() === '') {
+
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Debes ingresar el nombre del Proyecto"
+          });
+
+          return false;
+        }
+        return true;
+      }
+
+    
+    </script>
+  </body>
+</html>

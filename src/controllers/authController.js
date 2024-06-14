@@ -40,13 +40,9 @@ module.exports = {
 
                res.cookie('userEncopeWeb', req.session.userLogin, {maxAge: 1000*60*7})
 
-               if(req.session.userLogin && req.session.userLogin.rol == 5){
-                return res.redirect('/cunas/listar')
-               } else if(req.session.userLogin && req.session.userLogin.rol == 6) {
-                return res.redirect('/cunas/estadistica')
-               } else {
-                return res.redirect('/users/perfil')
-               }
+               
+                return res.redirect('/gestionweb')
+              
 
             
                

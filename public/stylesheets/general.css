@@ -83,6 +83,7 @@ h3 {
 }
 
 
+
 /*:::Ventana Modal:::*/
 #btn-modal{
     display: none;
@@ -158,6 +159,21 @@ h3 {
     top:0; left: 0;
     z-index: -1;
 }
+
+.btnAction{
+    transition: transform 1.3s ease-in-out;
+}
+
+.btnAction :hover{
+    transform: scale(1.02) rotate(1deg);
+   
+}
+
+.deleteInsumo{
+    cursor: pointer;   
+}
+
+
 
 
 

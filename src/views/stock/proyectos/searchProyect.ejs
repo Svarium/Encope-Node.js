@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../../partials/head')  %>
+        
+          
+    <body>
+  
+        <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-3">
+            <div class="container">
+              <div class="d-flex">
+                <!-- Botón para abrir el menú a la izquierda -->
+                <button
+                  class="navbar-toggler d-lg-none order-0 me-2"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapsibleNavId"
+                  aria-controls="collapsibleNavId"
+                  aria-expanded="false"
+                  aria-label="Toggle navigation"
+                >
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+          
+                <!-- Botón para abrir el menú canvas a la derecha -->
+                <button
+                  class="btn btn-transparent order-1"
+                  type="button"
+                  data-bs-toggle="offcanvas"
+                  data-bs-target="#offcanvasRight"
+                  aria-controls="offcanvasRight"
+                >
+                  <img
+                    id="userIconProfile"
+                    src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>"
+                    class="iconProfile me-2"
+                    alt=""
+                  />
+                  <%= userLogin.name %><i class="fa-solid fa-caret-down fa-lg"></i>
+                </button>
+              </div>
+          
+              <!-- Menú de navegación -->
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto"> <!-- 'ms-auto' para alinear a la derecha -->
+                  <li class="nav-item">
+                    <a class="nav-link" href="/stock/">Regresar</a>
+                  </li>              
+                </ul>
+              </div>
+            </div>
+          </nav> <br>
+
+    <main>
+
+      <% if (title === 'Resultado de la búsqueda') { %>
+        <div class="container d-flex justify-content-center gap-2">
+          <button type="button" class="btn btn-primary btn-sm "><strong><i
+                class="fa-solid fa-screwdriver-wrench"></i> ideal: <%= ideal %> por <%= parte.unidadDuracion %>
+            </strong></button>
+          <button type="button" class="btn btn-success btn-sm"><strong><i
+                class="fa-solid fa-screwdriver-wrench"></i> real: <%= real %> por <%= parte.unidadDuracion %>
+            </strong></button>
+          <button type="button" class="btn btn-danger btn-sm"><strong><i class="fa-solid fa-percent"></i> de
+              avance: Proyecto al <%= porcentajeAvance %> %
+            </strong></button>
+        </div>
+
+
+              <!-- TABLA DE PROYECTOS -->
+    
+        <div class="container-fluid">
+          <button type="button" class="btn btn-outline-primary ms-3 btn-sm mt-1 mb-2" onclick="window.location.href='/stock/proyectsTable'">
+            <i class="fa-solid fa-download"></i> Exportar Excel</i>
+          </button>
+                <br> 
+          <table class="table">
+              <thead>
+                  <tr>
+                    <th scope="col">proyecto</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Expediente</th>
+                    <th scope="col">Procedencia</th>
+                    <th scope="col">Duración</th>
+                    <th scope="col">Producto/s</th>               
+                    <th scope="col">Costo total</th>
+                    <th scope="col">Acciones</th>
+                  </tr>
+              </thead>
+              <tbody>
+        
+                  <tr>
+                    <td class="text-center">
+                      <%= proyecto.nombre %>
+                    </td>
+                    <td>
+                      <% if (proyecto.estado === "Pendiente") { %>
+                          <%= proyecto.estado %>  <i class="fa-solid fa-spinner text-danger"></i>
+                          <div class="form-check form-switch mt-1">
+                              <!-- Agrega un identificador único al interruptor -->
+                              <input class="form-check-input project-switch" type="checkbox" style="cursor: pointer;" role="switch" id="projectSwitch<%= proyecto.id %>" data-project-id="<%= proyecto.id %>">
+                              <label class="form-check-label " for="projectSwitch<%= proyecto.id %>"></label>
+                          </div>
+                      <% } else { %>
+                          <%= proyecto.estado %>  <i class="fa-solid fa-check text-success"></i>
+                          <div class="form-check form-switch mt-1">
+                            <!-- Agrega un identificador único al interruptor -->
+                            <input class="form-check-input project-switch" type="checkbox" style="cursor: pointer;" role="switch" id="projectSwitch<%= proyecto.id %>" data-project-id="<%= proyecto.id %>" checked>
+                            <label class="form-check-label" for="projectSwitch<%= proyecto.id %>"></label>
+                        </div>
+                      <% } %>
+                  </td>
+                                
+                    <td>
+                      <%= proyecto.expediente %>
+                    </td>
+                    <td>
+                      <%= proyecto.procedencia %>
+                    </td>
+                    <td>
+                      <%= proyecto.duracion %>
+                        <%= proyecto.unidadDuracion %>
+                    </td>
+                    <td>
+                      <% proyecto.productoProyecto.forEach(item => { %>
+                        <strong> <%= item.cantidadAProducir  %> - <%= item.producto.nombre  %> - $ <%= item.costoUnitario  %> c/u</strong><hr>
+                        <% }) %>
+                    </td>
+                    <td>$ <%= proyecto.costoTotalProyecto %>
+                    </td>
+                                        <td>
+                                          <div class="d-flex flex-column">
+                                            <!-- Primera fila de botones -->
+                                            <div class="d-flex justify-content-center gap-2 mb-2">
+                                                <!-- Enlace para editar -->
+                                                <a href="/stock/editProducts/<%= proyecto.id %>">
+                                                    <button class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></button>
+                                                </a>
+                                    
+                                                <!-- Formulario para eliminar -->
+                                                <form action="/stock/deleteProyect/<%= proyecto.id %>?_method=DELETE" method="POST" class="deleteProductForm">
+                                                    <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                                                </form>
+                                            </div>
+                                    
+                                            <!-- Segunda fila de botones -->
+                                            <div class="d-flex justify-content-center gap-2">
+                                                <!-- Boton descarga historial de reformulaciones en excel -->
+                                                <a href="/stock/reformulaciones/<%= proyecto.id %>">
+                                                    <button class="btn btn-primary"><i class="fa-solid fa-clock-rotate-left"></i></button>
+                                                </a>
+                                    
+                                                <!-- Boton descarga ficha tecnica -->                           
+                                                  <a  href="/images/insumos/<%= proyecto.insumosAdquirir %>" target="_blank">
+                                                    <button class="btn btn-info"><i class="fa-solid fa-file-pdf fa-lg"></i></button>
+                                                </a>                          
+                                            </div>                      
+                                        </div>         
+                    </td>
+                  </tr>              
+              </tbody>
+              </table>
+              </div>         
+       
+      <% } else { %>
+        <div class="container">
+          <p class="text-center h3">No hay resultados para la busqueda del <%= query %> </p>
+        </div>
+              
+      <% } %>
+
+     
+    </main>
+
+   
+<script>
+  const icon = document.getElementById('userIconProfileSearch')
+  const cardImg = document.getElementById('imgIcon')
+  icon.addEventListener('error', () => {
+  icon.src = 'https://cdn-icons-png.flaticon.com/512/149/149071.png'
+
+})
+
+cardImg.addEventListener('error', () => {
+  cardImg.src = 'https://cdn-icons-png.flaticon.com/512/149/149071.png'
+})
+</script>
+<script>
+  const deleteForms = document.querySelectorAll('.deleteSearchProyectForm');
+
+deleteForms.forEach(form => {
+form.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    Swal.fire({
+        title: "Seguro quieres borrar el proyecto??",
+        text: "Chequea bien el proyecto que deseas eliminar",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, eliminar!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: "Eliminado!",
+                text: "El producto fue eliminado",
+                icon: "success"
+            });
+
+            form.submit();
+        }
+    });
+});
+});
+</script>
+
+<script>
+  // Obtén todos los interruptores de proyectos
+  const projectSwitches = document.querySelectorAll('.project-switch');
+
+  // Escucha el evento de cambio en cada interruptor
+  projectSwitches.forEach(switchElement => {
+    switchElement.addEventListener('change', async (event) => {
+      const projectId = event.target.dataset.projectId; // Obtén el ID del proyecto del atributo de datos
+
+      try {
+        // Envía una solicitud PUT al servidor para actualizar el estado del proyecto
+        const response = await fetch(`http://localhost:3000/api/stock/editState/${projectId}`, {
+          method: 'PUT',
+        });
+
+        if (response.ok) {
+          // Maneja la respuesta del servidor
+          const data = await response.json();
+          let timerInterval;
+          Swal.fire({
+            title: "Actualizando estado!",
+            html: "Actualizando en <b></b>ms.",
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading();
+              const timer = Swal.getPopup().querySelector("b");
+              timerInterval = setInterval(() => {
+                timer.textContent = `${Swal.getTimerLeft()}`;
+              }, 100);
+            },
+            willClose: () => {
+              clearInterval(timerInterval);
+            }
+          }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+              console.log("I was closed by the timer");
+            }
+            location.reload()
+
+          });
+        } else {
+          throw new Error('Error al actualizar el estado del proyecto');
+        }
+      } catch (error) {
+        console.error(error);
+        alert('Error al actualizar el estado del proyecto');
+      }
+    });
+  });
+</script>
+<%- include('../../partials/scripts') %>
+</body>
+</html>
+

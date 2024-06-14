@@ -101,7 +101,7 @@ module.exports = {
     processLogin: (req,res) =>{
    
         const errors = validationResult(req);
-      /*   return res.send(errors.mapped()) */
+      
 
       if(errors.isEmpty()){
         const {email} = req.body
@@ -123,13 +123,8 @@ module.exports = {
                 res.cookie('userEncopeWeb', req.session.userLogin, {maxAge : 100*60*7})
             }
             
-            if(req.session.userLogin && req.session.userLogin.rol == 5){
-                return res.redirect('/cunas/listar')
-               } else if(req.session.userLogin && req.session.userLogin.rol == 6) {
-                return res.redirect('/cunas/estadistica')
-               } else {
-                return res.redirect('/users/perfil')
-               }
+          
+                return res.redirect('/gestionweb')              
 
         })
         .catch(error => console.log(error))

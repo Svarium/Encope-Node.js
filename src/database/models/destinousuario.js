@@ -17,20 +17,11 @@ module.exports = (sequelize, DataTypes) => {
         onDelete:"CASCADE"
       })
 
-      destinoUsuario.hasMany(models.Stock,{
-        foreignKey:'idDestino',
-        as:'destinoStock'
-      })
 
-      destinoUsuario.hasMany(models.detalleRetiro,{
-        foreignKey:'idDestino',
-        as:'retiro'
-      })
-
-      destinoUsuario.hasMany(models.retiroKit,{
-        foreignKey:'idDestino',
-        as:'retiroKit'
-      })
+     destinoUsuario.hasMany(models.Taller,{
+      foreignKey:'idDestino',
+      as:'destinoTaller'
+     })
     }
 
 

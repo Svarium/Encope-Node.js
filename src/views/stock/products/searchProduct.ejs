@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../../partials/head')  %>
+        
+          
+    <body>
+  
+        <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-3">
+            <div class="container">
+              <div class="d-flex">
+                <!-- Botón para abrir el menú a la izquierda -->
+                <button
+                  class="navbar-toggler d-lg-none order-0 me-2"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapsibleNavId"
+                  aria-controls="collapsibleNavId"
+                  aria-expanded="false"
+                  aria-label="Toggle navigation"
+                >
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+          
+                <!-- Botón para abrir el menú canvas a la derecha -->
+                <button
+                  class="btn btn-transparent order-1"
+                  type="button"
+                  data-bs-toggle="offcanvas"
+                  data-bs-target="#offcanvasRight"
+                  aria-controls="offcanvasRight"
+                >
+                  <img
+                    id="userIconProfile"
+                    src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>"
+                    class="iconProfile me-2"
+                    alt=""
+                  />
+                  <%= userLogin.name %><i class="fa-solid fa-caret-down fa-lg"></i>
+                </button>
+              </div>
+          
+              <!-- Menú de navegación -->
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto"> <!-- 'ms-auto' para alinear a la derecha -->
+                  <li class="nav-item">
+                    <a class="nav-link" href="/stock/">Regresar</a>
+                  </li>              
+                </ul>
+              </div>
+            </div>
+          </nav> <br>
+
+    <main>
+            <div class="row ms-3 me-3 justify-content-center mb-5">
+            <div class="col-md-6">
+                <h4 class="text-center">Resultado de la busqueda:</h4>
+                <hr>
+
+                <% if (producto.length != 0) { %>
+                  <% producto.forEach(item => { %>
+                    <div class="card">
+                      <div class="card-header">
+                          <%= item.nombre %>
+                      </div>
+                      <div class="card-body">
+                          <div class="row">
+                              <div class="col-md-12">
+                                  <div class="row align-items-center">
+                                      <div class="col-3">
+                                          <img src="/images/productos/<%= item.imagen %>" alt="" width="100px" height="100px" class="rounded shadow me-2">
+                                      </div>
+                                      <div class="col-8 mb-2">
+                                          <p><%= item.detalle %></p>
+                                          <small class="h6 font-weight-bolder">Insumos:</small>
+                                          <% item.productos.forEach(insumo => { %>
+                                           <small class="text-danger font-weight-bold"><%= insumo.cantidad %> - <%= insumo.nombre %> //</small>
+                                          <% }) %>
+                                      </div>
+                                      
+                                  </div>
+                              </div>
+                              <div class="col-md-12">
+                                  <div class="row align-items-center justify-content-center">
+                                      <!-- Enlace para editar -->
+                                      <div class="col-auto">
+                                          <a href="/stock/editProduct/<%= item.id %>" class="btn btn-success me-2">Editar <i class="fa-solid fa-pen-to-square"></i></a>
+                                      </div>
+                  
+                                      <!-- Formulario para eliminar -->
+                                      <div class="col-auto">
+                                          <form action="/stock/delete/<%= item.id %>?_method=DELETE" method="POST" class="deleteProduct">
+                                              <button type="submit" class="btn btn-danger">Eliminar <i class="fa-solid fa-trash"></i></button>
+                                          </form>
+                                      </div>
+                  
+                                      <!-- Botón para Insumos -->
+                                      <div class="col-auto">
+                                          <a href="/stock/addInsumo/<%= item.id %>">
+                                              <button class="btn btn-dark">Insumos <i class="fa-regular fa-square-plus"></i></button>
+                                          </a>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  
+                  
+                    
+                    
+                 <% }) %>
+                 <% } else { %>
+
+                  <h5 class="text-center">No se encontraron resultados para tu busqueda...</h5>
+
+                  
+                
+                <% } %>       
+            </div>          
+    </main>
+
+   
+<script>
+  const icon = document.getElementById('userIconProfileSearch')
+  const cardImg = document.getElementById('imgIcon')
+  icon.addEventListener('error', () => {
+  icon.src = 'https://cdn-icons-png.flaticon.com/512/149/149071.png'
+
+})
+
+cardImg.addEventListener('error', () => {
+  cardImg.src = 'https://cdn-icons-png.flaticon.com/512/149/149071.png'
+})
+</script>
+<script>
+  const deleteForms = document.querySelectorAll('.deleteProduct');
+
+deleteForms.forEach(form => {
+form.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    Swal.fire({
+        title: "Seguro quieres borrar el producto??",
+        text: "Chequea bien el producto que deseas eliminar",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, eliminar!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: "Eliminado!",
+                text: "El producto fue eliminado",
+                icon: "success"
+            });
+
+            form.submit();
+        }
+    });
+});
+});
+</script>
+<%- include('../../partials/scripts') %>
+</body>
+</html>
+
