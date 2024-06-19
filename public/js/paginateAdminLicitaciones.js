@@ -37,16 +37,18 @@ const paintLicitaciones = (licitacion) => {
             timeZone: 'America/Argentina/Buenos_Aires'
           }).format(new Date(publicacion.createdAt))}</td>
         <td>${publicacion.expediente}</td>
-        <td>
-            <div class="d-flex justify-content-center gap-2"> 
-                <a class="btn  btn-primary" href="/images/licitaciones/${publicacion.archivo}">Ver</a>
-                <a class="btn  btn-success" href="/licitacion/editar/${publicacion.id}">Editar</i></a>              
-          <div class="boton-modal detalle-comprar">
-          <button class="btn btn-danger btn-sm" onclick="removeLicitacion(${publicacion.id})">ELIMINAR <i class="fa-solid fa-trash"></i></button>
-          </div>          
+         <td>
+            <div class="d-flex justify-content-center flex-wrap gap-2">
+                <div class="btn-group gap-2">
+                    <a class="btn btn-primary" href="/images/licitaciones/${publicacion.archivo}">Ver</a>
+                    <a class="btn btn-success" href="/licitacion/editar/${publicacion.id}">Editar</a>
+                </div>
+                <div class="boton-modal detalle-comprar">
+                    <button class="btn btn-danger btn-large" onclick="removeLicitacion(${publicacion.id})">ELIMINAR <i class="fa-solid fa-trash"></i></button>
+                </div>
             </div>
-    </td>
-      </tr>     
+         </td>
+        </tr>     
         `
         licitacionesTable.innerHTML += template
     });
