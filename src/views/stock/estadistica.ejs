@@ -71,7 +71,7 @@
 
 			<!-- Nav Item - Tables -->
 			<li class="nav-item">
-				<a class="nav-link" href="/inicio">
+				<a class="nav-link" href="/gestionweb">
 					<i class="fa-solid fa-house"></i>
 					<span>Ir al Inicio</span></a>
 			</li>
@@ -102,7 +102,7 @@
 	
 							<!-- Nav Item - User Information -->
 							<li class="nav-item dropdown no-arrow">
-								<a class="nav-link dropdown-toggle" href="/" id="userDropdown">
+								<a class="nav-link dropdown-toggle" href="/users/perfil" id="userDropdown">
 									<% if (locals.userLogin) { %>
 										<span class="mr-2 d-none d-lg-inline text-gray-600 small"><%= locals.userLogin.name %></span>
 										<img class="img-profile rounded-circle" src="<%= /http/.test(locals.userLogin.icon) ? locals.userLogin.icon : `/images/iconsProfile/${locals.userLogin.icon}` %>" alt="Jordan Walke - Creador de React" width="60">

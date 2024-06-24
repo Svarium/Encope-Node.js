@@ -150,11 +150,19 @@
 }
 
 
+.user-mobile{
+    display: none;
+}
 
-
+.nav-container{
+    padding-top: 1rem;
+}
 
 .user {
     width: 70%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
 }
 .user .icon-user{
     color:#2D3D81;
@@ -164,6 +172,14 @@
     text-align: center;
     border-radius: 50%;
     line-height: 30px;
+}
+
+.user p{
+    padding-left: 1rem;
+}
+
+.user p::first-letter {
+    text-transform: capitalize;
 }
 
 /* --------------inicio menu hamburguesa---------------------*/
@@ -179,6 +195,8 @@
     border: none;
     padding: 10px;
     cursor: pointer;
+    border: 2px solid white;
+    border-radius: 18px;
 }
 
 .hamburger-bar {
@@ -312,7 +330,7 @@ hr{
     
     .li-item-nav {
         padding: .3rem;
-        text-align: center;
+        text-align: left;
 
     }
 
@@ -362,24 +380,71 @@ hr{
 }
 
 @media screen and (max-width: 550px) {
+
+    .header-home{
+        margin: 0 auto;
+    }
+
+    .nav-container {
+        display: grid;
+        grid-template-areas: 
+            "user-mobile menu-toggle"
+            "ul-header-home ul-header-home";
+        justify-content: center;
+        align-items: center ;
+        justify-items: center;
+        column-gap: 44%; 
+        margin-top: 1rem;
+    }
+    
+    
+    .menu-toggle {
+        grid-area: menu-toggle;
+    }
+    
+    .user-mobile {
+        grid-area: user-mobile;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-left: 1rem;
+    }
+
+    .user-mobile p{
+        padding-left: 1rem;
+    }
+
+    .user-mobile p::first-letter {
+        text-transform: capitalize;
+    }
+    
+    .ul-header-home {
+        grid-area: ul-header-home;
+        justify-self: start;
+        display: none;
+        height: auto;
+        padding: 5% 10% 2% 4%;
+        position: relative;
+    }
+
+    .user{
+        display: none;
+    }
     
     .menu-toggle {
         display: block;
     }
     .header-home{
         height: 65vh;
+        padding-top: 1rem;
+        
     }
-    .ul-header-home{
-        display: none;
-        height: auto;
-        padding: 2% 10%;
-        position: relative;
-    }
+
     .carousel img{
         width: calc(90% / 1);
     }
     .cont-carousel{
-        top: -100px;
+        top: -5px;
     }
 
     .texto-intranet {

@@ -12,21 +12,29 @@
 
 <body>
     <header class="header-home">
-        <nav>
+        <nav class="nav-container">
             
             <div class="menu-toggle">
                 <button class="btn-hamburger" aria-label="Toggle Menu">
                     <span class="hamburger-bar"></span>
                     <span class="hamburger-bar"></span>
                     <span class="hamburger-bar"></span>
-                </button>
+                </button>   
+            </div>
+<!--
+
+-->            
+            <div class="user-mobile">
+                <img id="userIconProfile" src="<%= /http/.test(locals.userLogin.icon) ? locals.userLogin.icon : `/images/iconsProfile/${locals.userLogin.icon}` %>" class="iconProfileIntranet me-2" alt="">
+                <p><%= userLogin.name %></p>    
             </div>
 
             <ul class="ul-header-home">
-
                 <div class="user">
                     <img id="userIconProfile" src="<%= /http/.test(locals.userLogin.icon) ? locals.userLogin.icon : `/images/iconsProfile/${locals.userLogin.icon}` %>" class="iconProfileIntranet me-2" alt="">
+                    <p><%= userLogin.name %></p>    
                 </div>
+
                 <li class="li-item-nav">
                     <a href="/users/perfil" class="links-ul-header">Perfil</a>
                 </li>
