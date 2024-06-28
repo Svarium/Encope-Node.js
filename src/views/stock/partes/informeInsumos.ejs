@@ -78,34 +78,47 @@
                                                     <div class="modal-dialog modal-xl">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel"><%= item.producto.nombre %></h5>
+                                                        <p class="modal-title h5 text-danger" id="exampleModalLabel"><%= item.producto.nombre %> <i class="fa-solid fa-tags"></i></p>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <form>
-                                                                <% item.insumos.forEach(insumo => { %>
-                                                                    <div class="form-group row">
-                                                                        <div class="mb-3 col-6">
-                                                                            <label for="exampleInputEmail1" class="form-label"><%= insumo.nombre %> - <span class="text-danger">cantidad requerida: <%= insumo.cantidad %> <%= insumo.unidadDeMedida %></span> </label>
-                                                                            <input type="number" class="form-control" id="exampleInputEmail1"aria-describedby="emailHelp" placeholder="Ingrese la cantidad adquirida">                                                            
-                                                                          </div>
-                                                                          <div class="mb-3 col-6">
-                                                                            <label for="">Unidad de medida</label>
-                                                                            <select class="form-select" name="unidad" id="" disabled>
-                                                                                <option value="<%= insumo.unidadDeMedida %>" selected><%= insumo.unidadDeMedida %></option>
-                                                                              </select>
-                                                                          </div> 
+                                                          
+                                                                <% item.insumos.forEach(insumo => { %>                                                         
+
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-3 ">                                                                            
+                                                                            <label for="" class="text-danger fw-bolder"><%= insumo.nombre %></label>
+                                                                            <textarea name="detalle" disabled class="form-control" cols="1" rows="1" id="detalle" placeholder="">*Requerido: <%= insumo.cantidad * item.producto.cantidadAProducir %> <%= insumo.unidadDeMedida %></textarea>
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <label for="">Cantidad de insumo adquirida</label>
+                                                                            <input type="number" class="form-control" name="cantidadAdquirida" id="cantidadAdquirida" placeholder="Ingrese la cantidad adquirida">                                                                          
+                                                                            <button class="btn mt-1 btn-success w-100">Enviar Cantidad Adquirida</button>
+                                                                                  
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <label for="">N° de Factura</label>
+                                                                            <input type="number" class="form-control" name="factura" id="factura" placeholder="Ingrese el número de factura">  
+                                                                            <button class="btn mt-1 btn-success w-100">Enviar Número de factura</button>     
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <label for="">Detalle</label>
+                                                                            <textarea name="detalle" class="form-control" cols="1" rows="1" id="detalle" placeholder="El detalle es opcional..."></textarea>  
+                                                                            <button class="btn mt-1 btn-success w-100">Enviar Detalle de la adquisición</button>     
+                                                                        </div>                                                                        
                                                                     </div>
+                                                                    <hr>
+
+                                                                    
                                                                                                                                     
                                                                 <% }) %>
                                                                 
                                                                             
-                                                                <button type="submit" class="btn btn-primary">Submit</button>
-                                                              </form>
+                                                                
+                                                            
                                                         </div>
                                                         <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>                                                    
                                                         </div>
                                                     </div>
                                                     </div>

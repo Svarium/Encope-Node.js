@@ -123,6 +123,6 @@ module.exports = {
             console.error(error);
             return res.status(500).send({ message: 'Error interno del servidor' });
         }
-    }
+    },
 
 }

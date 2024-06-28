@@ -42,9 +42,10 @@ module.exports = {
             });
 
             data.forEach(item => {  //itero mi array para crear un registro en cada ciclo
-                item.insumos.forEach(insumo => {
+                let aProducir = item.producto.cantidadAProducir
+                item.insumos.forEach(insumo => {             
                     db.insumoProyecto.create({
-                        cantidadRequerida: insumo.cantidad,
+                        cantidadRequerida: +insumo.cantidad * +aProducir  ,
                         proyectoId: proyectoId,
                         productoId: item.producto.id,
                         insumoId:insumo.id
