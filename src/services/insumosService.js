@@ -64,12 +64,15 @@ module.exports = {
         }
     },
 
-    addCantidadAdquirida: async (idInsumo, cantidadAdquirida) => {
+    addCantidadAdquirida: async (idInsumo, cantidadAdquirida, idProyecto) => {
         try {
             const cantidad = await db.insumoProyecto.update( {
                 cantidadAdquirida:cantidadAdquirida
             },{
-                where:{id:idInsumo}
+                where:{
+                    insumoId:idInsumo,
+                    proyectoId:idProyecto
+                }
             })
             return cantidad        
             
@@ -83,12 +86,12 @@ module.exports = {
     },
 
     
-    addNumeroFactura: async (idInsumo, factura) => {
+    addNumeroFactura: async (idInsumo, factura, idProyecto) => {
         try {
             const addFactura = await db.insumoProyecto.update({
                 factura:factura
             },{
-                where:{id:idInsumo}
+                where:{insumoId:idInsumo, proyectoId:idProyecto}
             })
             return addFactura        
             
@@ -101,13 +104,13 @@ module.exports = {
         }      
     },
 
-    addDetalleInsumo: async (idInsumo, detalle) => {
+    addDetalleInsumo: async (idInsumo, detalle, idProyecto) => {
 
         try {
             const addDetalle = await db.insumoProyecto.update({
                 detalle:detalle
             },{
-                where:{id:idInsumo}
+                where:{insumoId:idInsumo, proyectoId:idProyecto}
             })
             return addDetalle        
             

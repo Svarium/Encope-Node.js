@@ -37,17 +37,17 @@ module.exports = {
             }
 
             const idInsumo = req.params.id;
-            const cantidadAdquirida = req.body.cantidadAdquirida
-            const insumoProyecto = await addCantidadAdquirida(idInsumo, cantidadAdquirida);
+            const {cantidadAdquirida, idProyecto} = req.body
+            const insumoProyecto = await addCantidadAdquirida(idInsumo, cantidadAdquirida, idProyecto);
 
             return res.status(200).json({
                 ok:true,
                 data:{
                     message:'Cantidad Adquirida actualizada correctamente!',
-                    cantidad: cantidadAdquirida
+                    cantidad: cantidadAdquirida,
+                    proyecto:idProyecto
                 }
-            })
-            
+            })            
             
         } catch (error) {
             console.log(error);
@@ -68,14 +68,15 @@ module.exports = {
             }
 
             const idInsumo = req.params.id;
-            const factura = req.body.factura
-            const facturaInsumo = await addNumeroFactura(idInsumo, factura);
+            const {factura, idProyecto} = req.body
+            const facturaInsumo = await addNumeroFactura(idInsumo, factura, idProyecto);
 
             return res.status(200).json({
                 ok:true,
                 data:{
                     message:'Número de factura agregado correctamente!',
-                    factura: factura
+                    factura: factura,
+                    proyecto:idProyecto
                 }
             })            
             
@@ -99,8 +100,8 @@ module.exports = {
             }
 
             const idInsumo = req.params.id;
-            const detalle = req.body.detalle
-            const detalleInsumo = await addDetalleInsumo(idInsumo, detalle);
+            const {detalle, idProyecto} = req.body
+            const detalleInsumo = await addDetalleInsumo(idInsumo, detalle, idProyecto);
 
             return res.status(200).json({
                 ok:true,

@@ -72,7 +72,7 @@ module.exports = {
                         include: [{
                             model: db.Insumo,
                             as: "productos",
-                            attributes: ["id", "nombre", "unidadDeMedida" , "cantidad"]
+                            attributes: ["id", "nombre", "unidadDeMedida", "cantidad"]
                         }]
                     }]
                 }],
@@ -81,6 +81,19 @@ module.exports = {
             if (!parte) {
                 return res.status(404).send({ message: 'Parte no encontrada' });
             }
+    
+            const registros = await db.insumoProyecto.findAll({
+                where: {
+                     proyectoId: idproyecto
+                },
+                attributes: ['id', 'cantidadAdquirida', 'insumoId']
+            });
+    
+            // Convertimos registros a un objeto para facilitar la búsqueda
+            const registrosMap = registros.reduce((acc, registro) => {
+                acc[registro.insumoId] = registro.cantidadAdquirida;
+                return acc;
+            }, {});
     
             const data = parte.productoParte.map(productoParte => {
                 return {
@@ -94,22 +107,14 @@ module.exports = {
                         id: insumo.id,
                         nombre: insumo.nombre,
                         unidadDeMedida: insumo.unidadDeMedida,
-                        cantidad: insumo.cantidad
+                        cantidad: insumo.cantidad,
+                        cantidadAdquirida: registrosMap[insumo.id] || null // Agregar cantidadAdquirida
                     }))
                 };
             });
     
             const nombreProyecto = parte.nombre;
-            const proyectId = parte.id
-
-            const registros = await db.insumoProyecto.findAll({
-                where: {
-                     proyectoId : idproyecto
-                },
-                attributes:['id']
-            })
-            
-            
+            const proyectId = parte.id;
     
             return res.render('stock/partes/informeInsumos', {
                 title: "Informar insumos",
@@ -123,6 +128,7 @@ module.exports = {
             console.error(error);
             return res.status(500).send({ message: 'Error interno del servidor' });
         }
-    },
+    }
+    ,
 
 }
