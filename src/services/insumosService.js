@@ -62,5 +62,62 @@ module.exports = {
             message:error.message,
         }        
         }
-    }
+    },
+
+    addCantidadAdquirida: async (idInsumo, cantidadAdquirida) => {
+        try {
+            const cantidad = await db.insumoProyecto.update( {
+                cantidadAdquirida:cantidadAdquirida
+            },{
+                where:{id:idInsumo}
+            })
+            return cantidad        
+            
+        } catch (error) {
+            console.log(error);
+            throw{
+                status:500,
+                message:error.message,
+            }        
+        }      
+    },
+
+    
+    addNumeroFactura: async (idInsumo, factura) => {
+        try {
+            const addFactura = await db.insumoProyecto.update({
+                factura:factura
+            },{
+                where:{id:idInsumo}
+            })
+            return addFactura        
+            
+        } catch (error) {
+            console.log(error);
+            throw{
+                status:500,
+                message:error.message,
+            }        
+        }      
+    },
+
+    addDetalleInsumo: async (idInsumo, detalle) => {
+
+        try {
+            const addDetalle = await db.insumoProyecto.update({
+                detalle:detalle
+            },{
+                where:{id:idInsumo}
+            })
+            return addDetalle        
+            
+        } catch (error) {
+            console.log(error);
+            throw{
+                status:500,
+                message:error.message,
+            }        
+        }      
+    }, 
+
 }
