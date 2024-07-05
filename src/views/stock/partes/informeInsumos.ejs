@@ -137,22 +137,41 @@
                                                                                     class="col-12 col-md-12 col-lg-3 mb-2 mb-md-0">
                                                                                     <label for="">N° de Factura</label>
                                                                                     <input type="number"
+                                                                                    <%= insumo.factura >= 1 ? 'disabled' : ''  %>
                                                                                         class="form-control"
-                                                                                        name="factura" id="factura"
+                                                                                        name="factura"
+                                                                                        id="factura<%= insumo.id %>"
                                                                                         placeholder="Ingrese el número de factura">
                                                                                     <button
-                                                                                        class="btn mt-1 btn-outline-success w-100 fw-bolder">Enviar
-                                                                                        Número de factura</button>
+                                                                                        class="btn mt-1 <%= insumo.factura >= 1 ? 'btn-success' : 'btn-outline-success'  %> w-100 fw-bolder"
+                                                                                        data-factura-id="<%= insumo.id %>"
+                                                                                        data-proyecto-id="<%= proyectId %>"
+                                                                                        onclick="enviarFactura(this)"
+                                                                                        > <% if (insumo.factura >= 1 ) { %>
+                                                                                            <i class="fa-solid fa-circle-check"></i>
+                                                                                            <% } else { %>
+                                                                                               Enviar Número de Factura
+                                                                                          <% } %></button>
                                                                                 </div>
                                                                                 <div class="col-12 col-md-12 col-lg-3">
                                                                                     <label for="">Detalle</label>
                                                                                     <textarea name="detalle"
+                                                                                    <%= insumo.detalle != "" ? 'disabled' : ''  %>
                                                                                         class="form-control" cols="1"
-                                                                                        rows="1" id="detalle"
-                                                                                        placeholder="El detalle es opcional..."></textarea>
+                                                                                        rows="1"
+                                                                                        placeholder="El detalle es opcional..."
+                                                                                        id="detalle<%= insumo.id %>"
+                                                                                        ></textarea>
                                                                                     <button
-                                                                                        class="btn mt-1 btn-outline-success w-100 fw-bolder">Enviar
-                                                                                        Detalle de adquisición</button>
+                                                                                        class="btn mt-1 <%= insumo.factura != "" ? 'btn-success' : 'btn-outline-success'  %> w-100 fw-bolder"
+                                                                                        data-detalle-id="<%= insumo.id %>"
+                                                                                        data-proyecto-id="<%= proyectId %>"
+                                                                                        onclick="enviarDetalle(this)"
+                                                                                        > <% if (insumo.factura != "" ) { %>
+                                                                                            <i class="fa-solid fa-circle-check"></i>
+                                                                                            <% } else { %>
+                                                                                               Enviar Detalle
+                                                                                          <% } %></button>
                                                                                 </div>
                                                                             </div>
                                                                             <hr>
@@ -172,6 +191,12 @@
                                     </div>
                                 </section>
                                 <% } %>
+                               
+                                <div class="d-flex justify-content-end m-4">
+                                    <a href="" id="boton-continuar" type="button" class="btn btn-primary" style="display: none;">
+                                       Cotinuar
+                                    </a>
+                                </div>
         </main>
 
         <%- include('../../partials/scripts') %>
@@ -283,8 +308,154 @@
                     }
                 }
 
+
+            async function enviarFactura(button){
+                const idInsumo = button.getAttribute('data-factura-id');
+                const idProyecto = button.getAttribute('data-proyecto-id');
+                const inputFactura = document.getElementById(`factura${idInsumo}`);
+                const factura = inputFactura.value
+
+                if (factura <= 0) {
+                    Swal.fire({
+                      icon: "error",
+                      title: "Oops...",
+                      text: "La factura no puede ir vacía",                      
+                    });
+                    return;
+                  };
+
+               try {
+
+                const response = await fetch(`http://localhost:3000/api/insumos/numeroFactura/${idInsumo}`,{
+                    method: 'POST',
+                    headers:{
+                        'Content-type' : 'application/json'
+                    },
+                    body: JSON.stringify({
+                        factura:factura,
+                        idProyecto: idProyecto
+                    })
+                })
+
+
+                const data = await response.json();
+
+                if(response.ok){
+                    Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: "Numero de factura informado!",
+                                showConfirmButton: false,
+                                timer: 1000
+                            });                        
+                            // Esperar un poco antes de recargar la página
+                            setTimeout(() => {
+                                location.reload();
+                            }, 1000);
+                        } else {
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "error",
+                                title: "Ocurrió un error :(",
+                                showConfirmButton: false,
+                                timer: 1000
+                            });
+                        }
+                
+               } catch (error) {
+                console.error('Error:', error);
+                alert('Error al enviar la factura');
+               }   
+            }
+
+
+            async function enviarDetalle(button){
+                const idInsumo = button.getAttribute('data-detalle-id');
+                const idProyecto = button.getAttribute('data-proyecto-id');
+                const inputDetalle = document.getElementById(`detalle${idInsumo}`);
+                const detalle = inputDetalle.value
+
+
+                
+                if (detalle <= 0) {
+                    Swal.fire({
+                      icon: "error",
+                      title: "Oops...",
+                      text: "El detalle no puede ir vacio",                      
+                    });
+                    return;
+                  };
+
+                  try {
+
+                    const response = await fetch(`http://localhost:3000/api/insumos/detalle/${idInsumo}`,{
+                    method: 'POST',
+                    headers: {
+                        'Content-type' : 'application/json'
+                    },
+                    body: JSON.stringify({
+                        detalle:detalle,
+                        idProyecto: idProyecto
+                    })
+                })
+
+                    const data = await response.json()
+
+                    if(response.ok){
+                        Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: "Detalle informado!",
+                                showConfirmButton: false,
+                                timer: 1000
+                            });                        
+                            // Esperar un poco antes de recargar la página
+                            setTimeout(() => {
+                                location.reload();
+                            }, 1000);
+                        } else {
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "error",
+                                title: "Ocurrió un error :(",
+                                showConfirmButton: false,
+                                timer: 1000
+                            });
+                        }
+                    
+                  } catch (error) {
+                    console.error('Error:', error);
+                    alert('Error al enviar el detalle');
+                  }
+
+               
+
+            }
                
             </script>
+
+            <script>
+                // Función para verificar si todos los inputs están deshabilitados
+                function verificarInputsDeshabilitados() {
+                    const allInputsDisabled = document.querySelectorAll('input:disabled').length === document.querySelectorAll('input').length;
+                    const botonContinuar = document.getElementById('boton-continuar');
+
+                    if (allInputsDisabled) {
+                        Swal.fire({
+                        icon: "success",
+                        title: "Finalizado",
+                        text: "¡insumos informados correctamente!",
+                        footer: '<a href="/stock/partes/<%= proyectId %>">¿Continuar al parte semanal?</a>'
+                        });
+                    } 
+                }
+
+                // Llamar a la función inicialmente y después de cualquier cambio en los inputs
+                window.addEventListener('load', verificarInputsDeshabilitados);
+                document.addEventListener('input', verificarInputsDeshabilitados);
+            </script>
+
+
 
     </body>
 

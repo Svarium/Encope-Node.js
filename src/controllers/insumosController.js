@@ -86,12 +86,16 @@ module.exports = {
                 where: {
                      proyectoId: idproyecto
                 },
-                attributes: ['id', 'cantidadAdquirida', 'insumoId']
+                attributes: ['id', 'cantidadAdquirida', 'insumoId', 'factura', 'detalle']
             });
     
             // Convertimos registros a un objeto para facilitar la búsqueda
             const registrosMap = registros.reduce((acc, registro) => {
-                acc[registro.insumoId] = registro.cantidadAdquirida;
+                acc[registro.insumoId] = {
+                    cantidadAdquirida: registro.cantidadAdquirida,
+                    factura: registro.factura,
+                    detalle: registro.detalle
+                }
                 return acc;
             }, {});
     
@@ -103,13 +107,18 @@ module.exports = {
                         imagen: productoParte.producto.imagen,
                         cantidadAProducir: productoParte.cantidadAProducir,
                     },
-                    insumos: productoParte.producto.productos.map(insumo => ({
-                        id: insumo.id,
-                        nombre: insumo.nombre,
-                        unidadDeMedida: insumo.unidadDeMedida,
-                        cantidad: insumo.cantidad,
-                        cantidadAdquirida: registrosMap[insumo.id] || null // Agregar cantidadAdquirida
-                    }))
+                    insumos: productoParte.producto.productos.map(insumo => {
+                        const registro = registrosMap[insumo.id];
+                        return {
+                            id: insumo.id,
+                            nombre: insumo.nombre,
+                            unidadDeMedida: insumo.unidadDeMedida,
+                            cantidad: insumo.cantidad,
+                            cantidadAdquirida: registro ? registro.cantidadAdquirida : null, // Agregar cantidadAdquirida
+                            factura: registro ? registro.factura : null, // Agregar factura
+                            detalle: registro ? registro.detalle : null // Agregar detalle
+                        };
+                    })
                 };
             });
     
