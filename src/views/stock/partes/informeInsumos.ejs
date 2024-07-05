@@ -156,18 +156,18 @@
                                                                                 <div class="col-12 col-md-12 col-lg-3">
                                                                                     <label for="">Detalle</label>
                                                                                     <textarea name="detalle"
-                                                                                    <%= insumo.detalle != "" ? 'disabled' : ''  %>
+                                                                                    <%= insumo.factura !== "" && insumo.factura !== null  ? 'disabled' : ''  %>
                                                                                         class="form-control" cols="1"
                                                                                         rows="1"
                                                                                         placeholder="El detalle es opcional..."
                                                                                         id="detalle<%= insumo.id %>"
                                                                                         ></textarea>
                                                                                     <button
-                                                                                        class="btn mt-1 <%= insumo.factura != "" ? 'btn-success' : 'btn-outline-success'  %> w-100 fw-bolder"
+                                                                                        class="btn mt-1 <%= insumo.factura !== "" && insumo.factura !== null  ? 'btn-success' : 'btn-outline-success'  %> w-100 fw-bolder"
                                                                                         data-detalle-id="<%= insumo.id %>"
                                                                                         data-proyecto-id="<%= proyectId %>"
                                                                                         onclick="enviarDetalle(this)"
-                                                                                        > <% if (insumo.factura != "" ) { %>
+                                                                                        > <% if (insumo.factura !== "" && insumo.factura !== null ) { %>
                                                                                             <i class="fa-solid fa-circle-check"></i>
                                                                                             <% } else { %>
                                                                                                Enviar Detalle
@@ -437,10 +437,11 @@
             <script>
                 // Función para verificar si todos los inputs están deshabilitados
                 function verificarInputsDeshabilitados() {
+                    const allInputs = document.querySelectorAll('input');
                     const allInputsDisabled = document.querySelectorAll('input:disabled').length === document.querySelectorAll('input').length;
                     const botonContinuar = document.getElementById('boton-continuar');
 
-                    if (allInputsDisabled) {
+                    if (allInputs.length > 0 && allInputsDisabled) {
                         Swal.fire({
                         icon: "success",
                         title: "Finalizado",
@@ -454,9 +455,5 @@
                 window.addEventListener('load', verificarInputsDeshabilitados);
                 document.addEventListener('input', verificarInputsDeshabilitados);
             </script>
-
-
-
     </body>
-
 </html>
