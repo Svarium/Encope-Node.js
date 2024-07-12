@@ -1,6 +1,6 @@
 const { validationResult } = require('express-validator');
 const createResponseError = require('../../helpers/createResponseError');
-const { addProyectoInsumos, addCantidadAdquirida, addNumeroFactura, addDetalleInsumo } = require('../../services/insumosService');
+const { addProyectoInsumos, addCantidadAdquirida, addNumeroFactura, addDetalleInsumo, getRemanentes } = require('../../services/insumosService');
 
 
 module.exports = {
@@ -118,6 +118,27 @@ module.exports = {
 
 
     },
+
+    calcularRemanentes: async (req,res) => {
+        try {
+
+            const proyectoId = req.body.proyectoId
+
+           const data = await getRemanentes(proyectoId)
+
+            return res.status(200).json({
+                ok:true,
+                data:{
+                    message:'Insumos estandar e insumos adquiridos',
+                    insumos: data                  
+                }
+            })      
+            
+        } catch (error) {
+            console.log(error);
+            return createResponseError(res, error)
+        }
+    }
 
 
 

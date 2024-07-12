@@ -156,18 +156,18 @@
                                                                                 <div class="col-12 col-md-12 col-lg-3">
                                                                                     <label for="">Detalle</label>
                                                                                     <textarea name="detalle"
-                                                                                    <%= insumo.factura !== "" && insumo.factura !== null  ? 'disabled' : ''  %>
+                                                                                    <%= insumo.detalle !== "" && insumo.detalle !== null  ? 'disabled' : ''  %>
                                                                                         class="form-control" cols="1"
                                                                                         rows="1"
                                                                                         placeholder="El detalle es opcional..."
                                                                                         id="detalle<%= insumo.id %>"
                                                                                         ></textarea>
                                                                                     <button
-                                                                                        class="btn mt-1 <%= insumo.factura !== "" && insumo.factura !== null  ? 'btn-success' : 'btn-outline-success'  %> w-100 fw-bolder"
+                                                                                        class="btn mt-1 <%= insumo.detalle !== "" && insumo.detalle !== null  ? 'btn-success' : 'btn-outline-success'  %> w-100 fw-bolder"
                                                                                         data-detalle-id="<%= insumo.id %>"
                                                                                         data-proyecto-id="<%= proyectId %>"
                                                                                         onclick="enviarDetalle(this)"
-                                                                                        > <% if (insumo.factura !== "" && insumo.factura !== null ) { %>
+                                                                                        > <% if (insumo.detalle !== "" && insumo.detalle !== null ) { %>
                                                                                             <i class="fa-solid fa-circle-check"></i>
                                                                                             <% } else { %>
                                                                                                Enviar Detalle
@@ -193,8 +193,8 @@
                                 <% } %>
                                
                                 <div class="d-flex justify-content-end m-4">
-                                    <a href="" id="boton-continuar" type="button" class="btn btn-primary" style="display: none;">
-                                       Cotinuar
+                                    <a href="/stock/partes/<%= proyectId %>" id="boton-continuar" type="button" class="btn btn-outline-danger" style="display: none;">
+                                       Continuar al parte semanal <i class="fa-solid fa-forward"></i>
                                     </a>
                                 </div>
         </main>
@@ -435,25 +435,30 @@
             </script>
 
             <script>
-                // Función para verificar si todos los inputs están deshabilitados
-                function verificarInputsDeshabilitados() {
+               // Función para verificar si todos los inputs y textareas están deshabilitados
+                function verificarCamposDeshabilitados() {
                     const allInputs = document.querySelectorAll('input');
-                    const allInputsDisabled = document.querySelectorAll('input:disabled').length === document.querySelectorAll('input').length;
+                    const allTextareas = document.querySelectorAll('textarea');
+                    const allCampos = [...allInputs, ...allTextareas];
+                    const allCamposDisabled = allCampos.filter(campo => campo.disabled).length === allCampos.length;
                     const botonContinuar = document.getElementById('boton-continuar');
 
-                    if (allInputs.length > 0 && allInputsDisabled) {
+                    if (allCampos.length > 0 && allCamposDisabled) {
                         Swal.fire({
-                        icon: "success",
-                        title: "Finalizado",
-                        text: "¡insumos informados correctamente!",
-                        footer: '<a href="/stock/partes/<%= proyectId %>">¿Continuar al parte semanal?</a>'
+                            icon: "success",
+                            title: "Finalizado",
+                            text: "¡insumos informados correctamente!",
+                            footer: '<a href="/stock/partes/<%= proyectId %>">¿Continuar al parte semanal?</a>'
                         });
-                    } 
+
+                        botonContinuar.style.display= 'block'
+                    }
                 }
 
-                // Llamar a la función inicialmente y después de cualquier cambio en los inputs
-                window.addEventListener('load', verificarInputsDeshabilitados);
-                document.addEventListener('input', verificarInputsDeshabilitados);
+                // Llamar a la función inicialmente y después de cualquier cambio en los inputs o textareas
+                window.addEventListener('load', verificarCamposDeshabilitados);
+                document.addEventListener('input', verificarCamposDeshabilitados);
+                document.addEventListener('change', verificarCamposDeshabilitados);
             </script>
     </body>
 </html>

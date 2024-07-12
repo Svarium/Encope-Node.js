@@ -42,6 +42,32 @@ module.exports = {
 
       const id = req.params.id;
 
+      const insumos = await db.insumoProyecto.findAll({
+        where: {proyectoId:id},
+        attributes:["cantidadRequerida", "cantidadAdquirida", "cantidadAproducir"],     
+        include:[
+        {
+            model: db.Insumo,
+            as:'insumos',
+            attributes:["nombre", "id", "unidadDeMedida","idProducto", "cantidad"]
+        }    
+    ]           
+    })
+    
+
+    const insumosComparados = insumos.map(item => {
+        const plainInsumo = item.insumos.get({ plain: true });
+        const cantidadRequerida = item.get('cantidadRequerida');
+        const cantidadAdquirida = item.get('cantidadAdquirida');
+        const cantidadAproducir = item.get('cantidadAproducir');
+        return {
+            ...plainInsumo,
+            cantidadRequerida: cantidadAproducir * plainInsumo.cantidad,
+            cantidadAdquirida,
+            remanentes: cantidadAdquirida != null ? cantidadAdquirida - cantidadRequerida : 'Falta informar cantidad Adquirida'
+        };
+    });           
+
       const parte = await db.Parte.findOne({
         where: {
           id: id
@@ -83,8 +109,8 @@ module.exports = {
         porcentajeAvance: porcentajeAvance.toFixed(2),
         ideal,
         real,
+        insumosComparados
       })
-
 
     } catch (error) {
       console.log(error);

@@ -122,7 +122,7 @@ module.exports = {
   editarCantidadAProducir: async (proyectoId, productoId, cantidad) => {
     try {     
 
-      const producto = await db.proyectoProducto.findOne({where:{productoId: productoId, //busco el producto para obtener sus datos previos
+    const producto = await db.proyectoProducto.findOne({where:{productoId: productoId, //busco el producto para obtener sus datos previos
         proyectoId: proyectoId,}});
 
       const updateProduct = await db.proyectoProducto.update({ //hago el update de las nuevas cantidades para el producto
@@ -149,9 +149,7 @@ module.exports = {
     
         const costoProducto = costoUnitario * cantidad;
         return total + costoProducto;
-    }, 0);
-
-  
+    }, 0);  
 
       const updateCostoTotalProyecto = await db.Proyecto.update({ // actualizo el costo total en la tabla proyectos
         costoTotalProyecto: costoTotal
@@ -159,7 +157,27 @@ module.exports = {
         where: { id: proyectoId }
       })
 
-      return true;
+     const registroInsumosProyecto = await db.insumoProyecto.findAll({
+      where:{
+        proyectoId:proyectoId,       
+      },
+      attributes:['cantidadAProducir'],      
+     })
+
+     registroInsumosProyecto.forEach(registro => {
+        db.insumoProyecto.update({
+         cantidadAProducir: cantidad
+        },{
+          where:{
+            proyectoId:proyectoId,       
+          },
+        }        
+      )
+     });
+
+
+
+    return true;
 
     } catch (error) {
       console.log(error);

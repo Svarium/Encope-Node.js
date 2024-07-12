@@ -38,6 +38,7 @@
     </nav> <br>
 
     <main>
+      <%- include('../../partials/modals') %> <%- include('../../partials/canvasMenu') %>
       <div class="row ms-3 me-3 justify-content-center mb-5">
         <div class="col-md-12">
 
@@ -173,22 +174,42 @@
                 <% }) %>
             </tbody>
           </table>
-
         </div>
+
+        
+            <!-- CANVAS PARA MOSTRAR INSUMOS COMPARADOS Y REMANENTES-->
+            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#insumosRemanentes" aria-controls="insumosRemanentes">Ver insumos y remanentes</button>
+
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="insumosRemanentes" aria-labelledby="insumosRemanentesLabel">
+              <div class="offcanvas-header">
+                <h5 id="insumosRemanentesLabel">Insumos y Remanentes <i class="fa-solid fa-screwdriver-wrench"></i></h5>               
+              
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+                <ul class="list-group">
+                  <% insumosComparados.forEach(item => { %>                    
+                    <li class="list-group-item ">
+                        <p class="text-gray-600 m-0 fw-bolder"> <%= item.nombre %></p>
+                        <p class="text-muted m-0">Cantidad Requerida: <%= item.cantidadRequerida %> <%= item.unidadDeMedida %></p>
+                        <p class="text-muted m-0">Cantidad Adquirida: <%= item.cantidadAdquirida %> <%= item.unidadDeMedida %></p>
+                        <p class="text-danger mt-1 fw-bolder text-decoration-underline">Remanentes: <%= item.remanentes %> <%= item.unidadDeMedida %> </p>
+                    </li>
+                    <hr>
+                    <% }) %>                 
+                </ul> 
+                
+                <button class="btn btn-success"><i class="fa-solid fa-file-excel"></i> Exportar Informe</button>
+              </div>
+            </div>
+   
     </main>
 
-    <section>
+   
 
 
 
-
-
-
-
-    </section><br><br>
-
-
-
+    <%- include('../../partials/scripts') %>
 
     <script>
       const icon = document.getElementById('userIconProfileSearch')
@@ -205,7 +226,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <% if ( (parte.remanentes) && (parte.remanentes.length > 0) && (porcentajeAvance == 100)  ) { %>
-
       <script>
         Swal.fire({
           position: "top-end",
@@ -215,7 +235,6 @@
           timer: 1500
         });
       </script>
-
       <% } else { %>
         <script>
           // @ts-ignore
@@ -513,7 +532,7 @@
 
           </script>
 
-          <%- include('../../partials/scripts') %>
+        
   </body>
 
 </html>

@@ -9,6 +9,9 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      cantidadAProducir: {
+        type: Sequelize.INTEGER
+      },
       cantidadRequerida: {
         type: Sequelize.INTEGER
       },
