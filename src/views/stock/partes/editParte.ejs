@@ -199,7 +199,7 @@
                     <% }) %>                 
                 </ul> 
                 
-                <button class="btn btn-success"><i class="fa-solid fa-file-excel"></i> Exportar Informe</button>
+                <button id="informeRemanentes" data-remanentes-id="<%= parte.id %>" class="btn btn-success"><i class="fa-solid fa-file-excel"></i> Exportar Informe</button>
               </div>
             </div>
    
@@ -299,14 +299,6 @@
         }
         </script>
         <% } %>
-
-
-
-
-
-
-
-
           <script>
             document.getElementById("enviarReporteBtn").onclick = function () {
               // Mostrar el alert
@@ -341,6 +333,46 @@
           <script>
 
             document.addEventListener('DOMContentLoaded', () => {
+
+
+              //Fetch para exportar informe de remanentes en excell
+
+              const buttonInformeRemanentes = document.getElementById('informeRemanentes');
+              const proyectId = buttonInformeRemanentes.getAttribute('data-remanentes-id');
+              
+              buttonInformeRemanentes.addEventListener('click', async function() {
+                try {
+                  const response = await fetch('http://localhost:3000/api/insumos/calculoRemanentes/', {
+                    method: 'POST', 
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                      proyectoId: proyectId 
+                    })
+                  });
+
+                  if (!response.ok) {
+                    throw new Error('Error al exportar la consulta');
+                  }
+
+                  // Crear un enlace temporal para descargar el archivo
+                  const blob = await response.blob();
+                  const url = window.URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = 'informeRemanentes.xlsx';
+                  document.body.appendChild(a);
+                  a.click();
+                  a.remove();
+                  window.URL.revokeObjectURL(url);
+
+                } catch (error) {
+                  console.error('Error:', error);
+                  alert('Error al exportar la consulta');
+                }
+              });
+
               //fetch para actualziar la cantidad producida
 
               document.querySelectorAll('.actualizar-cantidadProducida-btn').forEach(btn => {

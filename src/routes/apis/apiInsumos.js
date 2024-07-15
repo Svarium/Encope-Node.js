@@ -16,7 +16,7 @@ router.post('/numeroFactura/:id', addNumeroFacturaValidator , createNumeroFactur
 
 router.post('/detalle/:id', addDetalleValidator, createDetalleInsumo) // guarda el registro del detalle
 
-router.get('/calculoRemanentes/', calcularRemanentes)
+router.post('/calculoRemanentes/', calcularRemanentes)
 
 
 

@@ -1,10 +1,8 @@
 const db = require('../database/models');
 const {validationResult} = require('express-validator');
-const {op} = require('sequelize');
 const ExcelJS = require('exceljs');
 const fs = require('fs');
-const path = require('path');
-const { error } = require('console');
+
 
 
 module.exports = {
