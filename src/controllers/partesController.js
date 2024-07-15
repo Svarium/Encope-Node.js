@@ -44,7 +44,7 @@ module.exports = {
 
       const insumos = await db.insumoProyecto.findAll({
         where: {proyectoId:id},
-        attributes:["cantidadRequerida", "cantidadAdquirida", "cantidadAproducir"],     
+        attributes:["cantidadRequerida", "cantidadAdquirida", "cantidadAproducir", "decomiso"],     
         include:[
         {
             model: db.Insumo,
@@ -60,10 +60,12 @@ module.exports = {
         const cantidadRequerida = item.get('cantidadRequerida');
         const cantidadAdquirida = item.get('cantidadAdquirida');
         const cantidadAproducir = item.get('cantidadAproducir');
+        const decomiso = item.get('decomiso')
         return {
             ...plainInsumo,
             cantidadRequerida: cantidadAproducir * plainInsumo.cantidad,
             cantidadAdquirida,
+            decomiso,
             remanentes: cantidadAdquirida != null ? cantidadAdquirida - cantidadRequerida : 'Falta informar cantidad Adquirida'
         };
     });           

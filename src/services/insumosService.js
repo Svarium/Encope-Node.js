@@ -130,7 +130,7 @@ module.exports = {
         try {      
             const insumos = await db.insumoProyecto.findAll({
                 where: {proyectoId:proyectoId},
-                attributes:["cantidadRequerida", "cantidadAdquirida", "cantidadAproducir"],     
+                attributes:["cantidadRequerida", "cantidadAdquirida", "cantidadAproducir", "decomiso"],     
                 include:[
                 {
                     model: db.Insumo,
@@ -146,10 +146,12 @@ module.exports = {
                 const cantidadRequerida = item.get('cantidadRequerida');
                 const cantidadAdquirida = item.get('cantidadAdquirida');
                 const cantidadAproducir = item.get('cantidadAproducir');
+                const decomiso = item.get('decomiso')
                 return {
                     ...plainInsumo,
                     cantidadRequerida: cantidadAproducir * plainInsumo.cantidad,
                     cantidadAdquirida,
+                    decomiso,
                     remanentes: cantidadAdquirida != null ? cantidadAdquirida - cantidadRequerida : 'Falta informar cantidad Adquirida'
                 };
             });            
@@ -165,6 +167,29 @@ module.exports = {
             }        
         }
     }, 
+
+    informarDecomisos: async (proyectoId, insumoId, decomiso, expediente) => {
+        try {
+            await db.insumoProyecto.update({                
+                expedienteDecomiso: expediente,
+                decomiso: decomiso
+            }, {
+                where: {
+                    proyectoId: proyectoId,  // Corrección aquí
+                    insumoId: insumoId
+                }
+            })
+    
+            return true
+            
+        } catch (error) {
+            console.log(error);
+            throw {
+                status: 500,
+                message: error.message,
+            }       
+        }
+    }
     
 
 }

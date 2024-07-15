@@ -177,32 +177,41 @@
         </div>
 
         
-            <!-- CANVAS PARA MOSTRAR INSUMOS COMPARADOS Y REMANENTES-->
-            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#insumosRemanentes" aria-controls="insumosRemanentes">Ver insumos y remanentes</button>
+          <!-- CANVAS PARA MOSTRAR INSUMOS COMPARADOS Y REMANENTES-->
+        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#insumosRemanentes" aria-controls="insumosRemanentes">Ver insumos y remanentes</button>
 
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="insumosRemanentes" aria-labelledby="insumosRemanentesLabel">
-              <div class="offcanvas-header">
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="insumosRemanentes" aria-labelledby="insumosRemanentesLabel">
+            <div class="offcanvas-header">
                 <h5 id="insumosRemanentesLabel">Insumos y Remanentes <i class="fa-solid fa-screwdriver-wrench"></i></h5>               
-              
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-              </div>
-              <div class="offcanvas-body">
+            </div>
+            <div class="offcanvas-body">
                 <ul class="list-group">
-                  <% insumosComparados.forEach(item => { %>                    
-                    <li class="list-group-item ">
+                    <% insumosComparados.forEach(item => { %>                    
+                    <li class="list-group-item">
                         <p class="text-gray-600 m-0 fw-bolder"> <%= item.nombre %></p>
                         <p class="text-muted m-0">Cantidad Requerida: <%= item.cantidadRequerida %> <%= item.unidadDeMedida %></p>
-                        <p class="text-muted m-0">Cantidad Adquirida: <%= item.cantidadAdquirida %> <%= item.unidadDeMedida %></p>
-                        <p class="text-danger mt-1 fw-bolder text-decoration-underline">Remanentes: <%= item.remanentes %> <%= item.unidadDeMedida %> </p>
+                        <p class="text-muted mb-1">Cantidad Adquirida: <%= item.cantidadAdquirida %> <%= item.unidadDeMedida %></p>
+                        <p class="text-danger m-0 fw-bolder text-decoration-underline">Remanentes: <%= item.remanentes %> <%= item.unidadDeMedida %></p>
+                        <p class="text-danger mb-2 fw-bolder text-decoration-underline">Decomisos: <%= item.decomiso %> <%= item.unidadDeMedida %></p>
+
+                        <% if (porcentajeAvance == 100.00 && !item.decomiso) { %>
+                        <p class="text-muted m-0 text-center mb-2 fw-bolder">Informar Decomisos</p>
+                        <div class="d-flex justify-content-center align-items-center">                                                  
+                            <div class="col-md-8">                            
+                                <input type="number" class="form-control decomiso" data-insumo-id="<%= item.id %>" data-parte-id="<%= parte.id %>" placeholder="Ingrese cantidad">
+                                <input type="text" class="form-control expediente-decomiso mt-2" data-insumo-id="<%= item.id %>" data-parte-id="<%= parte.id %>" placeholder="Ingrese Expediente">
+                            </div>                          
+                            <button type="button" class="btn btn-primary informar-decomisos-btn"><i class="fa-solid fa-pen-to-square"></i></button>                                               
+                        </div>
+                        <% } %>                     
                     </li>
                     <hr>
                     <% }) %>                 
-                </ul> 
-                
+                </ul>                               
                 <button id="informeRemanentes" data-remanentes-id="<%= parte.id %>" class="btn btn-success"><i class="fa-solid fa-file-excel"></i> Exportar Informe</button>
-              </div>
             </div>
-   
+        </div>   
     </main>
 
    
@@ -590,7 +599,79 @@
                   throw new Error('Error al exportar informe al 100%');
                   console.log(error);
                 }
-              }             
+              } 
+              
+              
+              /* INFORMAR DECOMISOS */
+
+              const buttons = document.querySelectorAll('.informar-decomisos-btn');
+        
+              // Verificar si buttons es un NodeList
+              console.log('Botones seleccionados:', buttons);
+
+              buttons.forEach(button => { 
+              button.addEventListener('click', async () => {
+                try {
+                    // Obtener los elementos input relacionados
+                    const decomisoInput = button.parentElement.querySelector('.decomiso');
+                    const expedienteInput = button.parentElement.querySelector('.expediente-decomiso');
+
+                    // Extraer los valores de los inputs
+                    const decomiso = decomisoInput.value;
+                    const expediente = expedienteInput.value;
+                    const insumoId = decomisoInput.getAttribute('data-insumo-id');
+                    const proyectId = decomisoInput.getAttribute('data-parte-id'); // Considerando que parte.id es proyectId
+
+                    // Validar los valores
+                    if (!decomiso || !expediente) {
+                      Swal.fire({
+                      icon: "error",
+                      title: "Oops...",
+                      text: "Debes completar todos los campos",                     
+                    });
+                        return;
+                    }
+
+                    // Crear el objeto a enviar
+                    const body = {
+                        proyectId: proyectId,
+                        insumoId: insumoId,
+                        decomiso: parseInt(decomiso),
+                        expediente: expediente
+                    };
+
+                    // Hacer la solicitud fetch
+                    const response = await fetch('http://localhost:3000/api/insumos/decomisos/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(body)
+                    });
+
+                    const result = await response.json();
+
+                    if (result.ok) {
+                      Swal.fire({
+                      position: "top-end",
+                      icon: "success",
+                      title: "Decomiso informado!",
+                      showConfirmButton: false,
+                      timer: 1500
+                    });
+                      setTimeout(() => {
+                      location.reload();
+                    }, 1500);
+                    } else {
+                        alert(`Error: ${result.error.message}`);
+                    }
+                } catch (error) {
+                    console.error('Error al informar decomisos:', error);
+                    alert('Ocurrió un error al informar decomisos.');
+                }
+            });
+        });
+
             })
           </script>
 

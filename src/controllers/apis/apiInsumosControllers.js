@@ -1,6 +1,6 @@
 const { validationResult } = require('express-validator');
 const createResponseError = require('../../helpers/createResponseError');
-const { addProyectoInsumos, addCantidadAdquirida, addNumeroFactura, addDetalleInsumo, getRemanentes } = require('../../services/insumosService');
+const { addProyectoInsumos, addCantidadAdquirida, addNumeroFactura, addDetalleInsumo, getRemanentes, informarDecomisos } = require('../../services/insumosService');
 const ExcelJS = require('exceljs');
 const fs = require('fs');
 const db = require('../../database/models');
@@ -133,7 +133,7 @@ module.exports = {
             const worksheet = workbook.addWorksheet('Sheet 1'); // Crea una hoja de Excel 
     
             // Agregar títulos de columnas
-            const titleRow = worksheet.addRow(["Nombre", "Unidad de Medida", "Cantidad Estandar Requerida" ,"Cantidad Adquirida", "Remanentes"]);
+            const titleRow = worksheet.addRow(["Nombre", "Unidad de Medida", "Cantidad Estandar Requerida" ,"Cantidad Adquirida", "Remanentes", "Decomisos"]);
     
             // Aplicar formato al título
             titleRow.eachCell((cell) => {
@@ -154,7 +154,7 @@ module.exports = {
             });
     
             data.forEach(item=> {
-                const row = worksheet.addRow([item.nombre, item.unidadDeMedida, item.cantidadRequerida, item.cantidadAdquirida, item.remanentes]);
+                const row = worksheet.addRow([item.nombre, item.unidadDeMedida, item.cantidadRequerida, item.cantidadAdquirida, item.remanentes, item.decomiso]);
                 
                 // Aplicar bordes a las celdas de la fila de datos
                 row.eachCell((cell) => {
@@ -187,8 +187,7 @@ module.exports = {
 
     porcentajeAvance: async (req,res) => {  
 
-        try {   
-                            
+        try {                               
                     const {proyectoId} = req.body;
                     const parte = await db.Parte.findAll({
                         where: { id: proyectoId },
@@ -270,6 +269,36 @@ module.exports = {
             return createResponseError(res, error)
         }
 
-    }
+    },
 
+    decomisos: async (req,res) => {
+        try {
+
+            const errors = validationResult(req);
+
+            if(!errors.isEmpty()) throw{
+                status:400,
+                message:errors.mapped()
+            }
+
+            const {proyectId, insumoId, decomiso, expediente} = req.body
+
+            const decomisos = await informarDecomisos(proyectId, insumoId, decomiso, expediente)
+
+            return res.status(200).json({
+                ok:true,
+                data:{
+                    message:'Decomisos informados correctamente!',
+                    decomisos: {
+                        decomiso,
+                        expediente
+                    }
+                }
+            })           
+            
+        } catch (error) {
+            console.log(error);
+            return createResponseError(res, error)
+        }
+    }
 }
