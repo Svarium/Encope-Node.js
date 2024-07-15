@@ -1,5 +1,5 @@
 const express = require('express');
-const { createRegister, createCantidadAdquirida, createNumeroFactura, createDetalleInsumo, calcularRemanentes } = require('../../controllers/apis/apiInsumosControllers');
+const { createRegister, createCantidadAdquirida, createNumeroFactura, createDetalleInsumo, calcularRemanentes, porcentajeAvance } = require('../../controllers/apis/apiInsumosControllers');
 const addCantidadAdquiridaValidator = require('../../validations/api/insumos/addCantidadAdquiridaValidator');
 const addNumeroFacturaValidator = require('../../validations/api/insumos/addNumeroFacturaValidator');
 const addDetalleValidator = require('../../validations/api/insumos/addDetalleValidator');
@@ -16,7 +16,9 @@ router.post('/numeroFactura/:id', addNumeroFacturaValidator , createNumeroFactur
 
 router.post('/detalle/:id', addDetalleValidator, createDetalleInsumo) // guarda el registro del detalle
 
-router.post('/calculoRemanentes/', calcularRemanentes)
+router.post('/calculoRemanentes/', calcularRemanentes) // Reporte en excel de los remanentes
+
+router.post('/informeAvance', porcentajeAvance) //informes al 50% y al 100% del proyecto
 
 
 

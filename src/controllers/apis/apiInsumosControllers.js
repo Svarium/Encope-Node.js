@@ -3,6 +3,7 @@ const createResponseError = require('../../helpers/createResponseError');
 const { addProyectoInsumos, addCantidadAdquirida, addNumeroFactura, addDetalleInsumo, getRemanentes } = require('../../services/insumosService');
 const ExcelJS = require('exceljs');
 const fs = require('fs');
+const db = require('../../database/models');
 
 
 module.exports = {
@@ -182,8 +183,93 @@ module.exports = {
             console.log(error);
             return createResponseError(res, error)
         }
+    },
+
+    porcentajeAvance: async (req,res) => {  
+
+        try {   
+                            
+                    const {proyectoId} = req.body;
+                    const parte = await db.Parte.findAll({
+                        where: { id: proyectoId },
+                        include: [{
+                        model: db.proyectoProducto,
+                        as: 'productoParte',
+                        attributes: ["cantidadAProducir", "cantidadProducida", "stockEnTaller", "egresos"],
+                        include: [{
+                            model: db.Producto,
+                            as: 'producto',
+                            attributes: ["nombre"]
+                        }]
+                        }, {
+                        model: db.Taller,
+                        as: 'parteTaller',
+                        attributes: ["nombre"]
+                        }],
+                    });
+
+                    const workbook = new ExcelJS.Workbook();
+                    const worksheet = workbook.addWorksheet('Sheet 1');
+
+                    // Agregar títulos de columnas
+                    const titleRow = worksheet.addRow(["Nombre", "Taller", "Expediente", "Procedencia", "Duración", "Productos", "Cantidad a producir", "Cantidad Producida", "Fecha en que llegó al %" ]);
+
+                    // Aplicar formato al título
+                    titleRow.eachCell((cell) => {
+                        cell.font = { bold: true };
+                        cell.fill = {
+                        type: 'pattern',
+                        pattern: 'solid',
+                        fgColor: { argb: 'FFFF00' }
+                        };
+                        cell.border = {
+                        top: { style: 'thin' },
+                        left: { style: 'thin' },
+                        bottom: { style: 'thin' },
+                        right: { style: 'thin' }
+                        };
+                    });
+
+                    const fecha = new Date(Date.now());
+
+                    parte.forEach(item => {
+                        item.productoParte.forEach(productoItem => {
+                        const row = worksheet.addRow([
+                            item.nombre,
+                            item.parteTaller.nombre,
+                            item.expediente,
+                            item.procedencia,           
+                            `${item.duracion} ${item.unidadDuracion}`,
+                            productoItem.producto.nombre,
+                            productoItem.cantidadAProducir,
+                            productoItem.cantidadProducida, 
+                            fecha.toISOString().substring(0, 10)          
+                        ]);
+
+                        row.eachCell((cell) => {
+                            cell.border = {
+                            top: { style: 'thin' },
+                            left: { style: 'thin' },
+                            bottom: { style: 'thin' },
+                            right: { style: 'thin' }
+                            };
+                        });
+                        });
+                    });
+                    
+                    const fileName = `${fecha.toISOString().substring(0, 10)}-parteSemanal${parte[0].nombre}.xlsx`;
+
+                    res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
+                    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+                    await workbook.xlsx.write(res);
+                    res.end();
+            
+        } catch (error) {
+            console.log(error);
+            return createResponseError(res, error)
+        }
+
     }
-
-
 
 }
