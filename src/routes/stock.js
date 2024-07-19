@@ -5,7 +5,7 @@ const addProductValidator = require('../validations/addProductValidator');
 const checkUserEditorIntranetCentral = require('../middlewares/checkUserEditorIntranetCentral');
 const { newTaller, storageTaller, listTaller, editTaller, updateTaller, deleteTaller, ExcelTalleres, searchTaller } = require('../controllers/talleresController');
 const addTallerValidator = require('../validations/addTallerValidator');
-const { addNewProyect, storeProyect, listProyects, editProyect, updateProyect, deleteProyect, downloadExcelHistorial, downloadExcelProyects, searchProyect, editProducts } = require('../controllers/proyectosController');
+const { addNewProyect, storeProyect, listProyects, editProyect, updateProyect, deleteProyect, downloadExcelHistorial, downloadExcelProyects, searchProyect, editProducts, listDelayedProjects } = require('../controllers/proyectosController');
 const addProyectValidator = require('../validations/addProyectValidator');
 const { listPartes, editParte, updateParte, avanceDeProyecto, printParte, reporteViaEmail, printParteInsumos } = require('../controllers/partesController');
 const editParteValidator = require('../validations/editParteValidator');
@@ -73,6 +73,7 @@ router.post('/searchTaller', checkUserEditorIntranetCentral, searchTaller)
 router.get('/newProyect', checkUserAddProyect, addNewProyect) //ruta accedida por ambos roles: editores intranet central y de unidades
 router.post('/newProyect', uploadInsumosFiles.single('insumos'), addProyectValidator, storeProyect) //ruta accedida por ambos roles: editores intranet central y de unidades
 router.get('/listProyects', checkUserEditorIntranetCentral, listProyects)
+router.get('/listDelayedProyects', listDelayedProjects)
 router.get('/editProducts/:id', editProducts)
 router.get('/editProyect/:id', checkUserEditorIntranetCentral, editProyect)
 router.put('/editProyect/:id', uploadInsumosFiles.single('insumos'), checkUserEditorIntranetCentral, editProyectValidator, updateProyect)

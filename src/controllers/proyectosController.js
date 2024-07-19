@@ -3,9 +3,8 @@ const { validationResult } = require('express-validator');
 const { Op } = require("sequelize");
 const ExcelJS = require('exceljs');
 const db = require('../database/models');
-const { title } = require('process');
 const path = require('path');
-const { cantidadProducida } = require('./apis/apiStockControllers');
+
 
 
 module.exports = {
@@ -33,6 +32,70 @@ module.exports = {
             }).catch(error => console.log(error))
 
 
+    },
+
+    listDelayedProjects: async(req, res) => {
+        try {
+            // Consultar todos los proyectos
+            const proyectos = await db.Proyecto.findAll(
+                {
+                    include: [{
+                        model: db.proyectoProducto,
+                        as: "productoProyecto",
+                        include: [
+                            {
+                                model: db.Producto,
+                                as: "producto"
+                            }
+                        ]
+                    },           
+                    ]
+                }                
+            );
+        
+            // Obtener la fecha actual
+            const fechaActual = new Date();
+        
+            // Filtrar los proyectos fuera de término
+              const proyectosFueraDeTermino = proyectos.filter(proyecto => {
+              const { createdAt, duracion, unidadDuracion } = proyecto;
+        
+              // Convertir la fecha de creación a un objeto Date
+              const fechaCreacion = new Date(createdAt);
+        
+              // Calcular la fecha de vencimiento
+              let fechaVencimiento;
+              switch (unidadDuracion) {
+                case 'dia':
+                  fechaVencimiento = new Date(fechaCreacion);
+                  fechaVencimiento.setDate(fechaVencimiento.getDate() + duracion);
+                  break;
+                case 'semana':
+                  fechaVencimiento = new Date(fechaCreacion);
+                  fechaVencimiento.setDate(fechaVencimiento.getDate() + (duracion * 7));
+                  break;
+                case 'mes':
+                  fechaVencimiento = new Date(fechaCreacion);
+                  fechaVencimiento.setMonth(fechaVencimiento.getMonth() + duracion);
+                  break;
+                default:
+                  return false; // Si la unidad de duración no es válida, no consideres este proyecto
+              }
+        
+              // Comparar la fecha de vencimiento con la fecha actual
+              return fechaActual > fechaVencimiento;
+            });
+            
+           
+
+            // Enviar los proyectos fuera de término a la vista
+           return res.render('stock/proyectos/proyectosRetrasados', {
+            title:"Proyectos fuera de termino",
+            proyectosFueraDeTermino });
+          } catch (error) {
+            console.error('Error al obtener proyectos fuera de término:', error);
+            res.status(500).send('Ocurrió un error al obtener los proyectos fuera de término.');
+          }
     },
 
     addNewProyect: (req, res) => {
