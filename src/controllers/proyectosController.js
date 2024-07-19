@@ -694,224 +694,76 @@ module.exports = {
 
     searchProyect: async (req, res) => {
 
-      
-        const {expediente, taller, procedencia} = req.body;
+        const { expediente, taller, procedencia } = req.body;
 
-        if(expediente == "" && taller == "" && procedencia == ""){
-            const destinos = await db.destinoUsuario.findAll({
-                attributes:["nombreDestino"]
-            })
-
-            const talleres = await db.Taller.findAll({
-                attributes:["id", "nombre"]
-            })
-         
-            return res.render("stock/listStock",{               
-                title:"Modulo de stock",
-                destinos,
-                talleres,
-                error:"No puedes hacer una busqueda con los parámetros vacios "
-            })     
+        const findProyecto = async (whereCondition) => {
+            return await db.Proyecto.findOne({
+                where: whereCondition,
+                include: [{
+                    model: db.proyectoProducto,
+                    as: "productoProyecto",
+                    include: [{ model: db.Producto, as: "producto" }]
+                }]
+            });
+        };
+    
+        const findParte = async (proyectoId) => {
+            return await db.Parte.findOne({
+                where: { idProyecto: proyectoId },
+                include: [{
+                    model: db.proyectoProducto,
+                    as: "productoParte",
+                    include: [{ model: db.Producto, as: "producto" }]
+                }]
+            });
+        };
+    
+        const calculateMetrics = (parte) => {
+            const cantidadTotalAProducir = parte.productoParte.reduce((total, producto) => total + producto.cantidadAProducir, 0);
+            const cantidadTotalProducida = parte.productoParte.reduce((total, producto) => total + producto.cantidadProducida, 0);
+            const porcentajeAvance = (cantidadTotalProducida / cantidadTotalAProducir) * 100;
+            const ideal = cantidadTotalAProducir / parte.duracion;
+            const real = cantidadTotalProducida / parte.duracion;
+    
+            return { porcentajeAvance: porcentajeAvance.toFixed(2), ideal, real };
+        };
+    
+        try {
+            let proyecto;
+            if (expediente) {
+                proyecto = await findProyecto({ expediente });
+            } else if (taller) {
+                proyecto = await findProyecto({ idTaller: taller });
+            } else if (procedencia) {
+                proyecto = await findProyecto({ procedencia });
+            }
+    
+            if (proyecto) {
+                const parte = await findParte(proyecto.id);
+                if (parte) {
+                    const metrics = calculateMetrics(parte);
+                    return res.render('stock/proyectos/searchProyect', {
+                        title: 'Resultado de la búsqueda',
+                        proyecto,
+                        parte,
+                        ...metrics
+                    });
+                }
+            }
+    
+            // Renderizar una vista con un mensaje indicando que no se encontraron resultados
+            return res.render('stock/proyectos/searchProyect', {
+                title: 'Sin resultados'
+            });
+    
+        } catch (error) {
+            console.log(error);
+            // Renderizar una vista de error si es necesario
+            return res.render('stock/proyectos/searchProyect', {
+                title: 'Error en la búsqueda',
+                error: error.message
+            });
         }
-
-        if (expediente != ""){
-            db.Proyecto.findOne({
-                where: {
-                    expediente: expediente
-                },
-                include: [{
-                    model: db.proyectoProducto,
-                    as: "productoProyecto",
-                    include: [
-                        {
-                            model: db.Producto,
-                            as: "producto"
-                        }
-                    ]
-                },           
-                ]
-            }).then(proyecto => {
-                if (proyecto) {
-                    db.Parte.findOne({
-                        where: {
-                            idProyecto: proyecto.id
-                        },
-                        include: [{
-                            model: db.proyectoProducto,
-                            as:"productoParte",
-                            include:[
-                                {
-                                    model: db.Producto,
-                                    as:"producto"
-                                }
-                            ]
-                         }]
-                    }).then(parte => {    
-                      /*   return res.send(parte) */
-                        const cantidadTotalAProducir = parte.productoParte.reduce((total, producto) => { // Sumo el total a producir de todos los productos
-                            return total + producto.cantidadAProducir;
-                        }, 0); // Se inicializa con 0 para evitar problemas si la lista está vacía
-                  
-                        const cantidadTotalProducida = parte.productoParte.reduce((total, producto) => { // Sumo el total producido de todos los productos
-                            return total + producto.cantidadProducida;
-                        }, 0); // Se inicializa con 0 para evitar problemas si la lista está vacía
-            
-                     
-                        const porcentajeAvance = (cantidadTotalProducida / cantidadTotalAProducir) * 100;
-            
-                        const ideal = cantidadTotalAProducir / parte.duracion;
-            
-                        const real = cantidadTotalProducida / parte.duracion 
-        
-                        return res.render('stock/proyectos/searchProyect', {
-                            title: 'Resultado de la búsqueda',
-                            proyecto,                        
-                            parte,
-                            porcentajeAvance: porcentajeAvance.toFixed(2),
-                            ideal,
-                            real,  
-                        });
-                    }).catch(error => console.log(error));
-                } else {
-                    // Renderizar una vista con un mensaje indicando que no se encontraron resultados
-                    return res.render('stock/proyectos/searchProyect', {
-                        title: 'Sin resultados',                    
-                    });
-                }
-            }).catch(error => console.log(error));
-        } else if (taller != ""){
-            db.Proyecto.findOne({
-                where: {
-                    idTaller: taller
-                },
-                include: [{
-                    model: db.proyectoProducto,
-                    as: "productoProyecto",
-                    include: [
-                        {
-                            model: db.Producto,
-                            as: "producto"
-                        }
-                    ]
-                },           
-                ]
-            }).then(proyecto => {
-                if (proyecto) {
-                    db.Parte.findOne({
-                        where: {
-                            idProyecto: proyecto.id
-                        },
-                        include: [{
-                            model: db.proyectoProducto,
-                            as:"productoParte",
-                            include:[
-                                {
-                                    model: db.Producto,
-                                    as:"producto"
-                                }
-                            ]
-                         }]
-                    }).then(parte => {
-    
-                      /*   return res.send(parte) */
-                        const cantidadTotalAProducir = parte.productoParte.reduce((total, producto) => { // Sumo el total a producir de todos los productos
-                            return total + producto.cantidadAProducir;
-                        }, 0); // Se inicializa con 0 para evitar problemas si la lista está vacía
-                  
-                        const cantidadTotalProducida = parte.productoParte.reduce((total, producto) => { // Sumo el total producido de todos los productos
-                            return total + producto.cantidadProducida;
-                        }, 0); // Se inicializa con 0 para evitar problemas si la lista está vacía
-            
-                     
-                        const porcentajeAvance = (cantidadTotalProducida / cantidadTotalAProducir) * 100;
-            
-                        const ideal = cantidadTotalAProducir / parte.duracion;
-            
-                        const real = cantidadTotalProducida / parte.duracion 
-        
-                        return res.render('stock/proyectos/searchProyect', {
-                            title: 'Resultado de la búsqueda',
-                            proyecto,                        
-                            parte,
-                            porcentajeAvance: porcentajeAvance.toFixed(2),
-                            ideal,
-                            real,  
-                        });
-                    }).catch(error => console.log(error));
-                } else {
-                    // Renderizar una vista con un mensaje indicando que no se encontraron resultados
-                    return res.render('stock/proyectos/searchProyect', {
-                        title: 'Sin resultados',                    
-                    });
-                }
-            }).catch(error => console.log(error));
-        } else if (procedencia != ""){
-            db.Proyecto.findOne({
-                where: {
-                    procedencia: procedencia
-                },
-                include: [{
-                    model: db.proyectoProducto,
-                    as: "productoProyecto",
-                    include: [
-                        {
-                            model: db.Producto,
-                            as: "producto"
-                        }
-                    ]
-                },           
-                ]
-            }).then(proyecto => {
-                if (proyecto) {
-                    db.Parte.findOne({
-                        where: {
-                            idProyecto: proyecto.id
-                        },
-                        include: [{
-                            model: db.proyectoProducto,
-                            as:"productoParte",
-                            include:[
-                                {
-                                    model: db.Producto,
-                                    as:"producto"
-                                }
-                            ]
-                         }]
-                    }).then(parte => {
-    
-                      /*   return res.send(parte) */
-                        const cantidadTotalAProducir = parte.productoParte.reduce((total, producto) => { // Sumo el total a producir de todos los productos
-                            return total + producto.cantidadAProducir;
-                        }, 0); // Se inicializa con 0 para evitar problemas si la lista está vacía
-                  
-                        const cantidadTotalProducida = parte.productoParte.reduce((total, producto) => { // Sumo el total producido de todos los productos
-                            return total + producto.cantidadProducida;
-                        }, 0); // Se inicializa con 0 para evitar problemas si la lista está vacía
-            
-                     
-                        const porcentajeAvance = (cantidadTotalProducida / cantidadTotalAProducir) * 100;
-            
-                        const ideal = cantidadTotalAProducir / parte.duracion;
-            
-                        const real = cantidadTotalProducida / parte.duracion 
-        
-                        return res.render('stock/proyectos/searchProyect', {
-                            title: 'Resultado de la búsqueda',
-                            proyecto,                        
-                            parte,
-                            porcentajeAvance: porcentajeAvance.toFixed(2),
-                            ideal,
-                            real,  
-                        });
-                    }).catch(error => console.log(error));
-                } else {
-                    // Renderizar una vista con un mensaje indicando que no se encontraron resultados
-                    return res.render('stock/proyectos/searchProyect', {
-                        title: 'Sin resultados',                    
-                    });
-                }
-            }).catch(error => console.log(error));
-        }       
        
     }
     
