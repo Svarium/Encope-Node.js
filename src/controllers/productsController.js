@@ -4,20 +4,22 @@ const { Op } = require('sequelize');
 const ExcelJS = require('exceljs');
 const fs = require('fs');
 const path = require('path');
-const { includes, forEach } = require("../validations/addProductValidator");
-const { error } = require("console");
-
-
-
 
 module.exports = {
     list : async (req,res) => {
 
-       const destinos = await db.destinoUsuario.findAll()
+            const destinos = await db.destinoUsuario.findAll({
+                attributes:["nombreDestino"]
+            })
+
+            const talleres = await db.Taller.findAll({
+                attributes:["id", "nombre"]
+            })
          
             return res.render("stock/listStock",{               
                 title:"Modulo de stock",
-                destinos
+                destinos,
+                talleres
             })     
     },
 

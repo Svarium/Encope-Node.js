@@ -10,10 +10,37 @@ module.exports = {
 
     listTaller : (req,res) => {
         db.Taller.findAll({
-            include: ['destinoTaller']
+            include: ['destinoTaller'],
+            where: {estado:"En Proceso de Aprobación"}
         })
         .then(talleres => {           
             return res.render("stock/talleres/listTaller",{
+                title: "Lista de Talleres",
+                talleres
+            })
+        }).catch(error => console.log(error));
+    },
+
+    listApproved : (req,res) =>{
+        db.Taller.findAll({
+            include: ['destinoTaller'],
+            where: {estado:"Aprobado"}
+        })
+        .then(talleres => {           
+            return res.render("stock/talleres/talleresAprobados",{
+                title: "Lista de Talleres",
+                talleres
+            })
+        }).catch(error => console.log(error));
+    },
+
+    listClosed :(req,res) => {
+        db.Taller.findAll({
+            include: ['destinoTaller'],
+            where: {estado:"De Baja"}
+        })
+        .then(talleres => {           
+            return res.render("stock/talleres/talleresDeBaja",{
                 title: "Lista de Talleres",
                 talleres
             })

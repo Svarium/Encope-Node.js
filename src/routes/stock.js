@@ -3,7 +3,7 @@ const { list, newProduct, storageProduct, listProducts, editProduct, updateProdu
 const { uploadProductosFiles } = require('../middlewares/subirProductos');
 const addProductValidator = require('../validations/addProductValidator');
 const checkUserEditorIntranetCentral = require('../middlewares/checkUserEditorIntranetCentral');
-const { newTaller, storageTaller, listTaller, editTaller, updateTaller, deleteTaller, ExcelTalleres, searchTaller } = require('../controllers/talleresController');
+const { newTaller, storageTaller, listTaller, editTaller, updateTaller, deleteTaller, ExcelTalleres, searchTaller, listApproved, listClosed } = require('../controllers/talleresController');
 const addTallerValidator = require('../validations/addTallerValidator');
 const { addNewProyect, storeProyect, listProyects, editProyect, updateProyect, deleteProyect, downloadExcelHistorial, downloadExcelProyects, searchProyect, editProducts, listDelayedProjects } = require('../controllers/proyectosController');
 const addProyectValidator = require('../validations/addProyectValidator');
@@ -60,6 +60,8 @@ router.post('/addInsumo/:id', addInsumoValidator, storeInsumo);
 router.get('/newTaller', checkUserEditorIntranetCentral, newTaller)
 router.post('/newTaller', addTallerValidator, checkUserEditorIntranetCentral, storageTaller)
 router.get('/talleresTable', checkUserEditorIntranetCentral, listTaller)
+router.get('/talleresAprobados',checkUserEditorIntranetCentral, listApproved)
+router.get('/talleresDeBaja', checkUserEditorIntranetCentral, listClosed)
 router.get('/editTaller/:id', checkUserEditorIntranetCentral, editTaller)
 router.put('/editTaller/:id', addTallerValidator, checkUserEditorIntranetCentral, updateTaller)
 router.delete('/deleteTaller/:id', checkUserEditorIntranetCentral, deleteTaller)
@@ -73,14 +75,14 @@ router.post('/searchTaller', checkUserEditorIntranetCentral, searchTaller)
 router.get('/newProyect', checkUserAddProyect, addNewProyect) //ruta accedida por ambos roles: editores intranet central y de unidades
 router.post('/newProyect', uploadInsumosFiles.single('insumos'), addProyectValidator, storeProyect) //ruta accedida por ambos roles: editores intranet central y de unidades
 router.get('/listProyects', checkUserEditorIntranetCentral, listProyects)
-router.get('/listDelayedProyects', listDelayedProjects)
+router.get('/listDelayedProyects',checkUserEditorIntranetCentral ,listDelayedProjects)
 router.get('/editProducts/:id', editProducts)
 router.get('/editProyect/:id', checkUserEditorIntranetCentral, editProyect)
 router.put('/editProyect/:id', uploadInsumosFiles.single('insumos'), checkUserEditorIntranetCentral, editProyectValidator, updateProyect)
 router.delete('/deleteProyect/:id', checkUserEditorIntranetCentral, deleteProyect)
 router.get('/reformulaciones/:id', checkUserEditorIntranetCentral, downloadExcelHistorial)
 router.get('/proyectsTable', checkUserEditorIntranetCentral, downloadExcelProyects)
-router.get('/searchProyect', checkUserEditorIntranetCentral, searchProyect)
+router.post('/searchProyect', checkUserEditorIntranetCentral, searchProyect)
 
 
 
