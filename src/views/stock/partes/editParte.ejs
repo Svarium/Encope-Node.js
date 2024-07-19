@@ -191,7 +191,7 @@
                     <li class="list-group-item">
                         <p class="text-gray-600 m-0 fw-bolder"> <%= item.nombre %></p>
                         <p class="text-muted m-0">Cantidad Requerida: <%= item.cantidadRequerida %> <%= item.unidadDeMedida %></p>
-                        <p class="text-muted mb-1">Cantidad Adquirida: <%= item.cantidadAdquirida %> <%= item.unidadDeMedida %></p>
+                        <p class="text-muted mb-1" data-cantidad-adquirida="<%= item.cantidadAdquirida %>">Cantidad Adquirida: <%= item.cantidadAdquirida %> <%= item.unidadDeMedida %></p>
                         <p class="text-danger m-0 fw-bolder text-decoration-underline">Remanentes: <%= item.remanentes %> <%= item.unidadDeMedida %></p>
                         <p class="text-danger mb-2 fw-bolder text-decoration-underline">Decomisos: <%= item.decomiso %> <%= item.unidadDeMedida %></p>
 
@@ -605,9 +605,8 @@
               /* INFORMAR DECOMISOS */
 
               const buttons = document.querySelectorAll('.informar-decomisos-btn');
-        
-              // Verificar si buttons es un NodeList
-              console.log('Botones seleccionados:', buttons);
+
+
 
               buttons.forEach(button => { 
               button.addEventListener('click', async () => {
@@ -615,12 +614,14 @@
                     // Obtener los elementos input relacionados
                     const decomisoInput = button.parentElement.querySelector('.decomiso');
                     const expedienteInput = button.parentElement.querySelector('.expediente-decomiso');
+                    const cantidadAdquiridaElement = button.closest('.list-group-item').querySelector('[data-cantidad-adquirida]');
 
                     // Extraer los valores de los inputs
                     const decomiso = decomisoInput.value;
                     const expediente = expedienteInput.value;
                     const insumoId = decomisoInput.getAttribute('data-insumo-id');
-                    const proyectId = decomisoInput.getAttribute('data-parte-id'); // Considerando que parte.id es proyectId
+                    const proyectId = decomisoInput.getAttribute('data-parte-id'); 
+                    const cantidadAdquirida = parseFloat(cantidadAdquiridaElement.getAttribute('data-cantidad-adquirida'));
 
                     // Validar los valores
                     if (!decomiso || !expediente) {
@@ -629,6 +630,16 @@
                       title: "Oops...",
                       text: "Debes completar todos los campos",                     
                     });
+                        return;
+                    }
+
+                    // Validar que el decomiso sea mayor o igual que la cantidad adquirida
+                    if (parseFloat(decomiso) < cantidadAdquirida) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "La cantidad decomisada no puede superar la cantidad adquirida.",                     
+                        });
                         return;
                     }
 
