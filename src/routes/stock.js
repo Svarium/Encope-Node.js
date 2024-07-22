@@ -39,7 +39,7 @@ router.post('/newProduct', uploadProductosFiles.single('producto'), addProductVa
 router.get('/products', checkUserEditorIntranetCentral, listProducts)
 router.get('/editProduct/:id', checkUserEditorIntranetCentral, editProduct)
 router.put('/editProduct/:id', uploadProductosFiles.single('producto'),uploadFichasFiles.single('ficha'), addProductValidator, checkUserEditorIntranetCentral, updateProduct)
-router.put('/addFicha/:id', uploadFichasFiles.single('ficha'),addFichaValidator, addFicha)
+router.put('/addFicha/:id',  uploadFichasFiles.single('ficha'),addFichaValidator, addFicha)
 router.delete('/delete/:id', checkUserEditorIntranetCentral, deleteProduct)
 router.get('/searchProduct', checkUserEditorIntranetCentral, searchProduct)
 router.get('/ProductsTable', checkUserEditorIntranetCentral, productsTableExcel)

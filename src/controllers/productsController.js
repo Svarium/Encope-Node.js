@@ -189,8 +189,6 @@ module.exports = {
 
         const errors = validationResult(req);
 
-        /* return res.send(errors.mapped()) */
-
         if(req.fileValidationError){ //este if valida que solo se puedan subir extensiones (pdf)
             errors.errors.push({
                 value : "",
