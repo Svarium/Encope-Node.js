@@ -24,7 +24,7 @@ module.exports = {
     },
 
     newProduct : (req,res) => {
-        return res.render('stock/products/addproduct',{
+        return res.render('stock/products/addProduct',{
             title:"Nuevo Producto"
         })
     },
