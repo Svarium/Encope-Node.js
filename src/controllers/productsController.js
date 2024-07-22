@@ -229,7 +229,7 @@ module.exports = {
             where:{id:id}
         })
         .then(() => {
-            return res.redirect('/')
+            return res.redirect('/stock/products')
         })
         .catch(error => console.log(error));
     } else {
