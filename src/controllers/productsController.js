@@ -237,7 +237,7 @@ module.exports = {
     } else {
 
         if(req.file){
-            fs.existsSync(path.join(__dirname,`../../public/images/fichasTecnicas/${req.file.filename}`)) && fs.unlinkSync(path.join(__dirname,`../../public/images/fichasTecnicas/${req.file.filename}`)) //SI HAY ERROR Y CARGÓ IMAGEN ESTE METODO LA BORRA
+            fs.existsSync(path.join(__dirname,`../../public/images/fichas/${req.file.filename}`)) && fs.unlinkSync(path.join(__dirname,`../../public/images/fichas/${req.file.filename}`)) //SI HAY ERROR Y CARGÓ IMAGEN ESTE METODO LA BORRA
         }
 
         db.Producto.findAll()
