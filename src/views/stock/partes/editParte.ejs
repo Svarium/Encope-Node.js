@@ -277,7 +277,7 @@
               
               buttonInformeRemanentes.addEventListener('click', async function() {
                 try {
-                  const response = await fetch('http://localhost:3000/api/insumos/calculoRemanentes/', {
+                  const response = await fetch('https://encope-node-js.onrender.com/api/insumos/calculoRemanentes/', {
                     method: 'POST', 
                     headers: {
                       'Content-Type': 'application/json'
@@ -331,7 +331,7 @@
                   };
 
                   try {
-                    const response = await fetch(`http://localhost:3000/api/stock/cantidadProducida/${proyectoId}`, {
+                    const response = await fetch(`https://encope-node-js.onrender.com/api/stock/cantidadProducida/${proyectoId}`, {
                       method: 'PUT',
                       headers: {
                         'Content-Type': 'application/json'
@@ -390,7 +390,7 @@
 
                 try {
 
-                  const response = await fetch(`http://localhost:3000/api/stock/egresos/${proyectoId}`, {
+                  const response = await fetch(`https://encope-node-js.onrender.com/api/stock/egresos/${proyectoId}`, {
                     method: 'PUT',
                     headers: {
                       'Content-Type': 'application/json'
@@ -462,7 +462,7 @@
 
                 try {
 
-                  const response = await fetch(`http://localhost:3000/api/stock/observaciones/${proyectoId}`, {
+                  const response = await fetch(`https://encope-node-js.onrender.com/api/stock/observaciones/${proyectoId}`, {
                     method: 'PUT',
                     headers: {
                       'Content-Type': 'application/json'
@@ -502,7 +502,7 @@
               const proyectId = buttonInformeRemanentes.getAttribute('data-remanentes-id');
 
               async function informeAvance() {
-              const response = await fetch('http://localhost:3000/api/insumos/informeAvance/', {
+              const response = await fetch('https://encope-node-js.onrender.com/api/insumos/informeAvance/', {
                     method: 'POST', 
                     headers: {
                       'Content-Type': 'application/json'
@@ -529,7 +529,7 @@
               }
 
               async function informarRemanentes() {
-                  const response = await fetch('http://localhost:3000/api/insumos/calculoRemanentes/', {
+                  const response = await fetch('https://encope-node-js.onrender.com/api/insumos/calculoRemanentes/', {
                     method: 'POST', 
                     headers: {
                       'Content-Type': 'application/json'
@@ -652,7 +652,7 @@
                     };
 
                     // Hacer la solicitud fetch
-                    const response = await fetch('http://localhost:3000/api/insumos/decomisos/', {
+                    const response = await fetch('https://encope-node-js.onrender.com/api/insumos/decomisos/', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'

@@ -552,7 +552,7 @@ module.exports = {
                 });
     
                 // Construir la URL completa del archivo PDF
-                const urlPDF = `http://localhost:3000/images/insumos/${proyecto.insumosAdquirir}`;
+                const urlPDF = `https://encope-node-js.onrender.com/images/insumos/${proyecto.insumosAdquirir}`;
                 const linkText = `Descargar anexo 3`;
     
                 const row = worksheet.addRow([proyecto.nombre, proyecto.estado, proyecto.detalle, historial.expediente, proyecto.procedencia, `${proyecto.duracion} - ${proyecto.unidadDuracion}`, `${resultado.join(", ")}`, proyecto.costoTotalProyecto, linkText, proyecto.createdAt]);
@@ -649,7 +649,7 @@ module.exports = {
                 });
                             
                   // Construir la URL completa del archivo PDF
-                  const urlPDF = `http://localhost:3000/images/insumos/${proyecto.insumosAdquirir}`;
+                  const urlPDF = `https://encope-node-js.onrender.com/images/insumos/${proyecto.insumosAdquirir}`;
                   const linkText = `Descargar anexo 3`;
 
 
