@@ -89,7 +89,7 @@ module.exports = {
                fs.existsSync(path.join(__dirname, `../../public/images/productos/${req.file.filename}`)) && fs.unlinkSync(path.join(__dirname, `../../public/images/productos/${req.file.filename}`))
             }
 
-            return res.render('stock/products/addproduct',{
+            return res.render('stock/products/addProduct',{
                 title:"Nuevo Producto",
                 errors: errors.mapped(),
                 old: req.body
