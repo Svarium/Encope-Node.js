@@ -242,7 +242,7 @@ module.exports = {
                 Promise.all(([talleres, productos, ]))
                     .then(([talleres, productos, ]) => {
 
-                        return res.render('stock/proyectos/addproyect', {
+                        return res.render('stock/proyectos/addProyect', {
                             title: 'Nuevo Proyecto',
                             talleres,
                             productos,                            
