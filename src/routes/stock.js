@@ -72,12 +72,12 @@ router.post('/searchTaller', checkUserEditorIntranetCentral, searchTaller)
 
 //crud proyectos
 router.get('/newProyect', checkUserAddProyect, addNewProyect) //ruta accedida por ambos roles: editores intranet central y de unidades
-router.post('/newProyect', uploadAnexosFiles.single('insumos'), addProyectValidator, storeProyect) //ruta accedida por ambos roles: editores intranet central y de unidades
+router.post('/newProyect', uploadAnexosFiles.single('anexo'), addProyectValidator, storeProyect) //ruta accedida por ambos roles: editores intranet central y de unidades
 router.get('/listProyects', checkUserEditorIntranetCentral, listProyects)
 router.get('/listDelayedProyects',checkUserEditorIntranetCentral ,listDelayedProjects)
 router.get('/editProducts/:id', editProducts)
 router.get('/editProyect/:id', checkUserEditorIntranetCentral, editProyect)
-router.put('/editProyect/:id', uploadAnexosFiles.single('insumos'), checkUserEditorIntranetCentral, editProyectValidator, updateProyect)
+router.put('/editProyect/:id', uploadAnexosFiles.single('anexo'), checkUserEditorIntranetCentral, editProyectValidator, updateProyect)
 router.delete('/deleteProyect/:id', checkUserEditorIntranetCentral, deleteProyect)
 router.get('/reformulaciones/:id', checkUserEditorIntranetCentral, downloadExcelHistorial)
 router.get('/proyectsTable', checkUserEditorIntranetCentral, downloadExcelProyects)
