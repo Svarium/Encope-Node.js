@@ -18,6 +18,7 @@ const { uploadFichasFiles } = require('../middlewares/subirFicha');
 const addFichaValidator = require('../validations/addFichaValidator');
 const { addInsumo, storeInsumo, reportInsumos } = require('../controllers/insumosController');
 const addInsumoValidator = require('../validations/addInsumoValidator');
+const { uploadAnexosFiles } = require('../middlewares/subirAnexo');
 
 
 var router = express.Router();
@@ -52,8 +53,6 @@ router.get('/addInsumo/:id', addInsumo);
 router.post('/addInsumo/:id', addInsumoValidator, storeInsumo);
 
 
-
-
 /* TALLERES */
 
 //crud talleres
@@ -73,12 +72,12 @@ router.post('/searchTaller', checkUserEditorIntranetCentral, searchTaller)
 
 //crud proyectos
 router.get('/newProyect', checkUserAddProyect, addNewProyect) //ruta accedida por ambos roles: editores intranet central y de unidades
-router.post('/newProyect', uploadInsumosFiles.single('insumos'), addProyectValidator, storeProyect) //ruta accedida por ambos roles: editores intranet central y de unidades
+router.post('/newProyect', uploadAnexosFiles.single('insumos'), addProyectValidator, storeProyect) //ruta accedida por ambos roles: editores intranet central y de unidades
 router.get('/listProyects', checkUserEditorIntranetCentral, listProyects)
 router.get('/listDelayedProyects',checkUserEditorIntranetCentral ,listDelayedProjects)
 router.get('/editProducts/:id', editProducts)
 router.get('/editProyect/:id', checkUserEditorIntranetCentral, editProyect)
-router.put('/editProyect/:id', uploadInsumosFiles.single('insumos'), checkUserEditorIntranetCentral, editProyectValidator, updateProyect)
+router.put('/editProyect/:id', uploadAnexosFiles.single('insumos'), checkUserEditorIntranetCentral, editProyectValidator, updateProyect)
 router.delete('/deleteProyect/:id', checkUserEditorIntranetCentral, deleteProyect)
 router.get('/reformulaciones/:id', checkUserEditorIntranetCentral, downloadExcelHistorial)
 router.get('/proyectsTable', checkUserEditorIntranetCentral, downloadExcelProyects)

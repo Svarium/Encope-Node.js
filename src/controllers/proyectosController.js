@@ -222,7 +222,7 @@ module.exports = {
             } else {
 
                 if (req.file) {
-                    fs.existsSync(path.join(__dirname, `../../public/images/insumos/${req.file.filename}`)) && fs.unlinkSync(path.join(__dirname, `../../public/images/insumos/${req.file.filename}`))
+                    fs.existsSync(path.join(__dirname, `../../public/images/anexos/${req.file.filename}`)) && fs.unlinkSync(path.join(__dirname, `../../public/images/anexos/${req.file.filename}`))
                 }
 
                 const talleres = db.Taller.findAll({
