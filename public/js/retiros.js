@@ -39,7 +39,7 @@ const checkedFields = () => {
 
   verifyCantidadRetiro = async (cantidad, producto, destino) => {
     try {
-      let response = await fetch("https://encope-node-js.onrender.com/api/cunas/retiroStock/",{
+      let response = await fetch("https://test.encope.gob.ar/api/cunas/retiroStock/",{
         method: "POST",
         body: JSON.stringify({
           cantidad:cantidad,

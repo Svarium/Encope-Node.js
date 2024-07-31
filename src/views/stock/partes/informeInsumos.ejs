@@ -208,7 +208,7 @@
                     const proyectId = button.getAttribute('data-bs-target');
 
                     button.addEventListener('click', () => {
-                        fetch('https://encope-node-js.onrender.com/api/insumos/addproyectoInsumo', {
+                        fetch('https://test.encope.gob.ar/api/insumos/addproyectoInsumo', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -268,7 +268,7 @@
                   };
 
                     try {
-                        const response = await fetch(`https://encope-node-js.onrender.com/api/insumos/cantidadAdquirida/${idInsumo}`, {
+                        const response = await fetch(`https://test.encope.gob.ar/api/insumos/cantidadAdquirida/${idInsumo}`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -326,7 +326,7 @@
 
                try {
 
-                const response = await fetch(`https://encope-node-js.onrender.com/api/insumos/numeroFactura/${idInsumo}`,{
+                const response = await fetch(`https://test.encope.gob.ar/api/insumos/numeroFactura/${idInsumo}`,{
                     method: 'POST',
                     headers:{
                         'Content-type' : 'application/json'
@@ -388,7 +388,7 @@
 
                   try {
 
-                    const response = await fetch(`https://encope-node-js.onrender.com/api/insumos/detalle/${idInsumo}`,{
+                    const response = await fetch(`https://test.encope.gob.ar/api/insumos/detalle/${idInsumo}`,{
                     method: 'POST',
                     headers: {
                         'Content-type' : 'application/json'

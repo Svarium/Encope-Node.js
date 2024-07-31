@@ -341,7 +341,7 @@ module.exports = {
                 const insumosConCantidad = insumos.map((insumo, index) => `${cantidad[index]} ${insumo}`); 
             
                 // Construir la URL completa del archivo PDF
-                const urlPDF = `https://encope-node-js.onrender.com/images/fichasTecnicas/${producto.ficha}`;
+                const urlPDF = `https://test.encope.gob.ar/images/fichasTecnicas/${producto.ficha}`;
                 const linkText = `Descargar ficha`;
             
                 const row = worksheet.addRow([producto.nombre, producto.detalle, `- ${insumosConCantidad.join(', ')}`, producto.unidadDeMedida, linkText, producto.createdAt]);
