@@ -76,26 +76,25 @@
                 <small id="errorNombre" class="text-danger "><%= locals.errors && errors.destino ? errors.destino.msg : null %></small>
               </div>  
 
-              
               <div class="form-group col-md-6">
                 <label for="destino">Elija el/los Productos</label>
-                <select id="producto" class="form-control rounded <%= (locals.errors && errors.productos) && 'is-invalid'%>" >
-                    <option value="" selected hidden>Seleccione el producto...</option>
+                <input list="listaProductos" id="producto" class="form-control rounded <%= (locals.errors && errors.productos) && 'is-invalid'%>" placeholder="Escriba para buscar...">
+                <datalist id="listaProductos">
                     <% productos.forEach(({nombre, id}) => { %>
-                        <option value="<%= id %>"> <%= nombre %> </option>
+                        <option value="<%= nombre %>" data-id="<%= id %>">
                     <% }) %>
-                </select>
+                </datalist>
                 <small id="errorDetalle" class="text-danger ms-2"><%= locals.errors && errors.productos ? errors.productos.msg : null %></small>
             </div>
-
-           <!-- Contenedor para los campos adicionales -->
-<div class="form-group col-md-12">
-  <div class="row" id="camposExtras"></div>
-</div>
-
-<!-- Agregar campo oculto para enviar productos -->
-<input type="hidden" name="productos" id="productos" value="">
-         
+            
+            <!-- Contenedor para los campos adicionales -->
+            <div class="form-group col-md-12">
+                <div class="row" id="camposExtras"></div>
+            </div>
+            
+            <!-- Agregar campo oculto para enviar productos -->
+            <input type="hidden" name="productos" id="productos" value="">
+                  
             
             <div class="form-group col-md-12">
               <label for="anexo">Insumos a adquirir (anexo 3)</label>
@@ -139,10 +138,18 @@
     <script>
       let index = 0; // Variable para llevar el seguimiento del índice de los productos seleccionados
       let productosSeleccionados = []; // Lista para almacenar los productos ya seleccionados
-      
+  
       document.getElementById('producto').addEventListener('change', function() {
-          var productoId = this.value;
-          var productoNombre = this.options[this.selectedIndex].text; // Obtiene el nombre del producto seleccionado
+          var productoNombre = this.value;
+          var dataList = document.getElementById('listaProductos');
+          var option = Array.from(dataList.options).find(opt => opt.value === productoNombre);
+          
+          if (!option) {
+              alert('Por favor seleccione un producto válido de la lista.');
+              return;
+          }
+          
+          var productoId = option.getAttribute('data-id');
           var camposExtrasDiv = document.getElementById('camposExtras');
   
           // Verificar si el producto ya ha sido seleccionado previamente
@@ -176,7 +183,10 @@
   
           // Agrega el template al contenedor
           camposExtrasDiv.insertAdjacentHTML('beforeend', template);
-          
+  
+          // Limpiar el input después de agregar el producto
+          this.value = '';
+  
           index++; // Incrementa el índice solo cuando se agrega un nuevo producto
       });
   
