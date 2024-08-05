@@ -231,8 +231,7 @@ module.exports = {
 
     },
 
-    searchTaller: (req,res) => {     
-
+    searchTaller: (req,res) => {
         const {nombre, destino} = req.body;
 
         db.Taller.findOne({
@@ -241,8 +240,8 @@ module.exports = {
                 idDestino:destino
             },
             include: ['destinoTaller']        
-        }).then(taller => {
-           
+        }).then(taller => {   
+                
            return res.render('stock/talleres/searchTaller',{
             title:'Resultado de la busqueda',
             taller

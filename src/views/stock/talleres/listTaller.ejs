@@ -97,12 +97,8 @@
                         <td><%= item.destinoTaller.nombreDestino %></td>
                         <td>
                             <!-- Enlace para editar -->
-                            <a href="/stock/editTaller/<%= item.id %>"><button class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></button></a>
-                            
-                            <!-- Formulario para eliminar -->
-                            <form action="/stock/deleteTaller/<%= item.id %>?_method=DELETE" method="POST" class="deleteTallerForm">
-                              <button type="submit" class="btn btn-danger mt-2"><i class="fa-solid fa-trash"></i></button>
-                          </form>
+                            <a href="/stock/editTaller/<%= item.id %>"><button class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></button></a>                            
+                           
                         </td>
                     </tr>
                 <% }) %>

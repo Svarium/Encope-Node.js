@@ -64,6 +64,7 @@
           <i class="fa-solid fa-download"></i> Exportar Excel</i>
         </button>        
         <a href="/stock/talleresDeBaja" class="btn btn-sm btn-danger mt-1 mb-2">Ver Talleres De baja <i class="fa-solid fa-lock"></i></a> 
+        <a href="/stock/talleresTable" class="btn btn-sm btn-primary mt-1 mb-2">En Proceso de Aprobación <i class="fa-solid fa-clock"></i></a> 
        <br> 
         <br> 
         <table class="table">
@@ -99,10 +100,7 @@
                             <!-- Enlace para editar -->
                             <a href="/stock/editTaller/<%= item.id %>"><button class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></button></a>
                             
-                            <!-- Formulario para eliminar -->
-                            <form action="/stock/deleteTaller/<%= item.id %>?_method=DELETE" method="POST" class="deleteTallerForm">
-                              <button type="submit" class="btn btn-danger mt-2"><i class="fa-solid fa-trash"></i></button>
-                          </form>
+                          
                         </td>
                     </tr>
                 <% }) %>

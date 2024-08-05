@@ -9,7 +9,7 @@ module.exports = {
     list : async (req,res) => {
 
             const destinos = await db.destinoUsuario.findAll({
-                attributes:["nombreDestino"]
+                attributes:["id", "nombreDestino"]
             })
 
             const talleres = await db.Taller.findAll({

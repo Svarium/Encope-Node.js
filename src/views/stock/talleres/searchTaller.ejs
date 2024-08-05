@@ -59,10 +59,11 @@
                 <% if (taller) { %>
                  
                     <div class="card">
-                      <div class="card-header">
+                      <div class="card-header d-flex justify-content-between align-content-center align-items-center">
                         <h5>
                           <%= taller.nombre %>
                         </h5>
+                        <h5 class="h6 fw-bold <%= taller.estado == "En Proceso de Aprobación" ? 'text-primary' : (taller.estado == "Aprobado" ? 'text-success' : 'text-danger') %>"><%= taller.estado %></h5>
                       </div>
                       <div class="card-body align-items-center justify-content-center">
                         <p class="font-weight-bold">
@@ -79,12 +80,8 @@
                         <div class="d-flex align-items-center justify-content-center">
                           <!-- Enlace para editar -->
                           <a href="/stock/editTaller/<%= taller.id %>" class="btn btn-success ms-3">Editar <i
-                              class="fa-solid fa-pen-to-square"></i></a>
-                    
-                          <!-- Formulario para eliminar -->
-                          <form action="/stock/deleteTaller/<%= taller.id %>?_method=DELETE" method="POST" class="ms-2 deleteProduct">
-                            <button type="submit" class="btn btn-danger">Eliminar <i class="fa-solid fa-trash"></i></button>
-                          </form>
+                              class="fa-solid fa-pen-to-square"></i></a>                    
+                         
                         </div>
                     
                       </div>
