@@ -123,11 +123,9 @@
                                                                                     <label for=""
                                                                                         class="text-danger fw-bolder">
                                                                                         <%= insumo.nombre %>
-                                                                                    </label>
-                                                                                    <textarea name="detalle" disabled
-                                                                                    class="form-control" cols="1" rows="1" id="detalle<%= insumo.id %>"
-                                                                                    data-requerido="<%= insumo.cantidad * item.producto.cantidadAProducir %>"
-                                                                                    placeholder="">*Requerido: <%= insumo.cantidad * item.producto.cantidadAProducir %> <%= insumo.unidadDeMedida %></textarea>
+                                                                                    </label>                                                                               
+                                                                                    <button name="detalle" class="form-control" disabled
+                                                                                    >*Requerido: <%= insumo.cantidad * item.producto.cantidadAProducir %> <%= insumo.unidadDeMedida %></button>
                                                                                 </div>
                                                                                 <div
                                                                                     class="col-12 col-md-12 col-lg-3 mb-2 mb-md-0">
@@ -476,8 +474,6 @@
                 const idProyecto = button.getAttribute('data-proyecto-id');
                 const inputDetalle = document.getElementById(`detalle${idInsumo}`);
                 const detalle = inputDetalle.value
-
-
                 
                 if (detalle <= 0) {
                     Swal.fire({

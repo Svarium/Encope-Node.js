@@ -31,7 +31,7 @@ const checkedFields = () => {
 
   verifyCantidad = async (cantidad) => {
     try {
-      let response = await fetch("https://test.encope.gob.ar/api/cunas/cantidadKit",{
+      let response = await fetch("http://localhost:3000/api/cunas/cantidadKit",{
         method: "POST",
         body: JSON.stringify({
           cantidad:cantidad

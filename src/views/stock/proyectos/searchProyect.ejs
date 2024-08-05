@@ -225,7 +225,7 @@ form.addEventListener('submit', function (event) {
 
       try {
         // Envía una solicitud PUT al servidor para actualizar el estado del proyecto
-        const response = await fetch(`https://test.encope.gob.ar/api/stock/editState/${projectId}`, {
+        const response = await fetch(`http://localhost:3000/api/stock/editState/${projectId}`, {
           method: 'PUT',
         });
 

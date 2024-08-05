@@ -207,10 +207,10 @@ module.exports = {
   },
 
   printParteInsumos: async (req, res) => {
-
     try {
       const id = req.params.id;
-
+  
+      // Obtener los datos de parteInsumos
       const parteInsumos = await db.Parte.findOne({
         where: { id: id },
         attributes: ["nombre", "procedencia", "updatedAt"],
@@ -225,7 +225,7 @@ module.exports = {
             include: [{
               model: db.Insumo,
               as: "productos",
-              attributes: ["nombre", "cantidad"]
+              attributes: ["nombre", "id", "cantidad"]
             }]
           }]
         }, {
@@ -234,13 +234,26 @@ module.exports = {
           attributes: ["nombre"]
         }],
       });
-
+  
+      // Obtener la cantidad adquirida
+      const cantidadAdquiridaData = await db.insumoProyecto.findAll({
+        where: { proyectoId: id },
+        attributes: ['insumoId', 'cantidadAdquirida']
+      });
+  
+      // Crear un mapa para las cantidades adquiridas
+      const cantidadAdquiridaMap = new Map();
+      cantidadAdquiridaData.forEach(entry => {        
+        cantidadAdquiridaMap.set(entry.insumoId, entry.cantidadAdquirida);
+      });
+      
+  
       const workbook = new ExcelJS.Workbook();
       const worksheet = workbook.addWorksheet('Sheet 1');
-
+  
       // Agregar títulos de columnas
-      const titleRow = worksheet.addRow(["Nombre del Proyecto", "Procedencia", "Taller", "Producto/s", "Cantidad de Insumos al Inicio", "Cantidad de Insumos Actual", "Última actualización"]);
-
+      const titleRow = worksheet.addRow(["Nombre del Proyecto", "Procedencia", "Taller", "Producto/s", "Cantidad de Insumos Adquiridos", "Cantidad de Insumos Actual", "Última actualización"]);
+  
       // Aplicar formato al título
       titleRow.eachCell((cell) => {
         cell.font = { bold: true };
@@ -256,22 +269,24 @@ module.exports = {
           right: { style: 'thin' }
         };
       });
-
-
-
+  
       if (parteInsumos) {
         parteInsumos.productoParte.forEach(productoItem => {
           productoItem.producto.productos.forEach(insumoItem => {
-            const cantidadInicial = productoItem.cantidadAProducir * insumoItem.cantidad; // calculo la cantidad de insumos necesarios al inicio del proyecto (cantidad a producir * cantidad de insumo)
-            const cantidadActual = productoItem.cantidadProducida * insumoItem.cantidad; // calculo la cantidad de insumo utilizado al momento (cantidad producida * cantidad de insumo) 
-            const insumosActuales = cantidadInicial - cantidadActual; // calculo la existencia de insumos actuales (cantidad de insumos iniciales - insumos utlizados)
-
+            // Obtén la cantidad adquirida usando el ID del insumo
+            const cantidadAdquirida = cantidadAdquiridaMap.get(insumoItem.id) || 0;           
+  
+            const cantidadActual = productoItem.cantidadProducida * insumoItem.cantidad; // Calcula la cantidad de insumo utilizado al momento            
+  
+            const insumosActuales = cantidadAdquirida - cantidadActual; // Calcula la existencia de insumos actuales
+           
+  
             worksheet.addRow([
               parteInsumos.nombre,
               parteInsumos.procedencia,
               parteInsumos.parteTaller.nombre,
               productoItem.producto.nombre,
-              `${insumoItem.nombre}: ${cantidadInicial}`,
+              `${insumoItem.nombre}: ${cantidadAdquirida}`,
               `${insumoItem.nombre}: ${insumosActuales}`,
               parteInsumos.updatedAt
             ]).eachCell((cell) => {
@@ -285,21 +300,20 @@ module.exports = {
           });
         });
       }
-
+  
       const fecha = new Date(Date.now());
       const fileName = `${fecha.toISOString().substring(0, 10)}-parteInsumos${parteInsumos.nombre}.xlsx`;
-
+  
       res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
       res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-
+  
       await workbook.xlsx.write(res);
       res.end();
     } catch (error) {
       console.log(error);
     }
-
   },
-
+  
   reporteViaEmail: async (req, res) => {
 
     try {
