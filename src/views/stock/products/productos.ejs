@@ -154,18 +154,16 @@
 
                       <!-- Enlace para editar y formulario para eliminar -->
                       <div class="row mt-2">
-                        <div class="col-6">
+                        <div class="<%= !item.ficha ? 'col-12' : 'col-6' %>">
                           <a href="/stock/editProduct/<%= item.id %>">
                             <button class="btn btn-success w-100">Editar <i
                                 class="fa-solid fa-pen-to-square"></i></button>
                           </a>
                         </div>
                         <div class="col-6">
-                          <form action="/stock/delete/<%= item.id %>?_method=DELETE" method="POST"
-                            class="deleteProductForm">
-                            <button type="submit" class="btn btn-danger w-100">Eliminar <i
-                                class="fa-solid fa-trash"></i></button>
-                          </form>
+                          <% if (item.ficha) { %>
+                            <a href="/images/fichas/<%= item.ficha %>" target="_blank" class="btn btn-danger w-100">Ficha <i class="fa-solid fa-file-arrow-down"></i></a>
+                          <% } %>                         
                         </div>
                       </div>
                     </td>

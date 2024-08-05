@@ -88,9 +88,9 @@
                   
                                       <!-- Formulario para eliminar -->
                                       <div class="col-auto">
-                                          <form action="/stock/delete/<%= item.id %>?_method=DELETE" method="POST" class="deleteProduct">
-                                              <button type="submit" class="btn btn-danger">Eliminar <i class="fa-solid fa-trash"></i></button>
-                                          </form>
+                                        <% if (item.ficha) { %>
+                                          <a href="/images/fichas/<%= item.ficha %>" target="_blank" class="btn btn-danger w-100">Ficha <i class="fa-solid fa-file-arrow-down"></i></a>
+                                        <% } %>    
                                       </div>
                   
                                       <!-- Botón para Insumos -->

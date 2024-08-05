@@ -50,8 +50,8 @@
       </div>
       <div class="modal-body">
         <% if (userLogin && (userLogin.rol === 1 || userLogin.rol === 2) ) { %>
-          <small class="text-white text-start"><%= message %></small>
-          <pre class="text-justify ms-5 mb-5 text-muted"><%= error.stack %></pre>
+          <small class="text-dark text-start"><%= message %></small>
+          <pre class="text-justify ms-5 mb-5 text-dark"><%= error.stack %></pre>
         <% }else {  %>
           <i class="fas fa-exclamation-triangle"></i>
          <span>upss hubo un error...le sugerimos regresar al inicio del sitio mientras trabajamos en resolverlo.</span>
