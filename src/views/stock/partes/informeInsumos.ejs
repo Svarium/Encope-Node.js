@@ -195,6 +195,8 @@
                                                                             <% }) %>
                                                                     </div>
                                                                     <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-success"
+                                                                            data-bs-dismiss="modal" onclick="location.reload()">Informe Finalizado <i class="fa-solid fa-circle-check"></i></button>
                                                                         <button type="button" class="btn btn-secondary"
                                                                             data-bs-dismiss="modal">Cerrar</button>
                                                                     </div>
@@ -381,11 +383,15 @@
                             title: "Cantidad informada!",
                             showConfirmButton: false,
                             timer: 1000
-                        });                        
-                        // Esperar un poco antes de recargar la página
-                        setTimeout(() => {
-                            location.reload();
-                        }, 1000);
+                        }); 
+                        
+                         // Deshabilitar input y botón
+                        inputCantidad.disabled = true;
+                        button.disabled = true;
+                        button.classList.remove('btn-outline-success');
+                        button.classList.add('btn-success');
+                        button.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+                       
                     } else {
                         Swal.fire({
                             position: "top-end",
@@ -441,10 +447,13 @@
                                 showConfirmButton: false,
                                 timer: 1000
                             });                        
-                            // Esperar un poco antes de recargar la página
-                            setTimeout(() => {
-                                location.reload();
-                            }, 1000);
+                                    // Deshabilitar input y botón
+                            inputFactura.disabled = true;
+                            button.disabled = true;
+                            button.classList.remove('btn-outline-success');
+                            button.classList.add('btn-success');
+                            button.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+
                         } else {
                             Swal.fire({
                                 position: "top-end",
@@ -502,10 +511,13 @@
                                 showConfirmButton: false,
                                 timer: 1000
                             });                        
-                            // Esperar un poco antes de recargar la página
-                            setTimeout(() => {
-                                location.reload();
-                            }, 1000);
+                            // Deshabilitar textarea y botón
+                            inputDetalle.disabled = true;
+                            button.disabled = true;
+                            button.classList.remove('btn-outline-success');
+                            button.classList.add('btn-success');
+                            button.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+
                         } else {
                             Swal.fire({
                                 position: "top-end",
