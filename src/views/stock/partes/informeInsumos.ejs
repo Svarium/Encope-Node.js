@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include('../../partials/head') %>
-    <style>
-        .card {
+        <style>
+            .card {
             min-height: 100%;
             display: flex;
             flex-direction: column;
@@ -17,7 +17,8 @@
         .btn.mt-auto {
             margin-top: auto;
         }
-    </style>
+
+        </style>
 
     <body style="background-color: rgb(243, 241, 238)">
         <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-3">
@@ -70,27 +71,22 @@
                             <% if (registros.length !==0) { %>
                                 <section class="container">
                                     <div class="row d-flex justify-content-center">
-                                        <% data.forEach(item=> { %>
+                                        <% data.forEach(item => { %>
                                             <div class="col-12 col-md-6 col-lg-3 mb-4 d-flex">
                                                 <div class="card d-flex flex-column h-100">
-                                                    <img src="/images/productos/<%= item.producto.imagen %>"
-                                                        class="card-img-top" alt="<%= item.producto.nombre %>">
+                                                    <img src="/images/productos/<%= item.producto.imagen %>" class="card-img-top" alt="<%= item.producto.nombre %>">
                                                     <div class="card-body d-flex flex-column">
                                                         <h5 class="card-title">
                                                             <%= item.producto.nombre %>
                                                         </h5>
-                                                        <p class="card-text">Cantidad a Producir: <%=
-                                                                item.producto.cantidadAProducir %>
-                                                        </p>
+                                                        <p class="card-text">Cantidad a Producir: <%= item.producto.cantidadAProducir %></p>
                                                         <h5>Insumos:</h5>
                                                         <ul>
-                                                            <% item.insumos.forEach(insumo=> { %>
+                                                            <% item.insumos.forEach(insumo => { %>
                                                                 <li class="card-text">
-                                                                    <%= insumo.nombre %> - Cantidad: <%= insumo.cantidad
-                                                                            %>
-                                                                            <%= insumo.unidadDeMedida %>
+                                                                    <%= insumo.nombre %> - Cantidad: <%= insumo.cantidad %> <%= insumo.unidadDeMedida %>
                                                                 </li>
-                                                                <% }) %>
+                                                            <% }) %>
                                                         </ul>
                                                         <!-- Button trigger modal -->
                                                         <button type="button" class="btn btn-primary mt-auto"
@@ -124,71 +120,55 @@
                                                                                         <%= insumo.nombre %>
                                                                                     </label>
                                                                                     <textarea name="detalle" disabled
-                                                                                        class="form-control" cols="1"
-                                                                                        rows="1" id="detalle"
-                                                                                        placeholder="">*Requerido: <%= insumo.cantidad * item.producto.cantidadAProducir %> <%= insumo.unidadDeMedida %></textarea>
+                                                                                    class="form-control" cols="1" rows="1" id="detalle<%= insumo.id %>"
+                                                                                    data-requerido="<%= insumo.cantidad * item.producto.cantidadAProducir %>"
+                                                                                    placeholder="">*Requerido: <%= insumo.cantidad * item.producto.cantidadAProducir %> <%= insumo.unidadDeMedida %></textarea>
                                                                                 </div>
                                                                                 <div
                                                                                     class="col-12 col-md-12 col-lg-3 mb-2 mb-md-0">
                                                                                     <label for="">Cantidad de insumo
                                                                                         adquirida</label>
                                                                                     <input type="number"
-                                                                                        <%=insumo.cantidadAdquirida>= 1
-                                                                                    ? 'disabled' : '' %>
-                                                                                    class="form-control"
-                                                                                    name="cantidadAdquirida"
-                                                                                    id="cantidadAdquirida<%= insumo.id
-                                                                                        %>"
-                                                                                        placeholder="Ingrese la cantidad
-                                                                                        adquirida" >
-                                                                                        <button
-                                                                                            class="btn mt-1 <%= insumo.cantidadAdquirida >= 1 ? 'btn-success' : 'btn-outline-success'  %>  w-100 fw-bold"
-                                                                                            data-insumo-id="<%= insumo.id %>"
-                                                                                            data-proyecto-id="<%= proyectId %>"
-                                                                                            onclick="enviarCantidadAdquirida(this)">
-                                                                                            <% if
-                                                                                                (insumo.cantidadAdquirida>
-                                                                                                = 1 ) { %>
-                                                                                                <i
-                                                                                                    class="fa-solid fa-circle-check"></i>
-                                                                                                <% } else { %>
-                                                                                                    Enviar Cantidad
-                                                                                                    Adquirida
-                                                                                                    <% } %>
-                                                                                        </button>
+                                                                                        <%= insumo.cantidadAdquirida >= 1 ? 'disabled' : ''  %>
+                                                                                        class="form-control"
+                                                                                        name="cantidadAdquirida"
+                                                                                        id="cantidadAdquirida<%= insumo.id %>"
+                                                                                        placeholder="Ingrese la cantidad adquirida" >
+                                                                                    <button
+                                                                                        class="btn mt-1 <%= insumo.cantidadAdquirida >= 1 ? 'btn-success' : 'btn-outline-success'  %>  w-100 fw-bold"
+                                                                                        data-insumo-id="<%= insumo.id %>"
+                                                                                        data-proyecto-id="<%= proyectId %>" 
+                                                                                        onclick="enviarCantidadAdquirida(this)"
+                                                                                        > <% if (insumo.cantidadAdquirida >= 1 ) { %>
+                                                                                            <i class="fa-solid fa-circle-check"></i>
+                                                                                            <% } else { %>
+                                                                                               Enviar Cantidad Adquirida
+                                                                                          <% } %> </button>
                                                                                 </div>
                                                                                 <div
                                                                                     class="col-12 col-md-12 col-lg-3 mb-2 mb-md-0">
                                                                                     <label for="">N° de Factura</label>
                                                                                     <input type="number"
-                                                                                        <%=insumo.factura>= 1 ?
-                                                                                    'disabled' : '' %>
-                                                                                    class="form-control"
-                                                                                    name="factura"
-                                                                                    id="factura<%= insumo.id %>"
-                                                                                        placeholder="Ingrese el número
-                                                                                        de factura">
-                                                                                        <button
-                                                                                            class="btn mt-1 <%= insumo.factura >= 1 ? 'btn-success' : 'btn-outline-success'  %> w-100 fw-bolder"
-                                                                                            data-factura-id="<%= insumo.id %>"
-                                                                                            data-proyecto-id="<%= proyectId %>"
-                                                                                            onclick="enviarFactura(this)">
-                                                                                            <% if (insumo.factura>= 1 )
-                                                                                                { %>
-                                                                                                <i
-                                                                                                    class="fa-solid fa-circle-check"></i>
-                                                                                                <% } else { %>
-                                                                                                    Enviar Número de
-                                                                                                    Factura
-                                                                                                    <% } %>
-                                                                                        </button>
+                                                                                    <%= insumo.factura >= 1 ? 'disabled' : ''  %>
+                                                                                        class="form-control"
+                                                                                        name="factura"
+                                                                                        id="factura<%= insumo.id %>"
+                                                                                        placeholder="Ingrese el número de factura">
+                                                                                    <button
+                                                                                        class="btn mt-1 <%= insumo.factura >= 1 ? 'btn-success' : 'btn-outline-success'  %> w-100 fw-bolder"
+                                                                                        data-factura-id="<%= insumo.id %>"
+                                                                                        data-proyecto-id="<%= proyectId %>"
+                                                                                        onclick="enviarFactura(this)"
+                                                                                        > <% if (insumo.factura >= 1 ) { %>
+                                                                                            <i class="fa-solid fa-circle-check"></i>
+                                                                                            <% } else { %>
+                                                                                               Enviar Número de Factura
+                                                                                          <% } %></button>
                                                                                 </div>
                                                                                 <div class="col-12 col-md-12 col-lg-3">
                                                                                     <label for="">Detalle</label>
                                                                                     <textarea name="detalle"
-                                                                                        <%=insumo.detalle !=="" &&
-                                                                                        insumo.detalle !==null
-                                                                                        ? 'disabled' : '' %>
+                                                                                    <%= insumo.detalle !== "" && insumo.detalle !== null  ? 'disabled' : ''  %>
                                                                                         class="form-control" cols="1"
                                                                                         rows="1"
                                                                                         placeholder="El detalle es opcional..."
@@ -198,16 +178,12 @@
                                                                                         class="btn mt-1 <%= insumo.detalle !== "" && insumo.detalle !== null  ? 'btn-success' : 'btn-outline-success'  %> w-100 fw-bolder"
                                                                                         data-detalle-id="<%= insumo.id %>"
                                                                                         data-proyecto-id="<%= proyectId %>"
-                                                                                        onclick="enviarDetalle(this)">
-                                                                                        <% if (insumo.detalle !=="" &&
-                                                                                            insumo.detalle !==null ) {
-                                                                                            %>
-                                                                                            <i
-                                                                                                class="fa-solid fa-circle-check"></i>
+                                                                                        onclick="enviarDetalle(this)"
+                                                                                        > <% if (insumo.detalle !== "" && insumo.detalle !== null ) { %>
+                                                                                            <i class="fa-solid fa-circle-check"></i>
                                                                                             <% } else { %>
-                                                                                                Enviar Detalle
-                                                                                                <% } %>
-                                                                                    </button>
+                                                                                               Enviar Detalle
+                                                                                          <% } %></button>
                                                                                 </div>
                                                                             </div>
                                                                             <hr>
@@ -223,17 +199,16 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <% }) %>
+                                        <% }) %>
                                     </div>
                                 </section>
                                 <% } %>
-
-                                    <div class="d-flex justify-content-end m-4">
-                                        <a href="/stock/partes/<%= proyectId %>" id="boton-continuar" type="button"
-                                            class="btn btn-outline-danger" style="display: none;">
-                                            Continuar al parte semanal <i class="fa-solid fa-forward"></i>
-                                        </a>
-                                    </div>
+                               
+                                <div class="d-flex justify-content-end m-4">
+                                    <a href="/stock/partes/<%= proyectId %>" id="boton-continuar" type="button" class="btn btn-outline-danger" style="display: none;">
+                                       Continuar al parte semanal <i class="fa-solid fa-forward"></i>
+                                    </a>
+                                </div>
         </main>
 
         <%- include('../../partials/scripts') %>
@@ -289,102 +264,112 @@
 
             <script>
                 async function enviarCantidadAdquirida(button) {
-                    const idInsumo = button.getAttribute('data-insumo-id');
-                    const idProyecto = button.getAttribute('data-proyecto-id');
-                    const inputCantidad = document.getElementById(`cantidadAdquirida${idInsumo}`);
-                    const cantidadAdquirida = inputCantidad.value;
+                const idInsumo = button.getAttribute('data-insumo-id');
+                const idProyecto = button.getAttribute('data-proyecto-id');
+                const inputCantidad = document.getElementById(`cantidadAdquirida${idInsumo}`);
+                const cantidadAdquirida = inputCantidad.value;
+                const textareaDetalle = document.getElementById(`detalle${idInsumo}`);
+                const cantidadRequerida = parseFloat(textareaDetalle.getAttribute('data-requerido'));
 
-
-                    if (cantidadAdquirida <= 0) {
-                        Swal.fire({
-                            icon: "error",
-                            title: "Oops...",
-                            text: "La cantidad no puede ser cero o menor",
-                        });
-                        return;
-                    };
-
-                    try {
-                        const response = await fetch(`http://localhost:3000/api/insumos/cantidadAdquirida/${idInsumo}`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                cantidadAdquirida: cantidadAdquirida,
-                                idProyecto: idProyecto
-                            })
-                        });
-
-                        const data = await response.json();
-
-                        if (response.ok) {
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: "Cantidad informada!",
-                                showConfirmButton: false,
-                                timer: 1000
-                            });
-                            // Esperar un poco antes de recargar la página
-                            setTimeout(() => {
-                                location.reload();
-                            }, 1000);
-                        } else {
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "error",
-                                title: "Ocurrió un error :(",
-                                showConfirmButton: false,
-                                timer: 1000
-                            });
-                        }
-                    } catch (error) {
-                        console.error('Error:', error);
-                        alert('Error al enviar la cantidad adquirida');
-                    }
+                if (cantidadAdquirida <= 0) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "La cantidad no puede ser cero o menor",                      
+                    });
+                    return;
                 }
 
+                if (parseFloat(cantidadAdquirida) < cantidadRequerida) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: `La cantidad adquirida debe ser igual o mayor a ${cantidadRequerida}`,                      
+                    });
+                    return;
+                }
 
-                async function enviarFactura(button) {
-                    const idInsumo = button.getAttribute('data-factura-id');
-                    const idProyecto = button.getAttribute('data-proyecto-id');
-                    const inputFactura = document.getElementById(`factura${idInsumo}`);
-                    const factura = inputFactura.value
-
-                    if (factura <= 0) {
-                        Swal.fire({
-                            icon: "error",
-                            title: "Oops...",
-                            text: "La factura no puede ir vacía",
-                        });
-                        return;
-                    };
-
-                    try {
-
-                        const response = await fetch(`http://localhost:3000/api/insumos/numeroFactura/${idInsumo}`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                factura: factura,
-                                idProyecto: idProyecto
-                            })
+                try {
+                    const response = await fetch(`http://localhost:3000/api/insumos/cantidadAdquirida/${idInsumo}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            cantidadAdquirida: cantidadAdquirida,
+                            idProyecto: idProyecto
                         })
+                    });
+
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "Cantidad informada!",
+                            showConfirmButton: false,
+                            timer: 1000
+                        });                        
+                        // Esperar un poco antes de recargar la página
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1000);
+                    } else {
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "error",
+                            title: "Ocurrió un error :(",
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Error al enviar la cantidad adquirida');
+                }
+            }
 
 
-                        const data = await response.json();
+            async function enviarFactura(button){
+                const idInsumo = button.getAttribute('data-factura-id');
+                const idProyecto = button.getAttribute('data-proyecto-id');
+                const inputFactura = document.getElementById(`factura${idInsumo}`);
+                const factura = inputFactura.value
 
-                        if (response.ok) {
-                            Swal.fire({
+                if (factura <= 0) {
+                    Swal.fire({
+                      icon: "error",
+                      title: "Oops...",
+                      text: "La factura no puede ir vacía",                      
+                    });
+                    return;
+                  };
+
+               try {
+
+                const response = await fetch(`http://localhost:3000/api/insumos/numeroFactura/${idInsumo}`,{
+                    method: 'POST',
+                    headers:{
+                        'Content-type' : 'application/json'
+                    },
+                    body: JSON.stringify({
+                        factura:factura,
+                        idProyecto: idProyecto
+                    })
+                })
+
+
+                const data = await response.json();
+
+                if(response.ok){
+                    Swal.fire({
                                 position: "top-end",
                                 icon: "success",
                                 title: "Numero de factura informado!",
                                 showConfirmButton: false,
                                 timer: 1000
-                            });
+                            });                        
                             // Esperar un poco antes de recargar la página
                             setTimeout(() => {
                                 location.reload();
@@ -398,54 +383,54 @@
                                 timer: 1000
                             });
                         }
-
-                    } catch (error) {
-                        console.error('Error:', error);
-                        alert('Error al enviar la factura');
-                    }
-                }
-
-
-                async function enviarDetalle(button) {
-                    const idInsumo = button.getAttribute('data-detalle-id');
-                    const idProyecto = button.getAttribute('data-proyecto-id');
-                    const inputDetalle = document.getElementById(`detalle${idInsumo}`);
-                    const detalle = inputDetalle.value
+                
+               } catch (error) {
+                console.error('Error:', error);
+                alert('Error al enviar la factura');
+               }   
+            }
 
 
+            async function enviarDetalle(button){
+                const idInsumo = button.getAttribute('data-detalle-id');
+                const idProyecto = button.getAttribute('data-proyecto-id');
+                const inputDetalle = document.getElementById(`detalle${idInsumo}`);
+                const detalle = inputDetalle.value
 
-                    if (detalle <= 0) {
+
+                
+                if (detalle <= 0) {
+                    Swal.fire({
+                      icon: "error",
+                      title: "Oops...",
+                      text: "El detalle no puede ir vacio",                      
+                    });
+                    return;
+                  };
+
+                  try {
+
+                    const response = await fetch(`http://localhost:3000/api/insumos/detalle/${idInsumo}`,{
+                    method: 'POST',
+                    headers: {
+                        'Content-type' : 'application/json'
+                    },
+                    body: JSON.stringify({
+                        detalle:detalle,
+                        idProyecto: idProyecto
+                    })
+                })
+
+                    const data = await response.json()
+
+                    if(response.ok){
                         Swal.fire({
-                            icon: "error",
-                            title: "Oops...",
-                            text: "El detalle no puede ir vacio",
-                        });
-                        return;
-                    };
-
-                    try {
-
-                        const response = await fetch(`http://localhost:3000/api/insumos/detalle/${idInsumo}`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                detalle: detalle,
-                                idProyecto: idProyecto
-                            })
-                        })
-
-                        const data = await response.json()
-
-                        if (response.ok) {
-                            Swal.fire({
                                 position: "top-end",
                                 icon: "success",
                                 title: "Detalle informado!",
                                 showConfirmButton: false,
                                 timer: 1000
-                            });
+                            });                        
                             // Esperar un poco antes de recargar la página
                             setTimeout(() => {
                                 location.reload();
@@ -459,20 +444,20 @@
                                 timer: 1000
                             });
                         }
+                    
+                  } catch (error) {
+                    console.error('Error:', error);
+                    alert('Error al enviar el detalle');
+                  }
 
-                    } catch (error) {
-                        console.error('Error:', error);
-                        alert('Error al enviar el detalle');
-                    }
+               
 
-
-
-                }
-
+            }
+               
             </script>
 
             <script>
-                // Función para verificar si todos los inputs y textareas están deshabilitados
+               // Función para verificar si todos los inputs y textareas están deshabilitados
                 function verificarCamposDeshabilitados() {
                     const allInputs = document.querySelectorAll('input');
                     const allTextareas = document.querySelectorAll('textarea');
@@ -488,7 +473,7 @@
                             footer: '<a href="/stock/partes/<%= proyectId %>">¿Continuar al parte semanal?</a>'
                         });
 
-                        botonContinuar.style.display = 'block'
+                        botonContinuar.style.display= 'block'
                     }
                 }
 
@@ -498,5 +483,4 @@
                 document.addEventListener('change', verificarCamposDeshabilitados);
             </script>
     </body>
-
 </html>
