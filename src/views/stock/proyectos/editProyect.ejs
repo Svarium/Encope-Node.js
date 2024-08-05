@@ -103,10 +103,9 @@
               <label for="unidadDuracion">Unidad de Duración</label>
               <select class="form-control <%= (locals.errors && errors.unidadDuracion) && 'is-invalid'%>" id="unidadDuracion" name="unidadDuracion">
                 <option value="" >Seleccione</option>
-                <option value="día" <%= proyecto.unidadDuracion === "día" && 'selected' %>>Días</option>
+                <option value="dia" <%= proyecto.unidadDuracion === "dia" && 'selected' %>>Días</option>
                 <option value="semana" <%= proyecto.unidadDuracion === "semana" && 'selected' %>>Semanas</option>
-                <option value="mes" <%= proyecto.unidadDuracion === "mes" && 'selected' %>>Meses</option>
-                <!-- Agrega más opciones según tus necesidades -->
+                <option value="mes" <%= proyecto.unidadDuracion === "mes" && 'selected' %>>Meses</option>                
               </select>
               <small id="unidadDuracion" class="text-danger ms-2"><%= locals.errors && errors.unidadDuracion ? errors.unidadDuracion.msg : null %></small>
             </div>     

@@ -1,11 +1,8 @@
 const fs = require('fs');
 const { validationResult } = require('express-validator');
-const { Op } = require("sequelize");
 const ExcelJS = require('exceljs');
 const db = require('../database/models');
 const path = require('path');
-const { error } = require('console');
-
 
 
 module.exports = {
@@ -292,9 +289,7 @@ module.exports = {
                 })
             }).catch(error => console.log(error));
 
-    },
-
-  
+    }, 
 
     updateProyect: async (req, res) => {
 
@@ -555,7 +550,7 @@ module.exports = {
                 const urlPDF = `https://test.encope.gob.ar/images/insumos/${proyecto.insumosAdquirir}`;
                 const linkText = `Descargar anexo 3`;
     
-                const row = worksheet.addRow([proyecto.nombre, proyecto.estado, proyecto.detalle, historial.expediente, proyecto.procedencia, `${proyecto.duracion} - ${proyecto.unidadDuracion}`, `${resultado.join(", ")}`, proyecto.costoTotalProyecto, linkText, proyecto.createdAt]);
+                const row = worksheet.addRow([historial.nombre, historial.estado, historial.detalle, historial.expediente, historial.procedencia, `${proyecto.duracion} - ${proyecto.unidadDuracion}`, `${resultado.join(", ")}`, historial.costoTotalProyecto, linkText, historial.createdAt]);
     
                 // Obtener la celda del enlace
                 const linkCell = row.getCell(9); // Cambiar el índice según la posición de la columna del enlace
