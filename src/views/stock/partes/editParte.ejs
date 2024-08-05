@@ -133,7 +133,7 @@
                       <%= item.producto.nombre %>
                     </strong>
                   </td>
-                  <td>
+                  <td data-producto-cantidadAProducir="<%= item.cantidadAProducir %>" class="cantidadAProducir">
                     <%= item.cantidadAProducir %>
                   </td>
                   <td>
@@ -144,7 +144,7 @@
                           data-producto-id="<%= item.productoId %>" data-parte-id="<%= parte.id %>"
                           placeholder="Ingrese cantidad" value="<%= item.cantidadProducida %>">
                       </div>
-                      <% if (parte.remanentes === null) { %>
+                      <% if (porcentajeAvance != 100.00) { %>
                         <button type="button" class="btn btn-success actualizar-cantidadProducida-btn"><i
                           class="fa-solid fa-pen-to-square"></i></button>
                       <% } %>
@@ -152,7 +152,7 @@
                     </div>
 
                   </td>
-                  <td>
+                  <td class="stockEnTallerInfo" data-stock-enTaller="<%= item.stockEnTaller %>">
                     <%= item.stockEnTaller %>
                   </td>
                   <td>
@@ -163,7 +163,7 @@
                           data-producto-id="<%= item.productoId %>" placeholder="Ingrese cantidad"
                           value="<%= item.egresos %>">
                       </div>
-                      <% if (parte.remanentes === null) { %>
+                      <% if (porcentajeAvance != 100.00) { %>
                         <button type="button" class="btn btn-primary actualizar-egresos-btn"><i
                           class="fa-solid fa-pen-to-square"></i></button>
                       <% } %>
@@ -316,6 +316,7 @@
                   const proyectoId = tbody.id
                   const productoId = this.parentElement.querySelector('.cantidadProducida-input').getAttribute('data-producto-id');
                   const cantidad = this.parentElement.querySelector('.cantidadProducida-input').value
+                  const cantidadAProducir = document.querySelector('.cantidadAProducir').getAttribute('data-producto-cantidadAProducir');
 
 
                   //Validad que cantidad no sea negativo o cero
@@ -329,6 +330,19 @@
                     });
                     return;
                   };
+
+                  if(cantidad > +cantidadAProducir){
+                    Swal.fire({
+                      icon: "error",
+                      title: "Oops...",
+                      text: "No puede ser mayor que la cantidad a producir",
+                      footer: '<a href="/">Volver al inicio</a>'
+                    });
+                    setTimeout(() => {
+                      location.reload();
+                    }, 1500)                   
+                    return;
+                  }
 
                   try {
                     const response = await fetch(`http://localhost:3000/api/stock/cantidadProducida/${proyectoId}`, {
@@ -374,11 +388,12 @@
                 const proyectoId = tbody.id
                 const productoId = this.parentElement.querySelector('.egresos-input').getAttribute('data-producto-id');
                 const egresos = this.parentElement.querySelector('.egresos-input').value;
+                const stockEnTallerInfo = document.querySelector('.stockEnTallerInfo').getAttribute('data-stock-enTaller');
 
 
 
                 // Validar que el costo no sea negativo
-                if (egresos < 0) {
+                if (egresos <= 0) {
                   Swal.fire({
                     icon: "error",
                     title: "Oops...",
@@ -387,6 +402,15 @@
                   });
                   return;
                 }
+
+                if(egresos > +stockEnTallerInfo)
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "No hay stock suficiente para este retiro",
+                    footer: '<a href="/">Volver al inicio</a>'
+                  });
+                  return;
 
                 try {
 
