@@ -658,7 +658,7 @@
                     }
 
                     // Validar que el decomiso sea mayor o igual que la cantidad adquirida
-                    if (parseFloat(decomiso) < cantidadAdquirida) {
+                    if (+decomiso > cantidadAdquirida) {
                         Swal.fire({
                             icon: "error",
                             title: "Oops...",

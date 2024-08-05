@@ -186,17 +186,32 @@ module.exports = {
 
     informarDecomisos: async (proyectoId, insumoId, decomiso, expediente) => {
         try {
-            await db.insumoProyecto.update({                
-                expedienteDecomiso: expediente,
-                decomiso: decomiso
-            }, {
+
+            const insumoProyecto = await db.insumoProyecto.findOne({
                 where: {
-                    proyectoId: proyectoId,  // Corrección aquí
-                    insumoId: insumoId
+                  proyectoId: proyectoId,
+                  insumoId: insumoId
                 }
-            })
-    
-            return true
+              });
+
+              if (insumoProyecto) {
+                const nuevaCantidadAdquirida = insumoProyecto.cantidadAdquirida - decomiso;
+              
+                await db.insumoProyecto.update({
+                  expedienteDecomiso: expediente,
+                  decomiso: decomiso,
+                  cantidadAdquirida: nuevaCantidadAdquirida
+                }, {
+                  where: {
+                    proyectoId: proyectoId,
+                    insumoId: insumoId
+                  }
+                });
+              
+                return true;
+              } else {            
+                return false;
+              }
             
         } catch (error) {
             console.log(error);
