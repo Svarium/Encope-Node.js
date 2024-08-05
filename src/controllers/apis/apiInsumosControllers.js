@@ -1,6 +1,6 @@
 const { validationResult } = require('express-validator');
 const createResponseError = require('../../helpers/createResponseError');
-const { addProyectoInsumos, addCantidadAdquirida, addNumeroFactura, addDetalleInsumo, getRemanentes, informarDecomisos } = require('../../services/insumosService');
+const { addProyectoInsumos, addCantidadAdquirida, addNumeroFactura, addDetalleInsumo, getRemanentes, informarDecomisos, deleteProyectoInsumos } = require('../../services/insumosService');
 const ExcelJS = require('exceljs');
 const fs = require('fs');
 const db = require('../../database/models');
@@ -26,6 +26,26 @@ module.exports = {
             return createResponseError(res, error)
         }
 
+    },
+
+    deleteRegister: async (req,res) => {
+        try {
+            const proyectoId = req.body.proyectoId
+
+          const deleteRegisteredProyects = await deleteProyectoInsumos(proyectoId);
+          const createRegisteredProyects = await addProyectoInsumos(proyectoId)
+
+            return res.status(200).json({
+                ok:true,
+                data:{
+                    message:'Registros actualizados correctamente!'
+                }
+            })
+            
+        } catch (error) {
+            console.log(error);
+            return createResponseError(res, error)
+        }
     },
 
     createCantidadAdquirida : async (req,res) => {

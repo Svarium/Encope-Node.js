@@ -58,11 +58,27 @@ module.exports = {
             return 
 
         } catch (error) {
-            console.log(error);
+        console.log(error);
         throw{
             status:500,
             message:error.message,
         }        
+        }
+    },
+
+    deleteProyectoInsumos: async(idProyecto) =>{
+        try {
+
+            const deleteRegisteredProyect = await db.insumoProyecto.destroy({
+                where:{proyectoId: idProyecto} 
+            })
+            
+        } catch (error) {
+            console.log(error);
+            throw{
+                status:500,
+                message:error.message,
+            }        
         }
     },
 

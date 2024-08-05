@@ -1,5 +1,5 @@
 const express = require('express');
-const { createRegister, createCantidadAdquirida, createNumeroFactura, createDetalleInsumo, calcularRemanentes, porcentajeAvance, decomisos } = require('../../controllers/apis/apiInsumosControllers');
+const { createRegister, createCantidadAdquirida, createNumeroFactura, createDetalleInsumo, calcularRemanentes, porcentajeAvance, decomisos, deleteRegister } = require('../../controllers/apis/apiInsumosControllers');
 const addCantidadAdquiridaValidator = require('../../validations/api/insumos/addCantidadAdquiridaValidator');
 const addNumeroFacturaValidator = require('../../validations/api/insumos/addNumeroFacturaValidator');
 const addDetalleValidator = require('../../validations/api/insumos/addDetalleValidator');
@@ -10,6 +10,8 @@ const router = express.Router();
 //llego con api/insumos
 
 router.post('/addproyectoInsumo', createRegister) //crea el registro con los datos basicos 
+
+router.post('/deleteProyectoInsumo', deleteRegister ) //elimina los registros y llama al createRegister para acualizar el estado
 
 router.post('/cantidadAdquirida/:id', addCantidadAdquiridaValidator, createCantidadAdquirida) //guarda el registro de la cantidad adquirida
 
