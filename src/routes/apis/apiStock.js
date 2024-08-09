@@ -1,5 +1,6 @@
 const express = require('express');
 const { editState, addRemanentes, allProducts, allTallers, allProyectsDone, lastProyects, updateCantidadAProducir, updateCostoUnitario, eliminarProducto, agregarProducto, cantidadProducida, egresos, observaciones, estadistica, deleteInsumo } = require('../../controllers/apis/apiStockControllers');
+const { expedienteFichaTecnicaExistente } = require('../../controllers/apis/apiFichaTecnicaControllers');
 
 const router = express.Router();
 
@@ -32,6 +33,8 @@ router.put('/egresos/:id', egresos) //actualizo los egresos
 router.put('/observaciones/:id', observaciones) //actualizo las observaciones
 
 router.delete('/deleteInsumo/:id', deleteInsumo) //elimina el insumo de un producto
+
+router.post('/expedienteFicha/', expedienteFichaTecnicaExistente) //consulta si el expediente de la nueva ficha ya existe en la base de datos
 
 
 
