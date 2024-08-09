@@ -1,4 +1,5 @@
 const db = require('../database/models');
+const { includes } = require('../validations/api/insumos/addCantidadAdquiridaValidator');
 
 
 module.exports = {
@@ -42,9 +43,11 @@ module.exports = {
             });
 
             data.forEach(item => {  //itero mi array para crear un registro en cada ciclo
-                item.insumos.forEach(insumo => {
+                let aProducir = item.producto.cantidadAProducir
+                item.insumos.forEach(insumo => {             
                     db.insumoProyecto.create({
-                        cantidadRequerida: insumo.cantidad,
+                        cantidadAProducir: aProducir ,
+                        cantidadRequerida: +insumo.cantidad * +aProducir  ,
                         proyectoId: proyectoId,
                         productoId: item.producto.id,
                         insumoId:insumo.id
@@ -55,11 +58,169 @@ module.exports = {
             return 
 
         } catch (error) {
-            console.log(error);
+        console.log(error);
         throw{
             status:500,
             message:error.message,
         }        
         }
+    },
+
+    deleteProyectoInsumos: async(idProyecto) =>{
+        try {
+
+            const deleteRegisteredProyect = await db.insumoProyecto.destroy({
+                where:{proyectoId: idProyecto} 
+            })
+            
+        } catch (error) {
+            console.log(error);
+            throw{
+                status:500,
+                message:error.message,
+            }        
+        }
+    },
+
+    addCantidadAdquirida: async (idInsumo, cantidadAdquirida, idProyecto) => {
+        try {
+            const cantidad = await db.insumoProyecto.update( {
+                cantidadAdquirida:cantidadAdquirida
+            },{
+                where:{
+                    insumoId:idInsumo,
+                    proyectoId:idProyecto
+                }
+            })
+            return cantidad        
+            
+        } catch (error) {
+            console.log(error);
+            throw{
+                status:500,
+                message:error.message,
+            }        
+        }      
+    },
+
+    
+    addNumeroFactura: async (idInsumo, factura, idProyecto) => {
+        try {
+            const addFactura = await db.insumoProyecto.update({
+                factura:factura
+            },{
+                where:{insumoId:idInsumo, proyectoId:idProyecto}
+            })
+            return addFactura        
+            
+        } catch (error) {
+            console.log(error);
+            throw{
+                status:500,
+                message:error.message,
+            }        
+        }      
+    },
+
+    addDetalleInsumo: async (idInsumo, detalle, idProyecto) => {
+
+        try {
+            const addDetalle = await db.insumoProyecto.update({
+                detalle:detalle
+            },{
+                where:{insumoId:idInsumo, proyectoId:idProyecto}
+            })
+            return addDetalle        
+            
+        } catch (error) {
+            console.log(error);
+            throw{
+                status:500,
+                message:error.message,
+            }        
+        }      
+    }, 
+
+    getRemanentes: async (proyectoId) => {
+
+        try {      
+            const insumos = await db.insumoProyecto.findAll({
+                where: {proyectoId:proyectoId},
+                attributes:["cantidadRequerida", "cantidadAdquirida", "cantidadAproducir", "decomiso"],     
+                include:[
+                {
+                    model: db.Insumo,
+                    as:'insumos',
+                    attributes:["nombre", "id", "unidadDeMedida","idProducto", "cantidad"]
+                }    
+            ]           
+            })
+            
+
+            const insumosComparados = insumos.map(item => {
+                const plainInsumo = item.insumos.get({ plain: true });
+                const cantidadRequerida = item.get('cantidadRequerida');
+                const cantidadAdquirida = item.get('cantidadAdquirida');
+                const cantidadAproducir = item.get('cantidadAproducir');
+                const decomiso = item.get('decomiso')
+                return {
+                    ...plainInsumo,
+                    cantidadRequerida: cantidadAproducir * plainInsumo.cantidad,
+                    cantidadAdquirida,
+                    decomiso,
+                    remanentes: cantidadAdquirida != null ? cantidadAdquirida - cantidadRequerida : 'Falta informar cantidad Adquirida'
+                };
+            });            
+
+            return insumosComparados
+
+            
+        } catch (error) {
+            console.log(error);
+            throw{
+                status:500,
+                message:error.message,
+            }        
+        }
+    }, 
+
+    informarDecomisos: async (proyectoId, insumoId, decomiso, expediente) => {
+        try {
+
+            const insumoProyecto = await db.insumoProyecto.findOne({
+                where: {
+                  proyectoId: proyectoId,
+                  insumoId: insumoId
+                }
+              });
+
+              if (insumoProyecto) {
+                const nuevaCantidadAdquirida = insumoProyecto.cantidadAdquirida - decomiso;
+              
+                await db.insumoProyecto.update({
+                  expedienteDecomiso: expediente,
+                  decomiso: decomiso,
+                  cantidadAdquirida: nuevaCantidadAdquirida
+                }, {
+                  where: {
+                    proyectoId: proyectoId,
+                    insumoId: insumoId
+                  }
+                });
+              
+                return true;
+              } else {            
+                return false;
+              }
+            
+        } catch (error) {
+            console.log(error);
+            throw {
+                status: 500,
+                message: error.message,
+            }       
+        }
     }
+    
+
 }

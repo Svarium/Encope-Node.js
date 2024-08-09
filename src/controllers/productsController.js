@@ -4,25 +4,27 @@ const { Op } = require('sequelize');
 const ExcelJS = require('exceljs');
 const fs = require('fs');
 const path = require('path');
-const { includes, forEach } = require("../validations/addProductValidator");
-const { error } = require("console");
-
-
-
 
 module.exports = {
     list : async (req,res) => {
 
-       const destinos = await db.destinoUsuario.findAll()
+            const destinos = await db.destinoUsuario.findAll({
+                attributes:["id", "nombreDestino"]
+            })
+
+            const talleres = await db.Taller.findAll({
+                attributes:["id", "nombre"]
+            })
          
             return res.render("stock/listStock",{               
                 title:"Modulo de stock",
-                destinos
+                destinos,
+                talleres
             })     
     },
 
     newProduct : (req,res) => {
-        return res.render('stock/products/addproduct',{
+        return res.render('stock/products/addProduct',{
             title:"Nuevo Producto"
         })
     },
@@ -87,7 +89,7 @@ module.exports = {
                fs.existsSync(path.join(__dirname, `../../public/images/productos/${req.file.filename}`)) && fs.unlinkSync(path.join(__dirname, `../../public/images/productos/${req.file.filename}`))
             }
 
-            return res.render('stock/products/addproduct',{
+            return res.render('stock/products/addProduct',{
                 title:"Nuevo Producto",
                 errors: errors.mapped(),
                 old: req.body
@@ -187,8 +189,6 @@ module.exports = {
 
         const errors = validationResult(req);
 
-        /* return res.send(errors.mapped()) */
-
         if(req.fileValidationError){ //este if valida que solo se puedan subir extensiones (pdf)
             errors.errors.push({
                 value : "",
@@ -235,7 +235,7 @@ module.exports = {
     } else {
 
         if(req.file){
-            fs.existsSync(path.join(__dirname,`../../public/images/fichasTecnicas/${req.file.filename}`)) && fs.unlinkSync(path.join(__dirname,`../../public/images/fichasTecnicas/${req.file.filename}`)) //SI HAY ERROR Y CARGÓ IMAGEN ESTE METODO LA BORRA
+            fs.existsSync(path.join(__dirname,`../../public/images/fichas/${req.file.filename}`)) && fs.unlinkSync(path.join(__dirname,`../../public/images/fichas/${req.file.filename}`)) //SI HAY ERROR Y CARGÓ IMAGEN ESTE METODO LA BORRA
         }
 
         db.Producto.findAll()

@@ -154,18 +154,16 @@
 
                       <!-- Enlace para editar y formulario para eliminar -->
                       <div class="row mt-2">
-                        <div class="col-6">
+                        <div class="<%= !item.ficha ? 'col-12' : 'col-6' %>">
                           <a href="/stock/editProduct/<%= item.id %>">
                             <button class="btn btn-success w-100">Editar <i
                                 class="fa-solid fa-pen-to-square"></i></button>
                           </a>
                         </div>
                         <div class="col-6">
-                          <form action="/stock/delete/<%= item.id %>?_method=DELETE" method="POST"
-                            class="deleteProductForm">
-                            <button type="submit" class="btn btn-danger w-100">Eliminar <i
-                                class="fa-solid fa-trash"></i></button>
-                          </form>
+                          <% if (item.ficha) { %>
+                            <a href="/images/fichas/<%= item.ficha %>" target="_blank" class="btn btn-danger w-100">Ficha <i class="fa-solid fa-file-arrow-down"></i></a>
+                          <% } %>                         
                         </div>
                       </div>
                     </td>
@@ -220,7 +218,7 @@
           const forms = document.querySelectorAll('form');
 
           forms.forEach(form => {
-            form.addEventListener('submit', function (event) {
+            form.addEventListener('submit', async function (event) {
               event.preventDefault(); // Detener el envío del formulario para validar primero
 
               const inputs = form.querySelectorAll('input[type="text"], input[type="file"]');
@@ -235,6 +233,23 @@
                 errors.push('El formato del expediente no es correcto. Ejemplo: EX-2023-114492446-APN-DS#ENCOPE');
               }
 
+              //Validacion expediente existente
+              let response = await fetch("http://localhost:3000/api/stock/expedienteFicha/",{
+                method: 'POST',
+                body: JSON.stringify({
+                  expedienteFicha: expediente.value.trim()
+                }),
+                headers:{
+                  "Content-Type" : "application/json"
+                }
+              });
+
+              let result = await response.json();
+
+              if(result.data.existExpedienteFicha === true) {
+                errors.push('El Expediente ya existe en la base de datos');
+              }
+
               // Validación del campo de ficha para recibir solo archivos PDF
               if (ficha.value.trim() && !ficha.value.trim().toLowerCase().endsWith('.pdf')) {
                 errors.push('El archivo seleccionado en el campo de ficha debe ser un PDF.');
@@ -246,6 +261,8 @@
                   errors.push(`El campo ${input.getAttribute('name')} es requerido.`);
                 }
               });
+
+
 
               if (errors.length > 0) {
                 let errorMessage = '<ul>';

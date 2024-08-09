@@ -102,47 +102,60 @@
     </section>
 
     <!-- BUSCADOR DE TALLERES -->
-
     <section>
       <div class="container mt-3 shadow">
         <h5 class="text-center mb-3">Buscar Taller <i class="fa-solid fa-screwdriver-wrench fa-sm"></i></h5>
-        
-          <form action="/stock/searchTaller" method="POST" class="row g-3"  onsubmit="return validarFormBuscarTaller()">
-            <div class="col-md-6">
-                <input type="search" class="form-control" id="inputTaller" name="nombre" placeholder="Escribe el nombre del taller">
-            </div>
-            <div class="col-md-6">
-              <select id="inputDestino" class="form-control rounded <%= (locals.errors && errors.destino) && 'is-invalid'%>" name="destino">
-                <option value="" selected hidden>Seleccione el destino del taller...</option>
-                <% destinos.forEach(({nombreDestino, id}) => { %>
+        <form action="/stock/searchTaller" method="POST" class="row g-3" onsubmit="return validarFormBuscarTaller()" id="searchTallerForm">
+          <div class="col-md-6">
+            <input type="search" class="form-control" id="inputTaller" name="nombre" placeholder="Escribe el nombre del taller">
+          </div>
+          <div class="col-md-6">
+            <select id="inputDestino" class="form-control <%= (locals.errors && errors.destino) && 'is-invalid'%>" name="destino">
+              <option value="" selected hidden>Seleccione el destino del taller...</option>
+              <% destinos.forEach(({nombreDestino, id}) => { %>
                 <option value="<%= id %>"> <%= nombreDestino %> </option>
-                <% }) %>
+              <% }) %>
             </select>
-          </div> 
+          </div>
           <div class="col-md-6 mb-4">
             <button type="submit" class="btn btn-primary">Buscar</button>
-        </div>         
-           
-          
-      </form>
-    </div>
+          </div>
+        </form>
+      </div>
     </section>
 
     <section class="mb-5">
       <!-- BUSCADOR DE PROYECTOS -->
     <div class="container mt-3 shadow">
       <h5 class="text-center mb-3">Buscar Proyecto <i class="fa-solid fa-receipt fa-sm"></i></h5>
-      <form action="/stock/searchProyect" class="row g-3" id="searchProyect" onsubmit="return validarFormSearchProyect()">
-        <div class="col-md-11">
-            <input type="search" class="form-control" id="inputProyecto" name="search" placeholder="Ingresa numero de expediente (ej: EX-2023-114492446-APN-DS#ENCOPE)">
+      <form action="/stock/searchProyect" method="POST" class="row " id="searchProyect" onsubmit="return validarFormularioBuscarProyecto()">
+        <div class="col-md-4">
+            <input type="text" class="form-control" id="expediente" name="expediente" placeholder="Ingresa numero de expediente (ej: EX-2023-114492446-APN-DS#ENCOPE)">           
         </div>
-        <div class="col-md-1 mb-4">
+        <div class="col-md-4">
+          <input list="talleres" class="form-control" id="taller" name="taller" placeholder="Ingresa el nombre del taller..."> 
+          <datalist id="talleres">
+            <% talleres.forEach(taller => { %>
+              <option value="<%= taller.id %>"><%= taller.nombre %></option>
+            <% }) %>           
+          </datalist>          
+      </div>
+      <div class="col-md-4">
+        <input list="unidades"  class="form-control" id="procedencia" name="procedencia" placeholder="Ingresa la unidad o complejo...">  
+        <datalist id="unidades">
+          <% destinos.forEach(destino => { %>
+            <option value="<%= destino.nombreDestino %>"><%= destino.nombreDestino %></option>
+          <% }) %>          
+        </datalist>              
+    </div>
+        <div class="col-md-12 mb-4 w-100 mt-3">
             <button type="submit" class="btn btn-primary">Buscar</button>
         </div>
     </form>
   </div>
     </section><br><br><br>
 
+   
      
 
 
@@ -169,7 +182,7 @@
         return true;
       }
 
-      function validarFormBuscarTaller() {
+      function validarFormBuscarTaller() {       
 
         const inputTaller = document.getElementById('inputTaller');
         const inputDestino = document.getElementById('inputDestino');
@@ -187,22 +200,23 @@
         return true
       }
 
-      function validarFormSearchProyect() {
-        const inputSearch = document.getElementById('inputProyecto');
+      function validarFormularioBuscarProyecto() {
+          const inputExpediente = document.getElementById('expediente');
+          const inputProcedencia = document.getElementById('procedencia');
+          const inputTaller = document.getElementById('taller')
 
-        if (inputSearch.value.trim() === '') {
-
-          Swal.fire({
+          if(inputExpediente.value.trim() === '' && inputProcedencia.value.trim() === '' && inputTaller.value <= 0){
+            Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "Debes ingresar el nombre del Proyecto"
+            text: "Debes ingresar algún parámetro para la busqueda"
           });
 
-          return false;
-        }
-        return true;
+          return false
+          }
+          return true
       }
-
+      
     
     </script>
   </body>

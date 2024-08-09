@@ -122,7 +122,7 @@ module.exports = {
   editarCantidadAProducir: async (proyectoId, productoId, cantidad) => {
     try {     
 
-      const producto = await db.proyectoProducto.findOne({where:{productoId: productoId, //busco el producto para obtener sus datos previos
+    const producto = await db.proyectoProducto.findOne({where:{productoId: productoId, //busco el producto para obtener sus datos previos
         proyectoId: proyectoId,}});
 
       const updateProduct = await db.proyectoProducto.update({ //hago el update de las nuevas cantidades para el producto
@@ -149,9 +149,7 @@ module.exports = {
     
         const costoProducto = costoUnitario * cantidad;
         return total + costoProducto;
-    }, 0);
-
-  
+    }, 0);  
 
       const updateCostoTotalProyecto = await db.Proyecto.update({ // actualizo el costo total en la tabla proyectos
         costoTotalProyecto: costoTotal
@@ -159,7 +157,36 @@ module.exports = {
         where: { id: proyectoId }
       })
 
-      return true;
+      const insumos = await db.insumoProyecto.findAll({
+        where: { proyectoId: proyectoId },
+        attributes: ["id","cantidadRequerida", "cantidadAdquirida", "cantidadAProducir", "decomiso"],
+        include: [
+          {
+            model: db.Insumo,
+            as: 'insumos',
+            attributes: ["nombre", "id", "unidadDeMedida", "idProducto", "cantidad"]
+          }
+        ]
+      });
+
+      const insumosActualizados = insumos.map(async (item) => {
+        const plainInsumo = item.insumos.get({ plain: true });
+        const cantidadRequerida = cantidad * plainInsumo.cantidad;
+  
+        await db.insumoProyecto.update({
+          cantidadAProducir: cantidad,
+          cantidadRequerida: cantidadRequerida
+        }, {
+          where: {
+            proyectoId: proyectoId,   
+            insumoId: plainInsumo.id        
+          }
+        });
+      });
+
+    await Promise.all(insumosActualizados);
+    
+    return true;
 
     } catch (error) {
       console.log(error);

@@ -1,17 +1,17 @@
 const multer = require('multer');
 const path = require('path');
 
-const storageFichasFiles = multer.diskStorage({
+const storageAnexosFiles = multer.diskStorage({
     destination: function (req, file, callback) {
-        callback(null, 'public/images/fichas')
+        callback(null, 'public/images/anexos')
     },
     filename: function (req, file, callback) {
-        callback(null, `${Date.now()}_fichas_${path.extname(file.originalname)}`)
+        callback(null, `${Date.now()}_anexos_${path.extname(file.originalname)}`)
     }
 })
 
-const uploadFichasFiles = multer({
-    storage: storageFichasFiles,
+const uploadAnexosFiles = multer({
+    storage: storageAnexosFiles,
 
     limits:{
         fileSize: 5 * 1024 * 1024 // 5mb 
@@ -27,5 +27,5 @@ const uploadFichasFiles = multer({
 });
 
 module.exports = {
-    uploadFichasFiles
+    uploadAnexosFiles
 };

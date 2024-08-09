@@ -1,11 +1,8 @@
 const fs = require('fs');
 const { validationResult } = require('express-validator');
-const { Op } = require("sequelize");
 const ExcelJS = require('exceljs');
 const db = require('../database/models');
-const { title } = require('process');
 const path = require('path');
-const { cantidadProducida } = require('./apis/apiStockControllers');
 
 
 module.exports = {
@@ -35,6 +32,70 @@ module.exports = {
 
     },
 
+    listDelayedProjects: async(req, res) => {
+        try {
+            // Consultar todos los proyectos
+            const proyectos = await db.Proyecto.findAll(
+                {
+                    include: [{
+                        model: db.proyectoProducto,
+                        as: "productoProyecto",
+                        include: [
+                            {
+                                model: db.Producto,
+                                as: "producto"
+                            }
+                        ]
+                    },           
+                    ]
+                }                
+            );
+        
+            // Obtener la fecha actual
+            const fechaActual = new Date();
+        
+            // Filtrar los proyectos fuera de término
+              const proyectosFueraDeTermino = proyectos.filter(proyecto => {
+              const { createdAt, duracion, unidadDuracion } = proyecto;
+        
+              // Convertir la fecha de creación a un objeto Date
+              const fechaCreacion = new Date(createdAt);
+        
+              // Calcular la fecha de vencimiento
+              let fechaVencimiento;
+              switch (unidadDuracion) {
+                case 'dia':
+                  fechaVencimiento = new Date(fechaCreacion);
+                  fechaVencimiento.setDate(fechaVencimiento.getDate() + duracion);
+                  break;
+                case 'semana':
+                  fechaVencimiento = new Date(fechaCreacion);
+                  fechaVencimiento.setDate(fechaVencimiento.getDate() + (duracion * 7));
+                  break;
+                case 'mes':
+                  fechaVencimiento = new Date(fechaCreacion);
+                  fechaVencimiento.setMonth(fechaVencimiento.getMonth() + duracion);
+                  break;
+                default:
+                  return false; // Si la unidad de duración no es válida, no consideres este proyecto
+              }
+        
+              // Comparar la fecha de vencimiento con la fecha actual
+              return fechaActual > fechaVencimiento;
+            });
+            
+           
+
+            // Enviar los proyectos fuera de término a la vista
+           return res.render('stock/proyectos/proyectosRetrasados', {
+            title:"Proyectos fuera de termino",
+            proyectosFueraDeTermino });
+          } catch (error) {
+            console.error('Error al obtener proyectos fuera de término:', error);
+            res.status(500).send('Ocurrió un error al obtener los proyectos fuera de término.');
+          }
+    },
+
     addNewProyect: (req, res) => {
 
         const talleres = db.Taller.findAll({
@@ -56,7 +117,7 @@ module.exports = {
         Promise.all(([talleres, productos, ]))
             .then(([talleres, productos,]) => {
 
-                return res.render('stock/proyectos/addproyect', {
+                return res.render('stock/proyectos/addProyect', {
                     title: 'Nuevo Proyecto',
                     talleres,
                     productos,
@@ -158,7 +219,7 @@ module.exports = {
             } else {
 
                 if (req.file) {
-                    fs.existsSync(path.join(__dirname, `../../public/images/insumos/${req.file.filename}`)) && fs.unlinkSync(path.join(__dirname, `../../public/images/insumos/${req.file.filename}`))
+                    fs.existsSync(path.join(__dirname, `../../public/images/anexos/${req.file.filename}`)) && fs.unlinkSync(path.join(__dirname, `../../public/images/anexos/${req.file.filename}`))
                 }
 
                 const talleres = db.Taller.findAll({
@@ -178,7 +239,7 @@ module.exports = {
                 Promise.all(([talleres, productos, ]))
                     .then(([talleres, productos, ]) => {
 
-                        return res.render('stock/proyectos/addproyect', {
+                        return res.render('stock/proyectos/addProyect', {
                             title: 'Nuevo Proyecto',
                             talleres,
                             productos,                            
@@ -228,9 +289,7 @@ module.exports = {
                 })
             }).catch(error => console.log(error));
 
-    },
-
-  
+    }, 
 
     updateProyect: async (req, res) => {
 
@@ -491,7 +550,7 @@ module.exports = {
                 const urlPDF = `http://localhost:3000/images/insumos/${proyecto.insumosAdquirir}`;
                 const linkText = `Descargar anexo 3`;
     
-                const row = worksheet.addRow([proyecto.nombre, proyecto.estado, proyecto.detalle, historial.expediente, proyecto.procedencia, `${proyecto.duracion} - ${proyecto.unidadDuracion}`, `${resultado.join(", ")}`, proyecto.costoTotalProyecto, linkText, proyecto.createdAt]);
+                const row = worksheet.addRow([historial.nombre, historial.estado, historial.detalle, historial.expediente, historial.procedencia, `${proyecto.duracion} - ${proyecto.unidadDuracion}`, `${resultado.join(", ")}`, historial.costoTotalProyecto, linkText, historial.createdAt]);
     
                 // Obtener la celda del enlace
                 const linkCell = row.getCell(9); // Cambiar el índice según la posición de la columna del enlace
@@ -628,77 +687,79 @@ module.exports = {
 
     },
 
-    searchProyect: (req, res) => {
-        const query = req.query.search;
-    
-        db.Proyecto.findOne({
-            where: {
-                expediente: {
-                    [Op.like]: `%${query}%`
-                }
-            },
-            include: [{
-                model: db.proyectoProducto,
-                as: "productoProyecto",
-                include: [
-                    {
-                        model: db.Producto,
-                        as: "producto"
-                    }
-                ]
-            },           
-            ]
-        }).then(proyecto => {
-            if (proyecto) {
-                db.Parte.findOne({
-                    where: {
-                        idProyecto: proyecto.id
-                    },
-                    include: [{
-                        model: db.proyectoProducto,
-                        as:"productoParte",
-                        include:[
-                            {
-                                model: db.Producto,
-                                as:"producto"
-                            }
-                        ]
-                     }]
-                }).then(parte => {
+    searchProyect: async (req, res) => {
 
-                  /*   return res.send(parte) */
-                    const cantidadTotalAProducir = parte.productoParte.reduce((total, producto) => { // Sumo el total a producir de todos los productos
-                        return total + producto.cantidadAProducir;
-                    }, 0); // Se inicializa con 0 para evitar problemas si la lista está vacía
-              
-                    const cantidadTotalProducida = parte.productoParte.reduce((total, producto) => { // Sumo el total producido de todos los productos
-                        return total + producto.cantidadProducida;
-                    }, 0); // Se inicializa con 0 para evitar problemas si la lista está vacía
-        
-                 
-                    const porcentajeAvance = (cantidadTotalProducida / cantidadTotalAProducir) * 100;
-        
-                    const ideal = cantidadTotalAProducir / parte.duracion;
-        
-                    const real = cantidadTotalProducida / parte.duracion 
+        const { expediente, taller, procedencia } = req.body;
+
+        const findProyecto = async (whereCondition) => {
+            return await db.Proyecto.findOne({
+                where: whereCondition,
+                include: [{
+                    model: db.proyectoProducto,
+                    as: "productoProyecto",
+                    include: [{ model: db.Producto, as: "producto" }]
+                }]
+            });
+        };
     
+        const findParte = async (proyectoId) => {
+            return await db.Parte.findOne({
+                where: { idProyecto: proyectoId },
+                include: [{
+                    model: db.proyectoProducto,
+                    as: "productoParte",
+                    include: [{ model: db.Producto, as: "producto" }]
+                }]
+            });
+        };
+    
+        const calculateMetrics = (parte) => {
+            const cantidadTotalAProducir = parte.productoParte.reduce((total, producto) => total + producto.cantidadAProducir, 0);
+            const cantidadTotalProducida = parte.productoParte.reduce((total, producto) => total + producto.cantidadProducida, 0);
+            const porcentajeAvance = (cantidadTotalProducida / cantidadTotalAProducir) * 100;
+            const ideal = cantidadTotalAProducir / parte.duracion;
+            const real = cantidadTotalProducida / parte.duracion;
+    
+            return { porcentajeAvance: porcentajeAvance.toFixed(2), ideal, real };
+        };
+    
+        try {
+            let proyecto;
+            if (expediente) {
+                proyecto = await findProyecto({ expediente });
+            } else if (taller) {
+                proyecto = await findProyecto({ idTaller: taller });
+            } else if (procedencia) {
+                proyecto = await findProyecto({ procedencia });
+            }
+    
+            if (proyecto) {
+                const parte = await findParte(proyecto.id);
+                if (parte) {
+                    const metrics = calculateMetrics(parte);
                     return res.render('stock/proyectos/searchProyect', {
                         title: 'Resultado de la búsqueda',
-                        proyecto,                        
+                        proyecto,
                         parte,
-                        porcentajeAvance: porcentajeAvance.toFixed(2),
-                        ideal,
-                        real,  
+                        ...metrics
                     });
-                }).catch(error => console.log(error));
-            } else {
-                // Renderizar una vista con un mensaje indicando que no se encontraron resultados
-                return res.render('stock/proyectos/searchProyect', {
-                    title: 'Sin resultados',
-                    query: query
-                });
+                }
             }
-        }).catch(error => console.log(error));
+    
+            // Renderizar una vista con un mensaje indicando que no se encontraron resultados
+            return res.render('stock/proyectos/searchProyect', {
+                title: 'Sin resultados'
+            });
+    
+        } catch (error) {
+            console.log(error);
+            // Renderizar una vista de error si es necesario
+            return res.render('stock/proyectos/searchProyect', {
+                title: 'Error en la búsqueda',
+                error: error.message
+            });
+        }
+       
     }
     
 }

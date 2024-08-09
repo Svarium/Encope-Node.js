@@ -34,6 +34,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   insumoProyecto.init({
+    cantidadAProducir: DataTypes.INTEGER,
     cantidadRequerida: DataTypes.INTEGER,
     cantidadAdquirida: DataTypes.INTEGER,
     detalle: DataTypes.STRING,

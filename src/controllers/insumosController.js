@@ -72,7 +72,7 @@ module.exports = {
                         include: [{
                             model: db.Insumo,
                             as: "productos",
-                            attributes: ["id", "nombre", "unidadDeMedida" , "cantidad"]
+                            attributes: ["id", "nombre", "unidadDeMedida", "cantidad"]
                         }]
                     }]
                 }],
@@ -82,6 +82,23 @@ module.exports = {
                 return res.status(404).send({ message: 'Parte no encontrada' });
             }
     
+            const registros = await db.insumoProyecto.findAll({
+                where: {
+                     proyectoId: idproyecto
+                },
+                attributes: ['id', 'cantidadAdquirida', 'insumoId', 'factura', 'detalle']
+            });
+    
+            // Convertimos registros a un objeto para facilitar la búsqueda
+            const registrosMap = registros.reduce((acc, registro) => {
+                acc[registro.insumoId] = {
+                    cantidadAdquirida: registro.cantidadAdquirida,
+                    factura: registro.factura,
+                    detalle: registro.detalle
+                }
+                return acc;
+            }, {});
+    
             const data = parte.productoParte.map(productoParte => {
                 return {
                     producto: {
@@ -90,26 +107,23 @@ module.exports = {
                         imagen: productoParte.producto.imagen,
                         cantidadAProducir: productoParte.cantidadAProducir,
                     },
-                    insumos: productoParte.producto.productos.map(insumo => ({
-                        id: insumo.id,
-                        nombre: insumo.nombre,
-                        unidadDeMedida: insumo.unidadDeMedida,
-                        cantidad: insumo.cantidad
-                    }))
+                    insumos: productoParte.producto.productos.map(insumo => {
+                        const registro = registrosMap[insumo.id];
+                        return {
+                            id: insumo.id,
+                            nombre: insumo.nombre,
+                            unidadDeMedida: insumo.unidadDeMedida,
+                            cantidad: insumo.cantidad,
+                            cantidadAdquirida: registro ? registro.cantidadAdquirida : null, // Agregar cantidadAdquirida
+                            factura: registro ? registro.factura : null, // Agregar factura
+                            detalle: registro ? registro.detalle : null // Agregar detalle
+                        };
+                    })
                 };
             });
     
             const nombreProyecto = parte.nombre;
-            const proyectId = parte.id
-
-            const registros = await db.insumoProyecto.findAll({
-                where: {
-                     proyectoId : idproyecto
-                },
-                attributes:['id']
-            })
-            
-            
+            const proyectId = parte.id;
     
             return res.render('stock/partes/informeInsumos', {
                 title: "Informar insumos",
@@ -124,5 +138,6 @@ module.exports = {
             return res.status(500).send({ message: 'Error interno del servidor' });
         }
     }
+    ,
 
 }

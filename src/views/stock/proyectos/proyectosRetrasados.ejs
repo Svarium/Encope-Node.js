@@ -50,7 +50,7 @@
       <!-- TITULO H1 -->
       <div class="container-fluid mt-4">
         <p class="text-black h2 text-center shadow-3">
-          <strong >Proyectos Productivos</strong>
+          <strong class="text-danger">Proyectos Productivos fuera de termino <i class="fa-solid fa-circle-exclamation"></i></strong> 
         </p>
         <hr class="text-black" />        
       </div>
@@ -63,7 +63,6 @@
         <button type="button" class="btn btn-outline-primary ms-3 btn-sm mt-1 mb-2" onclick="window.location.href='/stock/proyectsTable'">
           <i class="fa-solid fa-download"></i> Exportar Excel</i>
         </button>
-        <a href="/stock/listDelayedProyects" class="btn btn-danger btn-sm  btn-sm mt-1 mb-2">Ver Proyectos fuera de término <i class="fa-solid fa-clock"></i></a>
               <br> 
         <table class="table">
             <thead>
@@ -79,10 +78,10 @@
                 </tr>
             </thead>
             <tbody>
-              <% proyectos.forEach(item=> { %>
+              <% proyectosFueraDeTermino .forEach(item=> { %>
                 <tr>
-                  <td class="text-center">
-                    <%= item.nombre %>
+                  <td class="text-center text-danger fw-bold">
+                    <%= item.nombre %> <i class="fa-solid fa-clock"></i>
                   </td>
                   <td>
                     <% if (item.estado === "Pendiente") { %>
@@ -142,7 +141,7 @@
                             </a>
                 
                             <!-- Boton descarga ficha tecnica -->                           
-                              <a  href="/images/anexos/<%= item.insumosAdquirir %>" target="_blank">
+                              <a  href="/images/insumos/<%= item.insumosAdquirir %>" target="_blank">
                                 <button class="btn btn-info"><i class="fa-solid fa-file-pdf fa-lg"></i></button>
                             </a>                          
                         </div>                      
@@ -152,7 +151,7 @@
                 <% }) %>
             </tbody>
             </table>
-      </div>
+            </div>
 
    
     </main>

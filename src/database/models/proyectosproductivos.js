@@ -52,7 +52,16 @@ module.exports = (sequelize, DataTypes) => {
     detalle: DataTypes.STRING,
     procedencia: DataTypes.STRING,
     duracion: DataTypes.INTEGER,
-    unidadDuracion: DataTypes.STRING,
+    unidadDuracion:{
+      type: DataTypes.STRING,
+      defaultValue:"pendiente",
+      validate:{
+        isIn:{
+          args: [["dia", "semana", "mes"]],
+          msg:"Llas duraciones válidas son dia - semana  - mes"
+        },
+      },
+    },
     costoTotalProyecto: DataTypes.INTEGER,    
     insumosAdquirir:DataTypes.STRING,
     estado:{
