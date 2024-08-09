@@ -157,26 +157,35 @@ module.exports = {
         where: { id: proyectoId }
       })
 
-     const registroInsumosProyecto = await db.insumoProyecto.findAll({
-      where:{
-        proyectoId:proyectoId,       
-      },
-      attributes:['cantidadAProducir'],      
-     })
+      const insumos = await db.insumoProyecto.findAll({
+        where: { proyectoId: proyectoId },
+        attributes: ["id","cantidadRequerida", "cantidadAdquirida", "cantidadAProducir", "decomiso"],
+        include: [
+          {
+            model: db.Insumo,
+            as: 'insumos',
+            attributes: ["nombre", "id", "unidadDeMedida", "idProducto", "cantidad"]
+          }
+        ]
+      });
 
-     registroInsumosProyecto.forEach(registro => {
-        db.insumoProyecto.update({
-         cantidadAProducir: cantidad
-        },{
-          where:{
-            proyectoId:proyectoId,       
-          },
-        }        
-      )
-     });
+      const insumosActualizados = insumos.map(async (item) => {
+        const plainInsumo = item.insumos.get({ plain: true });
+        const cantidadRequerida = cantidad * plainInsumo.cantidad;
+  
+        await db.insumoProyecto.update({
+          cantidadAProducir: cantidad,
+          cantidadRequerida: cantidadRequerida
+        }, {
+          where: {
+            proyectoId: proyectoId,   
+            insumoId: plainInsumo.id        
+          }
+        });
+      });
 
-
-
+    await Promise.all(insumosActualizados);
+    
     return true;
 
     } catch (error) {
