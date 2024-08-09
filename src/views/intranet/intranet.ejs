@@ -31,7 +31,7 @@
             <ul class="ul-header-home">
                 <div class="user">
                     <img id="userIconProfile" src="<%= /http/.test(locals.userLogin.icon) ? locals.userLogin.icon : `/images/iconsProfile/${locals.userLogin.icon}` %>" class="iconProfileIntranet me-2" alt="">
-                    <p><%= userLogin.name %></p>    
+                    <p id="user-info" class="<%= userLogin.rol %>"><%= userLogin.name %></p>    
                 </div>
 
                 <li class="li-item-nav">
@@ -53,6 +53,7 @@
 
             </ul>
         </nav>
+      
         <div>
             <div class="cont-titulo">
                 <div class="texto-intranet">
@@ -81,15 +82,15 @@
             <div class="wrapper">
                 <i id="left" class="fa-solid fa-angle-left"></i>
                 <div class="carousel">
-                    <a href="/stock"><img src="/images/img/proyectos_productivos.svg" alt="img" draggable="false"></a>
-                    <a href="/stock/partes"><img src="/images/img/parte_semanal.svg" alt="img" draggable="false"></a>
-                    <a href="/stock/estadistica"><img src="/images/img/dashboard.svg" alt="img" draggable="false"></a>
-                    <a href="#"><img src="/images/img/fondo_rotatorio.svg" alt="img" draggable="false"></a>
-                    <a href="/licitacion/publicaciones"><img src="/images/img/licitaciones.svg" alt="img" draggable="false"></a>
-                    <a href="/stock/estadistica"><img src="/images/img/metricas.svg" alt="img" draggable="false"></a>
-                    <a href="/noticias/add"><img src="/images/img/noticias.svg" alt="img" draggable="false"></a>
-                    <a href="#"><img src="/images/img/stock.svg" alt="img" draggable="false"></a>
-                    <a href="/users/dashboard"><img src="/images/img/usuarios.svg" alt="img" draggable="false"></a>
+                    <a href="/stock" data-role="1,2,5,6"><img src="/images/img/proyectos_productivos.svg" alt="img" draggable="false"></a>
+                    <a href="/stock/partes" data-role="1,2,6"><img src="/images/img/parte_semanal.svg" alt="img" draggable="false"></a>
+                    <a href="/stock/estadistica" data-role="1,2,5"><img src="/images/img/dashboard.svg" alt="img" draggable="false"></a>
+                    <a href="#" data-role="none"><img src="/images/img/fondo_rotatorio.svg" alt="img" draggable="false"></a>
+                    <a href="/licitacion/publicaciones" data-role="1,2,4"><img src="/images/img/licitaciones.svg" alt="img" draggable="false"></a>
+                    <a href="/stock/estadistica" data-role="1,2,5"><img src="/images/img/metricas.svg" alt="img" draggable="false"></a>
+                    <a href="/noticias/add" data-role="1,2,3"><img src="/images/img/noticias.svg" alt="img" draggable="false"></a>
+                    <a href="#" data-role="none"><img src="/images/img/stock.svg" alt="img" draggable="false"></a>
+                    <a href="/users/dashboard" data-role="1,2"><img src="/images/img/usuarios.svg" alt="img" draggable="false"></a>
                 </div>
                 <i id="right" class="fa-solid fa-angle-right"></i>
             </div>
@@ -107,5 +108,47 @@
 
     <%- include('../partials/scripts') %> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
+
+   <script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Obtén el rol del usuario desde la clase del elemento <p>
+    const userInfo = document.getElementById('user-info');
+    const userRole = parseInt(userInfo.className, 10);
+
+    // Usa SweetAlert
+    const swal = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-primary'
+        },
+        buttonsStyling: false
+    });
+
+    // Maneja el clic en los enlaces
+    document.querySelectorAll('.carousel a').forEach(link => {
+        link.addEventListener('click', function(event) {
+            const requiredRoles = this.getAttribute('data-role').split(',').map(role => role.trim());
+
+            if (requiredRoles.includes(userRole.toString()) || requiredRoles.includes('none')) {
+                // Permitir el acceso si el rol del usuario está en la lista de roles permitidos
+                return true;
+            } else {
+                // Evitar el acceso y mostrar la alerta
+                event.preventDefault();
+                swal.fire({
+                    title: 'Acceso Denegado',
+                    text: 'No tienes permisos para acceder a este módulo.',
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar'
+                });
+                return false;
+            }
+        });
+    });
+});
+
+
+   </script>
 </body>
 </html>
