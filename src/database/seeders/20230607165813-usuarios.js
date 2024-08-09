@@ -6,24 +6,6 @@ require("dotenv").config();
 module.exports = {
   async up (queryInterface, Sequelize) {
     
-<<<<<<< HEAD
-      await queryInterface.bulkInsert('Usuarios', [
-        {
-          name: 'Ezequiel',
-          surname : 'Muñoz',
-          email : 'svariumfoo@gmail.com',      
-          icon : 'https://lh3.googleusercontent.com/a/ACg8ocKAyV2iuOjK40tmmIlfcXKT9gOj4b1xdDkTG9Xz-NQXce4=s96-c',
-          socialId: '117303958612759707634',
-          socialProvider:'google',
-          destinoId:1,
-          credencial: 42942,
-          rolId: 1, 
-          destinoId:1,     
-          createdAt: new Date,  
-          updatedAt: new Date
-        }
-    ], {});
-=======
       await queryInterface.bulkInsert('Usuarios', [{
         name: process.env.USER_ADMIN_NAME,
         surname : process.env.USER_ADMIN_SURNAME,
@@ -36,7 +18,6 @@ module.exports = {
         createdAt: new Date,  
         updatedAt: new Date
       }], {});
->>>>>>> test-stock
     
   },
 
