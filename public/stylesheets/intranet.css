@@ -185,8 +185,7 @@
 /* --------------inicio menu hamburguesa---------------------*/
 
 .menu-toggle {
-    position: relative;
-    display: none;
+    display: none; /* Inicialmente oculto, solo visible en pantallas móviles */
     z-index: 1000; /* Asegura que esté sobre otros elementos */
 }
 
@@ -208,20 +207,27 @@
     transition: background-color 0.3s ease;
 }
 
+/* Menu para pantallas grandes (desktop) */
 .ul-header-home {
     list-style-type: none;
+    display: flex; /* Muestra el menú en línea horizontalmente */
+    justify-content: flex-end;
+    gap: 20px;
+    background-color: transparent;
+    opacity: 1; /* Totalmente visible en desktop */
+    transform: none; /* Sin transformaciones en desktop */
+    position: relative; /* Posición normal para desktop */
 }
 
-.ul-header-home.show {
-    display: block; /* Mostrar cuando tiene la clase .show */
+.user {
+    display: flex;
+    align-items: center;
 }
 
-.header-home.newHeight{
-    height: 85vh;
+.user-mobile {
+    display: none; /* Solo visible en mobile */
 }
-    
 
-/* --------------fin menu hamburguesa---------------------*/
 
 /* ----------------------------------------------------------------------- FIN NAV ------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------ DIV TEXTO /IMAGEN ------------------------------------------------------------------------- */
@@ -395,17 +401,41 @@ hr{
     }
 
     .menu-toggle {
-        display: block;
+        display: block; /* Visible en pantallas móviles */
     }
 
-    
-    .hamburger-bar {
-        display: block;
-        width: 2rem;
-        height: .25rem;
-        background-color: white;
-        margin: 6px 0;
-        transition: background-color 0.3s ease;
+    .ul-header-home {
+        flex-direction: column; /* Menú en columna para mobile */
+        position: fixed; /* Fijado en la parte superior */
+        top: 5%;
+        left: 0;
+        width: 100%;
+        height: 100vh; /* Ocupa toda la altura de la pantalla */
+        background-color: rgba(53, 52, 52, 50%); /* Fondo semi-transparente */
+        padding: 20px;
+        display: none; /* Inicialmente oculto */
+        opacity: 2%;
+        transition: opacity 0.5s ease, transform 0.5s ease;
+        transform: translateY(-100%); /* Inicialmente fuera de la vista */
+        z-index: 999; /* Asegura que esté sobre otros elementos */
+        border-radius: 10px;
+    }
+
+    .ul-header-home.show {
+        display: flex;
+        opacity: 1%;
+        transform: translateY(0); /* Desliza hacia abajo al desplegarse */
+    }
+
+    .user {
+        display: none; /* Oculta la versión de desktop en mobile */
+    }
+
+    .user-mobile {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+        color: white; /* Ajustar el color del texto para que sea visible */
     }
 
 
@@ -520,7 +550,7 @@ hr{
     }
 
     .header-home{
-        height: 700px;
+        height: 750px;
     }
 
     .texto-intranet {
@@ -532,12 +562,20 @@ hr{
     }
 }
 
-@media screen and (max-width: 329px) {
+@media screen and (max-width: 390px) {
     .cont-carousel{
         top: 2%px;
     }
 
     .header-home{
-        height: 80vh;
+        height: 110vh;
+    }
+
+    .nav-container {
+        column-gap: 20%;
+    }
+
+    .carousel img{
+        width: calc(90% / 1);
     }
 }

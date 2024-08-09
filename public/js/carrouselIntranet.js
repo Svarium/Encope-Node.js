@@ -73,15 +73,20 @@ carousel.addEventListener ("touchend", dragStop);
 document.addEventListener('DOMContentLoaded', function() {
     const btnHamburger = document.querySelector('.btn-hamburger');
     const ulHeaderHome = document.querySelector('.ul-header-home');
-    const headerHome = document.querySelector('.header-home')
-
 
     btnHamburger.addEventListener('click', function() {
-        ulHeaderHome.classList.toggle('show'); // Alternar la clase .show
-        headerHome.classList.toggle('newHeight');
+        if (ulHeaderHome.classList.contains('show')) {
+            ulHeaderHome.style.transform = 'translateY(-100%)';
+            ulHeaderHome.style.opacity = '0';
+            setTimeout(() => {
+                ulHeaderHome.classList.remove('show');
+            }, 500); // Duración de la animación en milisegundos
+        } else {
+            ulHeaderHome.classList.add('show');
+            setTimeout(() => {
+                ulHeaderHome.style.transform = 'translateY(0)';
+                ulHeaderHome.style.opacity = '1';
+            }, 10);
+        }
     });
-
-
-
-
 });
