@@ -72,7 +72,7 @@
                   </div>
                   <div class="mb-3">
                     <label for="cantidad" class="form-label">Cantidad</label>
-                    <input type="number" class="form-control <%= (locals.errors && errors.cantidad) && 'is-invalid'%>" name="cantidad" id="cantidad"  placeholder="Ingrese una cantidad">
+                    <input type="number" class="form-control <%= (locals.errors && errors.cantidad) && 'is-invalid'%>" name="cantidad" id="cantidad"  placeholder="Ingrese una cantidad" step="0.01">
                     <small id="cantidad" class="text-danger ms-2"><%= locals.errors && errors.cantidad ? errors.cantidad.msg : null %></small>
                   </div>
                   <div class="mb-3">

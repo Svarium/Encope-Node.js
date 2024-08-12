@@ -25,7 +25,7 @@ module.exports = {
 
         if (errors.isEmpty()) {
 
-        const {nombre, unidad, cantidad, detalle} = req.body;
+        const {nombre, unidad, cantidad, detalle} = req.body;       
 
         db.Insumo.create({
             nombre:nombre.trim(),
@@ -35,6 +35,7 @@ module.exports = {
             idProducto:idProducto
         })        
              .then(() => {
+                
                 return res.redirect('/stock/products')
              })
              .catch(error => console.log(error))      

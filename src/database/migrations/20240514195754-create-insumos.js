@@ -17,7 +17,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       cantidad: {
-        type: Sequelize.INTEGER
+        type: Sequelize.DECIMAL(10,2)
       },
       idProducto:{
         type:Sequelize.INTEGER,

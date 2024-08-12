@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
   Insumo.init({
     nombre: DataTypes.STRING,
     unidadDeMedida: DataTypes.STRING,
-    cantidad: DataTypes.INTEGER,
+    cantidad: DataTypes.DECIMAL(10, 2),
     detalle: DataTypes.STRING,
     idProducto: DataTypes.INTEGER
   }, {
