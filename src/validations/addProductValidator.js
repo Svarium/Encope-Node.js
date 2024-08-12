@@ -31,7 +31,7 @@ module.exports = [
 
     check('medida')
     .notEmpty().withMessage('La unidad de medida es requerida').bail()
-    .isLength({min:5, max:200}).withMessage('La unidad de medida debe tener entre 5 y 200 carácteres').bail()
+    .isLength({min:3, max:200}).withMessage('La unidad de medida debe tener entre 5 y 200 carácteres').bail()
     .isAlpha('es-ES',{
         ignore:" "
     }).withMessage("Solo carácteres alfabéticos"),

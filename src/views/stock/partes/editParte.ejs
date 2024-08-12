@@ -404,17 +404,17 @@
                   return;
                 }
 
-                if(egresos > +stockEnTallerInfo)
-                Swal.fire({
+                if(egresos > +stockEnTallerInfo){
+                  Swal.fire({
                     icon: "error",
                     title: "Oops...",
                     text: "No hay stock suficiente para este retiro",
                     footer: '<a href="/">Volver al inicio</a>'
                   });
                   return;
-
+                }
+               
                 try {
-
                   const response = await fetch(`https://test.encope.gob.ar/api/stock/egresos/${proyectoId}`, {
                     method: 'PUT',
                     headers: {

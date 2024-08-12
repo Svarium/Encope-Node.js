@@ -83,18 +83,20 @@
                                                 <div class="card d-flex flex-column h-100">
                                                     <img src="/images/productos/<%= item.producto.imagen %>" class="card-img-top" alt="<%= item.producto.nombre %>">
                                                     <div class="card-body d-flex flex-column">
-                                                        <h5 class="card-title">
+                                                        <h5 class="card-title m-0">
                                                             <%= item.producto.nombre %>
                                                         </h5>
-                                                        <p class="card-text">Cantidad a Producir: <%= item.producto.cantidadAProducir %></p>
+                                                       <hr>
                                                         <h5>Insumos:</h5>
                                                         <ul>
                                                             <% item.insumos.forEach(insumo => { %>
-                                                                <li class="card-text">
+                                                                <li class="card-text m-0">
                                                                     <%= insumo.nombre %> - Cantidad: <%= insumo.cantidad %> <%= insumo.unidadDeMedida %>
                                                                 </li>
                                                             <% }) %>
                                                         </ul>
+                                                        <hr>
+                                                        <p class="card-text ">Cantidad a Producir: <%= item.producto.cantidadAProducir %></p>
                                                         <!-- Button trigger modal -->
                                                         <button type="button" class="btn btn-primary mt-auto"
                                                             data-bs-toggle="modal"
