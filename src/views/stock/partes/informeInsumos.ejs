@@ -227,7 +227,7 @@
                     const proyectId = buttonInformInit.getAttribute('data-bs-target');
 
                     buttonInformInit.addEventListener('click', () => {
-                        fetch('http://localhost:3000/api/insumos/addproyectoInsumo', {
+                        fetch('https://test.encope.gob.ar/api/insumos/addproyectoInsumo', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -282,7 +282,7 @@
                             confirmButtonText: "Si, reiniciar!"
                             }).then((result) => {
                             if (result.isConfirmed) {
-                                fetch('http://localhost:3000/api/insumos/deleteProyectoInsumo', {
+                                fetch('https://test.encope.gob.ar/api/insumos/deleteProyectoInsumo', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -363,7 +363,7 @@
                 }
 
                 try {
-                    const response = await fetch(`http://localhost:3000/api/insumos/cantidadAdquirida/${idInsumo}`, {
+                    const response = await fetch(`https://test.encope.gob.ar/api/insumos/cantidadAdquirida/${idInsumo}`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -425,7 +425,7 @@
 
                try {
 
-                const response = await fetch(`http://localhost:3000/api/insumos/numeroFactura/${idInsumo}`,{
+                const response = await fetch(`https://test.encope.gob.ar/api/insumos/numeroFactura/${idInsumo}`,{
                     method: 'POST',
                     headers:{
                         'Content-type' : 'application/json'
@@ -488,7 +488,7 @@
 
                   try {
 
-                    const response = await fetch(`http://localhost:3000/api/insumos/detalle/${idInsumo}`,{
+                    const response = await fetch(`https://test.encope.gob.ar/api/insumos/detalle/${idInsumo}`,{
                     method: 'POST',
                     headers: {
                         'Content-type' : 'application/json'

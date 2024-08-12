@@ -11,7 +11,7 @@ const stockGeneral = document.getElementById("tablaStockGeneral")
 
 /* const endpointURL = "https://encope.gob.ar/api/cunas/"; */
 
-const endpointURL = "http://localhost:3000/api/stock/";
+const endpointURL = "https://test.encope.gob.ar/api/stock/";
 
 const paintKitsDone = fetch(`${endpointURL}kits`)
   .then((response) => response.json())
