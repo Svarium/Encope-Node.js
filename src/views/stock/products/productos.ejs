@@ -134,7 +134,7 @@
                                   </div>
                                   <div class="mb-3">
                                     <label for="ficha_<%= item.id %>" class="form-label">Ficha Técnica</label>
-                                    <input type="file"
+                                    <input type="file" accept=".pdf"
                                       class="form-control <%= (locals.errors && errors._undefined) && 'is-invalid'%>"
                                       name="ficha" id="ficha_<%= item.id %>" placeholder="Ingrese número de expediente">
                                     <small id="errorProducto_<%= item.id %>" class="text-danger ms-2">

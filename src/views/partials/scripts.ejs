@@ -47,7 +47,7 @@
                   title: '¡Esperamos que vuelvas pronto!',
                   icon: 'success',
                   html: 'Cerrando sesión en <b></b>...',
-                  timer: 5000,
+                  timer: 2000,
                   timerProgressBar: true,
                   didOpen: () => {
                       Swal.showLoading();
@@ -72,7 +72,7 @@
               // Retraso de 5 segundos antes de enviar el formulario y cambiar la página
               setTimeout(function() {
                   logout.submit();
-              }, 5200); // 5200 milisegundos = 5.2 segundos
+              }, 2200); // 5200 milisegundos = 5.2 segundos
           }
       });
   }

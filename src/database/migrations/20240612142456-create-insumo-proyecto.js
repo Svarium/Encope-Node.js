@@ -16,7 +16,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       cantidadAdquirida: {
-        type: Sequelize.INTEGER
+        type: Sequelize.DECIMAL(10, 2)
       },
       detalle: {
         type: Sequelize.STRING

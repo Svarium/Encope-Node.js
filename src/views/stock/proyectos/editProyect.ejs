@@ -80,7 +80,7 @@
             
               <div class="form-group col-md-6">
                 <label for="insumos">Insumos a adquirir (anexo 3)</label>
-                <input type="file" name="insumos" class="form-control rounded <%= (locals.errors && errors._undefined) && 'is-invalid'%>" id="insumos">
+                <input type="file" accept=".pdf" name="insumos" class="form-control rounded <%= (locals.errors && errors._undefined) && 'is-invalid'%>" id="insumos">
                 <small id="errorinsumos" class="text-danger ms-2"><%= locals.errors && errors._undefined ? errors._undefined.msg : null %></small>        
               </div>             
   

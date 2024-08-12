@@ -34,7 +34,8 @@ module.exports = {
                 model:db.Insumo,
                 as:"productos",
                 attributes:["nombre","unidadDeMedida" ,"cantidad", "id"],                
-            }]
+            }],
+            order:[['createdAt', 'DESC']]
         })
         .then(productos => {    
             /* return res.send(productos) */          

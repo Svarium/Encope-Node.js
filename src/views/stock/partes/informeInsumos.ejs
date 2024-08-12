@@ -58,17 +58,19 @@
                         <hr class="text-black" />
                     </div>
 
-                    <div class="container d-flex justify-content-center align-content-center mb-2 gap-3">
-                        <% if (registros.length===0) { %>                           
-                            <button class="btn btn-outline-primary" data-bs-target="<%= proyectId %>"
-                                id="iniciarInforme">
-                                Iniciar Informe <i class="fa-solid fa-paper-plane"></i>
-                            </button>                             
-                    <% } %>
-                        <button class="btn btn-outline-danger " data-bs-target="<%= proyectId %>"
-                            id="reiniciarInforme">
-                            Reiniciar Informe <i class="fa-solid fa-retweet"></i>
-                        </button>
+                    <div class="container d-flex justify-content-center align-items-center align-content-center">
+                        <div class="text-center">
+                            <% if (registros.length === 0) { %>
+                                <button class="btn btn-outline-primary" data-bs-target="<%= proyectId %>"
+                                    id="iniciarInforme">
+                                    Iniciar Informe <i class="fa-solid fa-paper-plane"></i>
+                                </button>
+                            <% } %>
+                            <button class="btn btn-outline-danger" data-bs-target="<%= proyectId %>"
+                                id="reiniciarInforme">
+                                Reiniciar Informe <i class="fa-solid fa-retweet"></i>
+                            </button>
+                        </div>
                     </div>
 
                  
@@ -119,13 +121,13 @@
                                                                         <% item.insumos.forEach(insumo=> { %>
                                                                             <div class="row mb-4">
                                                                                 <div
-                                                                                    class="col-12 col-md-12 col-lg-3 mb-2 mb-md-0">
+                                                                                    class="col-12 col-md-12 col-lg-2 mb-2 mb-md-0">
                                                                                     <label for=""
                                                                                         class="text-danger fw-bolder">
                                                                                         <%= insumo.nombre %>
                                                                                     </label>                                                                               
-                                                                                    <button name="detalle" class="form-control" disabled
-                                                                                    >*Requerido: <%= insumo.cantidad * item.producto.cantidadAProducir %> <%= insumo.unidadDeMedida %></button>
+                                                                                    <button name="detalle" class="form-control h-75" disabled
+                                                                                    >Requerido: <%= (insumo.cantidad * item.producto.cantidadAProducir).toFixed(2) %> <%= insumo.unidadDeMedida %></button>
                                                                                 </div>
                                                                                 <div
                                                                                     class="col-12 col-md-12 col-lg-3 mb-2 mb-md-0">
@@ -136,7 +138,7 @@
                                                                                         class="form-control"
                                                                                         name="cantidadAdquirida"
                                                                                         id="cantidadAdquirida<%= insumo.id %>"
-                                                                                        placeholder="Ingrese la cantidad adquirida" >
+                                                                                        placeholder="Ingrese la cantidad adquirida" step="0.01" >
                                                                                     <button
                                                                                         class="btn mt-1 <%= insumo.cantidadAdquirida >= 1 ? 'btn-success' : 'btn-outline-success'  %>  w-100 fw-bold"
                                                                                         data-insumo-id="<%= insumo.id %>"
@@ -340,7 +342,7 @@
                 const inputCantidad = document.getElementById(`cantidadAdquirida${idInsumo}`);
                 const cantidadAdquirida = inputCantidad.value;
                 const textareaDetalle = document.getElementById(`detalle${idInsumo}`);
-                const cantidadRequerida = parseFloat(textareaDetalle.getAttribute('data-requerido'));
+                const cantidadRequerida = (textareaDetalle.getAttribute('data-requerido'));
 
                 if (cantidadAdquirida <= 0) {
                     Swal.fire({
@@ -351,7 +353,7 @@
                     return;
                 }
 
-                if (parseFloat(cantidadAdquirida) < cantidadRequerida) {
+                if ((+cantidadAdquirida) < +cantidadRequerida) {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
@@ -390,11 +392,11 @@
                         button.classList.add('btn-success');
                         button.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
                        
-                    } else {
+                    } else {                                      
                         Swal.fire({
                             position: "top-end",
                             icon: "error",
-                            title: "Ocurrió un error :(",
+                            title: `${data.error.message.cantidadAdquirida.msg}`,
                             showConfirmButton: false,
                             timer: 1000
                         });

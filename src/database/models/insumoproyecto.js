@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
   insumoProyecto.init({
     cantidadAProducir: DataTypes.INTEGER,
     cantidadRequerida: DataTypes.INTEGER,
-    cantidadAdquirida: DataTypes.INTEGER,
+    cantidadAdquirida: DataTypes.DECIMAL(10, 2),
     detalle: DataTypes.STRING,
     proyectoId: DataTypes.INTEGER,
     productoId: DataTypes.INTEGER,

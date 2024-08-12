@@ -120,9 +120,9 @@
                   <td>$ <%= item.costoTotalProyecto %>
                   </td>
                   <td>
-                    <div class="d-flex flex-column">
+                    <div class="d-flex flex-column w-100">
                         <!-- Primera fila de botones -->
-                        <div class="d-flex justify-content-center gap-2 mb-2">
+                        <div class="d-flex justify-content-center gap-2 mb-2 align-content-center align-items-center">
                             <!-- Enlace para editar -->
                             <a href="/stock/editProducts/<%= item.id %>">
                                 <button class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i></button>
@@ -135,7 +135,7 @@
                         </div>
                 
                         <!-- Segunda fila de botones -->
-                        <div class="d-flex justify-content-center gap-2">
+                        <div class="d-flex ms-1 w-100 justify-content-center align-content-center align-items-center gap-2">
                             <!-- Boton descarga historial de reformulaciones en excel -->
                             <a href="/stock/reformulaciones/<%= item.id %>">
                                 <button class="btn btn-primary"><i class="fa-solid fa-clock-rotate-left"></i></button>
@@ -143,7 +143,7 @@
                 
                             <!-- Boton descarga ficha tecnica -->                           
                               <a  href="/images/anexos/<%= item.insumosAdquirir %>" target="_blank">
-                                <button class="btn btn-info"><i class="fa-solid fa-file-pdf fa-lg"></i></button>
+                                <button class="btn btn-info"><i class="fa-solid fa-file-pdf"></i></button>
                             </a>                          
                         </div>                      
                     </div>

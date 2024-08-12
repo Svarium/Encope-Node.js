@@ -70,7 +70,7 @@
             </div>
             <div class="form-row">
               <div class="form-group col-md-12 mt-3">       
-                <input type="file" name="producto" class="form-control rounded <%= (locals.errors && errors._undefined) && 'is-invalid'%>" id="producto">
+                <input type="file" name="producto" accept=".jpg, .jpeg, .png" class="form-control rounded <%= (locals.errors && errors._undefined) && 'is-invalid'%>" id="producto">
                 <small id="errorProducto" class="text-danger ms-2"><%= locals.errors && errors._undefined ? errors._undefined.msg : null %></small>      
               </div>                      
             </div>

@@ -11,7 +11,8 @@ module.exports = {
     listTaller : (req,res) => {
         db.Taller.findAll({
             include: ['destinoTaller'],
-            where: {estado:"En Proceso de Aprobación"}
+            where: {estado:"En Proceso de Aprobación"},
+            order: [['createdAt', 'DESC']]
         })
         .then(talleres => {           
             return res.render("stock/talleres/listTaller",{
@@ -24,7 +25,8 @@ module.exports = {
     listApproved : (req,res) =>{
         db.Taller.findAll({
             include: ['destinoTaller'],
-            where: {estado:"Aprobado"}
+            where: {estado:"Aprobado"},
+            order: [['createdAt', 'DESC']]
         })
         .then(talleres => {           
             return res.render("stock/talleres/talleresAprobados",{
@@ -37,7 +39,8 @@ module.exports = {
     listClosed :(req,res) => {
         db.Taller.findAll({
             include: ['destinoTaller'],
-            where: {estado:"De Baja"}
+            where: {estado:"De Baja"},
+            order: [['createdAt', 'DESC']]
         })
         .then(talleres => {           
             return res.render("stock/talleres/talleresDeBaja",{

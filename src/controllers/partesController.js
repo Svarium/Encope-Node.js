@@ -20,7 +20,8 @@ module.exports = {
       const proyectos = await db.Proyecto.findAll({
         where: {
           procedencia: procedencia.nombreDestino
-        }
+        },
+        order: [['createdAt', 'DESC']]
       })
 
       return res.render('stock/partes/partes', {
@@ -145,7 +146,7 @@ module.exports = {
       const worksheet = workbook.addWorksheet('Sheet 1');
 
       // Agregar títulos de columnas
-      const titleRow = worksheet.addRow(["Nombre", "Taller", "Expediente", "Procedencia", "Detalle", "Duración", "Productos", "Cantidad a producir", "Cantidad Producida", "Stock en Taller", "egresos", "Remanentes", "Última Actualización"]);
+      const titleRow = worksheet.addRow(["Nombre", "Taller", "Expediente", "Procedencia", "Detalle", "Duración", "Productos", "Cantidad a producir", "Cantidad Producida", "Stock en Taller", "egresos", "Última Actualización"]);
 
       // Aplicar formato al título
       titleRow.eachCell((cell) => {
@@ -176,8 +177,7 @@ module.exports = {
             productoItem.cantidadAProducir,
             productoItem.cantidadProducida,
             productoItem.stockEnTaller,
-            productoItem.egresos,
-            item.remanentes,
+            productoItem.egresos,            
             item.updatedAt
           ]);
 

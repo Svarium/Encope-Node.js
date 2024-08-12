@@ -193,8 +193,9 @@
                         <p class="text-muted m-0">Cantidad Requerida: <%= item.cantidadRequerida %> <%= item.unidadDeMedida %></p>
                         <p class="text-muted mb-1" data-cantidad-adquirida="<%= item.cantidadAdquirida %>">Cantidad Adquirida: <%= item.cantidadAdquirida %> <%= item.unidadDeMedida %></p>
                         <p class="text-danger m-0 fw-bolder text-decoration-underline">Remanentes: <%= item.remanentes %> <%= item.unidadDeMedida %></p>
-                        <p class="text-danger mb-2 fw-bolder text-decoration-underline">Decomisos: <%= item.decomiso %> <%= item.unidadDeMedida %></p>
-
+                        <% if (item.decomiso) { %>
+                          <p class="text-danger mb-2 fw-bolder text-decoration-underline">Decomisos: <%= item.decomiso %> <%= item.unidadDeMedida %></p>
+                        <% } %>
                         <% if (porcentajeAvance == 100.00 && !item.decomiso) { %>
                         <p class="text-muted m-0 text-center mb-2 fw-bolder">Informar Decomisos</p>
                         <div class="d-flex justify-content-center align-items-center">                                                  
