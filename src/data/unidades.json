@@ -134,54 +134,48 @@
     },
     {
         "id":23,
-        "nombreDestino": "Unidad 21",
-        "provincia":"Buenos Aires",
-        "ciudad":"Ciudad Autónoma de Buenos Aires"
-    },
-    {
-        "id":24,
         "nombreDestino": "Unidad 22",
         "provincia":"Jujuy",
         "ciudad":"San Salvador de Jujuy"
     },
     {
-        "id":25,
+        "id":24,
         "nombreDestino": "Unidad 25",
         "provincia":"La Pampa",
         "ciudad":"General Pico"
     },
     {
-        "id":26,
+        "id":25,
         "nombreDestino": "Unidad 30",
         "provincia":"La Pampa",
         "ciudad":"Santa Rosa"
     },
     {
-        "id":27,
+        "id":26,
         "nombreDestino": "Unidad 31",
         "provincia":"Buenos Aires",
         "ciudad":"Ezeiza"
     },
     {
-        "id":28,
+        "id":27,
         "nombreDestino": "Unidad 34",
         "provincia":"Buenos Aires",
         "ciudad":"Campo de Mayo"
     },
     {
-        "id":29,
+        "id":28,
         "nombreDestino": "Unidad 35",
         "provincia":"Santiago del Estero",
         "ciudad":"San Martín"
     },
     {
-        "id":30,
+        "id":29,
         "nombreDestino": "Alcaidías",
         "provincia":"Buenos Aires y Mendoza",
         "ciudad":"Ciudad Autónoma de Buenos Aires, La Plata, Lomas de Zamora y Mendoza"
     },
     {
-        "id":31,
+        "id":30,
         "nombreDestino": "Complejo Penitenciario Federal II - Marcos Paz",
         "provincia":"Buenos Aires",
         "ciudad":"Marcos Paz"

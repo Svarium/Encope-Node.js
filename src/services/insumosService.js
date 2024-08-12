@@ -194,13 +194,12 @@ module.exports = {
                 }
               });
 
-              if (insumoProyecto) {
-                const nuevaCantidadAdquirida = insumoProyecto.cantidadAdquirida - decomiso;
+              if (insumoProyecto) {             
               
                 await db.insumoProyecto.update({
                   expedienteDecomiso: expediente,
                   decomiso: decomiso,
-                  cantidadAdquirida: nuevaCantidadAdquirida
+                 
                 }, {
                   where: {
                     proyectoId: proyectoId,

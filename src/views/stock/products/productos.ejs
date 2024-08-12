@@ -73,7 +73,7 @@
                     <td class="text-justify">
                       <% if (item.productos) { %>
                         <% item.productos.forEach(producto=> { %>
-                          - <%= producto.cantidad %>
+                          ✅ <%= producto.cantidad %>
                             <%= producto.unidadDeMedida %>
                             <%= producto.nombre %> <i class="fa-solid fa-delete-left text-danger deleteInsumo"
                                 data-producto-id="<%= item.id %>" data-insumo-id="<%= producto.id %>"></i><br>
@@ -224,14 +224,10 @@
               const inputs = form.querySelectorAll('input[type="text"], input[type="file"]');
               const expediente = form.querySelector('input[name="expedienteFicha"]');
               const ficha = form.querySelector('input[name="ficha"]');
-              const regex = /^EX-\d{4}-\d{9}-APN-DS#[A-Z0-9]+$/;
+  
 
               let errors = [];
 
-              // Validación del formato del expediente
-              if (!regex.test(expediente.value.trim())) {
-                errors.push('El formato del expediente no es correcto. Ejemplo: EX-2023-114492446-APN-DS#ENCOPE');
-              }
 
               //Validacion expediente existente
               let response = await fetch("https://test.encope.gob.ar/api/stock/expedienteFicha/",{

@@ -370,6 +370,7 @@
         margin: 0;
         padding: 0;
         table-layout: fixed;
+        color: #000;
     }
     
     .table caption {
@@ -377,6 +378,7 @@
         text-transform: uppercase;
         font-weight: bold;
         margin: 8px 0px;
+        color: #000;
     }
     
     .table tr {
@@ -398,7 +400,7 @@
     }
     
     .table tbody tr:hover {
-        background-color: #7faaad;
+        background-color: #bdd7d8;
     }
     
     .table tbody td:hover {

@@ -515,7 +515,7 @@ module.exports = {
             const worksheet = workbook.addWorksheet('Sheet 1'); // Crea una hoja de Excel 
     
             // Agregar títulos de columnas
-            const titleRow = worksheet.addRow(["Nombre Proyecto", "Estado", "Detalle", "Expediente Reformulación", "Procedencia", 'Duración', 'Productos', 'Costo total Proyecto', 'Insumos a adquirir', 'Fecha de creación del proyecto']);
+            const titleRow = worksheet.addRow(["Nombre Proyecto", "Estado", "Detalle", "Expediente Reformulación", "Procedencia", 'Duración', 'Productos', 'Costo total Proyecto', 'Insumos a adquirir', 'Fecha de reformulación']);
     
             // Aplicar formato al título
             titleRow.eachCell((cell) => {
@@ -536,8 +536,7 @@ module.exports = {
             });
     
             tablaHistorial.forEach(historial => {
-                const proyecto = historial.historialProyecto;
-    
+                const proyecto = historial.historialProyecto;    
                 const cantidades = proyecto.productoProyecto.map(item => item.cantidadAProducir);
                 const productos = proyecto.productoProyecto.map(item => item.producto.nombre);
                 const costos = proyecto.productoProyecto.map(item => item.costoUnitario);
@@ -692,6 +691,8 @@ module.exports = {
     searchProyect: async (req, res) => {
 
         const { expediente, taller, procedencia } = req.body;
+
+       
 
         const findProyecto = async (whereCondition) => {
             return await db.Proyecto.findOne({

@@ -59,13 +59,12 @@
               </div>
               <div class="form-group col-md-6">
                 <label for="destino" class="form-label">Unidad de destino del taller</label>
-                <input list="destinos" id="destino" class="form-control rounded <%= (locals.errors && errors.destino) && 'is-invalid'%>" name="destino" value="<%= taller.idDestino %>">
-                <datalist id="destinos">
-                    <option value="" disabled selected hidden>Seleccione el destino del taller...</option>
-                    <% destinos.forEach(({nombreDestino, id}) => { %>
-                        <option value="<%= id %>"><%= nombreDestino %></option>
-                    <% }) %>
-                </datalist>
+                <select id="destino" class="form-control rounded <%= (locals.errors && errors.destino) && 'is-invalid'%>" name="destino">
+                  <option value="" selected hidden>Seleccione el destino del taller...</option>
+                  <% destinos.forEach(({nombreDestino, id}) => { %>
+                  <option value="<%= id %>" <%= id === taller.id && 'selected' %>> <%= nombreDestino %> </option>
+                  <% }) %>
+              </select>
                 <small id="errorNombre" class="text-danger"><%= locals.errors && errors.destino ? errors.destino.msg : null %></small>
             </div>
               <div class="form-group col-md-12">
