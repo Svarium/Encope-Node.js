@@ -1,5 +1,5 @@
 const express = require('express');
-const { editState, addRemanentes, allProducts, allTallers, allProyectsDone, lastProyects, updateCantidadAProducir, updateCostoUnitario, eliminarProducto, agregarProducto, cantidadProducida, egresos, observaciones, estadistica, deleteInsumo } = require('../../controllers/apis/apiStockControllers');
+const { editState, addRemanentes, allProducts, allTallers, allProyectsDone, lastProyects, updateCantidadAProducir, updateCostoUnitario, eliminarProducto, agregarProducto, cantidadProducida, egresos, observaciones, estadistica, deleteInsumo, allProyectsInProgress, allProyectsDelayed } = require('../../controllers/apis/apiStockControllers');
 const { expedienteFichaTecnicaExistente } = require('../../controllers/apis/apiFichaTecnicaControllers');
 
 const router = express.Router();
@@ -15,6 +15,10 @@ router.get('/getProducts', allProducts) //me trae una consulta contando la canti
 router.get('/getTalleres', allTallers) //me trae una consulta que me cuenta la cantidad de tallers en la base de datos
 
 router.get('/getProyectsDone', allProyectsDone) // Me trae una consulta que cuenta la cantidad de proyectos terminados
+
+router.get('/getProyectsInProgress', allProyectsInProgress) // Me trae una consulta que cuenta la cantidad de proyectos pendientes
+
+router.get('/getProyectsDelayed', allProyectsDelayed) // Me trae una consulta que cuenta la cantidad de proyectos fuera de temrino o retrasados
 
 router.get('/getLastProyects', lastProyects) //me trae una consulta con los ultimos 9 proyectos agregados
 

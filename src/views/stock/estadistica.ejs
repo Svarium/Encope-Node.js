@@ -15,9 +15,7 @@
 		
 
 		<!-- Sidebar -->
-		<ul class="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-			
+		<ul class="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion" id="accordionSidebar">			
 
 			<!-- Divider -->
 			<hr class="sidebar-divider my-0">
@@ -37,8 +35,8 @@
 
 			<!-- Nav Item - Charts -->
 			<li class="nav-item">			
-				<button type="button" class="btn btn-success nav-link mb-1" data-bs-toggle="modal" data-bs-target="#tablaDeStock">
-					<span><i class="fa-solid fa-table"></i></span>Tabla Proyectos
+				<button type="button" class="btn btn-danger nav-link mb-1" data-bs-toggle="modal" data-bs-target="#tablaDeStock">
+					<span><i class="fa-solid fa-triangle-exclamation"></i></span> Proyectos Demorados
 					  </button>
 		</li>
 
@@ -51,7 +49,7 @@
 				
 				<!-- Nav Item - Pages -->
 			<li class="nav-item mt-1">
-				<button type="button" class="btn btn-danger nav-link collapsed" data-bs-toggle="modal" data-bs-target="#internosTrabajadores">
+				<button type="button" class="btn btn-success nav-link collapsed" data-bs-toggle="modal" data-bs-target="#internosTrabajadores">
 					<i class="fa-solid fa-people-group"></i> Internos trabajadores
 				  </button>
 			</li>
@@ -63,8 +61,8 @@
 					<i class="fa-solid fa-book"></i>
 					<span>Registro de Retiros</span>
 				</a>
-			</li>
-			 -->
+			</li> -->
+			
 
 
 			
@@ -109,75 +107,89 @@
 									<% } %>									
 								</a>
 							</li>	
-						</ul>
-
-						
-
-						
-							
+						</ul>					
 					</nav>
 
 					<!-- End of Topbar -->
 
 				
         <!-- Content Row Top -->
-				<div class="container-fluid mt-3">			
-					
-				
-					<!-- Content Row Movies-->
-					<div class="row">
-
-						<!-- Movies in Data Base -->
-						<div class="col-md-4 mb-4">
-							<div class="card border-left-primary shadow h-100 py-2">
-								<div class="card-body">
-									<div class="row no-gutters align-items-center">
-										<div class="col mr-2" id="productos">
-											
-										</div>
-										<div class="col-auto">
-											<i class="fa-solid fa-paperclip fa-2x text-gray-300"></i>
-										</div>
-									</div>
+		<div class="container-fluid mt-3">
+			<!-- Content Row -->
+			<div class="row d-flex flex-nowrap">
+				<!-- Productos in Data Base -->
+				<div class="col-md-3 mb-4 flex-shrink-0">
+					<div class="card border-left-primary shadow h-100 py-2">
+						<div class="card-body">
+							<div class="row no-gutters align-items-center">
+								<div class="col mr-2" id="productos">
+									<!-- Contenido cargado desde JavaScript -->
 								</div>
-							</div>
-						</div>
-
-						<!-- Total awards -->
-						<div class="col-md-4 mb-4">
-							<div class="card border-left-success shadow h-100 py-2">
-								<div class="card-body">
-									<div class="row no-gutters align-items-center">
-										<div class="col mr-2" id="talleres">
-											
-										</div>
-										<div class="col-auto">
-											<i class="fa-solid fa-gear fa-2x text-gray-300"></i>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<!-- Actors quantity -->
-						<div class="col-md-4 mb-4">
-							<div class="card border-left-warning shadow h-100 py-2">
-								<div class="card-body">
-									<div class="row no-gutters align-items-center">
-										<div class="col mr-2" id="proyectosDone">
-											
-										</div>
-										<div class="col-auto">
-											<i class="fa-solid fa-check-to-slot fa-2x text-gray-300"></i>
-										</div>
-									</div>
+								<div class="col-auto">
+									<i class="fa-solid fa-tag fa-2x text-gray-300"></i>
 								</div>
 							</div>
 						</div>
 					</div>
+				</div>
+
+					
+				<!-- Talleres funcionando -->
+				<div class="col-md-3 mb-4 flex-shrink-0">
+					<div class="card border-left-warning shadow h-100 py-2">
+						<div class="card-body">
+							<div class="row no-gutters align-items-center">
+								<div class="col mr-2" id="talleres">
+									<!-- Contenido cargado desde JavaScript -->
+								</div>
+								<div class="col-auto">
+									<i class="fa-solid fa-gear fa-2x text-gray-300"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+		
+				<!-- Proyectos en proceso-->
+				<div class="col-md-3 mb-4 flex-shrink-0">
+					<div class="card border-left-info shadow h-100 py-2">
+						<div class="card-body">
+							<div class="row no-gutters align-items-center">
+								<div class="col mr-2" id="proyectsPending">
+									<!-- Contenido cargado desde JavaScript -->
+								</div>
+								<div class="col-auto">
+									<i class="fa-solid fa-spinner fa-2x text-gray-300"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+		
+				<!-- Proyectos finalizados-->
+				<div class="col-md-3 mb-4 flex-shrink-0">
+					<div class="card border-left-success shadow h-100 py-2">
+						<div class="card-body">
+							<div class="row no-gutters align-items-center">
+								<div class="col mr-2" id="proyectsDone">
+									<!-- Contenido cargado desde JavaScript -->
+								</div>
+								<div class="col-auto">
+									<i class="fa-solid fa-circle-check fa-2x text-gray-300"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		
+		
 					
 
-						<!-- Genres in DB -->
+						<!-- Ultimos agregados -->
 						<div class="col-lg-12 mb-4">						
 							<div class="card shadow mb-4">
 								<div class="card-header py-3">
@@ -261,10 +273,7 @@
 				<div class="modal-dialog modal-xl">
 				  <div class="modal-content">
 					<div class="modal-header">
-					  <h5 class="modal-title" id="exampleModalLabel">Tabla de Stock General</h5>
-					  <button type="button" class="btn btn-outline-primary ms-3 btn-sm mt-1" onclick="window.location.href='/cunas/tablaStock'">
-						<i class="fa-solid fa-download"></i> Exportar Excel <i class="fa-solid fa-file-excel"></i>
-					</button>
+					  <h5 class="modal-title text-danger fw-bold " id="exampleModalLabel">Proyectos Demorados <i class="fa-solid fa-triangle-exclamation"></i></h5>				 
 					  
 					  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
@@ -274,14 +283,15 @@
 				<table class="table">     
 					<thead>
 						<tr>
-							<th>Destino</th>
-							<th>Producto</th>
-							<th>Stock</th>
-							<th>Fecha de creación</th>
-							<th>Última Actualización</th>
+							<th>Proyecto</th>
+							<th>Expediente</th>
+							<th>Procedencia</th>
+							<th>Duración</th>
+							<th>Fecha de inicio</th>
+							<th>Última actualización </th>
 						</tr>
 					</thead>
-					<tbody id="tablaStockGeneral">   
+					<tbody id="tablaDeProyectosDemorados">   
 					
 					
 					</tbody>

@@ -1,5 +1,5 @@
 const createResponseError = require('../../helpers/createResponseError');
-const { editProyectState, editParteSemanal, getAllProducts, getAllTallers, getProyectsDone, getLastproyects, editarCantidadAProducir, editarCostoUnitario, eliminarProductoDelProyecto, agregarProductoAlProyecto, editarCantidadProducida, actualizarEgresos, actualizarObservaciones, removeInsumo } = require('../../services/stockServices');
+const { editProyectState, editParteSemanal, getAllProducts, getAllTallers, getProyectsDone, getLastproyects, editarCantidadAProducir, editarCostoUnitario, eliminarProductoDelProyecto, agregarProductoAlProyecto, editarCantidadProducida, actualizarEgresos, actualizarObservaciones, removeInsumo, getProyectsPending, getProyectsDelayed } = require('../../services/stockServices');
 
 
 module.exports = {
@@ -89,6 +89,46 @@ module.exports = {
                 data:{
                     message:"Proyectos Finalizados",
                     proyectsDone
+                }
+            })
+            
+        } catch (error) {
+            console.log(error);
+            return createResponseError(res, error)
+        }
+    },
+
+    allProyectsInProgress : async (req,res) => {
+        try { 
+
+            const proyectsPending = await getProyectsPending()
+
+            return res.status(200).json({
+                ok:true,
+                data:{
+                    message:"Proyectos Finalizados",
+                    proyectsPending
+                }
+            })
+            
+        } catch (error) {
+            console.log(error);
+            return createResponseError(res, error)
+        }
+    },
+
+    allProyectsDelayed : async (req,res) => {
+        try { 
+
+            const proyectsDelayed = await getProyectsDelayed()
+
+            return res.status(200).json({
+                ok:true,
+                data:{
+                    message:"Proyectos Finalizados",
+                    count: proyectsDelayed.length,
+                    proyectsDelayed
+
                 }
             })
             

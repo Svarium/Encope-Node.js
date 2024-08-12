@@ -4,14 +4,16 @@ const sectionKits = document.getElementById("kits");
 const sectionStocks = document.getElementById("stocksPorDestino");
 const productsInDb = document.getElementById("productos");
 const talleresInDB = document.getElementById("talleres")
-const proyectosDone = document.getElementById("proyectosDone");
-const stockGeneral = document.getElementById("tablaStockGeneral")
+const proyectsDone = document.getElementById("proyectsDone");
+const proyectsPending= document.getElementById("proyectsPending");
+
+const tablaProyectosDemorados = document.getElementById("tablaDeProyectosDemorados")
 
 /* const URL_API_SERVER= "https://encope.gob.ar" */
 
 /* const endpointURL = "https://encope.gob.ar/api/cunas/"; */
 
-const endpointURL = "https://test.encope.gob.ar/api/stock/";
+const endpointURL = "http://localhost:3000/api/stock/";
 
 const paintKitsDone = fetch(`${endpointURL}kits`)
   .then((response) => response.json())
@@ -104,7 +106,7 @@ const paintKitsDone = fetch(`${endpointURL}kits`)
         if(data.ok){
 
       talleresInDB.innerHTML +=  `
-      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Talleres en Base de Datos</div>
+      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Talleres funcionando</div>
                           <div class="h5 mb-0 font-weight-bold text-gray-800">${data.data.tallersInDB}</div>
       `
      
@@ -115,27 +117,42 @@ const paintKitsDone = fetch(`${endpointURL}kits`)
   .then((response) => response.json())
   .then((data) => {
     if(data.ok){
-      proyectosDone.innerHTML += `
-      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total de Kits Entregados
+      proyectsDone.innerHTML += `
+      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Proyectos Finalizados
 											</div>
 											<div class="h5 mb-0 font-weight-bold text-gray-800">${data.data.proyectsDone}</div>
       `
     }
   })
 
-
-  const paintTableStock = fetch(`${endpointURL}/allstock`)
+  const paintProyectsPending = fetch(`${endpointURL}/getProyectsInProgress`)
   .then((response) => response.json())
   .then((data) => {
     if(data.ok){
-      stockGeneral.innerHTML = ""
+      proyectsPending.innerHTML += `
+      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Proyectos en proceso
+											</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">${data.data.proyectsPending}</div>
+      `
+    }
+  })
 
-      data.stock.forEach(stock => {
+
+  const paintTableProyectsDelayed = fetch(`${endpointURL}/getProyectsDelayed`)
+  .then((response) => response.json())
+  .then((data) => {
+    if(data.ok){
+      console.log(data.data.proyectsDelayed);
+      
+      tablaProyectosDemorados.innerHTML = ""
+
+      data.data.proyectsDelayed.forEach(item=> {
         const template = `
         <tr>
-        <td data-label="Destino">${stock.destino.nombreDestino}</td>
-        <td data-label="Producto">${stock.producto.nombre} </td>
-        <td data-label="Stock">${stock.cantidad}</td>
+        <td data-label="Destino">${item.nombre}</td>
+        <td data-label="Producto">${item.expediente} </td>
+        <td data-label="Stock">${item.procedencia}</td>
+        <td data-label="Stock">${item.duracion} - ${item.unidadDuracion} </td>
         <td data-label="Creado" class="text-black"> ${new Intl.DateTimeFormat('es-AR', {
           year: 'numeric',
           month: 'long',
@@ -144,7 +161,7 @@ const paintKitsDone = fetch(`${endpointURL}kits`)
           minute: 'numeric',
           second: 'numeric',
           timeZone: 'America/Argentina/Buenos_Aires'
-        }).format(new Date(stock.createdAt))} </td>
+        }).format(new Date(item.createdAt))} </td>
         <td data-label="Actualizado">${new Intl.DateTimeFormat('es-AR', {
           year: 'numeric',
           month: 'long',
@@ -153,12 +170,12 @@ const paintKitsDone = fetch(`${endpointURL}kits`)
           minute: 'numeric',
           second: 'numeric',
           timeZone: 'America/Argentina/Buenos_Aires'
-        }).format(new Date(stock.updatedAt))}</td>
+        }).format(new Date(item.updatedAt))}</td>
       </tr>
         
         `;
 
-        stockGeneral.innerHTML += template
+        tablaProyectosDemorados.innerHTML += template
       })
 
     }

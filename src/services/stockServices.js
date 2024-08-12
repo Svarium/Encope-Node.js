@@ -99,6 +99,72 @@ module.exports = {
         }     
       }
   },
+
+  getProyectsPending : async () => {
+    try {
+
+      const proyectsPending = await db.Proyecto.count({where:{estado:"Pendiente"}})
+
+      return proyectsPending
+      
+    } catch (error) {
+      console.log(error);
+      throw{
+          status:500,
+          message:error.message,
+      }     
+    }
+},
+
+getProyectsDelayed : async () => {
+  try {
+    // Consultar todos los proyectos
+    const proyectos = await db.Proyecto.findAll();
+
+    // Obtener la fecha actual
+    const fechaActual = new Date();
+
+    // Filtrar los proyectos fuera de término
+      const proyectosFueraDeTermino = proyectos.filter(proyecto => {
+      const { createdAt, duracion, unidadDuracion } = proyecto;
+
+      // Convertir la fecha de creación a un objeto Date
+      const fechaCreacion = new Date(createdAt);
+
+      // Calcular la fecha de vencimiento
+      let fechaVencimiento;
+      switch (unidadDuracion) {
+        case 'dia':
+          fechaVencimiento = new Date(fechaCreacion);
+          fechaVencimiento.setDate(fechaVencimiento.getDate() + duracion);
+          break;
+        case 'semana':
+          fechaVencimiento = new Date(fechaCreacion);
+          fechaVencimiento.setDate(fechaVencimiento.getDate() + (duracion * 7));
+          break;
+        case 'mes':
+          fechaVencimiento = new Date(fechaCreacion);
+          fechaVencimiento.setMonth(fechaVencimiento.getMonth() + duracion);
+          break;
+        default:
+          return false; // Si la unidad de duración no es válida, no consideres este proyecto
+      }
+
+      // Comparar la fecha de vencimiento con la fecha actual
+      return fechaActual > fechaVencimiento;
+    });
+
+    return proyectosFueraDeTermino
+    
+  } catch (error) {
+    console.log(error);
+    throw{
+        status:500,
+        message:error.message,
+    }     
+  }
+},
+
   
   getLastproyects : async () => {
     try {
