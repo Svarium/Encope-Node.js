@@ -100,12 +100,17 @@ module.exports = {
             attributes:['id', 'nombreDestino' ]
         })
 
-        Promise.all(([productos, destinos]))
-        .then(([productos, destinos]) => {
+        const talleres = db.Taller.findAll({
+            attributes:["id", "nombre"]
+        })
+
+        Promise.all(([productos, destinos, talleres]))
+        .then(([productos, destinos, talleres]) => {
             return res.render('stock/estadistica',{
                 title:'Estadisticas',
                 productos,
-                destinos
+                destinos,
+                talleres
             })
         })
       

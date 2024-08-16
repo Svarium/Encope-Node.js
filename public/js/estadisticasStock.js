@@ -1,11 +1,12 @@
 const $ = (el) => document.querySelector(el);
 
 const sectionKits = document.getElementById("kits");
-const sectionStocks = document.getElementById("stocksPorDestino");
+const sectionLastProyects = document.getElementById("lastProyects");
 const productsInDb = document.getElementById("productos");
 const talleresInDB = document.getElementById("talleres")
 const proyectsDone = document.getElementById("proyectsDone");
 const proyectsPending= document.getElementById("proyectsPending");
+const countDelayedProyect = document.getElementById("demorados");
 
 const tablaProyectosDemorados = document.getElementById("tablaDeProyectosDemorados")
 
@@ -64,23 +65,23 @@ const paintKitsDone = fetch(`${endpointURL}kits`)
   });
 
 
-  const paintStockDestinos = fetch(`${endpointURL}/stocks`)
+  const paintLastProyects = fetch(`${endpointURL}/getLastProyects`)
   .then((response) => response.json())
   .then((data) => {
     if(data.ok){
-      console.log(data.data.stocks);
+      console.log(data.data.proyects);
 
-        data.data.stocks.forEach(stock => {
+        data.data.proyects.forEach(proyect => {
             const template = `
-                             <div class="col-lg-4 mb-3">
+                             <div class="col-lg-3 mb-3">
                             <div class="card bg-dark text-white shadow">
                             <div class="card-body  p-2">
-                              <small>${stock.producto.nombre.toUpperCase()}: <strong>${stock.cantidad}</strong></small>                            
+                              <small>${proyect.nombre.toUpperCase()}: <strong>${proyect.expediente}</strong></small>                            
                         </div>
                             </div>
                                 </div>            
             `;    
-            sectionStocks.innerHTML += template
+            sectionLastProyects.innerHTML += template
                     });     
 
     }
@@ -142,9 +143,10 @@ const paintKitsDone = fetch(`${endpointURL}kits`)
   .then((response) => response.json())
   .then((data) => {
     if(data.ok){
-      console.log(data.data.proyectsDelayed);
+      console.log(data.data.count);
       
       tablaProyectosDemorados.innerHTML = ""
+      countDelayedProyect.innerHTML += `${data.data.count} +`
 
       data.data.proyectsDelayed.forEach(item=> {
         const template = `
@@ -174,9 +176,10 @@ const paintKitsDone = fetch(`${endpointURL}kits`)
       </tr>
         
         `;
-
         tablaProyectosDemorados.innerHTML += template
       })
+
+    
 
     }
   })

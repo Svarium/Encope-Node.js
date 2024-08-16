@@ -129,10 +129,10 @@
     <div class="container mt-3 shadow">
       <h5 class="text-center mb-3">Buscar Proyecto <i class="fa-solid fa-receipt fa-sm"></i></h5>
       <form action="/stock/searchProyect" method="POST" class="row " id="searchProyect" onsubmit="return validarFormularioBuscarProyecto()">
-        <div class="col-md-4">
+        <div class="col-md-4 mb-3">
             <input type="text" class="form-control" id="expediente" name="expediente" placeholder="Ingresa numero de expediente (ej: EX-2023-114492446-APN-DS#ENCOPE)">           
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 mb-3">
           <input list="talleres" class="form-control" id="taller" name="taller" placeholder="Ingresa el nombre del taller..."> 
           <datalist id="talleres">
             <% talleres.forEach(taller => { %>
@@ -140,7 +140,7 @@
             <% }) %>           
           </datalist>          
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4 mb-3">
         <input list="unidades"  class="form-control" id="procedencia" name="procedencia" placeholder="Ingresa la unidad o complejo...">  
         <datalist id="unidades">
           <% destinos.forEach(destino => { %>
