@@ -53,7 +53,7 @@ module.exports = {
 
   },
 
-  getAllProducts : async () => {
+  getCountProducts : async () => {
     try {
 
       const countProducts = await db.Producto.count()
@@ -66,6 +66,22 @@ module.exports = {
             status:500,
             message:error.message,
         }        
+    }
+  },
+
+  getAllDbProducts : async () => {
+    try {
+
+      const products = await db.Producto.findAll()
+
+      return products
+      
+    } catch (error) {
+      console.log(error);
+      throw{
+          status:500,
+          message:error.message,
+      }       
     }
   },
 

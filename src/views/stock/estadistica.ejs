@@ -1,18 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-    <%- include('../partials/head')  %>
-      
-        
-          
+    <%- include('../partials/head')  %>    
 <body > 
-
     <main>
       <%- include('../partials/modals')  %>    
       <%- include('../partials/canvasMenu')  %> 
 
 
-      <div id="wrapper">
-		
+      <div id="wrapper">	
 
 		<!-- Sidebar -->
 		<ul class="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion" id="accordionSidebar">			
@@ -43,8 +38,9 @@
 
 			<!-- Nav Item - Charts -->
 			<li class="nav-item">
-					<button type="button" class="btn btn-primary nav-link" data-bs-toggle="modal" data-bs-target="#kitsTerminados">
-					<span><i class="fa-solid fa-gears"></i></span>	Tabla de Productos
+					<button type="button" class="btn btn-primary nav-link" data-bs-toggle="modal" data-bs-target="#allProductsInDB" >
+					<span><i class="fa-solid fa-gears"></i></span> Tabla de Productos <span class="position-absolute top-0 start-100 p-1 translate-middle badge rounded-pill bg-primary shadow-sm" id="productsCount">						
+						<span class="visually-hidden">Proyectos demorados</span>
 					  </button>
 			</li>
 				
@@ -63,10 +59,7 @@
 					<span>Registro de Retiros</span>
 				</a>
 			</li> -->
-			
-
-
-			
+						
 
 			<!-- Nav Item - Tables -->
 			<li class="nav-item">
@@ -188,9 +181,6 @@
 		</div>
 
 		
-		
-					
-
 						<!-- Ultimos agregados -->
 						<div class="col-lg-12 mb-4">						
 							<div class="card shadow mb-4">
@@ -209,7 +199,11 @@
 						</div>
 
 							
-					    <section>
+					    <section class="container-fluid">
+							<hr>
+							<p class="text-center h3 text-success fw-bold">Buscadores <i class="fa-brands fa-searchengin"></i></p>
+							
+
 							<!-- BUSCADOR DE PRODUCTO -->
 						  <div class="container mt-5 shadow">
 							<p class="text-center h5 mb-3">Buscar Producto <i class="fa-solid fa-tag fa-sm"></i></p>
@@ -283,7 +277,7 @@
 					<div class="row">
 
 						<!-- Last Movie in DB -->
-						<div class="col-lg-12 mb-4" id="kits">
+						<div class="col-lg-12 mb-4" id="">
 							
 						</div>
 
@@ -299,6 +293,11 @@
 			</div>
 			<!-- End of MainContent -->
 
+
+			<!-- MODALES -->
+
+
+			<!-- MODAL PROYECTOS DEMORADOS -->
 			<div class="modal fade" id="tablaDeStock" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog modal-xl">
 				  <div class="modal-content">
@@ -333,44 +332,57 @@
 					</div>
 				  </div>
 				</div>
+			</div>
+
+			
+
+			<!-- MODAL TABLA DE PRODUCTOS -->
+
+			<div class="modal fade" id="allProductsInDB" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-xl">
+				  <div class="modal-content">
+					<div class="modal-header">
+					  <p class="modal-title h5 fw-bold" id="exampleModalLabel">Productos en base de datos</p>				 
+					  <button type="button" class="btn btn-primary btn-sm ms-2"
+						onclick="window.location.href='/stock/ProductsTable'">
+						<i class="fa-solid fa-download"></i>
+						</button>
+					  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						
+					 
+					<div class="contenedor">
+				<table class="table">     
+					<thead>
+						<tr>
+							<th>Imagen</th>
+							<th>Nombre</th>
+							<th>Detalle</th>
+							<th>Unidad de medida</th>
+							<th>Ficha Tecnica</th>							
+						</tr>
+					</thead>
+					<tbody id="tablaDeProductosenDB" class="align-content-center align-items-center">   
+					
+					
+					</tbody>
+				</table>
 			  </div>
+					</div>
+					<div class="modal-footer">
+					  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+					</div>
+				  </div>
+				</div>
+			</div>
 			  
 
     </main>
 
 
     
-    <script>
-      function showAlertAndSubmit(event) {
-        event.preventDefault();
-    
-        Swal.fire({
-          title: '¿Estas seguro de editar tu información?',
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Si, editar'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            // Si el usuario confirmó el alert, envía el formulario manualmente
-            const form = document.getElementById("editInfo");
-            Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: 'Informacion editada correctamente',
-      showConfirmButton: false,
-      timer: 1500
-    })
-    
-            // Retraso de 5 segundos antes de enviar el formulario y cambiar la página
-            setTimeout(function() {
-              form.submit();
-            }, 1000); // 2000 milisegundos = 2 segundos
-          }
-        });
-      }
-    </script>
+   
     
     <%- include('../partials/scripts')  %>
     

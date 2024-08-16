@@ -1,5 +1,5 @@
 const createResponseError = require('../../helpers/createResponseError');
-const { editProyectState, editParteSemanal, getAllProducts, getAllTallers, getProyectsDone, getLastproyects, editarCantidadAProducir, editarCostoUnitario, eliminarProductoDelProyecto, agregarProductoAlProyecto, editarCantidadProducida, actualizarEgresos, actualizarObservaciones, removeInsumo, getProyectsPending, getProyectsDelayed } = require('../../services/stockServices');
+const { editProyectState, editParteSemanal, getAllProducts, getAllTallers, getProyectsDone, getLastproyects, editarCantidadAProducir, editarCostoUnitario, eliminarProductoDelProyecto, agregarProductoAlProyecto, editarCantidadProducida, actualizarEgresos, actualizarObservaciones, removeInsumo, getProyectsPending, getProyectsDelayed, getCountProducts, getAllDbProducts } = require('../../services/stockServices');
 
 
 module.exports = {
@@ -43,7 +43,7 @@ module.exports = {
     allProducts : async (req,res) => {
         try {
 
-            const productsInDB = await getAllProducts()
+            const productsInDB = await getCountProducts()
 
             return res.status(200).json({
                 ok:true,
@@ -51,6 +51,26 @@ module.exports = {
                     message:"Productos en base de datos",
                     productsInDB,
 
+                }
+            })
+            
+        } catch (error) {
+            console.log(error);
+            return createResponseError(res, error)
+        }
+    },
+
+    getAllProducts : async(req,res) => {
+        try {
+
+            const allProducts = await getAllDbProducts()
+
+            return res.status(200).json({
+                ok:true,
+                data:{
+                    message:'Todos los productos existentes',
+                    allProducts,
+                    count: allProducts.length
                 }
             })
             

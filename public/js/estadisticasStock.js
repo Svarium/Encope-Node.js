@@ -1,12 +1,13 @@
 const $ = (el) => document.querySelector(el);
 
-const sectionKits = document.getElementById("kits");
+const sectionProductsTable = document.getElementById("tablaDeProductosenDB");
 const sectionLastProyects = document.getElementById("lastProyects");
 const productsInDb = document.getElementById("productos");
 const talleresInDB = document.getElementById("talleres")
 const proyectsDone = document.getElementById("proyectsDone");
 const proyectsPending= document.getElementById("proyectsPending");
 const countDelayedProyect = document.getElementById("demorados");
+const countProductsInDB = document.getElementById("productsCount");
 
 const tablaProyectosDemorados = document.getElementById("tablaDeProyectosDemorados")
 
@@ -16,51 +17,26 @@ const tablaProyectosDemorados = document.getElementById("tablaDeProyectosDemorad
 
 const endpointURL = "http://localhost:3000/api/stock/";
 
-const paintKitsDone = fetch(`${endpointURL}kits`)
+const paintProductsInDB = fetch(`${endpointURL}getAllProducts`)
   .then((response) => response.json())
   .then((data) => {
-    if (data.ok) {
-      const template = `
-      <!-- Modal -->
-<div class="modal fade" id="kitsTerminados" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
+    if (data.ok) {    
+      
+      sectionProductsTable.innerHTML = ""
+      countProductsInDB.innerHTML = `${data.data.count}+`
+      data.data.allProducts.forEach(item=> {
+        const template = `
+        <tr>
+        <td data-label="Imagen"><img src="/images/productos/${item.imagen}" alt="image-product" style="width: 70px; height: 70px;" class="rounded-circle shadow-sm"></td>
+        <td data-label="Nombre">${item.nombre}</td>
+        <td data-label="Detalle">${item.detalle} </td>
+        <td data-label="Unidad de medida">${item.unidadDeMedida} </td>
+        <td data-label="Ficha Técnica" class="text-black"><a href="/images/fichas/${item.ficha}" target="_blank" class="btn btn-outline-success btn-sm">Ficha <i class="fa-solid fa-cloud-arrow-down"></i></a></td>
+      </tr>
         
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-      <div class="card-header py-3">
-      <h5 class="m-0 font-weight-bold text-gray-800">Kits terminados</h5>
-      </div>
-      <div class="card-body">
-      <div class="text-center">
-      <img class="img-fluid px-3 px-sm-4 mt-3 mb-4 shadow " style="width: 100%;" src="/images/cunitas/kit.webp" alt="">
-                    </div>
-                    <p>Total de kits terminados y en stock en el CPFII. El kit consta de.... </p>
-                    <small>
-                    Última actualización:
-                      <strong>${new Intl.DateTimeFormat('es-AR', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                        hour: 'numeric',
-                        minute: 'numeric',
-                        second: 'numeric',
-                        timeZone: 'America/Argentina/Buenos_Aires'
-                      }).format(new Date(data.data.data[0].updatedAt))}
-                      </strong>
-                    </small>
-                    <a class="btn btn-danger mt-2" target="_blank" rel="nofollow" href="#"><strong>${data.data.data[0].cantidad}</strong> Kits terminados</a>
-                  </div>
-                </div>
-      </div>
-    </div>
-  </div>
-</div>
-     
-      `;
-      sectionKits.innerHTML += template
+        `;
+        sectionProductsTable.innerHTML += template
+      })
     }
   });
 
@@ -146,15 +122,15 @@ const paintKitsDone = fetch(`${endpointURL}kits`)
       console.log(data.data.count);
       
       tablaProyectosDemorados.innerHTML = ""
-      countDelayedProyect.innerHTML += `${data.data.count} +`
+      countDelayedProyect.innerHTML += `${data.data.count}+`
 
       data.data.proyectsDelayed.forEach(item=> {
         const template = `
         <tr>
-        <td data-label="Destino">${item.nombre}</td>
-        <td data-label="Producto">${item.expediente} </td>
-        <td data-label="Stock">${item.procedencia}</td>
-        <td data-label="Stock">${item.duracion} - ${item.unidadDuracion} </td>
+        <td data-label="Nombre">${item.nombre}</td>
+        <td data-label="Expediente">${item.expediente} </td>
+        <td data-label="Procedencia">${item.procedencia}</td>
+        <td data-label="Duración">${item.duracion} - ${item.unidadDuracion} </td>
         <td data-label="Creado" class="text-black"> ${new Intl.DateTimeFormat('es-AR', {
           year: 'numeric',
           month: 'long',
