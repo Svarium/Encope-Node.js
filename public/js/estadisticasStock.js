@@ -15,7 +15,7 @@ const tablaProyectosDemorados = document.getElementById("tablaDeProyectosDemorad
 
 /* const endpointURL = "https://encope.gob.ar/api/cunas/"; */
 
-const endpointURL = "http://localhost:3000/api/stock/";
+const endpointURL = "https://test.encope.gob.ar/api/stock/";
 
 const paintProductsInDB = fetch(`${endpointURL}getAllProducts`)
   .then((response) => response.json())
