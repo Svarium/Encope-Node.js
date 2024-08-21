@@ -1,7 +1,7 @@
 <header>
 
     <!-- place navbar here -->
-    <nav class="navbar navbar-expand-lg navbar-light" id="up" data-aos="zoom-in" data-aos-duration="1000">
+    <nav class="navbar navbar-expand-lg navbar-light align-content-center align-items-center" id="up" data-aos="zoom-in" data-aos-duration="1000">
           <div class="container-fluid ms-3">
             <a class="navbar-brand" href="/inicio"> 
             <img src="/images/logo_home.png" width="150px" alt="" class="logo-web">
@@ -35,17 +35,22 @@
                   <li class="nav-item me-4">
                     <a class="nav-link " href="/noticias">Noticias</a>
                 </li>
-                <form action="/licitacion/searchLicitacion" method="get" class="m-0 d-flex justify-content-start">
-                    <div class="col-12 col-md-12 col-lg-12">
-                        <div class="input-group mb-3">
-                            <input type="search" class="form-control" placeholder="Buscar licitación..." aria-label="Buscar" aria-describedby="button-addon2">
-                            <button type="submit" class="btn btn-danger bg-gradient" id="button-addon2">Buscar</button>
+                <li class="nav-item"> 
+                    <form action="/licitacion/searchLicitacion" method="get" class="m-0 d-flex justify-content-start">
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="input-group mb-3">
+                                <input type="search" class="form-control" placeholder="Buscar licitación..." aria-label="Buscar" aria-describedby="button-addon2">
+                                <button type="submit" class="btn btn-danger bg-gradient" id="button-addon2">Buscar</button>
+                            </div>
                         </div>
-                    </div>
-                  </form>
-                <% if (locals.userLogin) { %>                    
-                  <button class="btn btn-transparent btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><img id="userIconProfile" src="<%= /http/.test(locals.userLogin.icon) ? locals.userLogin.icon : `/images/iconsProfile/${locals.userLogin.icon}` %>" class="iconProfile me-2" alt="">
-                    <%= locals.userLogin.name %> <i class="fa-solid fa-caret-down fa-lg"></i></button>
+                      </form>
+                </li>
+                <% if (locals.userLogin) { %>  
+                    <li class="nav-item">
+                        <button class="btn btn-transparent btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><img id="userIconProfile" src="<%= /http/.test(locals.userLogin.icon) ? locals.userLogin.icon : `/images/iconsProfile/${locals.userLogin.icon}` %>" class="iconProfile me-2" alt="">
+                            <%= locals.userLogin.name %> <i class="fa-solid fa-caret-down fa-lg"></i></button>
+                    </li>                 
+                  
                  <% } else {%>
                     <li class="nav-item">
                         <a class="nav-link active" href="/users/login">Iniciar Sesión</a>
