@@ -1,4 +1,8 @@
 [
+    {
+        "lastUpdate" : "21-08-24",
+        "TotalGeneralInternos": 7503
+    },
 
     {
         "id" : 1,
@@ -287,13 +291,17 @@
                 "cantidad":74
             },
             {
-                "nombre": "MANTENIMIENTO",
-                "cantidad":66
+                "nombre": "MANTENIMIENTO GRAL DEL ESTABLECIENTO",
+                "cantidad":64
             },
             {
                 "nombre": "HORTICULTURA",
                 "cantidad":27
-            },           
+            },
+            {
+                "nombre": "HIGIENE DE ALOJAMIENTOS",
+                "cantidad":2
+            },
             {
                 "nombre": "HERRERIA",
                 "cantidad":2
@@ -338,12 +346,16 @@
                 "cantidad":18          
             },
             {
-                "nombre": "MANTENIMIENTO",
-                "cantidad":39
+                "nombre": "MANTENIMIENTO GRAL DEL ESTABLECIENTO",
+                "cantidad":19
             },
             {
                 "nombre": "LAVADERO AUTOMOTOR",
                 "cantidad":5
+            },
+            {
+                "nombre": "HIGIENE DE ALOJAMIENTOS",
+                "cantidad":10         
             },
             {
                 "nombre": "ELECTROTECNIA",
@@ -369,7 +381,13 @@
             {
                 "nombre": "AVICULTURA",
                 "cantidad":1           
-            }             
+            }   
+            ,
+            {
+                "nombre": "ASEO Y LIMPIEZA",
+                "cantidad":10           
+            }   
+            
         ],
         "TotalInternosTrabajadores": 90
     },
@@ -396,8 +414,8 @@
                 "cantidad":3          
             },
             {
-                "nombre": "MANTENIMIENTO",
-                "cantidad":77
+                "nombre": "MANTENIMIENTO GRAL DEL ESTABLECIENTO",
+                "cantidad":22
             },
             {
                 "nombre": "LAVADERO AUTOMOTOR",
@@ -406,7 +424,11 @@
             {
                 "nombre": "HORTICULTURA",
                 "cantidad":5          
-            },             
+            },
+            {
+                "nombre": "HIGIENE DE ALOJAMIENTOS",
+                "cantidad":35          
+            },    
             {
                 "nombre": "HERRERIA",
                 "cantidad":9        
@@ -418,7 +440,11 @@
             {
                 "nombre": "BLOQUERIA",
                 "cantidad":6              
-            }           
+            },
+            {
+                "nombre": "ASEO Y LIMPIEZA",
+                "cantidad":20             
+            }   
             
         ],
         "TotalInternosTrabajadores": 146
@@ -446,8 +472,8 @@
                 "cantidad":8           
             },
             {
-                "nombre": "MANTENIMIENTO",
-                "cantidad":53
+                "nombre": "MANTENIMIENTO GRAL DEL ESTABLECIENTO",
+                "cantidad":33
             },
             {
                 "nombre": "LAVADERO AUTOMOTOR",
@@ -481,7 +507,12 @@
             {
                 "nombre": "AUTOMOTORES",
                 "cantidad":14              
-            }  
+            }    
+            ,
+            {
+                "nombre": "ASEO Y LIMPIEZA",
+                "cantidad":20             
+            }    
             ,
             {
                 "nombre": "AGRICULTURA - RESERVAS FORRAJERAS",
@@ -522,7 +553,7 @@
             },
             {
                 "nombre": "MANTENIMIENTO GRAL DEL ESTABLECIENTO",
-                "cantidad":8            
+                "cantidad":3             
             },    
             {
                 "nombre": "LAVADERO DE ROPA",
@@ -539,8 +570,11 @@
             {
                 "nombre": "COCINA CENTRAL",
                 "cantidad":6              
-            }
-        
+            },
+            {
+                "nombre": "ASEO Y LIMPIEZA",
+                "cantidad":5              
+            }    
         ],
         "TotalInternosTrabajadores": 35
     },
@@ -567,8 +601,8 @@
                 "cantidad":14           
             },
             {
-                "nombre": "MANTENIMIENTO",
-                "cantidad":60
+                "nombre": "MANTENIMIENTO GRAL DEL ESTABLECIENTO",
+                "cantidad":28
             },
             {
                 "nombre": "HUERTA",
@@ -577,7 +611,11 @@
             {
                 "nombre": "HERRERIA",
                 "cantidad":8         
-            },
+            },  
+            {
+                "nombre": "HIGIENE DE ALOJAMIENTOS",
+                "cantidad":15              
+            },  
             {
                 "nombre": "HERRERIA",
                 "cantidad":5              
@@ -589,7 +627,11 @@
             {
                 "nombre": "BLOQUERIA",
                 "cantidad":5            
-            } 
+            },
+            {
+                "nombre": "ASEO Y LIMPIEZA",
+                "cantidad":17              
+            }    
         ],
         "TotalInternosTrabajadores": 102
     },
@@ -620,8 +662,8 @@
                 "cantidad":4
             },
             {
-                "nombre": "MANTENIMIENTO",
-                "cantidad":49
+                "nombre": "MANTENIMIENTO GRAL DEL ESTABLECIENTO",
+                "cantidad":23
             },
             {
                 "nombre": "LAVADERO DE ROPA",
@@ -630,7 +672,11 @@
             {
                 "nombre": "HUERTA",
                 "cantidad":13         
-            },              
+            },  
+            {
+                "nombre": "HIGIENE DE ALOJAMIENTOS",
+                "cantidad":15              
+            },  
             {
                 "nombre": "HERRERIA",
                 "cantidad":5              
@@ -646,7 +692,11 @@
             {
                 "nombre": "BLOQUERIA",
                 "cantidad":7               
-            } 
+            },   
+            {
+                "nombre": "ASEO Y LIMPIEZA",
+                "cantidad":11               
+            }    
         ],
         "TotalInternosTrabajadores": 110
     },
@@ -669,14 +719,17 @@
                 "cantidad":5              
             },
             {
-                "nombre": "MANTENIMIENTO",
-                "cantidad":51         
+                "nombre": "MANTENIMIENTO GRAL DEL ESTABLECIENTO",
+                "cantidad":24            
             },
             {
                 "nombre": "HUERTA",
                 "cantidad":20
-            },           
-            
+            },
+            {
+                "nombre": "HIGIENE DE ALOJAMIENTOS",
+                "cantidad":20
+            },
             {
                 "nombre": "HERRERIA",
                 "cantidad":5              
@@ -696,7 +749,11 @@
             {
                 "nombre": "AUTOMOTORES",
                 "cantidad":2               
-            },    
+            },      
+            {
+                "nombre": "ASEO Y LIMPIEZA",
+                "cantidad":7             
+            },   
             {
                 "nombre": "ARTICULOS DE LIMPIEZA",
                 "cantidad":3               
@@ -731,12 +788,16 @@
                 "cantidad":24
             },
             {
-                "nombre": "MANTENIMIENTO",
-                "cantidad":96
+                "nombre": "MANTENIMIENTO GRAL DEL ESTABLECIENTO",
+                "cantidad":46
             },
             {
                 "nombre": "HORTICULTURA",
                 "cantidad":14              
+            },    
+            {
+                "nombre": "HIGIENE DE ALOJAMIENTOS",
+                "cantidad":28              
             },  
             {
                 "nombre": "HERRERIA",
@@ -761,8 +822,11 @@
             {
                 "nombre": "BLOQUERIA",
                 "cantidad":2              
-            }  
-               
+            },   
+            {
+                "nombre": "ASEO Y LIMPIEZA",
+                "cantidad":22               
+            }        
         ],
         "TotalInternosTrabajadores": 189
     },
@@ -793,14 +857,17 @@
                 "cantidad":11
             },
             {
-                "nombre": "MANTENIMIENTO",
-                "cantidad":51
+                "nombre": "MANTENIMIENTO GRAL DEL ESTABLECIENTO",
+                "cantidad":36
             },
             {
                 "nombre": "HUERTA ORGANICA",
                 "cantidad":4               
-            },   
-             
+            },    
+            {
+                "nombre": "HIGIENE DE ALOJAMIENTOS",
+                "cantidad":12               
+            },  
             {
                 "nombre": "HERRERIA",
                 "cantidad":3               
@@ -816,7 +883,11 @@
             {
                 "nombre": "CARPINTERIA DE MADERA",
                 "cantidad":7               
-            },  
+            },   
+            {
+                "nombre": "ASEO Y LIMPIEZA",
+                "cantidad":3               
+            },   
             {
                 "nombre": "ARMADO DE BROCHES",
                 "cantidad":9              
@@ -847,13 +918,17 @@
                 "cantidad":12               
             },
             {
-                "nombre": "MANTENIMIENTO",
-                "cantidad":39            
+                "nombre": "MANTENIMIENTO GRAL DEL ESTABLECIENTO",
+                "cantidad":9              
             },
             {
                 "nombre": "LAVADERO AUTOMOTOR",
                 "cantidad":6
-            },            
+            },
+            {
+                "nombre": "HIGIENE DE ALOJAMIENTOS",
+                "cantidad":4
+            },
             {
                 "nombre": "HERRERIA",
                 "cantidad":26               
@@ -865,7 +940,11 @@
             {
                 "nombre": "CARPINTERIA DE MADERA",
                 "cantidad":6               
-            },             
+            },  
+            {
+                "nombre": "ASEO Y LIMPIEZA",
+                "cantidad":26               
+            },  
             {
                 "nombre": "ARTESANIAS",
                 "cantidad":5               
@@ -896,7 +975,7 @@
                 "cantidad":5               
             },
             {
-                "nombre": "MANTENIMIENTO",
+                "nombre": "MANTENIMIENTO GRAL DEL ESTABLECIENTO",
                 "cantidad":5
             },
             {
@@ -966,8 +1045,8 @@
                 "cantidad":4         
             },
             {
-                "nombre": "MANTENIMIENTO",
-                "cantidad":48        
+                "nombre": "MANTENIMIENTO GRAL DEL ESTABLECIENTO",
+                "cantidad":6         
             },
             {
                 "nombre": "LAVADERO DE ROPA",
@@ -980,7 +1059,11 @@
             {
                 "nombre": "COSTURA",
                 "cantidad":22       
-            }, 
+            },
+            {
+                "nombre": "ASEO Y LIMPIEZA",
+                "cantidad":48         
+            },    
             {
                 "nombre": "ARTICULOS DE LIMPIEZA",
                 "cantidad":4  
@@ -1040,7 +1123,7 @@
         "nombreCompleto":"Complejo Penitenciario Federal I - Ezeiza",
         "fachada":"CPF I.JPG",
         "detalle":"La unidad cuenta, entre otros, con los siguientes talleres productivos: Panadería, Herrería, Carpintería, Zapatería, Sastrería, Imprenta, Armado de carteras.",
-        "video":null,
+        "video":"https://youtu.be/_xP9N_ofyw0",
         "imgDatos":null,
         "internosPorTaller": [
             {
@@ -1060,8 +1143,8 @@
                 "cantidad":66
             },
             {
-                "nombre": "MANTENIMIENTO",
-                "cantidad":497                  
+                "nombre": "MANTENIMIENTO GRAL DEL ESTABLECIENTO",
+                "cantidad":53                   
             },            
             {
                 "nombre": "IMPRENTA",
@@ -1070,7 +1153,11 @@
             {
                 "nombre": "HUERTA",
                 "cantidad":20
-            },            
+            },
+            {
+                "nombre": "HIGIENE DE ALOJAMIENTOS",
+                "cantidad":398          
+            },
             {
                 "nombre": "COSTURA",
                 "cantidad":16             
@@ -1082,7 +1169,11 @@
             {
                 "nombre": "CARPINTERIA DE MADERA",
                 "cantidad":3           
-            }
+            } ,
+            {
+                "nombre": "ASEO Y LIMPIEZA",
+                "cantidad":46           
+            } 
             ,
             {
                 "nombre": "ARTICULOS DE LIMPIEZA",
@@ -1110,8 +1201,8 @@
                 "cantidad":59                
             },
             {
-                "nombre": "MANTENIMIENTO",
-                "cantidad":561             
+                "nombre": "MANTENIMIENTO GRAL DEL ESTABLECIENTO",
+                "cantidad":109               
             },
             {
                 "nombre": "LAVADERO DE ROPA",
@@ -1121,6 +1212,10 @@
                 "nombre": "LAVADERO AUTOMOTOR",
                 "cantidad":5                    
             },            
+            {
+                "nombre": "HIGIENE DE ALOJAMIENTOS",
+                "cantidad":176           
+            },
             {
                 "nombre": "HERRERIA",
                 "cantidad":7
@@ -1137,6 +1232,10 @@
                 "nombre": "CARPINTERIA DE MADERA",
                 "cantidad":29               
             },
+            {
+                "nombre": "ASEO Y LIMPIEZA",
+                "cantidad":276            
+            } ,
             {
                 "nombre": "ARTICULOS DE LIMPIEZA",
                 "cantidad":3             
@@ -1198,12 +1297,16 @@
                 "cantidad":1         
             },    
             {
-                "nombre": "MANTENIMIENTO",
-                "cantidad":308
+                "nombre": "MANTENIMIENTO GRAL DEL ESTABLECIENTO",
+                "cantidad":54    
             },              
             {
                 "nombre": "LAVADERO DE ROPA",
                 "cantidad":10          
+            },
+            {
+                "nombre": "HIGIENE DE ALOJAMIENTOS",
+                "cantidad":237           
             },
             {
                 "nombre": "HERRERIA",
@@ -1223,7 +1326,12 @@
             {
                 "nombre": "BLOQUERIA",
                 "cantidad":12         
-            }              
+            }   
+            ,
+            {
+                "nombre": "ASEO Y LIMPIEZA",
+                "cantidad":17          
+            }   
             ,
             {
                 "nombre": "ARTICULOS DE LIMPIEZA",
@@ -1281,8 +1389,8 @@
                 "cantidad":17            
             },
             {
-                "nombre": "MANTENIMIENTO",
-                "cantidad":84              
+                "nombre": "MANTENIMIENTO GRAL DEL ESTABLECIENTO",
+                "cantidad":63               
             },
             {
                 "nombre": "LAVADERO DE ROPA",
@@ -1292,7 +1400,11 @@
                 "nombre": "LAVADERO AUTOMOTOR",
                 "cantidad":5             
             } ,
-
+            {
+                "nombre": "HIGIENE DE ALOJAMIENTOS",
+                "cantidad":5              
+            } 
+            ,
             {
                 "nombre": "FLORIHORTICULTURA",
                 "cantidad":3              
@@ -1317,7 +1429,12 @@
                 "nombre": "CARPINTERIA DE MADERA",
                 "cantidad":14             
             } 
-        
+            ,
+            {
+                "nombre": "ASEO Y LIMPIEZA",
+                "cantidad":16             
+            } 
+
         ],
         "TotalInternosTrabajadores": 402
     },
@@ -1344,8 +1461,8 @@
                 "cantidad":66               
             },
             {
-                "nombre": "MANTENIMIENTO",
-                "cantidad":312
+                "nombre": "MANTENIMIENTO GRAL DEL ESTABLECIENTO",
+                "cantidad":96
             },
             {
                 "nombre": "LAVADERO DE ROPA",
@@ -1358,6 +1475,10 @@
             {
                 "nombre": "HORTICULTURA",
                 "cantidad":79
+            },
+            {
+                "nombre": "HIGIENE DE ALOJAMIENTOS",
+                "cantidad":216               
             },
             {
                 "nombre": "HERRERIA",
@@ -1410,13 +1531,17 @@
                 "cantidad":37
             },
             {
-                "nombre": "MANTENIMIENTO",
-                "cantidad":279     
+                "nombre": "MANTENIMIENTO GRAL DEL ESTABLECIENTO",
+                "cantidad":76       
             },
             {
                 "nombre": "HORTICULTURA",
                 "cantidad":52         
-            },            
+            },    
+            {
+                "nombre": "HIGIENE DE ALOJAMIENTOS",
+                "cantidad":194   
+            },              
             {
                 "nombre": "HERRERIA",
                 "cantidad":27         
@@ -1429,6 +1554,11 @@
                 "nombre": "AUTOMOTORES",
                 "cantidad":2          
             }   
+            ,
+            {
+                "nombre": "ASEO Y LIMPIEZA",
+                "cantidad":9         
+            } 
             ,
             {
                 "nombre": "AGRICULTURA",
@@ -1457,8 +1587,8 @@
                 "cantidad":17              
             },
             {
-                "nombre": "MANTENIMIENTO",
-                "cantidad":12             
+                "nombre": "MANTENIMIENTO GRAL DEL ESTABLECIENTO",
+                "cantidad":7              
             },
             {
                 "nombre": "LAVADERO AUTOMOTOR",
@@ -1467,7 +1597,11 @@
             {
                 "nombre": "HUERTA",
                 "cantidad":13                  
-            },           
+            },            
+            {
+                "nombre": "HIGIENE DE ALOJAMIENTOS",
+                "cantidad":2       
+            },
             {
                 "nombre": "HERRERIA",
                 "cantidad":3
@@ -1479,6 +1613,10 @@
             {
                 "nombre": "CARPINTERIA DE MADERA",
                 "cantidad":55            
+            },
+            {
+                "nombre": "ASEO Y LIMPIEZA",
+                "cantidad":3             
             },
             {
                 "nombre": "ARTICULOS DE LIMPIEZA",
@@ -1514,9 +1652,13 @@
                 "cantidad":11               
             },
             {
-                "nombre": "MANTENIMIENTO",
-                "cantidad":220
-            },         
+                "nombre": "MANTENIMIENTO GRAL DEL ESTABLECIENTO",
+                "cantidad":6
+            },
+            {
+                "nombre": "HIGIENE DE ALOJAMIENTOS",
+                "cantidad":184                  
+            },            
             {
                 "nombre": "HERRERIA",
                 "cantidad":2       
@@ -1549,6 +1691,11 @@
             {
                 "nombre": "AUTOMOTORES",
                 "cantidad":1             
+            } 
+            ,
+            {
+                "nombre": "ASEO Y LIMPIEZA",
+                "cantidad":30             
             } 
             ,
             {
