@@ -1039,7 +1039,7 @@
     },
     {
         "id" : 18,
-        "nombre":"Unidad 31",
+        "nombre":"CPF VII",
         "nombreCompleto":"Centro Federal de Detención de Mujeres - Ezeiza",
         "fachada":"u31.png",
         "detalle":"La unidad cuenta con los siguientes talleres productivos: Costura, Marroquinería, Muñequería, Panadería, Armado de carpetas, Armado de bolsas de cartón, Lavandería.",
@@ -1584,7 +1584,7 @@
     },
     {
         "id" : 26,
-        "nombre":"CPFJA",
+        "nombre":"CPJA",
         "nombreCompleto":"Complejo Federal de Jóvenes Adultos",
         "fachada":"CFJA.JPG",
         "detalle":"En el establecimiento se desarrollan los siguientes talleres productivos: Armado de pelotas, Armado de bicicletas, Carpintería, Herrería, Armado de bolsas de papel, Porcicultura, Cría bovina, Elaboración de artículos de limpieza, Armado de escobas y escobillones, Armado de broches, Taller de panadería, Producción de snacks.",

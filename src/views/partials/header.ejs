@@ -1,6 +1,7 @@
 <header>
+
     <!-- place navbar here -->
-    <nav class="navbar navbar-expand-sm navbar-light" id="up" data-aos="zoom-in" data-aos-duration="1000">
+    <nav class="navbar navbar-expand-lg navbar-light" id="up" data-aos="zoom-in" data-aos-duration="1000">
           <div class="container-fluid ms-3">
             <a class="navbar-brand" href="/inicio"> 
             <img src="/images/logo_home.png" width="150px" alt="" class="logo-web">
@@ -34,12 +35,16 @@
                   <li class="nav-item me-4">
                     <a class="nav-link " href="/noticias">Noticias</a>
                 </li>
-                <form action="/licitacion/searchLicitacion" method="get" class="d-flex ">
-                    <input  class="form-control me-sm-2" type="search" name="search" placeholder="Buscar Licitacion">
-                    <button class="btn btn-outline-danger my-2 my-sm-0 me-3" type="submit">Buscar</button>
+                <form action="/licitacion/searchLicitacion" method="get" class="m-0 d-flex justify-content-start">
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="input-group mb-3">
+                            <input type="search" class="form-control" placeholder="Buscar licitación..." aria-label="Buscar" aria-describedby="button-addon2">
+                            <button type="submit" class="btn btn-danger bg-gradient" id="button-addon2">Buscar</button>
+                        </div>
+                    </div>
                   </form>
                 <% if (locals.userLogin) { %>                    
-                  <button class="btn btn-transparent" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><img id="userIconProfile" src="<%= /http/.test(locals.userLogin.icon) ? locals.userLogin.icon : `/images/iconsProfile/${locals.userLogin.icon}` %>" class="iconProfile me-2" alt="">
+                  <button class="btn btn-transparent btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><img id="userIconProfile" src="<%= /http/.test(locals.userLogin.icon) ? locals.userLogin.icon : `/images/iconsProfile/${locals.userLogin.icon}` %>" class="iconProfile me-2" alt="">
                     <%= locals.userLogin.name %> <i class="fa-solid fa-caret-down fa-lg"></i></button>
                  <% } else {%>
                     <li class="nav-item">
@@ -50,9 +55,11 @@
             </div>
       </div>
     </nav>      
+
+
     <span class="redes-sociales-span">  
     </span>
-    <script src="//code.tidio.co/hlix5kfat3m92rb4tfebsyogegqfbmo3.js" async></script>
+
 
       <!-- Accessibility Code for "www.encope.gob.ar" --> <script> window.interdeal = { "sitekey": "df0a6884c82e93c2e7023d1225b43fcd", "Position": "Right", "Menulang": "ES", "domains": { "js": "https://cdn.equalweb.com/", "acc": "https://access.equalweb.com/" }, "btnStyle": { "vPosition": [ "80%", null ], "scale": [ "0.8", "0.8" ], "icon": { "type": 7, "shape": "semicircle", "outline": false } } }; (function(doc, head, body){ var coreCall = doc.createElement('script'); coreCall.src = interdeal.domains.js + 'core/4.5.8/accessibility.js'; coreCall.defer = true; coreCall.integrity = 'sha512-edRZXolhkUWHM/uu0oiEu0tD39SPOhnl5a2KM+62YWIfb4M5oSMjvyl2NPXtGq8McfJl88bKtaxljjViGqQXtA=='; coreCall.crossOrigin = 'anonymous'; coreCall.setAttribute('data-cfasync', true ); body? body.appendChild(coreCall) : head.appendChild(coreCall); })(document, document.head, document.body); </script>
    

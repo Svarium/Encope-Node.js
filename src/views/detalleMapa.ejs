@@ -14,22 +14,24 @@
 
 
 
-<div class="container-fluid">
-    <div class="row  bg-secondary text-white">
-        <div class="p-5 col-xs-12 col-md-6 col-lg-5 ms-5">
+
+    <div class="row bg-secondary text-white">
+        <div class="p-5 col-xs-12 col-md-5 col-lg-5 ms-lg-5">
             <h4 class="h3 titulo-lic"><%= unidad.nombre %></h4>
             <hr class="linea-textos">
             <p class="h3 titulo-lic" style="font-weight:bolder;"><%= unidad.nombreCompleto %></p>            
         </div>
-        <div class="p-0 col-xs-12 col-md-6 col-lg-6 ms-2">
+        <div class="p-0 col-xs-12 col-md-6 col-lg-6 ms-lg-2">
          <img src="/images/mapa/FACHADAS/<%= unidad.fachada %>" alt="" class="mx-auto img-fluid d-block imagenUnidadesMapa">
         </div>
     </div>
-</div>
+
+   
+
 <br>
-<div class="container-fluid">
-    <div class="row text-black">
-        <div class="p-5 col-xs-12 col-md-6 col-lg-6 ms-5">
+
+    <div class="row text-black d-flex justify-content-center align-content-center align-items-center">
+        <div class="p-5 col-xs-12 col-md-6 col-lg-6 ms-lg-5">
             <p class="h3 ms-sm-0"><strong>Detalle de trabajo:</strong> <%= unidad.detalle %></p>            
         </div>
         <div class="p-5 mt-3 col-xs-12 col-md-6 col-lg-5">
@@ -78,44 +80,32 @@
         </div>
         
     </div>
-</div>
+
 <br>
 
 <% if (unidad.video) { %>
-    <div class="container-fluid">
-        <div class="row bg-danger text-white">
-            <div class="mt-5  p-5 col-xs-12 col-md-6 col-lg-5 ms-5">
+
+
+        <div class="row bg-danger text-white d-flex justify-content-center align-items-center align-content-center flex-wrap mb-4">
+            <div class="mt-5 p-5 col-xs-12 col-md-6 col-lg-5 ms-lg-5">
                 <p class="h3 titulo-lic" style="font-weight:bolder;">Conocé <br> sus talleres <br>productivos</p>  
                 <hr class="linea-textos">          
             </div>
-            <div class="p-3  col-xs-12 col-md-6 col-lg-5 ms-4">
-               <iframe width="600" height="320" src="https://www.youtube.com/embed/<%= unidad.video ? unidad.video.slice(17) : 'gb5Oek19Kr0' %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="videoUnidades"></iframe>
+            <div class="col-xs-12 col-md-6 col-lg-6 ms-lg-4 mx-auto ">
+                <div class="ratio ratio-16x9">
+                    <iframe src="https://www.youtube.com/embed/<%= unidad.video ? unidad.video.slice(17) : 'gb5Oek19Kr0' %>" title="YouTube video player" allowfullscreen ></iframe>
+                </div>
             </div>
         </div>
-    </div>
-    
-    <!-- video unidad small -->
-    <div class="container"> 
-        <div class="row">
-            <div class="mx-auto col-xs-12 col-md-6 col-lg-12">
-                <iframe width="430" height="415" src="https://www.youtube.com/embed/<%= unidad.video ? unidad.video.slice(17) : 'gb5Oek19Kr0' %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="videoUnidadesSmall"></iframe>
-            </div>
-        </div>
-      </div>
+   
+   
+     
 <% } %>
 
 
 
 
- <!-- IR ATRAS -->
 
- <div class="container">
-    <div class="ms-4 mt-3 col-xs-12 col-md-6 col-lg-3 d-block img-fluid">
-      <a href="/mapa">
-        <img src="/images/iconos/FLECHA2.png" alt="" width="40px">
-      </a>
-    </div>
-  </div>
 
 <!--LOGOS COLABORADORES-->
 

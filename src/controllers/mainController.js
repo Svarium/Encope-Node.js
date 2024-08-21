@@ -33,13 +33,14 @@ module.exports = {
             }
         })
         .then(noticias => {
-     /*  if(req.session.userLogin){
-        console.log(req.session.userLogin.destinoId);
-      } */
+            const unidadFilePath = path.join(__dirname, '../data/mapa.json');
+            const unidades = JSON.parse(fs.readFileSync(unidadFilePath, 'utf-8'));
+    
             return res.render('inicio', {
                 title: 'Encope',
                 noticias,
-                userLogin
+                userLogin,
+                unidades
             })
         })
       
