@@ -10,7 +10,7 @@
           class="navbar-toggler d-lg-none"
           type="button"
           data-bs-toggle="collapse"
-          data-bs-target="#collapsibleNavId"
+          data-bs-target="#navbarNav"
           aria-controls="collapsibleNavId"
           aria-expanded="false"
           aria-label="Toggle navigation"
@@ -31,7 +31,16 @@
             alt=""
           />
           <%= userLogin.name %> <i class="fa-solid fa-caret-down fa-lg"></i>
-        </button>       
+        </button>   
+        <!-- Menú de navegación -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto"> <!-- 'ms-auto' para alinear a la derecha -->
+            <li class="nav-item">
+              <a class="nav-link" href="/stock">Regresar</a>
+            </li>
+          </ul>
+        </div>
+      </div>    
     </nav>
 
     <main>
@@ -134,7 +143,7 @@
 
     </main>
 
-   
+    <%- include('../../partials/scripts') %>
     <script>
       let index = 0; // Variable para llevar el seguimiento del índice de los productos seleccionados
       let productosSeleccionados = []; // Lista para almacenar los productos ya seleccionados

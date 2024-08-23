@@ -5,50 +5,44 @@
           
     <body>
   
-        <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-3">
-            <div class="container">
-              <div class="d-flex">
-                <!-- Botón para abrir el menú a la izquierda -->
-                <button
-                  class="navbar-toggler d-lg-none order-0 me-2"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapsibleNavId"
-                  aria-controls="collapsibleNavId"
-                  aria-expanded="false"
-                  aria-label="Toggle navigation"
-                >
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-          
-                <!-- Botón para abrir el menú canvas a la derecha -->
-                <button
-                  class="btn btn-transparent order-1"
-                  type="button"
-                  data-bs-toggle="offcanvas"
-                  data-bs-target="#offcanvasRight"
-                  aria-controls="offcanvasRight"
-                >
-                  <img
-                    id="userIconProfile"
-                    src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>"
-                    class="iconProfile me-2"
-                    alt=""
-                  />
-                  <%= userLogin.name %><i class="fa-solid fa-caret-down fa-lg"></i>
-                </button>
-              </div>
-          
-              <!-- Menú de navegación -->
-              <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto"> <!-- 'ms-auto' para alinear a la derecha -->
-                  <li class="nav-item">
-                    <a class="nav-link" href="/stock/">Regresar</a>
-                  </li>              
-                </ul>
-              </div>
-            </div>
-          </nav> <br>
+      <nav class="navbar navbar-expand-sm navbar-light bg-light shadow-3">
+        <div class="container">
+          <button
+            class="navbar-toggler d-lg-none"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="collapsibleNavId"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <button
+            class="btn btn-transparent"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasRight"
+            aria-controls="offcanvasRight"
+          >
+            <img
+              id="userIconProfile"
+              src="<%= /http/.test(userLogin.icon) ? userLogin.icon : `/images/iconsProfile/${userLogin.icon}` %>"
+              class="iconProfile me-2"
+              alt=""
+            />
+            <%= userLogin.name %> <i class="fa-solid fa-caret-down fa-lg"></i>
+          </button>   
+          <!-- Menú de navegación -->
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto"> <!-- 'ms-auto' para alinear a la derecha -->
+              <li class="nav-item">
+                <a class="nav-link" href="/stock">Regresar</a>
+              </li>
+            </ul>
+          </div>
+        </div>    
+      </nav> <br>
 
     <main>
             <div class="row ms-3 me-3 justify-content-center mb-5">
