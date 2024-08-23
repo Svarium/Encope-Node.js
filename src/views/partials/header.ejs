@@ -1,66 +1,70 @@
 <header>
-
     <!-- place navbar here -->
-    <nav class="navbar navbar-expand-lg navbar-light align-content-center align-items-center" id="up" data-aos="zoom-in" data-aos-duration="1000">
-          <div class="container-fluid ms-3">
-            <a class="navbar-brand" href="/inicio"> 
-            <img src="/images/logo_home.png" width="150px" alt="" class="logo-web">
+    <nav class="navbar navbar-expand-lg navbar-light align-content-baseline align-items-center" id="up" data-aos="zoom-in" data-aos-duration="1000">
+        <div class="container-fluid ms-3">
+            <a class="navbar-brand" href="/inicio">
+                <img src="/images/logo_home.png" width="150px" alt="" class="logo-web">
             </a>
-            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
-                aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId"
+                aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse mt-3" id="collapsibleNavId">
-                <ul class="navbar-nav  mt-2 mt-lg-0">
-                    
+                <ul class="navbar-nav mt-2 mt-lg-0 me-auto d-flex flex-column flex-lg-row">
+                    <!-- Elementos del menú -->
                     <li class="nav-item">
-                        <a class="nav-link " href="/inicio" aria-current="page">Home<span class="visually-hidden">(current)</span></a>
+                        <a class="nav-link" href="/inicio" aria-current="page">Home<span class="visually-hidden">(current)</span></a>
                     </li>
                     <li class="nav-item" data-aos="zoom-in" data-aos-duration="3000">
-                        <a class="nav-link  " href="/nosotros" aria-current="page">¿Quiénes somos? <span class="visually-hidden">(current)</span></a>
-                    </li>
-                    <li class="nav-item" >
-                        <a class="nav-link  " href="/proyectos" aria-current="page">Productos<span class="visually-hidden">(current)</span></a>
+                        <a class="nav-link" href="/nosotros" aria-current="page">¿Quiénes somos?<span class="visually-hidden">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="/licitacion/listar" aria-current="page">Licitaciones <span class="visually-hidden">(current)</span></a>
+                        <a class="nav-link" href="/proyectos" aria-current="page">Productos<span class="visually-hidden">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="/contacto">Contacto</a>
+                        <a class="nav-link" href="/licitacion/listar" aria-current="page">Licitaciones<span class="visually-hidden">(current)</span></a>
                     </li>
-               
                     <li class="nav-item">
-                      <a class="nav-link " href="/mapa">Mapa</a>
-                  </li>
-                  <li class="nav-item me-4">
-                    <a class="nav-link " href="/noticias">Noticias</a>
-                </li>
-                <li class="nav-item"> 
-                    <form action="/licitacion/searchLicitacion" method="get" class="m-0 d-flex justify-content-start">
-                        <div class="col-12 col-md-12 col-lg-12">
-                            <div class="input-group mb-3">
+                        <a class="nav-link" href="/contacto">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/mapa">Mapa</a>
+                    </li>
+                    <li class="nav-item me-4">
+                        <a class="nav-link" href="/noticias">Noticias</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-between ul-hamburguesa">
+                    <li class="nav-item">
+                        <form action="/licitacion/searchLicitacion" method="get" class="m-0 d-flex">
+                            <div class="input-group">
                                 <input type="search" class="form-control" placeholder="Buscar licitación..." aria-label="Buscar" aria-describedby="button-addon2">
                                 <button type="submit" class="btn btn-danger bg-gradient" id="button-addon2">Buscar</button>
                             </div>
-                        </div>
-                      </form>
-                </li>
-                <% if (locals.userLogin) { %>  
-                    <li class="nav-item">
-                        <button class="btn btn-transparent btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><img id="userIconProfile" src="<%= /http/.test(locals.userLogin.icon) ? locals.userLogin.icon : `/images/iconsProfile/${locals.userLogin.icon}` %>" class="iconProfile me-2" alt="">
-                            <%= locals.userLogin.name %> <i class="fa-solid fa-caret-down fa-lg"></i></button>
-                    </li>                 
-                  
-                 <% } else {%>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/users/login">Iniciar Sesión</a>
+                        </form>
                     </li>
-                <% } %>                 
-                </ul>              
+                    <% if (locals.userLogin) { %>
+                    <li class="nav-item">
+                        <button class="btn btn-transparent btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                            aria-controls="offcanvasRight">
+                            <img id="userIconProfile" src="<%= /http/.test(locals.userLogin.icon) ? locals.userLogin.icon : `/images/iconsProfile/${locals.userLogin.icon}` %>" class="iconProfile me-2" alt="">
+                            <%= locals.userLogin.name %> <i class="fa-solid fa-caret-down fa-lg"></i>
+                        </button>
+                    </li>
+                    <% } else {%>
+                    <li class="nav-item d-none d-lg-flex align-items-center">
+                        <i class="fa-solid fa-ellipsis-vertical fa-lg text-danger fs-3"></i>
+                    </li>
+                    <li class="nav-item d-lg-flex align-items-center">
+                        <a class="btn btn-outline-danger rounded-pill" href="/users/login"><i class="fa-regular fa-user"></i></a>
+                    </li>
+                    <% } %>
+                </ul>
             </div>
-      </div>
-    </nav>      
-
+        </div>
+    </nav>
+    
+      
 
     <span class="redes-sociales-span">  
     </span>
