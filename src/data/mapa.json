@@ -7,8 +7,73 @@
         "fachada":"U4.jpg",
         "detalle":"Los talleres productivos de este establecimiento se dividen en tres secciones: Industrial: herrería, corte y doblado de chapa, carpintería, imprenta, fabrica de ladrillos, sastrería, panadería, aserradero, mecánica, chapa y pintura. Agropecuario: tambo, porcicultura, avicultura, chacinados, fábrica de quesos, agricultura, corte de leña, parques y jardines, horticultura, apicultura y cunicultura. Mantenimiento: albañilería, plomería, electrotécnica, lavadero, peluquería.",
         "video":null,
-        "imgDatos":null
+        "imgDatos":null,
+        "internosPorTaller": [
+            {
+                "nombre": "VIVERO",
+                "cantidad":3  
+            },
+            {
+                "nombre": "TAMBO",
+                "cantidad":7               
+            },
+            {
+                "nombre": "SASTRERIA",
+                "cantidad":19 
+            },
+            {
+                "nombre": "QUESERIA",
+                "cantidad":4
+            },
+            {
+                "nombre": "PORCICULTURA",
+                "cantidad":4            
+            },            
+            {
+                "nombre": "PANADERIA",
+                "cantidad":14                
+            },
+            {
+                "nombre": "MAYORDOMIA",
+                "cantidad":43 
+            },
+            {
+                "nombre": "MANTENIMIENTO",
+                "cantidad":299 
+            },
+            {
+                "nombre": "LAVADERO AUTOMOTOR",
+                "cantidad":4  
+            },
+            {
+                "nombre": "HORTICULTURA",
+                "cantidad":27  
+            },            
+            {
+                "nombre": "HERRERIA",
+                "cantidad":19
+            },
+            {
+                "nombre": "CARPINTERIA DE MADERA",
+                "cantidad":16
+            },
+            {
+                "nombre": "BIODIGESTOR",
+                "cantidad":4 
+            }, 
+            {
+                "nombre": "AUTOMOTORES",
+                "cantidad":6 
+            },
+
+            {
+                "nombre": "AGRICULTURA",
+                "cantidad":1 
+            }        
+        ],
+        "TotalInternosTrabajadores": 477
     },
+
     {
         "id" : 2,
         "nombre":"Unidad 5",
@@ -16,8 +81,68 @@
         "fachada":"U5.JPG",
         "detalle":"Cuenta con talleres de: Jardinería, Electricidad, Artículos de limpieza, Plomería, Albañilería, Horticultura, Guitarra.",
         "video":"https://youtu.be/xWIqdJbwBWo",
-        "imgDatos":null
+        "imgDatos":null,
+        "internosPorTaller": [
+            {
+                "nombre": "VIVERO",
+                "cantidad":7
+            },
+            {
+                "nombre": "SASTRERIA",
+                "cantidad":6
+            },
+            {
+                "nombre": "PANADERIA",
+                "cantidad":10
+            },
+            {
+                "nombre": "MOSAIQUERIA",
+                "cantidad":6
+            },
+            {
+                "nombre": "MAYORDOMIA",
+                "cantidad":28            
+            },            
+            {
+                "nombre": "MANTENIMIENTO",
+                "cantidad":155
+            },
+            {
+                "nombre": "HUERTA",
+                "cantidad":7
+            },            
+            {
+                "nombre": "HERRERIA",
+                "cantidad":9
+            },
+            {
+                "nombre": "FRUTICULTURA",
+                "cantidad":6 
+            },
+            {
+                "nombre": "ELABORACION DE DULCES Y MERMELADAS",
+                "cantidad":7
+            },
+            {
+                "nombre": "CARPINTERIA DE MADERA",
+                "cantidad":6
+            },
+            {
+                "nombre": "AUTOMOTORES",
+                "cantidad":5
+            },
+            {
+                "nombre": "ASERRADERO",
+                "cantidad":11
+            }, 
+            {
+                "nombre": "APICULTURA",
+                "cantidad":1
+            }        
+        ],
+        "TotalInternosTrabajadores": 264
     },
+
     {
         "id" : 3,
         "nombre":"Unidad 6",
@@ -25,8 +150,63 @@
         "fachada":"U6.jpg",
         "detalle":"En el establecimiento se desarrollan los siguientes talleres productivos: Carpintería, Tapicería, Imprenta, Reciclado de papel, Sastrería, Herrería, Mecánica del automotor, Chapa y pintura, Bloquería, Panadería, Lavadero de automotores, Electricidad, Pintura de obra, Plomería y gas, Albañilería.",
         "video":null,
-        "imgDatos":null
+        "imgDatos":null,
+        "internosPorTaller": [
+            {
+                "nombre": "TAPICERIA",
+                "cantidad":5
+            },
+            {
+                "nombre": "SASTRERIA",
+                "cantidad":7
+            },
+            {
+                "nombre": "RECICLADO DE PAPELES",
+                "cantidad":2
+            },
+            {
+                "nombre": "PLANTA ALMAZARA",
+                "cantidad":1
+            },
+            {
+                "nombre": "PANADERIA",
+                "cantidad":9
+            },
+            {
+                "nombre": "MAYORDOMIA",
+                "cantidad":22
+            },
+            {
+                "nombre": "MANTENIMIENTO",
+                "cantidad":243
+            },
+            {
+                "nombre": "LAVADERO AUTOMOTOR",
+                "cantidad":4
+            },
+            {
+                "nombre": "IMPRENTA",
+                "cantidad":3
+            },
+            {
+                "nombre": "HORTICULTURA",
+                "cantidad":16
+            },            
+            {
+                "nombre": "HERRERIA",
+                "cantidad":8            },
+            {
+                "nombre": "CARPINTERIA DE MADERA",
+                "cantidad":10
+            },           
+            {
+                "nombre": "BLOQUERIA",
+                "cantidad":14
+            }        
+        ],
+        "TotalInternosTrabajadores": 344
     },
+
     {
         "id" : 4,
         "nombre":"Unidad 7",
@@ -34,8 +214,65 @@
         "fachada":"U7.JPG",
         "detalle":"La unidad cuenta con los siguientes talleres: Albañilería, Herrería de obra, Bloquería, Horticultura, Huerta orgánica, Carpintería, Imprenta, Carpintería metálica, Panadería, Electricidad, Plomería, Lavadero de autos, Jardinería, Zapatería, Sastrería, Mecánica.",
         "video":"https://youtu.be/qGlLLrCCQ8E",
-        "imgDatos":null
+        "imgDatos":null,
+        "internosPorTaller": [
+            {                
+                "nombre": "TALABARTERIA",
+                "cantidad":5
+            },
+            {
+                "nombre": "SASTRERIA",
+                "cantidad":8
+            },
+            {
+                "nombre": "PANADERIA",
+                "cantidad":13
+            },
+            {
+                "nombre": "MAYORDOMIA",
+                "cantidad":8
+            },
+            {
+                "nombre": "MANTENIMIENTO",
+                "cantidad":94
+            },
+            {
+                "nombre": "LAVADERO AUTOMOTOR",
+                "cantidad":6
+            },
+            {
+                "nombre": "HORTICULTURA",
+                "cantidad":40
+            },
+            {
+                "nombre": "HERRERIA",
+                "cantidad":11
+            },
+            {
+                "nombre": "COCINA CENTRAL",
+                "cantidad":2
+            },
+            {
+                "nombre": "CARPINTERIA METALICA",
+                "cantidad":2
+            },
+            {
+                "nombre": "CARPINTERIA DE MADERA",
+                "cantidad":10
+            },
+            {
+                "nombre": "BLOQUERIA",
+                "cantidad":9
+            },
+            {
+                "nombre": "AUTOMOTORES",
+                "cantidad":7
+            }
+             
+        ],
+        "TotalInternosTrabajadores": 366
     },
+
     {
         "id" : 5,
         "nombre":"Unidad 8",
@@ -43,8 +280,42 @@
         "fachada":"U8.jpg",
         "detalle":"En la unidad se dictan diferentes talleres: Bloquería, Tallado de madera, Carpintería industrial, Herrería, Panadería, Albañilería, Electricidad, Plomería.",
         "video":"https://youtu.be/T1FckdWyZ-k",
-        "imgDatos":null
+        "imgDatos":null,
+        "internosPorTaller": [
+            {
+                "nombre": "MAYORDOMIA",
+                "cantidad":74
+            },
+            {
+                "nombre": "MANTENIMIENTO",
+                "cantidad":66
+            },
+            {
+                "nombre": "HORTICULTURA",
+                "cantidad":27
+            },           
+            {
+                "nombre": "HERRERIA",
+                "cantidad":2
+            },
+            {
+                "nombre": "CARPINTERIA DE MADERA",
+                "cantidad":1
+            },
+            {
+                "nombre": "BLOQUERIA",
+                "cantidad":1
+            },
+            {
+                "nombre": "ARTESANIAS REGIONALES",
+                "cantidad":2
+            }
+          
+        ],
+        "TotalInternosTrabajadores": 117
+
     },
+
     {
         "id" : 6,
         "nombre":"Unidad 10",
@@ -52,8 +323,57 @@
         "fachada":"u10.png",
         "detalle":"La unidad posee, entre otros, los siguientes talleres productivos: Carpintería, Tejido, Cocina, Panadería, Fajina penal",
         "video":"https://youtu.be/mWjpsCvN3Oo",
-        "imgDatos":null
+        "imgDatos":null,
+        "internosPorTaller": [
+            {
+                "nombre": "PORCICULTURA",
+                "cantidad":6         
+            },
+            {
+                "nombre": "OVINOCULTURA",
+                "cantidad":1          
+            },
+            {
+                "nombre": "MAYORDOMIA",
+                "cantidad":18          
+            },
+            {
+                "nombre": "MANTENIMIENTO",
+                "cantidad":39
+            },
+            {
+                "nombre": "LAVADERO AUTOMOTOR",
+                "cantidad":5
+            },
+            {
+                "nombre": "ELECTROTECNIA",
+                "cantidad":1         
+            },    
+            {
+                "nombre": "CRIA DE CAPRINO",
+                "cantidad":1       
+            },              
+            {
+                "nombre": "COCINA CENTRAL",
+                "cantidad":15          
+            },
+            {
+                "nombre": "CHAPA Y PINTURA",
+                "cantidad":2            
+            },
+            {
+                "nombre": "CARPINTERIA DE MADERA",
+                "cantidad":4            
+            }   
+            ,
+            {
+                "nombre": "AVICULTURA",
+                "cantidad":1           
+            }             
+        ],
+        "TotalInternosTrabajadores": 90
     },
+
     {
         "id" : 7,
         "nombre":"Unidad 11",
@@ -61,8 +381,49 @@
         "fachada":"u11.png",
         "detalle":"Cuenta, entre otros, con los siguientes talleres productivos: Sastrería, Lavadero de ropa, Carpintería, Aserradero, Ladrillería, Albañilería, Panadería, Plomería, Cocina central, Chapa y pintura, Automotores, Herrería, Agricultura, Tambo, Porcicultura, Horticultura.",
         "video":"https://youtu.be/SInLStYxwjQ",
-        "imgDatos":null
+        "imgDatos":null,
+        "internosPorTaller": [
+            {
+                "nombre": "PORCICULTURA",
+                "cantidad":4         
+            },
+            {
+                "nombre": "PANADERIA",
+                "cantidad":14          
+            },
+            {
+                "nombre": "MAYORDOMIA",
+                "cantidad":3          
+            },
+            {
+                "nombre": "MANTENIMIENTO",
+                "cantidad":77
+            },
+            {
+                "nombre": "LAVADERO AUTOMOTOR",
+                "cantidad":1
+            },
+            {
+                "nombre": "HORTICULTURA",
+                "cantidad":5          
+            },             
+            {
+                "nombre": "HERRERIA",
+                "cantidad":9        
+            },              
+            {
+                "nombre": "CARPINTERIA DE MADERA",
+                "cantidad":6            
+            },
+            {
+                "nombre": "BLOQUERIA",
+                "cantidad":6              
+            }           
+            
+        ],
+        "TotalInternosTrabajadores": 146
     },
+
     {
         "id" : 8,
         "nombre":"Unidad 12",
@@ -70,8 +431,66 @@
         "fachada":"u12.png",
         "detalle":"Los talleres se encuentran organizados en distintas secciones. Entre otros se dictan: Horticultura, Agricultura, Porcicultura, Herrería, Carpintería, Chapa, Pintura, Mecánica, Panadería, Lavadero de autos, Bloquería, Sastrería",
         "video":null,
-        "imgDatos":null
+        "imgDatos":null,
+        "internosPorTaller": [
+            {
+                "nombre": "SASTRERIA",
+                "cantidad":19         
+            },
+            {
+                "nombre": "PANADERIA",
+                "cantidad":22           
+            },
+            {
+                "nombre": "MAYORDOMIA",
+                "cantidad":8           
+            },
+            {
+                "nombre": "MANTENIMIENTO",
+                "cantidad":53
+            },
+            {
+                "nombre": "LAVADERO AUTOMOTOR",
+                "cantidad":5
+            },
+            {
+                "nombre": "HORTICULTURA",
+                "cantidad":2           
+            },    
+            {
+                "nombre": "HERRERIA",
+                "cantidad":14         
+            },  
+            {
+                "nombre": "CHAPA Y PINTURA",
+                "cantidad":14              
+            },  
+            {
+                "nombre": "CARPINTERIA DE MADERA",
+                "cantidad":15             
+            },  
+            {
+                "nombre": "CABAÑA ENCOPE",
+                "cantidad":1              
+            },
+            {
+                "nombre": "BLOQUERIA",
+                "cantidad":22              
+            }    
+            ,
+            {
+                "nombre": "AUTOMOTORES",
+                "cantidad":14              
+            }  
+            ,
+            {
+                "nombre": "AGRICULTURA - RESERVAS FORRAJERAS",
+                "cantidad":2             
+            }    
+        ],
+        "TotalInternosTrabajadores": 191
     },
+
     {
         "id" : 9,
         "nombre":"Unidad 13",
@@ -79,8 +498,53 @@
         "fachada":"U4.jpg",
         "detalle":"Cuenta, entre otros, con los siguientes talleres productivos: Repostería, Lavandería, Costura, Tejido, Muñequería, Manualidades, Horticultura, Mantenimiento, Cocina central",
         "video":null,
-        "imgDatos":null
+        "imgDatos":null,
+        "internosPorTaller": [
+            {
+                "nombre": "TEJIDO",
+                "cantidad":4          
+            },
+            {
+                "nombre": "REPOSTERIA",
+                "cantidad":2            
+            },
+            {
+                "nombre": "MUÑEQUERIA",
+                "cantidad":4           
+            },
+            {
+                "nombre": "MAYORDOMIA",
+                "cantidad":2
+            },
+            {
+                "nombre": "MANUALIDADES",
+                "cantidad":2
+            },
+            {
+                "nombre": "MANTENIMIENTO GRAL DEL ESTABLECIENTO",
+                "cantidad":8            
+            },    
+            {
+                "nombre": "LAVADERO DE ROPA",
+                "cantidad":3         
+            },  
+            {
+                "nombre": "HORTICULTURA",
+                "cantidad":1              
+            },  
+            {
+                "nombre": "COSTURA",
+                "cantidad":3              
+            },  
+            {
+                "nombre": "COCINA CENTRAL",
+                "cantidad":6              
+            }
+        
+        ],
+        "TotalInternosTrabajadores": 35
     },
+
     {
         "id" : 10,
         "nombre":"Unidad 14",
@@ -88,8 +552,48 @@
         "fachada":"u14.png",
         "detalle":"Cuenta con los siguientes talleres productivos: Panadería, Herrería, Chapa y pintura Carpintería, Horticultura y Bloquería.",
         "video":null,
-        "imgDatos":null
+        "imgDatos":null,
+        "internosPorTaller": [
+            {
+                "nombre": "SASTRERIA",
+                "cantidad":7          
+            },
+            {
+                "nombre": "PANADERIA",
+                "cantidad":7             
+            },
+            {
+                "nombre": "MAYORDOMIA",
+                "cantidad":14           
+            },
+            {
+                "nombre": "MANTENIMIENTO",
+                "cantidad":60
+            },
+            {
+                "nombre": "HUERTA",
+                "cantidad":11             
+            },    
+            {
+                "nombre": "HERRERIA",
+                "cantidad":8         
+            },
+            {
+                "nombre": "HERRERIA",
+                "cantidad":5              
+            },  
+            {
+                "nombre": "CARPINTERIA DE MADERA",
+                "cantidad":5              
+            },      
+            {
+                "nombre": "BLOQUERIA",
+                "cantidad":5            
+            } 
+        ],
+        "TotalInternosTrabajadores": 102
     },
+
     {
         "id" : 11,
         "nombre":"Unidad 15",
@@ -97,8 +601,56 @@
         "fachada":"u15.png",
         "detalle":"Cuenta con los siguientes talleres productivos: Panadería, Herrería, Chapa y pintura Carpintería, Horticultura y Bloquería.",
         "video":null,
-        "imgDatos":null
+        "imgDatos":null,
+        "internosPorTaller": [
+            {
+                "nombre": "TRANSPORTE",
+                "cantidad":2          
+            },
+            {
+                "nombre": "SASTRERIA",
+                "cantidad":2             
+            },
+            {
+                "nombre": "PANADERIA",
+                "cantidad":3           
+            },
+            {
+                "nombre": "MAYORDOMIA",
+                "cantidad":4
+            },
+            {
+                "nombre": "MANTENIMIENTO",
+                "cantidad":49
+            },
+            {
+                "nombre": "LAVADERO DE ROPA",
+                "cantidad":4              
+            },    
+            {
+                "nombre": "HUERTA",
+                "cantidad":13         
+            },              
+            {
+                "nombre": "HERRERIA",
+                "cantidad":5              
+            },  
+            {
+                "nombre": "COCINA CENTRAL",
+                "cantidad":14               
+            },      
+            {
+                "nombre": "CARPINTERIA DE MADERA",
+                "cantidad":7             
+            },   
+            {
+                "nombre": "BLOQUERIA",
+                "cantidad":7               
+            } 
+        ],
+        "TotalInternosTrabajadores": 110
     },
+
     {
         "id" : 12,
         "nombre":"Unidad 16",
@@ -106,8 +658,53 @@
         "fachada":"u16.jpg",
         "detalle":"La unidad cuenta, entre otros, con los siguientes talleres productivos: Carpintería, Herrería, Artesanía, Bloquería, Horticultura, Mantenimiento interno, Mecánica automotores, Lavadero artesanal de autos, Talabartería.",
         "video":null,
-        "imgDatos":null
+        "imgDatos":null,
+        "internosPorTaller": [
+            {
+                "nombre": "TALABARTERIA",
+                "cantidad":6           
+            },
+            {
+                "nombre": "MAYORDOMIA",
+                "cantidad":5              
+            },
+            {
+                "nombre": "MANTENIMIENTO",
+                "cantidad":51         
+            },
+            {
+                "nombre": "HUERTA",
+                "cantidad":20
+            },           
+            
+            {
+                "nombre": "HERRERIA",
+                "cantidad":5              
+            },    
+            {
+                "nombre": "COCINA CENTRAL",
+                "cantidad":14          
+            },  
+            {
+                "nombre": "CARPINTERIA DE MADERA",
+                "cantidad":8               
+            },  
+            {
+                "nombre": "BLOQUERIA",
+                "cantidad":5              
+            },  
+            {
+                "nombre": "AUTOMOTORES",
+                "cantidad":2               
+            },    
+            {
+                "nombre": "ARTICULOS DE LIMPIEZA",
+                "cantidad":3               
+            }  
+        ],
+        "TotalInternosTrabajadores": 119
     },
+
     {
         "id" : 13,
         "nombre":"Unidad 17",
@@ -115,8 +712,61 @@
         "fachada":"u17.png",
         "detalle":"La unidad cuenta, entre otros, con los siguientes talleres productivos: Albañilería, Bloquería, Carpintería, Herrería, Mecánica, Panadería, Yerbal, Avicultura, Porcicultura, Huerta.",
         "video":null,
-        "imgDatos":null
+        "imgDatos":null,
+        "internosPorTaller": [
+            {
+                "nombre": "YERBAL",
+                "cantidad":5            
+            },
+            {
+                "nombre": "PORCICULTURA",
+                "cantidad":3              
+            },
+            {
+                "nombre": "PANADERIA",
+                "cantidad":8              
+            },
+            {
+                "nombre": "MAYORDOMIA",
+                "cantidad":24
+            },
+            {
+                "nombre": "MANTENIMIENTO",
+                "cantidad":96
+            },
+            {
+                "nombre": "HORTICULTURA",
+                "cantidad":14              
+            },  
+            {
+                "nombre": "HERRERIA",
+                "cantidad":4               
+            },  
+            {
+                "nombre": "COSTURA",
+                "cantidad":5              
+            },  
+            {
+                "nombre": "COMPOSTAJE",
+                "cantidad":7               
+            },      
+            {
+                "nombre": "COCINA CENTRAL",
+                "cantidad":13              
+            },   
+            {
+                "nombre": "CARPINTERIA DE MADERA",
+                "cantidad":8               
+            },   
+            {
+                "nombre": "BLOQUERIA",
+                "cantidad":2              
+            }  
+               
+        ],
+        "TotalInternosTrabajadores": 189
     },
+
     {
         "id" : 14,
         "nombre":"Unidad 19",
@@ -124,8 +774,61 @@
         "fachada":"u19.png",
         "detalle":"La Colonia Penal de Ezeiza U.19, habilitada el 20 de abril en el año 1968, es un establecimiento con régimen semi abierto y abierto que aloja, en seis pabellones comunes, a personas privadas de libertad que se encuentran en la última etapa de tratamiento. Este establecimiento de 350 hectáreas de superficie tiene como misión, a través Ente de Cooperación Técnica y Financiera del Servicio Penitenciario Federal, la capacitación laboral de los privados de libertad allí alojados. La misma se canaliza a través de diversos cursos de acuerdo a las necesidades de los talleres de laborterapia existentes en todo el país. Además contribuye al desarrollo profesional del agente penitenciario, que es capacitado para acompañar y orientar al interno en este proceso.",
         "video":"https://youtu.be/uCRj6y2KiEc",
-        "imgDatos":null
+        "imgDatos":null,
+        "internosPorTaller": [
+            {
+                "nombre": "TAMBO",
+                "cantidad":5            
+            },
+            {
+                "nombre": "QUESERIA",
+                "cantidad":3              
+            },
+            {
+                "nombre": "PORCICULTURA",
+                "cantidad":6              
+            },
+            {
+                "nombre": "MAYORDOMIA",
+                "cantidad":11
+            },
+            {
+                "nombre": "MANTENIMIENTO",
+                "cantidad":51
+            },
+            {
+                "nombre": "HUERTA ORGANICA",
+                "cantidad":4               
+            },   
+             
+            {
+                "nombre": "HERRERIA",
+                "cantidad":3               
+            },  
+            {
+                "nombre": "DOMISANITARIO",
+                "cantidad":5              
+            },  
+            {
+                "nombre": "COSTURA",
+                "cantidad":1               
+            },      
+            {
+                "nombre": "CARPINTERIA DE MADERA",
+                "cantidad":7               
+            },  
+            {
+                "nombre": "ARMADO DE BROCHES",
+                "cantidad":9              
+            },   
+            {
+                "nombre": "ALIMENTO BALANCEADO",
+                "cantidad":6               
+            }        
+        ],
+        "TotalInternosTrabajadores": 111
     },
+
     {
         "id" : 15,
         "nombre":"Unidad 22",
@@ -133,7 +836,42 @@
         "fachada":"carcel-federal-jujuy-unidad-22.jpg",
         "detalle":"En la unidad se dictan diferentes talleres: Bloquería, Tallado de madera, Carpintería industrial, Herrería, Panadería, Albañilería, Electricidad, Plomería.",
         "video":"https://youtu.be/znKoeZNMTDk",
-        "imgDatos":null
+        "imgDatos":null,
+        "internosPorTaller": [
+            {
+                "nombre": "REPOSTERIA",
+                "cantidad":6             
+            },
+            {
+                "nombre": "MAYORDOMIA",
+                "cantidad":12               
+            },
+            {
+                "nombre": "MANTENIMIENTO",
+                "cantidad":39            
+            },
+            {
+                "nombre": "LAVADERO AUTOMOTOR",
+                "cantidad":6
+            },            
+            {
+                "nombre": "HERRERIA",
+                "cantidad":26               
+            },    
+            {
+                "nombre": "COSTURA",
+                "cantidad":1               
+            },  
+            {
+                "nombre": "CARPINTERIA DE MADERA",
+                "cantidad":6               
+            },             
+            {
+                "nombre": "ARTESANIAS",
+                "cantidad":5               
+            }           
+        ],
+        "TotalInternosTrabajadores": 62
     },
     
     {
@@ -143,8 +881,36 @@
         "fachada":"u25.png",
         "detalle":"Los talleres productivos de este establecimiento se dividen en tres secciones: Industrial: herrería, corte y doblado de chapa, carpintería, imprenta, fabrica de ladrillos, sastrería, panadería, aserradero, mecánica, chapa y pintura. Agropecuario: tambo, porcicultura, avicultura, chacinados, fábrica de quesos, agricultura, corte de leña, parques y jardines, horticultura, apicultura y cunicultura. Mantenimiento: albañilería, plomería, electrotécnica, lavadero, peluquería.",
         "video":"https://youtu.be/1lYMbNhI3gI",
-        "imgDatos":null
+        "imgDatos":null,
+        "internosPorTaller": [
+            {
+                "nombre": "PORCICULTURA",
+                "cantidad":2              
+            },
+            {
+                "nombre": "PANADERIA",
+                "cantidad":2                
+            },
+            {
+                "nombre": "MAYORDOMIA",
+                "cantidad":5               
+            },
+            {
+                "nombre": "MANTENIMIENTO",
+                "cantidad":5
+            },
+            {
+                "nombre": "LAVADERO AUTOMOTOR",
+                "cantidad":1
+            },
+            {
+                "nombre": "HERRERIA",
+                "cantidad":2                
+            }            
+        ],
+        "TotalInternosTrabajadores": 17
     },
+
     {
         "id" : 17,
         "nombre":"Unidad 30",
@@ -152,8 +918,36 @@
         "fachada":"u30.png",
         "detalle":"La unidad cuenta, entre otros, con los siguientes talleres productivos: Horticultura, Lavadero de Automotores, Carpintería, Avicultura, Herrería, Panadería, Mantenimiento general",
         "video":null,
-        "imgDatos":null
+        "imgDatos":null,
+        "internosPorTaller": [
+            {
+                "nombre": "PANADERIA",
+                "cantidad":1              
+            },
+            {
+                "nombre": "MAYORDOMIA",
+                "cantidad":2                
+            },
+            {
+                "nombre": "LAVADERO AUTOMOTOR",
+                "cantidad":2
+            },
+            {
+                "nombre": "HORTICULTURA",
+                "cantidad":8                      
+            },
+            {
+                "nombre": "HERRERIA",
+                "cantidad":1
+            },
+            {
+                "nombre": "CARPINTERIA DE MADERA",
+                "cantidad":1               
+            }
+        ],
+        "TotalInternosTrabajadores": 15
     },
+
     {
         "id" : 18,
         "nombre":"Unidad 31",
@@ -161,7 +955,38 @@
         "fachada":"u31.png",
         "detalle":"La unidad cuenta con los siguientes talleres productivos: Costura, Marroquinería, Muñequería, Panadería, Armado de carpetas, Armado de bolsas de cartón, Lavandería.",
         "video":null,
-        "imgDatos":null
+        "imgDatos":null,
+        "internosPorTaller": [
+            {
+                "nombre": "PANADERIA",
+                "cantidad":7    
+            },
+            {
+                "nombre": "MAYORDOMIA",
+                "cantidad":4         
+            },
+            {
+                "nombre": "MANTENIMIENTO",
+                "cantidad":48        
+            },
+            {
+                "nombre": "LAVADERO DE ROPA",
+                "cantidad":3
+            },
+            {
+                "nombre": "HUERTA",
+                "cantidad":9
+            },
+            {
+                "nombre": "COSTURA",
+                "cantidad":22       
+            }, 
+            {
+                "nombre": "ARTICULOS DE LIMPIEZA",
+                "cantidad":4  
+            }
+        ],
+        "TotalInternosTrabajadores": 103
     },
  
     {
@@ -171,7 +996,42 @@
         "fachada":"u35.png",
         "detalle":"La unidad cuenta con los siguientes talleres productivos: Carpintería, Herrería, Armado de escobas, Panadería, Huerta orgánica.",
         "video":null,
-        "imgDatos":null
+        "imgDatos":null,
+        "internosPorTaller": [
+            {
+                "nombre": "PANADERIA",
+                "cantidad":9              
+            },
+            {
+                "nombre": "MAYORDOMIA",
+                "cantidad":32                
+            },
+            {
+                "nombre": "MANTENIMIENTO",
+                "cantidad":102               
+            },
+            {
+                "nombre": "LAVADERO AUTOMOTOR",
+                "cantidad":1
+            },
+            {
+                "nombre": "HUERTA",
+                "cantidad":6                      
+            },
+            {
+                "nombre": "HERRERIA",
+                "cantidad":3
+            },
+            {
+                "nombre": "CARPINTERIA DE MADERA",
+                "cantidad":6                
+            },
+            {
+                "nombre": "ARTICULOS DE LIMPIEZA",
+                "cantidad":1                
+            } 
+        ],
+        "TotalInternosTrabajadores": 160
     },
 
     {
@@ -180,9 +1040,58 @@
         "nombreCompleto":"Complejo Penitenciario Federal I - Ezeiza",
         "fachada":"CPF I.JPG",
         "detalle":"La unidad cuenta, entre otros, con los siguientes talleres productivos: Panadería, Herrería, Carpintería, Zapatería, Sastrería, Imprenta, Armado de carteras.",
-        "video":"https://youtu.be/_xP9N_ofyw0",
-        "imgDatos":null
+        "video":null,
+        "imgDatos":null,
+        "internosPorTaller": [
+            {
+                "nombre": "ZAPATERIA",
+                "cantidad":15             
+            },
+            {
+                "nombre": "SASTRERIA",
+                "cantidad":24               
+            },
+            {
+                "nombre": "PANADERIA",
+                "cantidad":3               
+            },
+            {
+                "nombre": "MAYORDOMIA",
+                "cantidad":66
+            },
+            {
+                "nombre": "MANTENIMIENTO",
+                "cantidad":497                  
+            },            
+            {
+                "nombre": "IMPRENTA",
+                "cantidad":4        
+            },
+            {
+                "nombre": "HUERTA",
+                "cantidad":20
+            },            
+            {
+                "nombre": "COSTURA",
+                "cantidad":16             
+            },
+            {
+                "nombre": "CARPINTERIA METALICA",
+                "cantidad":11              
+            },
+            {
+                "nombre": "CARPINTERIA DE MADERA",
+                "cantidad":3           
+            }
+            ,
+            {
+                "nombre": "ARTICULOS DE LIMPIEZA",
+                "cantidad":107             
+            } 
+        ],
+        "TotalInternosTrabajadores": 766
     },
+
     {
         "id" :21,
         "nombre":"CPFII",
@@ -190,8 +1099,67 @@
         "fachada":"cpf2.png",
         "detalle":"El establecimiento cuenta con los siguientes talleres productivos: Herrería, Carpintería, Armado de broches de madera, Parques y jardines, Pastas, Repostería,Panadería, Sastrería, Carpintería",
         "video":"https://youtu.be/Z3DtCImWbWA",
-        "imgDatos":null
+        "imgDatos":null,
+        "internosPorTaller": [
+            {
+                "nombre": "SASTRERIA",
+                "cantidad":49             
+            },
+            {
+                "nombre": "MAYORDOMIA",
+                "cantidad":59                
+            },
+            {
+                "nombre": "MANTENIMIENTO",
+                "cantidad":561             
+            },
+            {
+                "nombre": "LAVADERO DE ROPA",
+                "cantidad":3
+            },
+            {
+                "nombre": "LAVADERO AUTOMOTOR",
+                "cantidad":5                    
+            },            
+            {
+                "nombre": "HERRERIA",
+                "cantidad":7
+            },
+            {
+                "nombre": "FABRICA DE PASTAS",
+                "cantidad":3            
+            },
+            {
+                "nombre": "COCINA CENTRAL",
+                "cantidad":59              
+            },
+            {
+                "nombre": "CARPINTERIA DE MADERA",
+                "cantidad":29               
+            },
+            {
+                "nombre": "ARTICULOS DE LIMPIEZA",
+                "cantidad":3             
+            } 
+            ,
+            {
+                "nombre": "ARMADO DE BROCHES",
+                "cantidad":1             
+            } 
+            ,
+            {
+                "nombre": "ANEXO CARPINTERIA",
+                "cantidad":9            
+            } 
+            ,
+            {
+                "nombre": "ANEXO BLOQUERIA",
+                "cantidad":2              
+            } 
+        ],
+        "TotalInternosTrabajadores": 790
     },
+
     {
         "id" :22,
         "nombre":"CPFIII",
@@ -199,7 +1167,76 @@
         "fachada":"CPF III.jpg",
         "detalle":" La unidad cuenta, entre otros, con los siguientes talleres productivos: Para mujeres: Parquizado, Costura, Tejido a máquina, Tejido a mano, Artículos de limpieza, Artesanía, Para varones: Herrería, Bloquería, Carpintería, Panadería, Lavandería, Sastrería, Peluquería, Parque y jardín.",
         "video":"https://youtu.be/0u4jPmqu_oI",
-        "imgDatos":null
+        "imgDatos":null,
+        "internosPorTaller": [
+            {
+                "nombre": "TEJIDO",
+                "cantidad":14       
+            },
+            {
+                "nombre": "SASTRERIA",
+                "cantidad":14          
+            },
+            {
+                "nombre": "REPOSTERIA",
+                "cantidad":6          
+            },
+            {
+                "nombre": "PELUQUERIA",
+                "cantidad":1
+            },
+            {
+                "nombre": "PANADERIA",
+                "cantidad":2
+            },
+            {
+                "nombre": "MAYORDOMIA",
+                "cantidad":39        
+            },
+            {
+                "nombre": "MARROQUINERIA Y TALABARTERIA",
+                "cantidad":1         
+            },    
+            {
+                "nombre": "MANTENIMIENTO",
+                "cantidad":308
+            },              
+            {
+                "nombre": "LAVADERO DE ROPA",
+                "cantidad":10          
+            },
+            {
+                "nombre": "HERRERIA",
+                "cantidad":22           
+            }   
+            ,
+            {
+                "nombre": "COSTURA",
+                "cantidad":11          
+            } 
+            ,
+            {
+                "nombre": "CARPINTERIA DE MADERA",
+                "cantidad":21          
+            } 
+            ,
+            {
+                "nombre": "BLOQUERIA",
+                "cantidad":12         
+            }              
+            ,
+            {
+                "nombre": "ARTICULOS DE LIMPIEZA",
+                "cantidad":8         
+            }   
+            ,
+            {
+                "nombre": "ARTESANIAS",
+                "cantidad":19          
+            }     
+            
+        ],
+        "TotalInternosTrabajadores": 488
     },
 
     {
@@ -209,8 +1246,82 @@
         "fachada":"CPF IV.JPG",
         "detalle":"La unidad cuenta, entre otros, con los siguientes talleres productivos: Cerámica, Costura y Tejido, Encuadernación, Fibrofacíl, Huerta y Jardinería, Lavadero, Muñequería, Peluquería, Repostería y Sandwichería, Serigrafía",
         "video":"https://youtu.be/_xP9N_ofyw0",
-        "imgDatos":null
+        "imgDatos":null,
+        "internosPorTaller": [
+            {
+                "nombre": "TEJIDO",
+                "cantidad":24             
+            },
+            {
+                "nombre": "TALLER COPIADO Y ENCUADERNADO",
+                "cantidad":10                
+            },
+            {
+                "nombre": "SUBLIMADO",
+                "cantidad":11               
+            },
+            {
+                "nombre": "REPOSTERIA",
+                "cantidad":10
+            },
+            {
+                "nombre": "RECICLADO",
+                "cantidad":42                     
+            },            
+            {
+                "nombre": "PELUQUERIA",
+                "cantidad":7           
+            },
+            {
+                "nombre": "MUÑEQUERIA",
+                "cantidad":22
+            },
+            {
+                "nombre": "MAYORDOMIA",
+                "cantidad":17            
+            },
+            {
+                "nombre": "MANTENIMIENTO",
+                "cantidad":84              
+            },
+            {
+                "nombre": "LAVADERO DE ROPA",
+                "cantidad":11               
+            },
+            {
+                "nombre": "LAVADERO AUTOMOTOR",
+                "cantidad":5             
+            } ,
+
+            {
+                "nombre": "FLORIHORTICULTURA",
+                "cantidad":3              
+            } 
+            ,
+            {
+                "nombre": "FIBROFACIL",
+                "cantidad":19             
+            } 
+            ,
+            {
+                "nombre": "ESTRECHANDO MANOS",
+                "cantidad":4              
+            } 
+            ,
+            {
+                "nombre": "COSTURA",
+                "cantidad":19              
+            } 
+            ,
+            {
+                "nombre": "CARPINTERIA DE MADERA",
+                "cantidad":14             
+            } 
+        
+        ],
+        "TotalInternosTrabajadores": 402
     },
+
     {
         "id" : 24,
         "nombre":"CPFV",
@@ -218,8 +1329,57 @@
         "fachada":"CPF V.jpeg",
         "detalle":"Cuenta con talleres de: Jardinería, Electricidad, Artículos de limpieza, Plomería, Albañilería, Horticultura, Guitarra.",
         "video":null,
-        "imgDatos":null
+        "imgDatos":null,
+        "internosPorTaller": [
+            {
+                "nombre": "SASTRERIA",
+                "cantidad":18             
+            },
+            {
+                "nombre": "PANADERIA",
+                "cantidad":7                
+            },
+            {
+                "nombre": "MAYORDOMIA",
+                "cantidad":66               
+            },
+            {
+                "nombre": "MANTENIMIENTO",
+                "cantidad":312
+            },
+            {
+                "nombre": "LAVADERO DE ROPA",
+                "cantidad":2                     
+            },            
+            {
+                "nombre": "LAVADERO AUTOMOTOR",
+                "cantidad":2           
+            },
+            {
+                "nombre": "HORTICULTURA",
+                "cantidad":79
+            },
+            {
+                "nombre": "HERRERIA",
+                "cantidad":6               
+            },
+            {
+                "nombre": "CHAPA Y PINTURA",
+                "cantidad":2                
+            },
+            {
+                "nombre": "CARPINTERIA DE MADERA",
+                "cantidad":10               
+            } ,
+            {
+                "nombre": "CHAPA Y PINTURA",
+                "cantidad":5               
+            } 
+
+        ],
+        "TotalInternosTrabajadores": 509
     },
+
     {
         "id" : 25,
         "nombre":"CPFVI",
@@ -227,8 +1387,58 @@
         "fachada":"CPF VI.jpg",
         "detalle":"El complejo posee, entre otros, los siguientes talleres productivos: costura/sastreria, articulos de limpieza, bordado/sublimado, carpinteria, fabricaciones de pañales, parques y jardines.",
         "video":"https://youtu.be/6EmbQNTKr40",
-        "imgDatos":null
+        "imgDatos":null,
+        "internosPorTaller": [
+            {
+                "nombre": "TEJIDO",
+                "cantidad":3       
+            },
+            {
+                "nombre": "SASTRERIA",
+                "cantidad":25          
+            },
+            {
+                "nombre": "RECICLADO",
+                "cantidad":45         
+            },
+            {
+                "nombre": "PANADERIA",
+                "cantidad":2
+            },
+            {
+                "nombre": "MAYORDOMIA",
+                "cantidad":37
+            },
+            {
+                "nombre": "MANTENIMIENTO",
+                "cantidad":279     
+            },
+            {
+                "nombre": "HORTICULTURA",
+                "cantidad":52         
+            },            
+            {
+                "nombre": "HERRERIA",
+                "cantidad":27         
+            },
+            {
+                "nombre": "CARPINTERIA DE MADERA",
+                "cantidad":24          
+            },
+            {
+                "nombre": "AUTOMOTORES",
+                "cantidad":2          
+            }   
+            ,
+            {
+                "nombre": "AGRICULTURA",
+                "cantidad":7          
+            } 
+            
+        ],
+        "TotalInternosTrabajadores": 503
     },
+
     {
         "id" : 26,
         "nombre":"CPFJA",
@@ -236,8 +1446,52 @@
         "fachada":"CFJA.JPG",
         "detalle":"En el establecimiento se desarrollan los siguientes talleres productivos: Armado de pelotas, Armado de bicicletas, Carpintería, Herrería, Armado de bolsas de papel, Porcicultura, Cría bovina, Elaboración de artículos de limpieza, Armado de escobas y escobillones, Armado de broches, Taller de panadería, Producción de snacks.",
         "video":null,
-        "imgDatos":null
+        "imgDatos":null,
+        "internosPorTaller": [
+            {
+                "nombre": "PANADERIA",
+                "cantidad":8             
+            },
+            {
+                "nombre": "MAYORDOMIA",
+                "cantidad":17              
+            },
+            {
+                "nombre": "MANTENIMIENTO",
+                "cantidad":12             
+            },
+            {
+                "nombre": "LAVADERO AUTOMOTOR",
+                "cantidad":3
+            },
+            {
+                "nombre": "HUERTA",
+                "cantidad":13                  
+            },           
+            {
+                "nombre": "HERRERIA",
+                "cantidad":3
+            },
+            {
+                "nombre": "CARPINTERIA METALICA",
+                "cantidad":6        
+            },
+            {
+                "nombre": "CARPINTERIA DE MADERA",
+                "cantidad":55            
+            },
+            {
+                "nombre": "ARTICULOS DE LIMPIEZA",
+                "cantidad":74          
+            } ,
+            {
+                "nombre": "ALIMENTO BALANCEADO",
+                "cantidad":3           
+            }
+        ],
+        "TotalInternosTrabajadores": 194
     },
+
     {
         "id" : 27,
         "nombre":"CPF CABA",
@@ -245,7 +1499,86 @@
         "fachada":"CPF CABA.jpg",
         "detalle":"La unidad cuenta, entre otros, con los siguientes talleres productivos: Panadería, Sastrería, Herrería, Carpintería, Automotores, Domisanitario, Armado de bolsas de madera.",
         "video":null,
-        "imgDatos":null
+        "imgDatos":null,
+        "internosPorTaller": [
+            {
+                "nombre": "SASTRERIA",
+                "cantidad":5             
+            },
+            {
+                "nombre": "PANADERIA",
+                "cantidad":9              
+            },
+            {
+                "nombre": "MAYORDOMIA",
+                "cantidad":11               
+            },
+            {
+                "nombre": "MANTENIMIENTO",
+                "cantidad":220
+            },         
+            {
+                "nombre": "HERRERIA",
+                "cantidad":2       
+            },
+            {
+                "nombre": "FIBROFACIL",
+                "cantidad":56
+            },
+            {
+                "nombre": "ELECTROTECNIA",
+                "cantidad":1          
+            },
+            {
+                "nombre": "DOMISANITARIO",
+                "cantidad":2             
+            },
+            {
+                "nombre": "COSTURA",
+                "cantidad":310              
+            },
+            {
+                "nombre": "COCINA CENTRAL",
+                "cantidad":8           
+            } ,
+            {
+                "nombre": "CARPINTERIA DE MADERA",
+                "cantidad":1           
+            } 
+            ,
+            {
+                "nombre": "AUTOMOTORES",
+                "cantidad":1             
+            } 
+            ,
+            {
+                "nombre": "ARMADO DE JUGUETES DIDACTICOS",
+                "cantidad":182            
+            } 
+        ],
+        "TotalInternosTrabajadores": 808
+    },
+
+    {
+        "id" : 28,
+        "nombre":"Unidad 34",
+        "nombreCompleto":"Instituto Penal Federal de Campo de Mayo",
+        "fachada":"u35.png",
+        "detalle":"La unidad cuenta con los siguientes talleres productivos: Carpintería, Herrería, Armado de escobas, Panadería, Huerta orgánica.",
+        "video":null,
+        "imgDatos":null,
+        "internosPorTaller": [           
+            {
+                "nombre": "MAYORDOMIA",
+                "cantidad":1
+            },
+            {
+                "nombre": "MANTENIMIENTO",
+                "cantidad":24
+            }
+            
+        ],
+        "TotalInternosTrabajadores": 25
     }
 
 ]
