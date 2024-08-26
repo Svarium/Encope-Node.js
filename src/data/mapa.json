@@ -38,12 +38,8 @@
                 "cantidad":14                
             },
             {
-                "nombre": "MAYORDOMIA",
-                "cantidad":43 
-            },
-            {
                 "nombre": "MANTENIMIENTO",
-                "cantidad":299 
+                "cantidad":342
             },
             {
                 "nombre": "LAVADERO AUTOMOTOR",
@@ -102,14 +98,10 @@
             {
                 "nombre": "MOSAIQUERIA",
                 "cantidad":6
-            },
-            {
-                "nombre": "MAYORDOMIA",
-                "cantidad":28            
-            },            
+            },                   
             {
                 "nombre": "MANTENIMIENTO",
-                "cantidad":155
+                "cantidad":183
             },
             {
                 "nombre": "HUERTA",
@@ -177,12 +169,8 @@
                 "cantidad":9
             },
             {
-                "nombre": "MAYORDOMIA",
-                "cantidad":22
-            },
-            {
                 "nombre": "MANTENIMIENTO",
-                "cantidad":243
+                "cantidad":265
             },
             {
                 "nombre": "LAVADERO AUTOMOTOR",
@@ -233,12 +221,8 @@
                 "cantidad":13
             },
             {
-                "nombre": "MAYORDOMIA",
-                "cantidad":8
-            },
-            {
                 "nombre": "MANTENIMIENTO",
-                "cantidad":94
+                "cantidad":102
             },
             {
                 "nombre": "LAVADERO AUTOMOTOR",
@@ -287,12 +271,8 @@
         "imgDatos":null,
         "internosPorTaller": [
             {
-                "nombre": "MAYORDOMIA",
-                "cantidad":74
-            },
-            {
                 "nombre": "MANTENIMIENTO",
-                "cantidad":66
+                "cantidad":140
             },
             {
                 "nombre": "HORTICULTURA",
@@ -338,12 +318,8 @@
                 "cantidad":1          
             },
             {
-                "nombre": "MAYORDOMIA",
-                "cantidad":18          
-            },
-            {
                 "nombre": "MANTENIMIENTO",
-                "cantidad":39
+                "cantidad":57
             },
             {
                 "nombre": "LAVADERO AUTOMOTOR",
@@ -396,12 +372,8 @@
                 "cantidad":14          
             },
             {
-                "nombre": "MAYORDOMIA",
-                "cantidad":3          
-            },
-            {
                 "nombre": "MANTENIMIENTO",
-                "cantidad":77
+                "cantidad":80
             },
             {
                 "nombre": "LAVADERO AUTOMOTOR",
@@ -446,12 +418,8 @@
                 "cantidad":22           
             },
             {
-                "nombre": "MAYORDOMIA",
-                "cantidad":8           
-            },
-            {
                 "nombre": "MANTENIMIENTO",
-                "cantidad":53
+                "cantidad":61
             },
             {
                 "nombre": "LAVADERO AUTOMOTOR",
@@ -517,16 +485,12 @@
                 "cantidad":4           
             },
             {
-                "nombre": "MAYORDOMIA",
-                "cantidad":2
-            },
-            {
                 "nombre": "MANUALIDADES",
                 "cantidad":2
             },
             {
-                "nombre": "MANTENIMIENTO GRAL DEL ESTABLECIENTO",
-                "cantidad":8            
+                "nombre": "MANTENIMIENTO",
+                "cantidad":10           
             },    
             {
                 "nombre": "LAVADERO DE ROPA",
@@ -567,12 +531,8 @@
                 "cantidad":7             
             },
             {
-                "nombre": "MAYORDOMIA",
-                "cantidad":14           
-            },
-            {
                 "nombre": "MANTENIMIENTO",
-                "cantidad":60
+                "cantidad":74
             },
             {
                 "nombre": "HUERTA",
@@ -620,12 +580,8 @@
                 "cantidad":3           
             },
             {
-                "nombre": "MAYORDOMIA",
-                "cantidad":4
-            },
-            {
                 "nombre": "MANTENIMIENTO",
-                "cantidad":49
+                "cantidad":53
             },
             {
                 "nombre": "LAVADERO DE ROPA",
@@ -669,12 +625,8 @@
                 "cantidad":6           
             },
             {
-                "nombre": "MAYORDOMIA",
-                "cantidad":5              
-            },
-            {
                 "nombre": "MANTENIMIENTO",
-                "cantidad":51         
+                "cantidad":56       
             },
             {
                 "nombre": "HUERTA",
@@ -731,12 +683,8 @@
                 "cantidad":8              
             },
             {
-                "nombre": "MAYORDOMIA",
-                "cantidad":24
-            },
-            {
                 "nombre": "MANTENIMIENTO",
-                "cantidad":96
+                "cantidad":120
             },
             {
                 "nombre": "HORTICULTURA",
@@ -793,12 +741,8 @@
                 "cantidad":6              
             },
             {
-                "nombre": "MAYORDOMIA",
-                "cantidad":11
-            },
-            {
                 "nombre": "MANTENIMIENTO",
-                "cantidad":51
+                "cantidad":62
             },
             {
                 "nombre": "HUERTA ORGANICA",
@@ -847,12 +791,8 @@
                 "cantidad":6             
             },
             {
-                "nombre": "MAYORDOMIA",
-                "cantidad":12               
-            },
-            {
                 "nombre": "MANTENIMIENTO",
-                "cantidad":39            
+                "cantidad":51         
             },
             {
                 "nombre": "LAVADERO AUTOMOTOR",
@@ -896,12 +836,8 @@
                 "cantidad":2                
             },
             {
-                "nombre": "MAYORDOMIA",
-                "cantidad":5               
-            },
-            {
                 "nombre": "MANTENIMIENTO",
-                "cantidad":5
+                "cantidad":10
             },
             {
                 "nombre": "LAVADERO AUTOMOTOR",
@@ -929,7 +865,7 @@
                 "cantidad":1              
             },
             {
-                "nombre": "MAYORDOMIA",
+                "nombre": "MANTENIMIENTO",
                 "cantidad":2                
             },
             {
@@ -966,12 +902,8 @@
                 "cantidad":7    
             },
             {
-                "nombre": "MAYORDOMIA",
-                "cantidad":4         
-            },
-            {
                 "nombre": "MANTENIMIENTO",
-                "cantidad":48        
+                "cantidad":52       
             },
             {
                 "nombre": "LAVADERO DE ROPA",
@@ -1007,12 +939,8 @@
                 "cantidad":9              
             },
             {
-                "nombre": "MAYORDOMIA",
-                "cantidad":32                
-            },
-            {
                 "nombre": "MANTENIMIENTO",
-                "cantidad":102               
+                "cantidad":134              
             },
             {
                 "nombre": "LAVADERO AUTOMOTOR",
@@ -1060,12 +988,8 @@
                 "cantidad":3               
             },
             {
-                "nombre": "MAYORDOMIA",
-                "cantidad":66
-            },
-            {
                 "nombre": "MANTENIMIENTO",
-                "cantidad":497                  
+                "cantidad":563                 
             },            
             {
                 "nombre": "IMPRENTA",
@@ -1110,12 +1034,8 @@
                 "cantidad":49             
             },
             {
-                "nombre": "MAYORDOMIA",
-                "cantidad":59                
-            },
-            {
                 "nombre": "MANTENIMIENTO",
-                "cantidad":561             
+                "cantidad":520            
             },
             {
                 "nombre": "LAVADERO DE ROPA",
@@ -1194,16 +1114,12 @@
                 "cantidad":2
             },
             {
-                "nombre": "MAYORDOMIA",
-                "cantidad":39        
-            },
-            {
                 "nombre": "MARROQUINERIA Y TALABARTERIA",
                 "cantidad":1         
             },    
             {
                 "nombre": "MANTENIMIENTO",
-                "cantidad":308
+                "cantidad":347
             },              
             {
                 "nombre": "LAVADERO DE ROPA",
@@ -1281,12 +1197,8 @@
                 "cantidad":22
             },
             {
-                "nombre": "MAYORDOMIA",
-                "cantidad":17            
-            },
-            {
                 "nombre": "MANTENIMIENTO",
-                "cantidad":84              
+                "cantidad":101             
             },
             {
                 "nombre": "LAVADERO DE ROPA",
@@ -1344,12 +1256,8 @@
                 "cantidad":7                
             },
             {
-                "nombre": "MAYORDOMIA",
-                "cantidad":66               
-            },
-            {
                 "nombre": "MANTENIMIENTO",
-                "cantidad":312
+                "cantidad":378
             },
             {
                 "nombre": "LAVADERO DE ROPA",
@@ -1410,12 +1318,8 @@
                 "cantidad":2
             },
             {
-                "nombre": "MAYORDOMIA",
-                "cantidad":37
-            },
-            {
                 "nombre": "MANTENIMIENTO",
-                "cantidad":279     
+                "cantidad":316     
             },
             {
                 "nombre": "HORTICULTURA",
@@ -1457,12 +1361,8 @@
                 "cantidad":8             
             },
             {
-                "nombre": "MAYORDOMIA",
-                "cantidad":17              
-            },
-            {
                 "nombre": "MANTENIMIENTO",
-                "cantidad":12             
+                "cantidad":29           
             },
             {
                 "nombre": "LAVADERO AUTOMOTOR",
@@ -1514,12 +1414,8 @@
                 "cantidad":9              
             },
             {
-                "nombre": "MAYORDOMIA",
-                "cantidad":11               
-            },
-            {
                 "nombre": "MANTENIMIENTO",
-                "cantidad":220
+                "cantidad":231
             },         
             {
                 "nombre": "HERRERIA",
@@ -1573,12 +1469,8 @@
         "imgDatos":null,
         "internosPorTaller": [           
             {
-                "nombre": "MAYORDOMIA",
-                "cantidad":1
-            },
-            {
                 "nombre": "MANTENIMIENTO",
-                "cantidad":24
+                "cantidad":25
             }
             
         ],
