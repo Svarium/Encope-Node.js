@@ -33,13 +33,29 @@ module.exports = {
             }
         })
         .then(noticias => {
-     /*  if(req.session.userLogin){
-        console.log(req.session.userLogin.destinoId);
-      } */
+            const unidadFilePath = path.join(__dirname, '../data/mapa.json');
+            const unidades = JSON.parse(fs.readFileSync(unidadFilePath, 'utf-8'));
+
+            const unidadesCount = unidades.length -1;
+
+            // Inicializar un contador para los talleres
+            let totalTalleres = 0;
+
+            // Recorrer cada unidad (ignorar la primera posición)
+            for (let i = 1; i < unidades.length; i++) {
+                const unidad = unidades[i];
+                
+                // Sumar la cantidad de talleres en el array 'internosPorTaller'
+                totalTalleres += unidad.internosPorTaller.length;
+            }
+    
             return res.render('inicio', {
                 title: 'Encope',
                 noticias,
-                userLogin
+                userLogin,
+                unidades,
+                totalTalleres,
+                unidadesCount
             })
         })
       

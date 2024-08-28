@@ -14,66 +14,98 @@
 
 
 
-<div class="container-fluid">
-    <div class="row  bg-secondary text-white">
-        <div class="p-5 col-xs-12 col-md-6 col-lg-5 ms-5">
+
+    <div class="row bg-secondary text-white">
+        <div class="p-5 col-xs-12 col-md-5 col-lg-5 ms-lg-5">
             <h4 class="h3 titulo-lic"><%= unidad.nombre %></h4>
             <hr class="linea-textos">
             <p class="h3 titulo-lic" style="font-weight:bolder;"><%= unidad.nombreCompleto %></p>            
         </div>
-        <div class="p-0 col-xs-12 col-md-6 col-lg-6 ms-2">
+        <div class="p-0 col-xs-12 col-md-6 col-lg-6 ms-lg-2">
          <img src="/images/mapa/FACHADAS/<%= unidad.fachada %>" alt="" class="mx-auto img-fluid d-block imagenUnidadesMapa">
         </div>
     </div>
-</div>
+
+   
+
 <br>
-<div class="container-fluid">
-    <div class="row text-black">
-        <div class="p-5 col-xs-12 col-md-6 col-lg-6 ms-5">
+
+    <div class="row text-black d-flex justify-content-center align-content-center align-items-center">
+        <div class="p-5 col-xs-12 col-md-6 col-lg-6 ms-lg-5">
             <p class="h3 ms-sm-0"><strong>Detalle de trabajo:</strong> <%= unidad.detalle %></p>            
         </div>
         <div class="p-5 mt-3 col-xs-12 col-md-6 col-lg-5">
-         <img src="/images/iconos/unidad_Mesa de trabajo 1.png" alt="" class="mx-auto img-fluid d-block" width="300px">
+            <div class="accordion" id="accordionExample<%= unidad.id %>">
+                <% if (unidad.internosPorTaller) { %>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-danger bg-gradient w-100 py-2" data-bs-toggle="modal" data-bs-target="#internosPorTaller">
+                        <p class="h5 mb-2 m-0 fw-bold">Total de internos trabajadores: <%= unidad.TotalInternosTrabajadores %> <i class="fa-solid fa-user-group"></i></p> Ver detalle... <br><i class="fa-solid fa-caret-down"></i>
+                    </button>
+                    
+                    <!-- Modal -->
+                    <div class="modal fade" id="internosPorTaller" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Detalle de internos trabajadores por taller</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <% unidad.internosPorTaller.forEach(taller => { 
+                                        // Reemplazar caracteres especiales para IDs válidos
+                                        const idSafeName = taller.nombre.replace(/[^a-zA-Z0-9]/g, '_');
+                                    %>
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="heading<%= idSafeName %>">
+                                                <button class="accordion-button bg-light bg-gradient" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= idSafeName %>" aria-expanded="false" aria-controls="collapse<%= idSafeName %>">
+                                                    <p class="text-dark "><%= taller.nombre %></p>
+                                                </button>
+                                            </h2>
+                                            <div id="collapse<%= idSafeName %>" class="accordion-collapse collapse" aria-labelledby="heading<%= idSafeName %>">
+                                                <div class="accordion-body text-center">
+                                                     <strong class="h5 text-center fw-bold">Cantidad: <%= taller.cantidad %> <i class="fa-solid fa-users"></i></strong> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <% }) %>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                <% } %>               
+            </div>
         </div>
+        
     </div>
-</div>
+
 <br>
 
 <% if (unidad.video) { %>
-    <div class="container-fluid">
-        <div class="row bg-danger text-white">
-            <div class="mt-5  p-5 col-xs-12 col-md-6 col-lg-5 ms-5">
+
+
+        <div class="row bg-danger text-white d-flex justify-content-center align-items-center align-content-center flex-wrap mb-4">
+            <div class="mt-5 p-5 col-xs-12 col-md-6 col-lg-5 ms-lg-5">
                 <p class="h3 titulo-lic" style="font-weight:bolder;">Conocé <br> sus talleres <br>productivos</p>  
                 <hr class="linea-textos">          
             </div>
-            <div class="p-3  col-xs-12 col-md-6 col-lg-5 ms-4">
-               <iframe width="600" height="320" src="https://www.youtube.com/embed/<%= unidad.video ? unidad.video.slice(17) : 'gb5Oek19Kr0' %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="videoUnidades"></iframe>
+            <div class="col-xs-12 col-md-6 col-lg-6 ms-lg-4 mx-auto ">
+                <div class="ratio ratio-16x9">
+                    <iframe src="https://www.youtube.com/embed/<%= unidad.video ? unidad.video.slice(17) : 'gb5Oek19Kr0' %>" title="YouTube video player" allowfullscreen ></iframe>
+                </div>
             </div>
         </div>
-    </div>
-    
-    <!-- video unidad small -->
-    <div class="container"> 
-        <div class="row">
-            <div class="mx-auto col-xs-12 col-md-6 col-lg-12">
-                <iframe width="430" height="415" src="https://www.youtube.com/embed/<%= unidad.video ? unidad.video.slice(17) : 'gb5Oek19Kr0' %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="videoUnidadesSmall"></iframe>
-            </div>
-        </div>
-      </div>
+   
+   
+     
 <% } %>
 
 
 
 
- <!-- IR ATRAS -->
 
- <div class="container">
-    <div class="ms-4 mt-3 col-xs-12 col-md-6 col-lg-3 d-block img-fluid">
-      <a href="/mapa">
-        <img src="/images/iconos/FLECHA2.png" alt="" width="40px">
-      </a>
-    </div>
-  </div>
 
 <!--LOGOS COLABORADORES-->
 
