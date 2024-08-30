@@ -49,13 +49,13 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <% if (userLogin && (userLogin.rol === 1 || userLogin.rol === 2) ) { %>
+    
           <small class="text-dark text-start"><%= message %></small>
           <pre class="text-justify ms-5 mb-5 text-dark"><%= error.stack %></pre>
-        <% }else {  %>
+       
           <i class="fas fa-exclamation-triangle"></i>
          <span>upss hubo un error...le sugerimos regresar al inicio del sitio mientras trabajamos en resolverlo.</span>
-          <% }  %>
+         
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
