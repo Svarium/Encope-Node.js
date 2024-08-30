@@ -44,19 +44,18 @@
 <div class="modal fade" id="internosTrabajadores" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Estadística de internos trabajadores</h5>
+      <div class="modal-header"> <small class="text-break"><%= unidades[0].lastUpdate %> última Actualización</small></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
        <!-- Total internos -->
-       <div class="col-md-4 mb-4">
+       <div class="col-md-12 mb-4">
         <div class="card border-left-success shadow h-100 py-2">
           <div class="card-body">
             <div class="row no-gutters align-items-center">
               <div class="col mr-2">
                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total de internos trabajadores</div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">416</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800"><%= unidades[0].TotalGeneralInternos %></div>
               </div>
               <div class="col-auto">
                 <i class="fa-solid fa-people-group fa-2x text-gray-300"></i>
@@ -73,55 +72,16 @@
           </div>
           <div class="card-body">
             <div class="row">
-              <div class="col-lg-6 mb-4">
-                <div class="card bg-dark text-white shadow">
-                  <div class="card-body">
-                  <i class="fa-solid fa-people-group text-gray-300"></i>  CPFI - 76
+              <% unidades.slice(1).forEach(unidad => { %>
+                <div class="col-lg-3 mb-4">
+                  <div class="card bg-success bg-gradient text-white shadow fw-bold text-center">
+                    <div class="card-body">
+                   <%= unidad.nombre %><br><i class="fa-solid fa-people-group text-white"></i>  <%= unidad.TotalInternosTrabajadores %>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-lg-6 mb-4">
-                <div class="card bg-dark text-white shadow">
-                  <div class="card-body">
-                  <i class="fa-solid fa-people-group text-gray-300"></i>  CPFII - 173 
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 mb-4">
-                <div class="card bg-dark text-white shadow">
-                  <div class="card-body">
-                  <i class="fa-solid fa-people-group text-gray-300"></i>  CPF III - 28 
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 mb-4">
-                <div class="card bg-dark text-white shadow">
-                  <div class="card-body">
-                    <i class="fa-solid fa-people-group text-gray-300"></i>  CPF IV - 44
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 mb-4">
-                <div class="card bg-dark text-white shadow">
-                  <div class="card-body">
-                    <i class="fa-solid fa-people-group text-gray-300"></i> CPF CABA - 50 
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 mb-4">
-                <div class="card bg-dark text-white shadow">
-                  <div class="card-body">
-                    <i class="fa-solid fa-people-group text-gray-300"></i> UNIDAD 4 - 20
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 mb-4">
-                <div class="card bg-dark text-white shadow">
-                  <div class="card-body">
-                    <i class="fa-solid fa-people-group text-gray-300"></i> UNIDAD 31 - 25
-                  </div>
-                </div>
-              </div>
+              <% }) %>         
+      
               </div>
             </div>
           </div>
