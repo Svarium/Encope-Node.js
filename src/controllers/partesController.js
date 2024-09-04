@@ -6,7 +6,7 @@ const db = require('../database/models');
 const transporter = require('../helpers/configNodemailer');
 
 module.exports = {
-  listPartes: async (req, res) => {
+  listPartes: async (req, res) => {   
 
     try {
       const destinoId = req.session.userLogin.destinoId;
@@ -17,17 +17,26 @@ module.exports = {
         }
       })
 
-      const proyectos = await db.Proyecto.findAll({
+      const limit = +(req.query.limit) || 2;;
+      const page = +(req.query.page) || 1;
+      const offset = (page -1) * limit;
+
+      const proyectos = await db.Proyecto.findAndCountAll({
         where: {
           procedencia: procedencia.nombreDestino
         },
-        order: [['createdAt', 'DESC']]
+        order: [['createdAt', 'DESC']],
+        limit:limit,
+        offset:offset,
       })
-
+      const totalPages = Math.ceil(proyectos.count / limit) 
       return res.render('stock/partes/partes', {
         title: 'Proyectos Productivos',
-        proyectos,
-        procedencia
+        proyectos:proyectos.rows,
+        procedencia,
+        currentPage:page,
+        totalPages:totalPages,
+        limit:limit,
       })
 
 
