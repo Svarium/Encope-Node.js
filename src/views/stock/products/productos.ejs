@@ -49,130 +49,147 @@
               onclick="window.location.href='/stock/ProductsTable'">
               <i class="fa-solid fa-download"></i>Exportar Excel</i>
             </button><br>
+            <div class="d-flex justify-content-center align-content-center align-items-center">
+                  <!-- Paginación -->
+              <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <% if (currentPage > 1) { %>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=<%= currentPage - 1 %>&limit=<%= limit %>"><i class="fa-solid fa-backward-fast"></i></a>
+                        </li>
+                    <% } %>
+            
+                    <% for (let i = 1; i <= totalPages; i++) { %>
+                        <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+                            <a class="page-link" href="?page=<%= i %>&limit=<%= limit %>"><%= i %></a>
+                        </li>
+                    <% } %>
+            
+                    <% if (currentPage < totalPages) { %>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=<%= currentPage + 1 %>&limit=<%= limit %>"><i class="fa-solid fa-forward-fast"></i></a>
+                        </li>
+                    <% } %>
+                </ul>
+            </nav>
+            </div>    
+        
+        
             <table class="table">
               <thead>
-                <tr>
-                  <th scope="col">Producto</th>
-                  <th scope="col">Detalle</th>
-
-                  <th scope="col">Insumos</th>
-                  <th scope="col">Imagen</th>
-                  <th scope="col">Acciones</th>
-                </tr>
+                  <tr>
+                      <th scope="col">Producto</th>
+                      <th scope="col">Detalle</th>
+                      <th scope="col">Insumos</th>
+                      <th scope="col">Imagen</th>
+                      <th scope="col">Acciones</th>
+                  </tr>
               </thead>
               <tbody>
-                <% productos.forEach(item=> { %>
-                  <tr>
-                    <td class="text-center">
-                      <%= item.nombre %>
-                    </td>
-                    <td>
-                      <%= item.detalle %>
-                    </td>
-
-                    <td class="text-justify">
-                      <% if (item.productos) { %>
-                        <% item.productos.forEach(producto=> { %>
-                          ✅ <%= producto.cantidad %>
-                            <%= producto.unidadDeMedida %>
-                            <%= producto.nombre %> <i class="fa-solid fa-delete-left text-danger deleteInsumo"
-                                data-producto-id="<%= item.id %>" data-insumo-id="<%= producto.id %>"></i><br>
-                              <% }) %>
-                                <% } %>
-
-
-                    </td>
-                    <td><img src="/images/productos/<%= item.imagen %>" alt="" width="70px" height="70px"
-                        class="rounded"></td>
-                    <td>
-
-
-                      <!-- Botón de agregar ficha -->
-                      <div class="row">
-
-                        <div class="col-6">
-                          <% if (!item.ficha) { %>
-                            <button type="button" class="btn btn-facebook w-100" data-bs-toggle="modal"
-                              data-bs-target="#fichaTecnica<%= item.id %>">
-                              Ficha Técnica
-                            </button>
-                            <% } %>
-                        </div>
-                        <div class="<%= !item.ficha ? " col-6" : "col-12" %>">
-                          <a href="/stock/addInsumo/<%= item.id %>"> <button class="btn btn-dark w-100">Insumos <i
-                                class="fa-regular fa-square-plus"></i></button></a>
-                        </div>
-                      </div>
-
-
-
-
-                      <!-- MODAL -->
-                      <div class="modal fade" id="fichaTecnica<%= item.id %>" tabindex="-1"
-                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Agregar Ficha: " <%= item.nombre %>"</h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                              <div class="container">
-                                <form action="/stock/addFicha/<%= item.id %>?_method=PUT" method="POST"
-                                  enctype="multipart/form-data">
-                                  <div class="mb-3">
-                                    <label for="expedienteFicha_<%= item.id %>" class="form-label text-left">Expediente
-                                      de la Ficha Técnica</label>
-                                    <input type="text"
-                                      class="form-control <%= (locals.errors && errors.expedienteFicha) && 'is-invalid'%>"
-                                      name="expedienteFicha" id="expedienteFicha_<%= item.id %>"
-                                      placeholder="Ingrese número de expediente">
-                                    <small id="errorExpediente_<%= item.id %>" class="text-danger ms-2">
-                                      <%= locals.errors && errors.expedienteFicha ? errors.expedienteFicha.msg : null %>
-                                    </small>
+                  <% productos.forEach(item => { %>
+                      <tr>
+                          <td class="text-center">
+                              <%= item.nombre %>
+                          </td>
+                          <td>
+                              <%= item.detalle %>
+                          </td>
+                          <td class="text-justify">
+                              <% if (item.productos) { %>
+                                  <% item.productos.forEach(producto => { %>
+                                      ✅ <%= producto.cantidad %> <%= producto.unidadDeMedida %> <%= producto.nombre %>
+                                      <i class="fa-solid fa-delete-left text-danger deleteInsumo"
+                                          data-producto-id="<%= item.id %>"
+                                          data-insumo-id="<%= producto.id %>"></i><br>
+                                  <% }) %>
+                              <% } %>
+                          </td>
+                          <td><img src="/images/productos/<%= item.imagen %>" alt="" width="70px" height="70px"
+                                  class="rounded"></td>
+                          <td>
+                              <div class="row">
+                                  <div class="col-6">
+                                      <% if (!item.ficha) { %>
+                                          <button type="button" class="btn btn-facebook w-100" data-bs-toggle="modal"
+                                              data-bs-target="#fichaTecnica<%= item.id %>">
+                                              Ficha Técnica
+                                          </button>
+                                      <% } %>
                                   </div>
-                                  <div class="mb-3">
-                                    <label for="ficha_<%= item.id %>" class="form-label">Ficha Técnica</label>
-                                    <input type="file" accept=".pdf"
-                                      class="form-control <%= (locals.errors && errors._undefined) && 'is-invalid'%>"
-                                      name="ficha" id="ficha_<%= item.id %>" placeholder="Ingrese número de expediente">
-                                    <small id="errorProducto_<%= item.id %>" class="text-danger ms-2">
-                                      <%= locals.errors && errors._undefined ? errors._undefined.msg : null %>
-                                    </small>
+                                  <div class="<%= !item.ficha ? 'col-6' : 'col-12' %>">
+                                      <a href="/stock/addInsumo/<%= item.id %>">
+                                          <button class="btn btn-dark w-100">Insumos <i class="fa-regular fa-square-plus"></i></button>
+                                      </a>
                                   </div>
-                                  <button type="submit" class="btn btn-primary">Enviar</button>
-                                </form>
                               </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <!-- Enlace para editar y formulario para eliminar -->
-                      <div class="row mt-2">
-                        <div class="<%= !item.ficha ? 'col-12' : 'col-6' %>">
-                          <a href="/stock/editProduct/<%= item.id %>">
-                            <button class="btn btn-success w-100">Editar <i
-                                class="fa-solid fa-pen-to-square"></i></button>
-                          </a>
-                        </div>
-                        <div class="col-6">
-                          <% if (item.ficha) { %>
-                            <a href="/images/fichas/<%= item.ficha %>" target="_blank" class="btn btn-danger w-100">Ficha <i class="fa-solid fa-file-arrow-down"></i></a>
-                          <% } %>                         
-                        </div>
-                      </div>
-                    </td>
-
-
-                  </tr>
+          
+                              <!-- MODAL -->
+                              <div class="modal fade" id="fichaTecnica<%= item.id %>" tabindex="-1"
+                                  aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog">
+                                      <div class="modal-content">
+                                          <div class="modal-header">
+                                              <h5 class="modal-title" id="exampleModalLabel">Agregar Ficha: "<%= item.nombre %>"</h5>
+                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                          </div>
+                                          <div class="modal-body">
+                                              <div class="container">
+                                                  <form action="/stock/addFicha/<%= item.id %>?_method=PUT" method="POST"
+                                                      enctype="multipart/form-data">
+                                                      <div class="mb-3">
+                                                          <label for="expedienteFicha_<%= item.id %>" class="form-label text-left">
+                                                              Expediente de la Ficha Técnica
+                                                          </label>
+                                                          <input type="text"
+                                                              class="form-control <%= (locals.errors && errors.expedienteFicha) && 'is-invalid'%>"
+                                                              name="expedienteFicha" id="expedienteFicha_<%= item.id %>"
+                                                              placeholder="Ingrese número de expediente">
+                                                          <small id="errorExpediente_<%= item.id %>" class="text-danger ms-2">
+                                                              <%= locals.errors && errors.expedienteFicha ? errors.expedienteFicha.msg : null %>
+                                                          </small>
+                                                      </div>
+                                                      <div class="mb-3">
+                                                          <label for="ficha_<%= item.id %>" class="form-label">Ficha Técnica</label>
+                                                          <input type="file" accept=".pdf"
+                                                              class="form-control <%= (locals.errors && errors._undefined) && 'is-invalid'%>"
+                                                              name="ficha" id="ficha_<%= item.id %>" placeholder="Ingrese número de expediente">
+                                                          <small id="errorProducto_<%= item.id %>" class="text-danger ms-2">
+                                                              <%= locals.errors && errors._undefined ? errors._undefined.msg : null %>
+                                                          </small>
+                                                      </div>
+                                                      <button type="submit" class="btn btn-primary">Enviar</button>
+                                                  </form>
+                                              </div>
+                                          </div>
+                                          <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+          
+                              <div class="row mt-2">
+                                  <div class="<%= !item.ficha ? 'col-12' : 'col-6' %>">
+                                      <a href="/stock/editProduct/<%= item.id %>">
+                                          <button class="btn btn-success w-100">Editar <i class="fa-solid fa-pen-to-square"></i></button>
+                                      </a>
+                                  </div>
+                                  <div class="col-6">
+                                      <% if (item.ficha) { %>
+                                          <a href="/images/fichas/<%= item.ficha %>" target="_blank" class="btn btn-danger w-100">
+                                              Ficha <i class="fa-solid fa-file-arrow-down"></i>
+                                          </a>
+                                      <% } %>
+                                  </div>
+                              </div>
+                          </td>
+                      </tr>
                   <% }) %>
               </tbody>
-            </table>
+          </table>
+          
+        
+            
           </div>
 
 

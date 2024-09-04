@@ -29,22 +29,32 @@ module.exports = {
         })
     },
     listProducts : (req,res) => {
-        db.Producto.findAll({
-            include:[{
-                model:db.Insumo,
-                as:"productos",
-                attributes:["nombre","unidadDeMedida" ,"cantidad", "id"],                
-            }],
-            order:[['createdAt', 'DESC']]
-        })
-        .then(productos => {    
-            /* return res.send(productos) */          
-            return res.render('stock/products/productos',{
-                title:'Productos',
-                productos
-            })
-        })
-        .catch(error => console.log(error))
+       // Obtener el número de página y el límite desde los parámetros de consulta, con valores por defecto
+    let page = parseInt(req.query.page) || 1;
+    let limit = parseInt(req.query.limit) || 10;
+    let offset = (page - 1) * limit;
+
+    db.Producto.findAndCountAll({
+        include: [{
+            model: db.Insumo,
+            as: "productos",
+            attributes: ["nombre", "unidadDeMedida", "cantidad", "id"],
+        }],
+        order: [['createdAt', 'DESC']],
+        limit: limit,   // Establecer el límite
+        offset: offset  // Establecer el desplazamiento
+    })
+    .then(result => {
+        let totalPages = Math.ceil(result.count / limit);  // Calcular el número total de páginas
+        return res.render('stock/products/productos', {
+            title: 'Productos',
+            productos: result.rows,  // Lista de productos
+            currentPage: page,       // Página actual
+            totalPages: totalPages,   // Número total de páginas
+            limit: limit // Pasar 'limit' a la vista
+        });
+    })
+    .catch(error => console.log(error));
     },
 
     storageProduct: (req,res) => {
