@@ -64,6 +64,30 @@
           <i class="fa-solid fa-download"></i> Exportar Excel</i>
         </button>
         <a href="/stock/listDelayedProyects" class="btn btn-danger btn-sm  btn-sm mt-1 mb-2">Ver Proyectos fuera de término <i class="fa-solid fa-clock"></i></a>
+        <div class="d-flex justify-content-center align-content-center align-items-center">
+          <!-- Paginación -->
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <% if (currentPage > 1) { %>
+                <li class="page-item">
+                    <a class="page-link" href="?page=<%= currentPage - 1 %>&limit=<%= limit %>"><i class="fa-solid fa-backward-fast"></i></a>
+                </li>
+            <% } %>
+    
+            <% for (let i = 1; i <= totalPages; i++) { %>
+                <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+                    <a class="page-link" href="?page=<%= i %>&limit=<%= limit %>"><%= i %></a>
+                </li>
+            <% } %>
+    
+            <% if (currentPage < totalPages) { %>
+                <li class="page-item">
+                    <a class="page-link" href="?page=<%= currentPage + 1 %>&limit=<%= limit %>"><i class="fa-solid fa-forward-fast"></i></a>
+                </li>
+            <% } %>
+        </ul>
+    </nav>
+    </div> 
               <br> 
         <table class="table">
             <thead>

@@ -9,7 +9,11 @@ module.exports = {
 
     listProyects: (req, res) => {
 
-        db.Proyecto.findAll({
+        const limit = +(req.query.limit) || 2;;
+        const page = +(req.query.page) || 1;
+        const offset = (page -1) * limit;
+
+        db.Proyecto.findAndCountAll({
             include: [{
                 model: db.proyectoProducto,
                 as: "productoProyecto",
@@ -19,14 +23,21 @@ module.exports = {
                         as: "producto"
                     }
                 ]
+
             },           
             ],
-            order: [['createdAt', 'DESC']]
+            order: [['createdAt', 'DESC']],
+            limit:limit,
+            offset:offset,
         })
-            .then(proyectos => {              
+        .then(proyectos => {  
+                const totalPages = Math.ceil(proyectos.count / limit)            
                 return res.render('stock/proyectos/proyectos', {
                     title: 'Proyectos Productivos',
-                    proyectos
+                    proyectos:proyectos.rows,
+                    currentPage:page,
+                    totalPages:totalPages,
+                    limit:limit,
                 })
             }).catch(error => console.log(error))
 
@@ -35,67 +46,75 @@ module.exports = {
 
     listDelayedProjects: async(req, res) => {
         try {
-            // Consultar todos los proyectos
-            const proyectos = await db.Proyecto.findAll(
-                {
-                    include: [{
-                        model: db.proyectoProducto,
-                        as: "productoProyecto",
-                        include: [
-                            {
-                                model: db.Producto,
-                                as: "producto"
-                            }
-                        ]
-                    },           
-                    ],
-                    order: [['createdAt', 'DESC']]
-                }                
-            );
-        
+            // Consultar todos los proyectos sin paginación
+            const proyectos = await db.Proyecto.findAll({
+                include: [{
+                    model: db.proyectoProducto,
+                    as: "productoProyecto",
+                    include: [
+                        {
+                            model: db.Producto,
+                            as: "producto"
+                        }
+                    ]
+                }],
+                order: [['createdAt', 'DESC']]
+            });
+    
             // Obtener la fecha actual
             const fechaActual = new Date();
-        
+    
             // Filtrar los proyectos fuera de término
-              const proyectosFueraDeTermino = proyectos.filter(proyecto => {
-              const { createdAt, duracion, unidadDuracion } = proyecto;
-        
-              // Convertir la fecha de creación a un objeto Date
-              const fechaCreacion = new Date(createdAt);
-        
-              // Calcular la fecha de vencimiento
-              let fechaVencimiento;
-              switch (unidadDuracion) {
-                case 'dia':
-                  fechaVencimiento = new Date(fechaCreacion);
-                  fechaVencimiento.setDate(fechaVencimiento.getDate() + duracion);
-                  break;
-                case 'semana':
-                  fechaVencimiento = new Date(fechaCreacion);
-                  fechaVencimiento.setDate(fechaVencimiento.getDate() + (duracion * 7));
-                  break;
-                case 'mes':
-                  fechaVencimiento = new Date(fechaCreacion);
-                  fechaVencimiento.setMonth(fechaVencimiento.getMonth() + duracion);
-                  break;
-                default:
-                  return false; // Si la unidad de duración no es válida, no consideres este proyecto
-              }
-        
-              // Comparar la fecha de vencimiento con la fecha actual
-              return fechaActual > fechaVencimiento;
+            const proyectosFueraDeTermino = proyectos.filter(proyecto => {
+                const { createdAt, duracion, unidadDuracion } = proyecto;
+    
+                // Convertir la fecha de creación a un objeto Date
+                const fechaCreacion = new Date(createdAt);
+    
+                // Calcular la fecha de vencimiento
+                let fechaVencimiento;
+                switch (unidadDuracion) {
+                    case 'dia':
+                        fechaVencimiento = new Date(fechaCreacion);
+                        fechaVencimiento.setDate(fechaVencimiento.getDate() + duracion);
+                        break;
+                    case 'semana':
+                        fechaVencimiento = new Date(fechaCreacion);
+                        fechaVencimiento.setDate(fechaVencimiento.getDate() + (duracion * 7));
+                        break;
+                    case 'mes':
+                        fechaVencimiento = new Date(fechaCreacion);
+                        fechaVencimiento.setMonth(fechaVencimiento.getMonth() + duracion);
+                        break;
+                    default:
+                        return false; // Si la unidad de duración no es válida, no consideres este proyecto
+                }
+    
+                // Comparar la fecha de vencimiento con la fecha actual
+                return fechaActual > fechaVencimiento;
             });
-            
-           
-
-            // Enviar los proyectos fuera de término a la vista
-           return res.render('stock/proyectos/proyectosRetrasados', {
-            title:"Proyectos fuera de termino",
-            proyectosFueraDeTermino });
-          } catch (error) {
+    
+            // Paginación del array filtrado
+            const page = parseInt(req.query.page) || 1;
+            const limit = parseInt(req.query.limit) || 10;
+            const offset = (page - 1) * limit;
+            const paginatedProjects = proyectosFueraDeTermino.slice(offset, offset + limit);
+    
+            // Calcular el número total de páginas
+            const totalPages = Math.ceil(proyectosFueraDeTermino.length / limit);
+    
+            // Enviar los proyectos fuera de término paginados a la vista, junto con la información de paginación
+            return res.render('stock/proyectos/proyectosRetrasados', {
+                title: "Proyectos fuera de término",
+                proyectosFueraDeTermino: paginatedProjects,
+                currentPage: page,
+                totalPages: totalPages,
+                limit: limit
+            });
+        } catch (error) {
             console.error('Error al obtener proyectos fuera de término:', error);
             res.status(500).send('Ocurrió un error al obtener los proyectos fuera de término.');
-          }
+        }
     },
 
     addNewProyect: (req, res) => {
