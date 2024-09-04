@@ -9,43 +9,75 @@ module.exports = {
 
 
     listTaller : (req,res) => {
-        db.Taller.findAll({
-            include: ['destinoTaller'],
-            where: {estado:"En Proceso de Aprobación"},
-            order: [['createdAt', 'DESC']]
-        })
-        .then(talleres => {           
-            return res.render("stock/talleres/listTaller",{
-                title: "Lista de Talleres",
-                talleres
-            })
-        }).catch(error => console.log(error));
+    const limit = parseInt(req.query.limit) || 10; // Número de elementos por página
+    const page = parseInt(req.query.page) || 1; // Página actual
+    const offset = (page - 1) * limit;
+
+    db.Taller.findAndCountAll({
+        include: ['destinoTaller'],
+        where: { estado: "En Proceso de Aprobación" },
+        order: [['createdAt', 'DESC']],
+        limit: limit,
+        offset: offset
+    })
+    .then(result => {
+    const totalPages = Math.ceil(result.count / limit);
+
+     return res.render("stock/talleres/listTaller", {
+            title: "Lista de Talleres",
+            talleres: result.rows,
+            currentPage: page,
+            totalPages: totalPages,
+            limit: limit
+        });
+    })
+    .catch(error => console.log(error));
     },
 
     listApproved : (req,res) =>{
-        db.Taller.findAll({
+        const limit = parseInt(req.query.limit) || 10; // Número de elementos por página
+        const page = parseInt(req.query.page) || 1; // Página actual
+        const offset = (page - 1) * limit;
+
+        db.Taller.findAndCountAll({
             include: ['destinoTaller'],
             where: {estado:"Aprobado"},
-            order: [['createdAt', 'DESC']]
+            order: [['createdAt', 'DESC']],
+            limit: limit,
+            offset: offset
         })
-        .then(talleres => {           
+        .then(talleres => {      
+            const totalPages = Math.ceil(talleres.count / limit);     
             return res.render("stock/talleres/talleresAprobados",{
                 title: "Lista de Talleres",
-                talleres
+                talleres: talleres.rows,
+                currentPage: page,
+                totalPages: totalPages,
+                limit: limit
             })
         }).catch(error => console.log(error));
     },
 
     listClosed :(req,res) => {
-        db.Taller.findAll({
+        const limit = parseInt(req.query.limit) || 10; // Número de elementos por página
+        const page = parseInt(req.query.page) || 1; // Página actual
+        const offset = (page - 1) * limit;
+
+        db.Taller.findAndCountAll({
             include: ['destinoTaller'],
             where: {estado:"De Baja"},
-            order: [['createdAt', 'DESC']]
+            order: [['createdAt', 'DESC']],
+            limit: limit,
+            offset: offset
         })
-        .then(talleres => {           
+        .then(result => {     
+            const totalPages = Math.ceil(result.count / limit);             
             return res.render("stock/talleres/talleresDeBaja",{
-                title: "Lista de Talleres",
-                talleres
+                title: "Lista de Talleres",          
+                talleres: result.rows,
+                currentPage: page,
+                totalPages: totalPages,
+                limit: limit
             })
         }).catch(error => console.log(error));
     },
