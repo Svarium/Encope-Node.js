@@ -31,6 +31,9 @@ module.exports = {
       procedencia: {
         type: Sequelize.STRING
       },
+      asignado: {
+        type: Sequelize.STRING
+      },
       duracion: {
         type: Sequelize.INTEGER
       },

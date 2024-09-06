@@ -51,6 +51,7 @@ module.exports = (sequelize, DataTypes) => {
     idTaller: DataTypes.INTEGER, 
     detalle: DataTypes.STRING,
     procedencia: DataTypes.STRING,
+    asignado: DataTypes.STRING,
     duracion: DataTypes.INTEGER,
     unidadDuracion:{
       type: DataTypes.STRING,

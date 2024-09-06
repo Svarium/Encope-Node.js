@@ -505,9 +505,25 @@ module.exports = {
         message: error.message || "Error al actualizar los egresos"
       };
     }
-  }
+  },
 
- 
-  
+ asignarProyecto : async(idProyecto, destino) => {
+    try {
 
+      const asignar = await db.Proyecto.update(
+        {asignado: destino,},
+        {    
+        where:{
+          id:idProyecto
+        }
+      })    
+
+    } catch (error) {
+      console.log(error);
+      throw {
+        status: error.status || 500,
+        message: error.message || "Error al asignar proyecto"
+      };
+    }
+ }
 }

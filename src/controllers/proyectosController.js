@@ -7,42 +7,56 @@ const path = require('path');
 
 module.exports = {
 
-    listProyects: (req, res) => {
+    listProyects: async (req, res) => {
+        try {
 
-        const limit = +(req.query.limit) || 2;;
-        const page = +(req.query.page) || 1;
-        const offset = (page -1) * limit;
+         //consulta de todos los destinos
+         
+         const destinos = await db.destinoUsuario.findAll({
+            attributes:["id", "nombreDestino"]
+         });
 
-        db.Proyecto.findAndCountAll({
-            include: [{
+          const limit = +(req.query.limit) || 2;
+          const page = +(req.query.page) || 1;
+          const offset = (page - 1) * limit;
+      
+          // Realizar la consulta con paginación
+          const proyectos = await db.Proyecto.findAndCountAll({
+            include: [
+              {
                 model: db.proyectoProducto,
                 as: "productoProyecto",
                 include: [
-                    {
-                        model: db.Producto,
-                        as: "producto"
-                    }
+                  {
+                    model: db.Producto,
+                    as: "producto"
+                  }
                 ]
-
-            },           
+              }
             ],
             order: [['createdAt', 'DESC']],
-            limit:limit,
-            offset:offset,
-        })
-        .then(proyectos => {  
-                const totalPages = Math.ceil(proyectos.count / limit)            
-                return res.render('stock/proyectos/proyectos', {
-                    title: 'Proyectos Productivos',
-                    proyectos:proyectos.rows,
-                    currentPage:page,
-                    totalPages:totalPages,
-                    limit:limit,
-                })
-            }).catch(error => console.log(error))
-
-
-    },
+            limit: limit,
+            offset: offset,
+          });
+      
+          // Calcular el total de páginas
+          const totalPages = Math.ceil(proyectos.count / limit);
+      
+          // Renderizar la vista con los proyectos paginados
+          return res.render('stock/proyectos/proyectos', {
+            title: 'Proyectos Productivos',
+            proyectos: proyectos.rows,
+            currentPage: page,
+            totalPages: totalPages,
+            limit: limit,
+            destinos
+          });
+      
+        } catch (error) {
+          console.log(error);
+          return res.status(500).send('Error al obtener los proyectos.');
+        }
+      },
 
     listDelayedProjects: async(req, res) => {
         try {

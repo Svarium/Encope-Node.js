@@ -1,5 +1,5 @@
 const createResponseError = require('../../helpers/createResponseError');
-const { editProyectState, editParteSemanal, getAllProducts, getAllTallers, getProyectsDone, getLastproyects, editarCantidadAProducir, editarCostoUnitario, eliminarProductoDelProyecto, agregarProductoAlProyecto, editarCantidadProducida, actualizarEgresos, actualizarObservaciones, removeInsumo, getProyectsPending, getProyectsDelayed, getCountProducts, getAllDbProducts } = require('../../services/stockServices');
+const { editProyectState, editParteSemanal, getAllProducts, getAllTallers, getProyectsDone, getLastproyects, editarCantidadAProducir, editarCostoUnitario, eliminarProductoDelProyecto, agregarProductoAlProyecto, editarCantidadProducida, actualizarEgresos, actualizarObservaciones, removeInsumo, getProyectsPending, getProyectsDelayed, getCountProducts, getAllDbProducts, asignarProyecto } = require('../../services/stockServices');
 
 
 module.exports = {
@@ -365,6 +365,26 @@ module.exports = {
             return createResponseError(res, error)
         }
 
+      },
+
+      asignarProyectoProductivo : async (req,res) => {
+        try {
+
+            const {idProyecto, destino} = req.body
+                        
+            const asignacion = await asignarProyecto(idProyecto, destino)
+
+            return res.status(200).json({
+                ok:true,
+                data:{
+                    message:"Proyecto asignado correctamente"
+                }
+            })
+            
+        } catch (error) {
+            console.log(error);
+            return createResponseError(res, error)
+        }
       }
 
    

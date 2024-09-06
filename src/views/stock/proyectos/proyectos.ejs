@@ -96,6 +96,7 @@
                     <th scope="col">Estado</th>
                     <th scope="col">Expediente</th>
                     <th scope="col">Procedencia</th>
+                    <th scope="col">Asignado a</th>
                     <th scope="col">Duración</th>
                     <th scope="col">Producto/s</th>               
                     <th scope="col">Costo total</th>
@@ -131,6 +132,18 @@
                   </td>
                   <td>
                     <%= item.procedencia %>
+                  </td>
+                  <td>
+                    <% if (item.asignado && item.asignado !== null) { %>
+                    <p class="fs-6 text-success fw-bold"><%= item.asignado %> <i class="fa-solid fa-circle-check"></i></p> 
+                    <% } else { %>
+                      <select class="form-control" name="destino" id="destino" data-idProyecto="<%= item.id %>">
+                        <% destinos.forEach(item => { %>
+                          <option value="<%= item.nombreDestino %>"><%= item.nombreDestino %></option>
+                        <% }) %>
+                      </select>
+                      <button class="btn mt-2 w-100 asignar-btn <%= item.asignado && item.asignado !== null ? 'btn-primary' : 'btn-outline-primary' %> ">Asignar</button>
+                      <% } %>                    
                   </td>
                   <td>
                     <%= item.duracion %>
@@ -218,57 +231,112 @@ deleteForms.forEach(form => {
 });
     </script>
 
-<script>
-  // Obtén todos los interruptores de proyectos
-  const projectSwitches = document.querySelectorAll('.project-switch');
+    <script>
+      // Obtén todos los interruptores de proyectos
+      const projectSwitches = document.querySelectorAll('.project-switch');
 
-  // Escucha el evento de cambio en cada interruptor
-  projectSwitches.forEach(switchElement => {
-    switchElement.addEventListener('change', async (event) => {
-      const projectId = event.target.dataset.projectId; // Obtén el ID del proyecto del atributo de datos
+      // Escucha el evento de cambio en cada interruptor
+      projectSwitches.forEach(switchElement => {
+        switchElement.addEventListener('change', async (event) => {
+          const projectId = event.target.dataset.projectId; // Obtén el ID del proyecto del atributo de datos
+
+          try {
+            // Envía una solicitud PUT al servidor para actualizar el estado del proyecto
+            const response = await fetch(`https://test.encope.gob.ar/api/stock/editState/${projectId}`, {
+              method: 'PUT',
+            });
+
+            if (response.ok) {
+              // Maneja la respuesta del servidor
+              const data = await response.json();
+              let timerInterval;
+              Swal.fire({
+                title: "Actualizando estado!",
+                html: "Actualizando en <b></b>ms.",
+                timer: 1500,
+                timerProgressBar: true,
+                didOpen: () => {
+                  Swal.showLoading();
+                  const timer = Swal.getPopup().querySelector("b");
+                  timerInterval = setInterval(() => {
+                    timer.textContent = `${Swal.getTimerLeft()}`;
+                  }, 100);
+                },
+                willClose: () => {
+                  clearInterval(timerInterval);
+                }
+              }).then((result) => {
+                /* Read more about handling dismissals below */
+                if (result.dismiss === Swal.DismissReason.timer) {
+                  console.log("I was closed by the timer");
+                }
+                location.reload()
+
+              });
+            } else {
+              throw new Error('Error al actualizar el estado del proyecto');
+            }
+          } catch (error) {
+            console.error(error);
+            alert('Error al actualizar el estado del proyecto');
+          }
+        });
+      });
+    </script>
+
+<script>
+  document.querySelectorAll('.asignar-btn').forEach(button => {
+    button.addEventListener('click', async function () {
+      // Capturar el select y el proyecto
+      const select = this.previousElementSibling;
+      const idProyecto = select.getAttribute('data-idProyecto');
+      const destino = select.value;
+
+      // Crear el cuerpo del request
+      const data = { idProyecto, destino };
 
       try {
-        // Envía una solicitud PUT al servidor para actualizar el estado del proyecto
-        const response = await fetch(`https://test.encope.gob.ar/api/stock/editState/${projectId}`, {
-          method: 'PUT',
+        // Realizar el request con Fetch API
+        const response = await fetch('http://localhost:3000/api/stock/asignarProyecto', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
         });
 
-        if (response.ok) {
-          // Maneja la respuesta del servidor
-          const data = await response.json();
-          let timerInterval;
+        // Verificar la respuesta
+        const result = await response.json();
+        if (result.ok) {
+          // Mostrar alerta de éxito con SweetAlert
           Swal.fire({
-            title: "Actualizando estado!",
-            html: "Actualizando en <b></b>ms.",
-            timer: 1500,
-            timerProgressBar: true,
-            didOpen: () => {
-              Swal.showLoading();
-              const timer = Swal.getPopup().querySelector("b");
-              timerInterval = setInterval(() => {
-                timer.textContent = `${Swal.getTimerLeft()}`;
-              }, 100);
-            },
-            willClose: () => {
-              clearInterval(timerInterval);
-            }
-          }).then((result) => {
-            /* Read more about handling dismissals below */
-            if (result.dismiss === Swal.DismissReason.timer) {
-              console.log("I was closed by the timer");
-            }
-            location.reload()
-
+            icon: 'success',           
           });
+          setTimeout(() => {
+            location.reload()
+          }, 1500)        
         } else {
-          throw new Error('Error al actualizar el estado del proyecto');
+          // Mostrar alerta de error
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Hubo un problema al asignar el proyecto.',
+            confirmButtonText: 'Aceptar'
+          });
         }
       } catch (error) {
-        console.error(error);
-        alert('Error al actualizar el estado del proyecto');
+        console.error('Error:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Hubo un problema con la asignación.',
+          confirmButtonText: 'Aceptar'
+        });
       }
     });
   });
 </script>
+
+
   </body>
 </html>

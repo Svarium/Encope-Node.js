@@ -4,9 +4,12 @@ const ExcelJS = require('exceljs');
 require("dotenv").config();
 const db = require('../database/models');
 const transporter = require('../helpers/configNodemailer');
+const { Op } = require('sequelize');
+
 
 module.exports = {
   listPartes: async (req, res) => {   
+
 
     try {
       const destinoId = req.session.userLogin.destinoId;
@@ -23,7 +26,10 @@ module.exports = {
 
       const proyectos = await db.Proyecto.findAndCountAll({
         where: {
-          procedencia: procedencia.nombreDestino
+          [Op.or]: [
+            { procedencia: procedencia.nombreDestino },
+            { asignado: procedencia.nombreDestino }
+          ]
         },
         order: [['createdAt', 'DESC']],
         limit:limit,
