@@ -8,7 +8,7 @@ const botonRetiros = document.getElementById("botonRetiros");
 
 const obtenerUltimosRetiros = (idDestino) => {
 
-    return fetch(`https://encope.gob.ar/api/cunas/ultimosRetiros/${idDestino}`)
+    return fetch(`https://test.encope.gob.ar/api/cunas/ultimosRetiros/${idDestino}`)
       .then((res) => res.json())
       .then((retiros) => {    
 

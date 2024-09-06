@@ -5,7 +5,7 @@ const btnNext = $('#btn-next-card-noticia')
 const containerItemPage = $('#container-items-page-card-noticia')
 const sectionNoticiaCard = $('#section-noticias-card')
 
-const URL_API_SERVER= "https://encope.gob.ar"
+const URL_API_SERVER= "https://test.encope.gob.ar"
 
 /* const URL_API_SERVER= "CAMBIAR A LA DIRECCION DE VNPOWER" */
 

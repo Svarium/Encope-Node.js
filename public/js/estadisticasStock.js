@@ -11,9 +11,9 @@ const countProductsInDB = document.getElementById("productsCount");
 
 const tablaProyectosDemorados = document.getElementById("tablaDeProyectosDemorados")
 
-/* const URL_API_SERVER= "https://encope.gob.ar" */
+/* const URL_API_SERVER= "https://test.encope.gob.ar" */
 
-/* const endpointURL = "https://encope.gob.ar/api/cunas/"; */
+/* const endpointURL = "https://test.encope.gob.ar/api/cunas/"; */
 
 const endpointURL = "https://test.encope.gob.ar/api/stock/";
 
