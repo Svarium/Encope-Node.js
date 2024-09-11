@@ -20,7 +20,7 @@ module.exports = {
         }
       })
 
-      const limit = +(req.query.limit) || 2;;
+      const limit = +(req.query.limit) || 10;
       const page = +(req.query.page) || 1;
       const offset = (page -1) * limit;
 

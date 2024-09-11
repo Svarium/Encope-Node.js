@@ -16,7 +16,7 @@ module.exports = {
             attributes:["id", "nombreDestino"]
          });
 
-          const limit = +(req.query.limit) || 2;
+          const limit = +(req.query.limit) || 10;
           const page = +(req.query.page) || 1;
           const offset = (page - 1) * limit;
       
@@ -247,9 +247,15 @@ module.exports = {
                         costoUnitario: producto.costoUnitario,
                         costoTotal: producto.cantidad * producto.costoUnitario,                    
                     })
-                })       
+                })                   
+              console.log(req.session.userLogin.rol);
                             
+              if (req.session.userLogin.rol === 5) {
                 return res.redirect('/stock/listProyects')
+              } else {
+                return res.redirect('/stock/partes')
+              }
+               
 
             } else {
 
