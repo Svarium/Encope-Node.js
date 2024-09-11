@@ -1,7 +1,7 @@
 const fs = require('fs');
 const { validationResult } = require('express-validator');
 const ExcelJS = require('exceljs');
-const db = require('../database/models');
+const db = require('../../database/models');
 const path = require('path');
 
 

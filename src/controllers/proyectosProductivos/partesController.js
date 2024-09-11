@@ -2,8 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const ExcelJS = require('exceljs');
 require("dotenv").config();
-const db = require('../database/models');
-const transporter = require('../helpers/configNodemailer');
+const db = require('../../database/models');
+const transporter = require('../../helpers/configNodemailer');
 const { Op } = require('sequelize');
 
 

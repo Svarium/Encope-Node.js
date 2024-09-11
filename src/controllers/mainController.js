@@ -1,10 +1,8 @@
 const db = require("../database/models");
-const { update } = require("./noticiasController");
 const fs = require('fs');
 const path = require('path')
-
-const unidadFilePath = path.join(__dirname, '../data/mapa.json');
-const unidades = JSON.parse(fs.readFileSync(unidadFilePath, 'utf-8'));
+const { promisify } = require('util');
+const readFileAsync = promisify(fs.readFile);
 
 
 
@@ -16,39 +14,42 @@ module.exports = {
             });
     
     },
-    inicio : (req,res) =>{
-    const userLogin = req.session.userLogin
-        db.Noticias.findAll({
-            include:[{
-                model:db.Image,
-                as:'images',
-                attributes:{
-                    exclude:["id", "noticiaId", "createdAt", "updatedAt" ]
+    inicio: async (req, res) => {
+        try {
+            const userLogin = req.session.userLogin;
+    
+            // Obtener noticias de la base de datos
+            const noticias = await db.Noticias.findAll({
+                include: [{
+                    model: db.Image,
+                    as: 'images',
+                    attributes: {
+                        exclude: ["id", "noticiaId", "createdAt", "updatedAt"]
+                    }
+                }],
+                order: [["createdAt", "DESC"]],
+                limit: 4,
+                attributes: {
+                    exclude: ["updatedAt"]
                 }
-            }],
-            order: [["createdAt", "DESC"]],
-            limit:4,
-            attributes:{
-                exclude:["updatedAt"]
-            }
-        })
-        .then(noticias => {
+            });
+    
+            // Leer el archivo de unidades de manera asincrónica
             const unidadFilePath = path.join(__dirname, '../data/mapa.json');
-            const unidades = JSON.parse(fs.readFileSync(unidadFilePath, 'utf-8'));
-
-            const unidadesCount = unidades.length -1;
-
-            // Inicializar un contador para los talleres
+            const unidadesData = await readFileAsync(unidadFilePath, 'utf-8');
+            const unidades = JSON.parse(unidadesData);
+    
+            // Contar talleres y unidades
+            const unidadesCount = unidades.length - 1;
             let totalTalleres = 0;
-
+    
             // Recorrer cada unidad (ignorar la primera posición)
             for (let i = 1; i < unidades.length; i++) {
                 const unidad = unidades[i];
-                
-                // Sumar la cantidad de talleres en el array 'internosPorTaller'
                 totalTalleres += unidad.internosPorTaller.length;
             }
     
+            // Renderizar la vista con los datos
             return res.render('inicio', {
                 title: 'Encope',
                 noticias,
@@ -56,25 +57,25 @@ module.exports = {
                 unidades,
                 totalTalleres,
                 unidadesCount
-            })
-        })
-      
+            });
+        } catch (error) {
+            // Manejo de errores
+            console.error('Error en el controlador inicio:', error);
+            return res.status(500).send('Error interno del servidor');
+        }
     },
-    nosotros : (req,res)=>{
-      const userLogin = req.session.userLogin
+    nosotros : (req,res)=>{  
         return res.render('nosotros',{
-            title:'Nosotros',
-            userLogin
+            title:'Nosotros',        
         })
     },
    
     mapa: (req,res) => {
         const unidadFilePath = path.join(__dirname, '../data/mapa.json');
         const unidades = JSON.parse(fs.readFileSync(unidadFilePath, 'utf-8'));
-        const userLogin = req.session.userLogin
+       
         return res.render('mapa',{
-            title:"Mapa",
-            userLogin,
+            title:"Mapa",           
             unidades
         })
     },
@@ -92,10 +93,8 @@ module.exports = {
         })
     },
 
-    contacto: (req,res) => {
-        const userLogin = req.session.userLogin
-        return res.render('contacto',{
-            userLogin,
+    contacto: (req,res) => {        
+        return res.render('contacto',{         
             title:'Contacto'
         })
     },
@@ -106,58 +105,52 @@ module.exports = {
         })
     },
 
-    estadisticas: (req,res) => {
+    estadisticas: async (req, res) => {
+        // Función para contar la cantidad total de talleres
+        function contarTalleres(unidades) {
+            return unidades.reduce((total, unidad, index) => {
+                // Ignorar la primera unidad (índice 0)
+                if (index === 0) return total;
+                return total + (unidad.internosPorTaller ? unidad.internosPorTaller.length : 0);
+            }, 0);
+        }
+        try {
+            // Consultas a la base de datos
+            const productosPromise = db.Producto.findAll({ attributes: ['id', 'nombre'] });
+            const destinosPromise = db.destinoUsuario.findAll({ attributes: ['id', 'nombreDestino'] });
+            const talleresPromise = db.Taller.findAll({ attributes: ['id', 'nombre'] });
 
-        const productos = db.Producto.findAll({
-            attributes: ['id', 'nombre']
-        })
+            // Leer y parsear el archivo JSON de unidades
+            const unidadFilePath = path.join(__dirname, '../data/mapa.json');
+            const unidades = JSON.parse(fs.readFileSync(unidadFilePath, 'utf-8'));
 
-        const destinos = db.destinoUsuario.findAll({
-            attributes:['id', 'nombreDestino' ]
-        })
+            // Contar unidades y talleres
+            const unidadesCount = unidades.length - 1;
+            const totalTalleres = contarTalleres(unidades);
 
-        const talleres = db.Taller.findAll({
-            attributes:["id", "nombre"]
-        })
+            // Ejecutar todas las consultas en paralelo
+            const [productos, destinos, talleres] = await Promise.all([productosPromise, destinosPromise, talleresPromise]);
 
-        const unidadFilePath = path.join(__dirname, '../data/mapa.json');
-        const unidades = JSON.parse(fs.readFileSync(unidadFilePath, 'utf-8'));
-        const unidadesCount = unidades.length -1;
-
-        // Inicializar un contador para los talleres
-            let totalTalleres = 0;
-
-        // Recorrer cada unidad (ignorar la primera posición)
-        for (let i = 1; i < unidades.length; i++) {
-                const unidad = unidades[i];
-                
-                // Sumar la cantidad de talleres en el array 'internosPorTaller'
-                totalTalleres += unidad.internosPorTaller.length;
-            }
-
-        Promise.all(([productos, destinos, talleres]))
-        .then(([productos, destinos, talleres]) => {
-            return res.render('stock/estadistica',{
-                title:'Estadisticas',
+            // Renderizar la vista con los datos obtenidos
+            return res.render('stock/estadistica', {
+                title: 'Estadísticas',
                 productos,
                 destinos,
                 talleres,
                 unidades,
                 totalTalleres,
-                unidadesCount
-            })
-        })
-      
+                unidadesCount,
+            });
+        } catch (error) {
+            console.error('Error obteniendo estadísticas:', error);
+            return res.status(500).render('error', { message: 'Hubo un problema al obtener las estadísticas.', error });
+        }
     }, 
 
-    intranet: (req,res) => {
-        const userLogin = req.session.userLogin
+    intranet: (req,res) => {       
         return res.render('intranet/intranet',{
-            title:"Sistema de Gestión Web - ENCOPE",
-            userLogin
+            title:"Sistema de Gestión Web - ENCOPE",         
         })
 
-    }
-
-  
+    }  
 }

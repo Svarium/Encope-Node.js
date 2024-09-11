@@ -1,13 +1,13 @@
 var express = require('express');
-const { list, newProduct, storageProduct, listProducts, editProduct, updateProduct, deleteProduct, searchProduct, productsTableExcel, addFicha } = require('../controllers/productsController');
+const { list, newProduct, storageProduct, listProducts, editProduct, updateProduct, deleteProduct, searchProduct, productsTableExcel, addFicha } = require('../controllers/proyectosProductivos/productsController');
 const { uploadProductosFiles } = require('../middlewares/subirProductos');
 const addProductValidator = require('../validations/addProductValidator');
 const checkUserEditorIntranetCentral = require('../middlewares/checkUserEditorIntranetCentral');
-const { newTaller, storageTaller, listTaller, editTaller, updateTaller, deleteTaller, ExcelTalleres, searchTaller, listApproved, listClosed } = require('../controllers/talleresController');
+const { newTaller, storageTaller, listTaller, editTaller, updateTaller, deleteTaller, ExcelTalleres, searchTaller, listApproved, listClosed } = require('../controllers/proyectosProductivos/talleresController');
 const addTallerValidator = require('../validations/addTallerValidator');
-const { addNewProyect, storeProyect, listProyects, editProyect, updateProyect, deleteProyect, downloadExcelHistorial, downloadExcelProyects, searchProyect, editProducts, listDelayedProjects } = require('../controllers/proyectosController');
+const { addNewProyect, storeProyect, listProyects, editProyect, updateProyect, deleteProyect, downloadExcelHistorial, downloadExcelProyects, searchProyect, editProducts, listDelayedProjects } = require('../controllers/proyectosProductivos/proyectosController');
 const addProyectValidator = require('../validations/addProyectValidator');
-const { listPartes, editParte, updateParte, avanceDeProyecto, printParte, reporteViaEmail, printParteInsumos } = require('../controllers/partesController');
+const { listPartes, editParte, updateParte, avanceDeProyecto, printParte, reporteViaEmail, printParteInsumos } = require('../controllers/proyectosProductivos/partesController');
 const editParteValidator = require('../validations/editParteValidator');
 const checkUserEditorIntranetUnidad = require('../middlewares/checkUserEditorIntranetUnidad');
 const checkUserAddProyect = require('../middlewares/checkUserAddProyect');
@@ -16,7 +16,7 @@ const { uploadInsumosFiles } = require('../middlewares/subirInsumos');
 const editProyectValidator = require('../validations/editProyectValidator');
 const { uploadFichasFiles } = require('../middlewares/subirFicha');
 const addFichaValidator = require('../validations/addFichaValidator');
-const { addInsumo, storeInsumo, reportInsumos } = require('../controllers/insumosController');
+const { addInsumo, storeInsumo, reportInsumos } = require('../controllers/proyectosProductivos/insumosController');
 const addInsumoValidator = require('../validations/addInsumoValidator');
 const { uploadAnexosFiles } = require('../middlewares/subirAnexo');
 

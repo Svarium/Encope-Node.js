@@ -3,7 +3,7 @@ const {validationResult} = require('express-validator');
 const path = require('path');
 require("dotenv").config();
 
-const db = require('../database/models');
+const db = require('../../database/models');
 
 
 module.exports = {
