@@ -486,7 +486,7 @@ module.exports = {
       // Una vez que ambos archivos se hayan generado y guardado en el servidor, puedes adjuntarlos al correo electrónico
       const mailOptions = {
         from: process.env.EMAIL_USER,
-        to: 'informatica@encope.gob.ar',
+        to: 'produccion@encope.gob.ar',
         subject: 'Informe de Parte Semanal',
         text: 'Adjunto encontrará el informe del parte Semanal de stock y de insumos ambos en formato Excel.',
         attachments: [
@@ -700,7 +700,7 @@ module.exports = {
       // Enviar correo electrónico con los archivos adjuntos
       const mailOptions = {
         from: process.env.EMAIL_USER,
-        to: 'informatica@encope.gob.ar',
+        to: 'produccion@encope.gob.ar',
         subject: 'Informe de Parte Semanal',
         text: 'Adjunto encontrará el informe del parte Semanal de stock y de insumos ambos en formato Excel.',
         attachments: [
