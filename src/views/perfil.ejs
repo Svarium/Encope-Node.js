@@ -18,33 +18,32 @@
 
 
       <!-- Button trigger modal -->
-      <% if (locals.userLogin && (locals.userLogin.rol != 7) && (locals.userLogin.rol != 4) && (locals.userLogin.rol != 3)) { %>
-        <button type="button" class="btn btn-primary btn-sm btn-tutorialModuloCunitas" data-bs-toggle="modal" data-bs-target="#tutorialModuloCunitas">
-          Tutorial Modulo Stock
+      <% if (locals.userLogin && (locals.userLogin.rol !== 5) && (locals.userLogin.rol !== 6)) { %>
+       
+      <% }else { %>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tutorialModuloCunitas">
+          Tutorial Modulo Proyectos Productivos <i class="fa-brands fa-youtube fa-lg"></i>
         </button>
       <% } %>
+    
 
 <!-- Modal -->
 <div class="modal fade" id="tutorialModuloCunitas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Tutorial uso del módulo Stock de Cunitas</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Tutorial uso del módulo proyectos productivos</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body text-center"> <!-- Agregamos la clase "text-center" para centrar el contenido -->
-        <% if (locals.userLogin && (locals.userLogin.rol == 5) && (locals.userLogin.destinoId != 31)) { %>
+        <% if (locals.userLogin && (locals.userLogin.rol == 5)) { %>
           <div class="embed-responsive embed-responsive-16by9"> <!-- Clase para hacerlo responsivo -->
-            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/hWE9kVfhUDI?si=sOTVdmtnl1_FVyZX" title="YouTube video player" allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/n-Lmw3JuWx0?si=sRm8BEv5AfsOnYaz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
           </div>
         <% } else if (locals.userLogin && locals.userLogin.rol == 6) { %>
           <div class="embed-responsive embed-responsive-16by9">
-            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/nh33Xojugt0?si=-369yyK9oIoYCszD" title="YouTube video player" allowfullscreen></iframe>
-          </div>
-        <% } else if (locals.userLogin && locals.userLogin.rol == 5 && locals.userLogin.destinoId == 31) { %>
-          <div class="embed-responsive embed-responsive-16by9">
-            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/1c9vY3niQOQ?si=o7cqnl57zlZVZfIk" title="YouTube video player" allowfullscreen></iframe>
-          </div>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/spi86z6iSrs?si=d8edkyWM8zolqTGU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>       
         <% } %>
       </div>
       <div class="modal-footer">
@@ -70,8 +69,7 @@
                   </div>
                   <ul class="list-group list-group-flush text-center">
                     <li class="list-group-item">Rol de usuario: <%= usuario.rol.nombre %> </li>
-                    <li class="list-group-item">Email: <%= usuario.email %> </li>
-                   
+                    <li class="list-group-item">Email: <%= usuario.email %> </li>                   
                     <li class="list-group-item">Credencial: <%= usuario.credencial? usuario.credencial : '-' %> </li>
                     <li class="list-group-item">Destino: <%= usuario.destino? usuario.destino.nombreDestino : '-' %> </li>
 
@@ -185,9 +183,8 @@
       </div>
     </div>
   </div>
-</div>
-          
-    </main>
+</div>  
+    </main>      
 
 <script>
   const icon = document.getElementById('userIconProfile')
