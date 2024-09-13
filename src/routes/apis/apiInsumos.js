@@ -1,5 +1,5 @@
 const express = require('express');
-const { createRegister, createCantidadAdquirida, createNumeroFactura, createDetalleInsumo, calcularRemanentes, porcentajeAvance, decomisos, deleteRegister } = require('../../controllers/apis/apiInsumosControllers');
+const { createRegister, createCantidadAdquirida, createNumeroFactura, createDetalleInsumo, calcularRemanentes, porcentajeAvance, decomisos, deleteRegister } = require('../../controllers/apis/apiStockControllers/apiInsumosControllers');
 const addCantidadAdquiridaValidator = require('../../validations/api/insumos/addCantidadAdquiridaValidator');
 const addNumeroFacturaValidator = require('../../validations/api/insumos/addNumeroFacturaValidator');
 const addDetalleValidator = require('../../validations/api/insumos/addDetalleValidator');

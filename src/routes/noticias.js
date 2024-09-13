@@ -1,8 +1,8 @@
 const express = require('express');
 const { add, store, edit, update, detail, remove, destroy, list } = require('../controllers/noticiasController');
-const { uploadNoticiasImages } = require('../middlewares/subirNoticia');
-const noticiaValidator = require('../validations/noticiaValidator');
-const checkUserEditorNoticias = require('../middlewares/checkUserEditorNoticias');
+const { uploadNoticiasImages } = require('../middlewares/upload/subirNoticia');
+const noticiaValidator = require('../validations/noticiasValidators/noticiaValidator');
+const checkUserEditorNoticias = require('../middlewares/checkUsers/checkUserEditorNoticias');
 const router = express.Router();
 
 /* llego con /noticias */

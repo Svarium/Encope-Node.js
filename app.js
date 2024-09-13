@@ -11,8 +11,8 @@ const cors = require('cors');
 
 // Importa servicios y middlewares
 const { loginGoogleInitalize } = require('./src/services/googleService');
-const localsUserCheckMiddleware = require('./src/middlewares/localsUserCheck');
-const cookieCheckMiddleware = require('./src/middlewares/cookieCheck');
+const localsUserCheckMiddleware = require('./src/middlewares/checkUsers/localsUserCheck');
+const cookieCheckMiddleware = require('./src/middlewares/checkUsers/cookieCheck');
 const { initializeCronJobs } = require('./src/helpers/cronJobs');
 
 // Inicializa cron jobs

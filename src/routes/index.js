@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const {home, inicio, nosotros, contacto, mapa, unidadDetail, nuestrosProyectos, intranet, } = require('../controllers/mainController');
-const checkUserGestion = require('../middlewares/checkUserGestion');
+const checkUserGestion = require('../middlewares/checkUsers/checkUserGestion');
 
 /* / */
 router.get('/', home);

@@ -1,56 +1,58 @@
 const express = require('express');
-const { editState, addRemanentes, allProducts, allTallers, allProyectsDone, lastProyects, updateCantidadAProducir, updateCostoUnitario, eliminarProducto, agregarProducto, cantidadProducida, egresos, observaciones, estadistica, deleteInsumo, allProyectsInProgress, allProyectsDelayed, getAllProducts, asignarProyectoProductivo } = require('../../controllers/apis/apiStockControllers');
-const { expedienteFichaTecnicaExistente } = require('../../controllers/apis/apiFichaTecnicaControllers');
+const {
+    editState,
+    addRemanentes,
+    allProducts,
+    allTallers,
+    allProyectsDone,
+    lastProyects,
+    updateCantidadAProducir,
+    updateCostoUnitario,
+    eliminarProducto,
+    agregarProducto,
+    cantidadProducida,
+    egresos,
+    observaciones,
+    estadistica,
+    deleteInsumo,
+    allProyectsInProgress,
+    allProyectsDelayed,
+    getAllProducts,
+    asignarProyectoProductivo
+} = require('../../controllers/apis/apiStockControllers/apiStockControllers');
+const { expedienteFichaTecnicaExistente } = require('../../controllers/apis/apiStockControllers/apiFichaTecnicaControllers');
 
 const router = express.Router();
 
-//llego con api/stock
+// Rutas relacionadas con el estado y remanentes de proyectos
+router.put('/editState/:id', editState);                 // Edita el estado del proyecto
+router.put('/remanentes/:id', addRemanentes);            // Edita el remanente de un parte semanal
 
-router.put('/editState/:id', editState) //edita el estado del proyecto
+// Rutas para obtener datos sobre productos, talleres y proyectos
+router.get('/getProducts', allProducts);                 // Trae la cantidad de productos en la base de datos
+router.get('/getAllProducts', getAllProducts);           // Trae todos los productos
+router.get('/getTalleres', allTallers);                  // Trae la cantidad de talleres en la base de datos
+router.get('/getProyectsDone', allProyectsDone);         // Trae la cantidad de proyectos terminados
+router.get('/getProyectsInProgress', allProyectsInProgress);  // Trae la cantidad de proyectos pendientes
+router.get('/getProyectsDelayed', allProyectsDelayed);   // Trae la cantidad de proyectos retrasados
+router.get('/getLastProyects', lastProyects);            // Trae los últimos 9 proyectos agregados
 
-router.put('/remanentes/:id', addRemanentes) //edita el remanente de un parte semanal
+// Rutas relacionadas con la gestión de productos
+router.put('/editCantidad/:id', updateCantidadAProducir);   // Edita la cantidad a producir y sus tablas relacionadas
+router.put('/editCosto/:id', updateCostoUnitario);          // Edita el costo unitario y sus tablas relacionadas
+router.delete('/deleteProduct/:id', eliminarProducto);      // Elimina un producto y actualiza tablas relacionadas
+router.post('/newProduct', agregarProducto);                // Agrega un nuevo producto a un proyecto
 
-router.get('/getProducts', allProducts) //me trae una consulta contando la cantidad de productos en la base de datos
+// Rutas relacionadas con producción, egresos y observaciones
+router.put('/cantidadProducida/:id', cantidadProducida);    // Edita la cantidad producida
+router.put('/egresos/:id', egresos);                        // Actualiza los egresos
+router.put('/observaciones/:id', observaciones);            // Actualiza las observaciones
 
-router.get('/getAllProducts', getAllProducts) // me trae una consulta con todos los productos
+// Rutas relacionadas con insumos
+router.delete('/deleteInsumo/:id', deleteInsumo);           // Elimina un insumo de un producto
 
-router.get('/getTalleres', allTallers) //me trae una consulta que me cuenta la cantidad de tallers en la base de datos
+// Rutas para asignar proyectos y fichas técnicas
+router.post('/expedienteFicha/', expedienteFichaTecnicaExistente); // Verifica si el expediente de una ficha ya existe
+router.post('/asignarProyecto', asignarProyectoProductivo);        // Asigna un proyecto productivo a una unidad o complejo
 
-router.get('/getProyectsDone', allProyectsDone) // Me trae una consulta que cuenta la cantidad de proyectos terminados
-
-router.get('/getProyectsInProgress', allProyectsInProgress) // Me trae una consulta que cuenta la cantidad de proyectos pendientes
-
-router.get('/getProyectsDelayed', allProyectsDelayed) // Me trae una consulta que cuenta la cantidad de proyectos fuera de temrino o retrasados
-
-router.get('/getLastProyects', lastProyects) //me trae una consulta con los ultimos 9 proyectos agregados
-
-router.put('/editCantidad/:id', updateCantidadAProducir) // edito la cantidad a producir y sus tablas relacionadas
-
-router.put('/editCosto/:id', updateCostoUnitario) // edito el costoUnitario y sus tablas relacionadas
-
-router.delete('/deleteProduct/:id', eliminarProducto) // Elimino el producto del proyecto y actualizo las tablas relacionadas
-
-router.post('/newProduct', agregarProducto) //agrego nuevo producto al proyecto
-
-router.put('/cantidadProducida/:id', cantidadProducida) //edito la cantidad producida
-
-router.put('/egresos/:id', egresos) //actualizo los egresos
-
-router.put('/observaciones/:id', observaciones) //actualizo las observaciones
-
-router.delete('/deleteInsumo/:id', deleteInsumo) //elimina el insumo de un producto
-
-router.post('/expedienteFicha/', expedienteFichaTecnicaExistente) //consulta si el expediente de la nueva ficha ya existe en la base de datos
-
-router.post('/asignarProyecto', asignarProyectoProductivo) // asigna el proyecto productivo creado por sede central a una unidad o complejo
-
-
-
-
-
-
-
-
-
-
-module.exports = router
+module.exports = router;
