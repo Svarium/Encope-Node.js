@@ -10,7 +10,6 @@ const checkUserEditorLicitaciones = require('../middlewares/checkUserEditorLicit
 
 
 
-
 /* llego con /licitacion */
 
 // listar publicaciones
@@ -29,9 +28,7 @@ router.get('/search', checkUserLogin, search)
 
 router.get('/searchLicitacion', searchLicitacion)
 
-
 //CRUD
-
 
 //Agregar Licitacion:
 
