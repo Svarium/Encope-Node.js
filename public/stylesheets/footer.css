@@ -1,5 +1,5 @@
 footer{
-	background:#1d1b1b;
+	background:#3c3c3b;
     padding: 0;
     margin: 0;
 }
@@ -96,5 +96,5 @@ footer.titulo-seccion{
 .wtp i:hover{
     transform: rotate(5deg) scale(1.3);
     transition: width 1s, height 1s, transform 1s;
-    color: rgb(230, 50, 50);
+    color: #566282;
 }

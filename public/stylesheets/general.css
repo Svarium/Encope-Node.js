@@ -61,6 +61,14 @@ h3 {
         font-family: 'Roboto';
     }
 
+    .btn-primary
+ /*    .bg-primary,
+    .text-primary */
+    {
+        background-color: #38476d !important;
+    }
+
+
 
     /* BOTON ABRIR VENTANA MODAL */
 

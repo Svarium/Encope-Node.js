@@ -19,6 +19,11 @@
         width:100%;       
     }
 
+    .logo-web{
+        width: 200px;
+        height: 80px;
+        object-fit: cover;
+    }
 
 
 /* CARRUSEL BOOTSTRAP5 */
@@ -63,8 +68,6 @@
     text-align:initial;
     color: rgb(247, 247, 247);
     border:#829529;
-
-
 }
 
 .descripCarrusel:hover{
@@ -76,7 +79,6 @@
 .linkSmall{
     display: none;
 }
-
 
 
                 /* COMIENZA SECCION REDES SOCIALES */
@@ -104,7 +106,7 @@
 }
 
 .redes-sociales-span{
-    background: #fd4a5c;
+    background: #38476D;
     height: 30px;
     width: 100%;
     display: flex;
@@ -169,7 +171,7 @@
           flex-direction: column;
          
           & small:first-child{
-            color: rgb(224, 53, 53);
+            color: #566282;
             font-weight: bolder;
             font-size: 2rem;
           }
@@ -206,7 +208,7 @@
           }
           
           .item-data-column-div small:nth-child(2){
-              color: rgb(224, 53, 53);
+              color: #566282;
               font-weight: bolder;
               font-size: 3.5rem;
           }
@@ -821,18 +823,6 @@
 	cursor: pointer;
 }
 
-
-.wtp i{
-    font-size: 50px;
-    text-decoration: none;
-    color: #ffff;
-}
-
-.wtp i:hover{
-    transform: rotate(5deg) scale(1.3);
-    transition: width 1s, height 1s, transform 1s;
-    color: rgb(230, 50, 50);
-}
 
 .iconProfile{
     width: 30.5px;
