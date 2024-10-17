@@ -237,7 +237,6 @@ module.exports = {
                 const productosFiltrados = req.body.productos.filter(producto => producto.id); // filtro el array productos para eliminar cualquier posición vacía
 
                
-
                 const proyectoProductos = await productosFiltrados.forEach(producto => {  //GUARDO LOS REGISTROS DE PRODUCTOS DEL PROYECTO
                     db.proyectoProducto.create({
                         proyectoId: proyecto.id,

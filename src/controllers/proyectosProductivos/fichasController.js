@@ -1,55 +1,32 @@
 const fs = require('fs');
-const {validationResult} = require('express-validator');
+const { validationResult } = require('express-validator');
 const path = require('path');
 require("dotenv").config();
-
 const db = require('../../database/models');
 
+const removeFileIfExists = (filePath) => {
+    if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+    }
+};
 
-module.exports = {
-
-    listFichas: (req,res) => {
-        db.Ficha.findAll()
-        .then(fichas => {
-            return res.render('stock/fichas/fichas', {
-                title: "Fichas Técnicas",
-                fichas
-            })
-        }).catch(error => console.log(error))
-    },
-
-    addFicha: (req,res) => {
-
-        return res.render('stock/fichas/addFicha',{
-            title: "Agregar Ficha Técnica"
-        })
-
-    },
-
-    storeFicha: (req,res) => {
-        const errors = validationResult(req)
-
-
-        if(req.fileValidationError){ //este if valida que solo se puedan subir extensiones (pdf)
-            errors.errors.push({
-                value : "",
-                msg : req.fileValidationError,
-                param : "ficha",
-                location : "file"
-            })
-        }
-
-        if(!req.file){  //este if valida que se suba un pdf
-            errors.errors.push({
-                value : "",
-                msg : "Debe subir el archivo",
-                param : "ficha",
-                location : "file"
-            })
-            
-        } 
-
-           // Manejar el error si el archivo excede el tamaño máximo (nuevo)
+const handleFileErrors = (req, errors) => {
+    if (req.fileValidationError) {
+        errors.errors.push({
+            value: "",
+            msg: req.fileValidationError,
+            param: "ficha",
+            location: "file"
+        });
+    }
+    if (!req.file) {
+        errors.errors.push({
+            value: "",
+            msg: "Debe subir el archivo",
+            param: "ficha",
+            location: "file"
+        });
+    }
     if (req.fileSizeError) {
         errors.errors.push({
             value: "",
@@ -57,137 +34,134 @@ module.exports = {
             param: "ficha",
             location: "file"
         });
-    }      
-        
-        if(errors.isEmpty()){     
+    }
+};
 
-        const {nombre, expediente} = req.body  
+module.exports = {
 
-        db.Ficha.create({
-            expediente:expediente.trim(),
-            nombre:nombre.trim(),
-            archivo: req.file? req.file.filename : null
-        }).then(ficha => {
-            return res.redirect('/stock/listFichas')
-        }).catch(errors => console.log(errors))    
+    listFichas: async (req, res) => {
+        try {
+            const fichas = await db.Ficha.findAll();
+            return res.render('stock/fichas/fichas', {
+                title: "Fichas Técnicas",
+                fichas
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send('Error interno del servidor');
+        }
+    },
 
+    addFicha: (req, res) => {
+        return res.render('stock/fichas/addFicha', {
+            title: "Agregar Ficha Técnica"
+        });
+    },
 
+    storeFicha: async (req, res) => {
+        const errors = validationResult(req);
+        handleFileErrors(req, errors);
 
-        } else {
+        if (errors.isEmpty()) {
+            const { nombre, expediente } = req.body;
 
-            if(req.file){
-                fs.existsSync(path.join(__dirname,`../../public/images/fichasTecnicas/${req.file.filename}`)) && fs.unlinkSync(path.join(__dirname,`../../public/images/fichasTecnicas/${req.file.filename}`)) //SI HAY ERROR Y CARGÓ IMAGEN ESTE METODO LA BORRA
+            try {
+                await db.Ficha.create({
+                    expediente: expediente.trim(),
+                    nombre: nombre.trim(),
+                    archivo: req.file ? req.file.filename : null
+                });
+                return res.redirect('/stock/listFichas');
+            } catch (error) {
+                console.log(error);
+                return res.status(500).send('Error interno del servidor');
             }
 
-            return res.render('stock/fichas/addFicha',{
+        } else {
+            if (req.file) {
+                removeFileIfExists(path.join(__dirname, `../../public/images/fichasTecnicas/${req.file.filename}`));
+            }
+            return res.render('stock/fichas/addFicha', {
                 title: "Agregar Ficha Técnica",
                 old: req.body,
                 errors: errors.mapped()
-            })
-    
+            });
         }
     },
 
-    editFicha: (req,res) => {
+    editFicha: async (req, res) => {
         const id = req.params.id;
 
-        db.Ficha.findOne({where:{id}})
-        .then(ficha => {
-            return res.render('stock/fichas/editFicha',{
-                title:"Editar Ficha",
+        try {
+            const ficha = await db.Ficha.findOne({ where: { id } });
+            return res.render('stock/fichas/editFicha', {
+                title: "Editar Ficha",
                 ficha
-            })
-        }).catch(error => console.log(error))
-
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send('Error interno del servidor');
+        }
     },
 
-    updateFicha: (req,res) => {
-            
-            const errors = validationResult(req);
-
-            if(req.fileValidationError){ //este if valida que solo se puedan subir extensiones (pdf)
-                errors.errors.push({
-                    value : "",
-                    msg : req.fileValidationError,
-                    param : "pdf",
-                    location : "file"
-                })
-            }
-    
-            if(!req.file){  //este if valida que se suba un pdf
-                errors.errors.push({
-                    value : "",
-                    msg : "Debe subir el archivo",
-                    param : "pdf",
-                    location : "file"
-                })
-                
-            } 
-    
-               // Manejar el error si el archivo excede el tamaño máximo (nuevo)
-        if (req.fileSizeError) {
-            errors.errors.push({
-                value: "",
-                msg: req.fileSizeError,
-                param: "ficha",
-                location: "file"
-            });
-        }      
-
-        if (errors.isEmpty()){
+    updateFicha: async (req, res) => {
+        const errors = validationResult(req);
+        handleFileErrors(req, errors);
 
         const id = req.params.id;
-        const {nombre, expediente} = req.body;
-        
-        let oldFile;
+        if (errors.isEmpty()) {
+            const { nombre, expediente } = req.body;
+            let oldFile;
 
-        db.Ficha.findByPk(id)
-        .then(ficha => {
-            oldFile = ficha.archivo;
+            try {
+                const ficha = await db.Ficha.findByPk(id);
+                oldFile = ficha.archivo;
 
-            return ficha.update({
-                nombre:nombre.trim(),
-                expediente:expediente.trim(),
-                archivo: req.file ? req.file.filename : ficha.archivo
-            });
-        })
-        .then(() => {
-            if(req.file){
-                fs.existsSync(path.join(__dirname, `../../public/images/fichasTecnicas/${oldFile}`)) && fs.unlinkSync(path.join(__dirname, `../../public/images/fichasTecnicas/${oldFile}`))
+                await ficha.update({
+                    nombre: nombre.trim(),
+                    expediente: expediente.trim(),
+                    archivo: req.file ? req.file.filename : ficha.archivo
+                });
+
+                if (req.file) {
+                    removeFileIfExists(path.join(__dirname, `../../public/images/fichasTecnicas/${oldFile}`));
+                }
+
+                return res.redirect('/stock/listFichas');
+            } catch (error) {
+                console.log(error);
+                return res.status(500).send('Error interno del servidor');
             }
-
-            return res.redirect('/stock/listFichas')
-        }).catch(error => console.log(error))    
-
 
         } else {
-
-            const id = req.params.id;
-
-            if(req.file){
-                fs.existsSync(path.join(__dirname,`../../public/images/fichasTecnicas/${req.file.filename}`)) && fs.unlinkSync(path.join(__dirname,`../../public/images/fichasTecnicas/${req.file.filename}`)) //SI HAY ERROR Y CARGÓ IMAGEN ESTE METODO LA BORRA
+            if (req.file) {
+                removeFileIfExists(path.join(__dirname, `../../public/images/fichasTecnicas/${req.file.filename}`));
             }
 
-            db.Ficha.findOne({where:{id}})
-            .then(ficha => {
-                return res.render('stock/fichas/editFicha',{
-                    title:"Editar Ficha",
+            try {
+                const ficha = await db.Ficha.findOne({ where: { id } });
+                return res.render('stock/fichas/editFicha', {
+                    title: "Editar Ficha",
                     ficha,
                     old: req.body,
                     errors: errors.mapped()
-                })
-            }).catch(error => console.log(error))
-
+                });
+            } catch (error) {
+                console.log(error);
+                return res.status(500).send('Error interno del servidor');
+            }
         }
     },
 
-    deleteFicha: (req,res) => {
-        const id = req.params.id
+    deleteFicha: async (req, res) => {
+        const id = req.params.id;
 
-        db.Ficha.destroy({where:{id:id}})
-        .then(() => {
-            return res.redirect('/stock/listFichas')
-        }).catch(error => console.log(error))
+        try {
+            await db.Ficha.destroy({ where: { id } });
+            return res.redirect('/stock/listFichas');
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send('Error interno del servidor');
+        }
     }
-
-}
+};
