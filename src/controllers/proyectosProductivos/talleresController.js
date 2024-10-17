@@ -1,9 +1,6 @@
 const db = require('../../database/models');
 const {validationResult} = require('express-validator');
 const ExcelJS = require('exceljs');
-const fs = require('fs');
-
-
 
 module.exports = {
 
@@ -99,8 +96,7 @@ module.exports = {
 
 
     storageTaller : (req,res) => {
-        const errors = validationResult(req);
-
+        const errors = validationResult(req);  
 
         if (errors.isEmpty()) {
             
@@ -201,8 +197,6 @@ module.exports = {
             return res.redirect('/stock/talleresTable')
         }).catch(errors => console.log(errors))
     },
-
-
 
     ExcelTalleres : async (req,res) => {      
 

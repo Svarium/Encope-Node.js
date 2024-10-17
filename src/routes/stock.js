@@ -39,7 +39,7 @@ const addFichaValidator = require('../validations/stockValidators/addFichaValida
 
 /** Routes */
 // Estadísticas
-router.get('/estadistica', estadisticas);
+router.get('/estadistica', checkUserEditorIntranetCentral, estadisticas);
 
 // Productos
 router.get('/', checkUserEditorIntranetCentral, list);
