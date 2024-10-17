@@ -7,7 +7,7 @@ const userTable = $("#userTable");
 
 let pageActive = 1;
 
-const apiGetUsers = "http://localhost:3000/api/users/";
+const apiGetUsers = "https://test.encope.gob.ar/api/users/";
 const getUsers = ({page=1} = {}) => {
     users = fetch(`${apiGetUsers}?page=${page}`).then((res)=> res.json())
     console.log(users);

@@ -1,5 +1,4 @@
 // config/nodemailer.js
-
 require("dotenv").config();
 
 const nodemailer = require('nodemailer');

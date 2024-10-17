@@ -247,7 +247,7 @@
 
 
               //Validacion expediente existente
-              let response = await fetch("http://localhost:3000/api/stock/expedienteFicha/",{
+              let response = await fetch("https://test.encope.gob.ar/api/stock/expedienteFicha/",{
                 method: 'POST',
                 body: JSON.stringify({
                   expedienteFicha: expediente.value.trim()
@@ -310,7 +310,7 @@
 
               try {
 
-                const response = await fetch(`http://localhost:3000/api/stock/deleteInsumo/${idProducto}`, {
+                const response = await fetch(`https://test.encope.gob.ar/api/stock/deleteInsumo/${idProducto}`, {
                   method: "DELETE",
                   headers: {
                     "Content-Type": "application/json"
