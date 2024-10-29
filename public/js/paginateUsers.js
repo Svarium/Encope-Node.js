@@ -38,13 +38,12 @@ const paintUsers = (users) => {
               <div class="col-md-10">
                 <label for="nuevo_rol" class="form-label">Nuevo rol:</label>
                 <select name="nuevoRol" id="nuevoRol" class="form-select">
-                  <option value="" selected hidden>Seleccione...</option>
-                  <option value="1">SuperAdmin</option>
+                  <option value="" selected hidden>Seleccione...</option>                
                   <option value="2">Admin</option>
                   <option value="3">Editor-Noticias</option>
                   <option value="4">Editor-Licitaciones</option>
-                  <option value="5">Editor-Intranet</option>
-                  <option value="6">Editor Cunas</option>
+                  <option value="5">Editor-Intranet-Central</option>
+                  <option value="6">Editor-Intranet-Unidades</option>
                   <option value="7">Visitante</option>
                   <option value="8">Agente</option>
                 </select>
