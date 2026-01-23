@@ -74,17 +74,198 @@
 
          </div>  
 
-         <div>
-          <h2>Autoridades del Organismo</h2><br>
-         </div>
-         
-         <div class="container-fluid">         
-            
-              <img src="/images/nosotros/Autoridades-01-2025.jpg" alt="" class="img-fluid d-lg-block d-none" >
-              <img src="/images/nosotros/Autoridades-mobile-2025.jpg" alt="" class="d-sm-block d-lg-none autoridades-small">
-                 
-         </div>
-      
+         <!-- Autoridades del Organismo -->
+         <section class="autoridades-section py-5">
+           <div class="container-fluid px-4">
+             <h2 class="text-center mb-4">Autoridades del Organismo</h2>
+             
+             <!-- Lista de autoridades en texto (visible en mobile) -->
+             <div class="autoridades-list d-md-none mb-4">
+               <p class="mb-2"><strong>Presidente</strong> (Prefecto): Lic. Cristian Ramón Costadoni</p>
+               <p class="mb-2"><strong>Vicepresidente</strong> (Subprefecto): Lic. Gladys Solís</p>
+               <p class="mb-2"><strong>Tesorero</strong> (Alcaide Mayor): Crdor. Mauro R. Gonzalez</p>
+               <p class="mb-2"><strong>Vocal I</strong> (Alcaide): Carlos Fernando Sussini</p>
+               <p class="mb-2"><strong>Vocal II</strong> (Alcaide): Sergio Martín Vargas</p>
+               <p class="mb-2"><strong>Secretario</strong> (Alcaide): Christian Alfredo Salvatierra</p>
+             </div>
+
+             <!-- Diseño gráfico (visible en tablet y desktop) -->
+             <div class="autoridades-card d-none d-md-block">
+               <div class="row g-0">
+                 <!-- Columna izquierda: Presidente -->
+                 <div class="col-md-6 autoridades-left">
+                   <div class="autoridad-item">
+                     <h5 class="cargo">PRESIDENTE</h5>
+                     <p class="rango">Prefecto</p>
+                     <p class="nombre">Lic. Cristian Ramón COSTADONI</p>
+                   </div>
+                 </div>
+
+                 <!-- Columna derecha: Resto de autoridades -->
+                 <div class="col-md-6 autoridades-right">
+                   <div class="autoridad-item">
+                     <h5 class="cargo">VICEPRESIDENTE</h5>
+                     <p class="rango">Subprefecto</p>
+                     <p class="nombre">Lic. Gladys SOLÍS</p>
+                   </div>
+
+                   <div class="autoridad-item">
+                     <h5 class="cargo">TESORERO</h5>
+                     <p class="rango">Alcaide Mayor</p>
+                     <p class="nombre">Cdor. Mauro R. GONZALEZ</p>
+                   </div>
+
+                   <div class="autoridad-item">
+                     <h5 class="cargo">VOCAL I</h5>
+                     <p class="rango">Alcaide</p>
+                     <p class="nombre">Carlos Fernando SUSSINI</p>
+                   </div>
+
+                   <div class="autoridad-item">
+                     <h5 class="cargo">VOCAL II</h5>
+                     <p class="rango">Alcaide</p>
+                     <p class="nombre">Sergio Martín VARGAS</p>
+                   </div>
+
+                   <div class="autoridad-item">
+                     <h5 class="cargo">SECRETARIO</h5>
+                     <p class="rango">Alcaide</p>
+                     <p class="nombre">Christian Alfredo SALVATIERRA</p>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </section>
+
+         <style>
+           .autoridades-section {
+             background-color: #f8f9fa;
+           }
+
+           .autoridades-section h2 {
+             font-weight: 600;
+             color: #2c3e50;
+             margin-bottom: 2rem;
+           }
+
+           /* Lista simple para mobile */
+           .autoridades-list p {
+             font-size: 1.2rem;
+             line-height: 1.6;
+             color: #495057;
+           }
+
+           /* Ajuste de tamaño de fuente para móviles pequeños */
+           @media (max-width: 576px) {
+             .autoridades-list p {
+               font-size: 1.1rem;
+             }
+           }
+
+           /* Diseño gráfico para tablet/desktop */
+           .autoridades-card {
+             background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+             border-radius: 12px;
+             overflow: hidden;
+             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+             min-height: 400px;
+           }
+
+           .autoridades-left,
+           .autoridades-right {
+             padding: 2.5rem 2rem;
+           }
+
+           .autoridades-left {
+             background-color: rgba(255, 255, 255, 0.3);
+             border-right: 2px solid rgba(255, 255, 255, 0.5);
+             display: flex;
+             align-items: center;
+             justify-content: center;
+           }
+
+           .autoridades-right {
+             display: flex;
+             flex-direction: column;
+             justify-content: space-between;
+           }
+
+           .autoridad-item {
+             margin-bottom: 1.5rem;
+           }
+
+           .autoridades-left .autoridad-item {
+             text-align: center;
+             margin-bottom: 0;
+           }
+
+           .autoridad-item:last-child {
+             margin-bottom: 0;
+           }
+
+           .autoridad-item .cargo {
+             font-size: 1.1rem;
+             font-weight: 700;
+             letter-spacing: 0.5px;
+             color: #2c3e50;
+             margin-bottom: 0.25rem;
+             text-transform: uppercase;
+           }
+
+           .autoridad-item .rango {
+             font-size: 0.95rem;
+             color: #6c757d;
+             margin-bottom: 0.25rem;
+             font-style: italic;
+           }
+
+           .autoridad-item .nombre {
+             font-size: 1.3rem;
+             font-weight: 500;
+             color: #212529;
+             margin-bottom: 0;
+           }
+
+           /* Presidente destacado */
+           .autoridades-left .cargo {
+             font-size: 1.4rem;
+           }
+
+           .autoridades-left .nombre {
+             font-size: 1.6rem;
+             font-weight: 600;
+           }
+
+           /* Responsive adjustments */
+           @media (max-width: 991px) {
+             .autoridades-card {
+               min-height: auto;
+             }
+
+             .autoridades-left,
+             .autoridades-right {
+               padding: 2rem 1.5rem;
+             }
+           }
+
+           @media (min-width: 992px) and (max-width: 1199px) {
+             .autoridad-item .cargo {
+               font-size: 0.8rem;
+             }
+
+             .autoridad-item .nombre {
+               font-size: 0.95rem;
+             }
+           }
+
+           @media (min-width: 1200px) {
+             .autoridades-left,
+             .autoridades-right {
+               padding: 3rem 2.5rem;
+             }
+           }
+         </style>
 
 <!--LOGOS COLABORADORES-->
 

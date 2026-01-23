@@ -1,7 +1,7 @@
 [
     {
         "lastUpdate" : "21-08-24",
-        "TotalGeneralInternos": 7503
+        "TotalGeneralInternos": 4685
     },
 
     {
@@ -1026,7 +1026,7 @@
         "nombreCompleto":"Complejo Penitenciario Federal II - Marcos Paz",
         "fachada":"cpf2.png",
         "detalle":"El establecimiento cuenta con los siguientes talleres productivos: Herrería, Carpintería, Armado de broches de madera, Parques y jardines, Pastas, Repostería,Panadería, Sastrería, Carpintería",
-        "video":"https://youtu.be/Z3DtCImWbWA",
+        "video":"https://youtu.be/",
         "imgDatos":null,
         "internosPorTaller": [
             {

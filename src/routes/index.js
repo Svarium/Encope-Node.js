@@ -8,8 +8,8 @@ router.get('/', home);
 router.get('/inicio', inicio);
 router.get('/nosotros', nosotros);
 router.get('/contacto', contacto)
-router.get('/mapa', mapa)
-router.get('/mapa/detalle/:id', unidadDetail)
+//router.get('/mapa', mapa)
+//router.get('/mapa/detalle/:id', unidadDetail)
 router.get('/proyectos', nuestrosProyectos)
 
 
